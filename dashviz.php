@@ -50,7 +50,7 @@ class DashboardVisualization{
             rewind_posts();
             wp_enqueue_script("dashviz-script", plugins_url().$plugin_dir.'/main.js', null, null, true);
             wp_enqueue_style("dashviz-style", plugins_url().$plugin_dir.'/main.css');
-
+            wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
         }
         return $template;
     }

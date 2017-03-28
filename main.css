@@ -7,7 +7,7 @@
   padding: 32px; }
 
 #dashboard {
-  background-color: #f0f0f0;
+  background-color: #fff;
   padding: 0;
   margin: 0; }
   #dashboard h1, #dashboard h2, #dashboard h3, #dashboard h4 {
@@ -44,5 +44,24 @@
       height: 100%;
       padding: 16px;
       box-sizing: border-box; }
+      #dashboard main #right-pane h4 {
+        margin-bottom: 20px; }
+      #dashboard main #right-pane #search-input-container {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid rgba(0, 0, 0, 0.1); }
+        #dashboard main #right-pane #search-input-container .fa {
+          color: #34495e;
+          flex-basis: 32px;
+          margin-top: 2px;
+          border-right: 1px solid rgba(0, 0, 0, 0.3);
+          text-align: center;
+          padding: 4px 10px;
+          font-size: 1.1em; }
+        #dashboard main #right-pane #search-input-container input {
+          flex-basis: calc(100% - 32px);
+          border: none;
+          outline: none;
+          padding: 0px 10px; }
 
 /*# sourceMappingURL=main.css.map */
