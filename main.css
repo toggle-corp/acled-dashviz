@@ -14,7 +14,8 @@
     margin: 0;
     padding: 0;
     text-transform: uppercase;
-    color: #34495e; }
+    color: #34495e;
+    font-weight: bold; }
   #dashboard main {
     height: 100vh;
     display: flex;
@@ -63,5 +64,60 @@
           border: none;
           outline: none;
           padding: 0px 10px; }
+      #dashboard main #right-pane #country-container {
+        height: calc(100vh - 115px);
+        background-color: #f0f0f0; }
+        #dashboard main #right-pane #country-container h6 {
+          text-transform: uppercase;
+          font-weight: bold;
+          color: #34495e;
+          font-size: 1.1em;
+          padding: none; }
+        #dashboard main #right-pane #country-container #country-report-container {
+          display: flex;
+          margin-top: 20px;
+          background-color: #f0f0f0;
+          display: flex; }
+          #dashboard main #right-pane #country-container #country-report-container #label-container {
+            flex-basis: 60%; }
+            #dashboard main #right-pane #country-container #country-report-container #label-container label {
+              padding-top: 5px;
+              font-style: italic;
+              color: #34495e; }
+            #dashboard main #right-pane #country-container #country-report-container #label-container p {
+              text-align: justify;
+              padding-right: 2px;
+              font-size: 0.9em; }
+          #dashboard main #right-pane #country-container #country-report-container #country-map-container {
+            display: flex;
+            flex-basis: 40%;
+            justify-content: center;
+            align-items: flex-start; }
+            #dashboard main #right-pane #country-container #country-report-container #country-map-container label {
+              padding-top: 20px;
+              color: #34495e; }
+        #dashboard main #right-pane #country-container #key-figures-container {
+          margin-top: 20px; }
+          #dashboard main #right-pane #country-container #key-figures-container label {
+            line-height: 2;
+            font-size: 0.9em;
+            padding-left: 32px; }
+          #dashboard main #right-pane #country-container #key-figures-container #flex-key {
+            display: flex; }
+            #dashboard main #right-pane #country-container #key-figures-container #flex-key #key-part-1 {
+              flex-basis: 50%; }
+            #dashboard main #right-pane #country-container #key-figures-container #flex-key #key-part-2 {
+              flex-basis: 50%; }
+        #dashboard main #right-pane #country-container #recent-events-container {
+          height: 37%;
+          margin-top: 20px;
+          display: flex; }
+        #dashboard main #right-pane #country-container #button-wrapper {
+          text-align: center;
+          padding-top: 2px; }
+          #dashboard main #right-pane #country-container #button-wrapper button {
+            background-color: #34495e; }
+            #dashboard main #right-pane #country-container #button-wrapper button span {
+              padding-left: 5px; }
 
 /*# sourceMappingURL=main.css.map */

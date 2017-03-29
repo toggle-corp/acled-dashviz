@@ -19,6 +19,7 @@ $primary-color: #34495e;
         padding: 0;
         text-transform: uppercase;
         color: $primary-color;
+        font-weight: bold;
     }
     main{
         height: 100vh;
@@ -57,32 +58,117 @@ $primary-color: #34495e;
             box-sizing: border-box;
 
             h4{
-              margin-bottom: 20px;
+                margin-bottom: 20px;
             }
             #search-input-container{
-              display: flex;
-              justify-content: space-between;
-              border: 1px solid rgba(0,0,0,0.1);
+                display: flex;
+                justify-content: space-between;
+                border: 1px solid rgba(0,0,0,0.1);
+
+                .fa{
+                    color: $primary-color;
+                    flex-basis: 32px ;
+                    margin-top: 2px;
+                    border-right: 1px solid rgba(0,0,0,0.3);
+                    text-align: center;
+                    padding: 4px 10px;
+                    font-size: 1.1em;
+                }
+
+                input{
+                    flex-basis: calc(100% - 32px);
+                    border: none;
+                    outline: none;
+                    padding: 0px 10px;
+                }
+            }
 
 
-              .fa{
-                color: $primary-color;
-                flex-basis: 32px ;
-                margin-top: 2px;
-                border-right: 1px solid rgba(0,0,0,0.3);
-                text-align: center;
-                padding: 4px 10px;
-                font-size: 1.1em;
+            #country-container{
+                height: calc(100vh - 115px);
+                background-color: #f0f0f0;
+                h6{
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    color: $primary-color;
+                    font-size: 1.1em;
+                    padding: none;
+                }
+                #country-report-container{
+                    display: flex;
+                    margin-top: 20px;
+                    background-color: #f0f0f0;
+                    display: flex;
+
+                    #label-container{
+                        flex-basis: 60%;
+
+                        label{
+                            padding-top: 5px;
+                            font-style: italic;
+                            color: $primary-color;
+
+                        }
+                        p{
+                            text-align: justify;
+                            padding-right: 2px;
+                            font-size: 0.9em;
+
+                        }
+                    }
+                    #country-map-container{
+                        display: flex;
+                        flex-basis: 40%;
+                        justify-content: center;
+                        align-items: flex-start;
+                        label{
+                            padding-top: 20px;
+                            color: $primary-color;
+                        }
+                    }
+                }
+                #key-figures-container{
+
+                    margin-top: 20px;
+
+                    label{
+                        line-height: 2;
+                        font-size: 0.9em;
+                        padding-left: 32px;
+                    }
+                        #flex-key{
+                            display: flex;
+                            #key-part-1{
+                                flex-basis: 50%;
+
+                            }
+
+                            #key-part-2{
+                                flex-basis: 50%;
+                            }
+                        }
+
+                }
+                #recent-events-container{
 
 
-              }
-              input{
+                    height: 37%;
+                    margin-top: 20px;
+                    display: flex;
+                }
 
-                flex-basis: calc(100% - 32px);
-                border: none;
-                outline: none;
-                padding: 0px 10px;
-              }
+
+                #button-wrapper{
+                    text-align: center;
+                    padding-top: 2px;
+
+                    button{
+                        background-color: $primary-color;
+                        span{
+                            padding-left: 5px;
+                        }
+                    }
+                }
             }
         }
     }
