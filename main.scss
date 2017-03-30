@@ -10,7 +10,7 @@ $primary-color: #34495e;
 }
 
 #dashboard{
-    background-color: #fff;
+    background-color: #f0f0f0;
     padding: 0;
     margin: 0;
 
@@ -42,6 +42,70 @@ $primary-color: #34495e;
                 height: calc(50% - 2px);
                 padding: 16px;
                 box-sizing: border-box;
+                display: flex;
+
+                #map-part{
+                    flex-basis: 80%;
+                    height: 100%;
+                    padding: 4px;
+                    box-sizing: border-box;
+                }
+
+                #legend-part{
+                    flex-basis: 20%;
+                    height: 100%;
+                    padding: 4px;
+                    box-sizing: border-box;
+                    font-size: 0.5em;
+                    h3{
+                        margin-bottom: 100px;
+                        margin-top: 40px;
+                        text-align: center;
+                    }
+                    .rect{
+                        padding-left: 10px;
+                    }
+                    label{
+                        vertical-align: middle;
+                        display: inline-block;
+                        text-align: right;
+                        font-size: 0.8em;
+                        line-height: 2;
+                        padding-left: 4px;
+                        padding-bottom: 2px;
+                    }
+                    p{
+                        display: inline-block;
+
+                    }
+                    #battles{
+                        display: inline-block;
+                        width:15px;
+                        height:15px;
+                        background:blue;
+                    }
+                     #violence-against-citizens{
+                          display: inline-block;
+                          width:15px;
+                          height:15px;
+                          background:black;
+                     }
+                     #remote-violence{
+                         display: inline-block;
+                          width:15px;
+                          height:15px;
+                          background:green;
+                     }
+                      #riots-protests{
+                          display: inline-block;
+                          width:15px;
+                          height:15px;
+                          background:red;
+                     }
+
+                }
+
+
             }
             #chart-container{
                 flex-basis: 100%;
@@ -172,4 +236,172 @@ $primary-color: #34495e;
             }
         }
     }
+}
+
+#country-profile{
+    background-color: #f0f0f0;
+    height: 100vh;
+    h1, h2, h3, h4{
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase;
+        color: $primary-color;
+        font-weight: bold;
+    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .boundbox{
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    #country-header{
+        flex-basis: 100%;
+        height: calc(5% - 2px);
+        box-sizing: border-box;
+
+    }
+
+    #map-part{
+        flex-basis: 50%;
+        height: calc(45% - 2px);
+        padding: 8px;
+        box-sizing: border-box;
+
+        #map-header{
+            border-left: 3px solid $primary-color;
+            h1{
+                padding-left: 15px;
+                line-height: 1;
+                color: rgba(0,0,0,0.6);
+                font-size: 2em;
+
+            }
+        }
+
+    }
+    #chart-part{
+        flex-basis: 50%;
+        height: calc(45% - 2px);
+        padding: 8px;
+        box-sizing: border-box;
+        display: flex;
+
+        h1{
+            padding-left: 15px;
+            line-height: 1;
+            color: rgba(0,0,0,0.6);
+            font-size: 2em;
+
+            span {
+                padding-left: 4px;
+                font-weight: lighter;
+            }
+        }
+        #chart-one{
+            flex-basis: 50%;
+            height: 100%;
+            padding: 4px;
+            box-sizing: border-box;
+
+            #time-series-header{
+                border-left: 3px solid $primary-color;
+
+            }
+            #time-series{
+            }
+
+        }
+        #chart-two{
+            flex-basis: 50%;
+            height:100%;
+            padding: 4px;
+            box-sizing: border-box;
+
+            #bar-chart-header{
+                border-left: 3px solid $primary-color;
+
+            }
+            #bar-chart{
+
+            }
+
+        }
+
+
+
+    }
+
+
+    #timeline-part{
+        flex-basis: 50%;
+        height: calc(45% - 2px);
+        padding: 8px;
+        box-sizing: border-box;
+
+        #timeline-header{
+            border-left: 3px solid $primary-color;
+            h1{
+                padding-left: 15px;
+                line-height: 1;
+                color: rgba(0,0,0,0.6);
+                font-size: 2em;
+
+                span {
+                    padding-left: 4px;
+                    font-weight: lighter;
+                }
+            }
+        }
+    }
+    #report-part{
+        flex-basis: 50%;
+        height: calc(45% - 2px);
+        padding: 8px;
+        box-sizing: border-box;
+        display: flex;
+
+        #text-section{
+            flex-basis: 50%;
+            height: 100%;
+            padding: 4px;
+            box-sizing: border-box;
+
+            #report-header{
+                border-left: 3px solid $primary-color;
+                margin-bottom: 48px;
+                h1{
+                    padding-left: 15px;
+                    line-height: 1;
+                    color: rgba(0,0,0,0.6);
+                    font-size: 2em;
+
+                    span {
+                        padding-left: 4px;
+                        font-weight: lighter;
+                    }
+                }
+            }
+        }
+
+        #report-text{
+            margin-top: 15px;
+            font-size: 0.8em;
+            text-align:justify;
+        }
+
+        #thumbnail-one{
+            flex-basis: 25%;
+            height: 100%;
+
+        }
+        #thumbnail-two{
+            flex-basis: 25%;
+            height: 100%;
+
+        }
+    }
+
 }
