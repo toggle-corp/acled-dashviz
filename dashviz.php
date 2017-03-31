@@ -48,9 +48,13 @@ class DashboardVisualization{
             $wp_query->the_post();
             $template = get_page_template();
             rewind_posts();
+            wp_enqueue_style("leaflet-style", 'https://unpkg.com/leaflet@1.0.3/dist/leaflet.css');
+            wp_enqueue_script("jquery-script", 'https://code.jquery.com/jquery-3.2.1.min.js', null, null, true);
+            wp_enqueue_script("leaflet-script", 'https://unpkg.com/leaflet@1.0.3/dist/leaflet.js', null, null, true);
+            wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+            wp_enqueue_script("data-script", plugins_url().$plugin_dir.'/data.js', null, null, true);
             wp_enqueue_script("dashviz-script", plugins_url().$plugin_dir.'/main.js', null, null, true);
             wp_enqueue_style("dashviz-style", plugins_url().$plugin_dir.'/main.css');
-            wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
         }
         return $template;
     }

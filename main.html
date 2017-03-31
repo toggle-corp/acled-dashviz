@@ -2,100 +2,78 @@
     <main>
         <div id="left-pane">
             <div id="map-container" class="boundbox">
-                <div id="map-part" class="boundbox">
-
+                <div id="map">
+                    <div id="the-map">
+                    </div>
                 </div>
-                <div id="legend-part" class="boundbox">
+                <div id="legend">
                     <h3>Event Type</h3>
-                    <div class="rect">
-                        <div id="battles">
-                        </div>
-                        <label>Battles</label>
+                    <div id="legend-elements">
                     </div>
-                    <div class="rect">
-                        <div id="violence-against-citizens">
-                        </div>
-                        <label>Violence Against Citizens</label>
-                    </div>
-                    <div class="rect">
-                        <div id="remote-violence">
-                        </div>
-                        <label>Remote Violence</label>
-                    </div>
-                    <div class="rect">
-                        <div id="riots-protests">
-                        </div>
-                        <label>Riots/Protests</label>
-                    </div>
+                </div>
+                <div class="legend-element-template">
+                    <span></span>
+                    <label></label>
                 </div>
             </div>
             <div id="chart-container" class="boundbox">
-
-
             </div>
         </div>
         <div id="right-pane" class="boundbox">
             <h4>Crisis profile</h4>
-
             <div id="search-input-container">
                 <i class="fa fa-search"></i>
                 <input id="country-search" placeholder="Search">
             </div>
-
             <div id="country-container">
-
-                <div id="country-report-container" class="boundbox">
+                <div id="country-report-container">
                     <div id="label-container">
-                        <h6> Country Report Title </h6>
-                        <label> Month, Year </label>
-                        <p> "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." </p>
+                        <h6>Country Report Title</h6>
+                        <date>Month, Year</date>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     </div>
-
                     <div id="country-map-container">
                         <label> Country Map </label>
                     </div>
                 </div>
 
-                <div id="key-figures-container" class="boundbox">
+                <div id="key-figures-container">
                     <h6>Key Figures</h6>
                         <div id="flex-key">
-                            <div id="key-part-1">
+                            <div id="key-1">
                                 <label>Number of Events:</label>
                                 <label>Reported Fatalities:</label>
                                 <label>Displaced People:</label>
                             </div>
 
-                            <div id="key-part-2">
+                            <div id="key-2">
                                 <label>Number of Events:</label>
                                 <label>Reported Fatalities:</label>
                                 <label>Displaced People:</label>
                             </div>
                         </div>
                 </div>
-
-                <div id="recent-events-container" class="boundbox">
+                <div id="recent-events-container">
                     <h6>Recent Events</h6>
                 </div>
-
                 <div id="button-wrapper">
-                <button class="btn" id="read-more">Read More <span class="fa fa-long-arrow-right"> </span></button>
+                    <button class="btn" id="read-more">Read More <span class="fa fa-long-arrow-right"> </span></button>
                 </div>
-
             </div>
         </div>
     </main>
 
 </div>
 <div id="country-profile" class="boundbox">
-    <div id="country-header" class="boundbox">
+    <div id="country-header">
         <h1><i class="fa fa-arrow-left"></i> country profile : IRAQ </h1>
     </div>
-    <div id="map-part" class="boundbox">
+    <div id="map" class="boundbox">
         <div id="map-header">
             <h1>Map</h1>
         </div>
     </div>
-    <div id="chart-part" class="boundbox">
+    <div id="chart" class="boundbox">
         <div id="chart-one" class="boundbox">
             <div id="time-series-header">
                 <h1>Time <span>Series<span></h1>
@@ -114,13 +92,13 @@
         </div>
 
     </div>
-    <div id="timeline-part" class="boundbox">
+    <div id="timeline" class="boundbox">
         <div id="timeline-header">
             <h1>Time <span>Line<span></h1>
         </div>
 
     </div>
-    <div id="report-part" class="boundbox">
+    <div id="report" class="boundbox">
         <div id="text-section" class="boundbox">
             <div id="report-header">
                 <h1>Country <span>Reports<span></h1>

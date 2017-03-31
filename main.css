@@ -34,54 +34,35 @@
         height: calc(50% - 2px);
         padding: 16px;
         box-sizing: border-box;
-        display: flex; }
-        #dashboard main #left-pane #map-container #map-part {
-          flex-basis: 80%;
+        display: flex;
+        justify-content: space-between; }
+        #dashboard main #left-pane #map-container #map {
+          flex-basis: 72%;
+          height: 100%;
+          box-sizing: border-box; }
+          #dashboard main #left-pane #map-container #map #the-map {
+            height: 100%; }
+        #dashboard main #left-pane #map-container #legend {
+          flex-basis: 25%;
           height: 100%;
           padding: 4px;
           box-sizing: border-box; }
-        #dashboard main #left-pane #map-container #legend-part {
-          flex-basis: 20%;
-          height: 100%;
-          padding: 4px;
-          box-sizing: border-box;
-          font-size: 0.5em; }
-          #dashboard main #left-pane #map-container #legend-part h3 {
-            margin-bottom: 100px;
-            margin-top: 40px;
-            text-align: center; }
-          #dashboard main #left-pane #map-container #legend-part .rect {
-            padding-left: 10px; }
-          #dashboard main #left-pane #map-container #legend-part label {
-            vertical-align: middle;
-            display: inline-block;
-            text-align: right;
-            font-size: 0.8em;
-            line-height: 2;
-            padding-left: 4px;
-            padding-bottom: 2px; }
-          #dashboard main #left-pane #map-container #legend-part p {
-            display: inline-block; }
-          #dashboard main #left-pane #map-container #legend-part #battles {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            background: blue; }
-          #dashboard main #left-pane #map-container #legend-part #violence-against-citizens {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            background: black; }
-          #dashboard main #left-pane #map-container #legend-part #remote-violence {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            background: green; }
-          #dashboard main #left-pane #map-container #legend-part #riots-protests {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            background: red; }
+          #dashboard main #left-pane #map-container #legend h3 {
+            height: 64px;
+            padding-left: 3%; }
+          #dashboard main #left-pane #map-container #legend > div {
+            height: calc(100% - 64px); }
+          #dashboard main #left-pane #map-container #legend .legend-element {
+            display: flex;
+            padding: 3%; }
+            #dashboard main #left-pane #map-container #legend .legend-element span {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              margin-right: 8px; }
+            #dashboard main #left-pane #map-container #legend .legend-element label {
+              font-size: 0.8em;
+              margin-top: -3px; }
       #dashboard main #left-pane #chart-container {
         flex-basis: 100%;
         align-self: flex-end;
@@ -152,9 +133,9 @@
             padding-left: 32px; }
           #dashboard main #right-pane #country-container #key-figures-container #flex-key {
             display: flex; }
-            #dashboard main #right-pane #country-container #key-figures-container #flex-key #key-part-1 {
+            #dashboard main #right-pane #country-container #key-figures-container #flex-key #key-1 {
               flex-basis: 50%; }
-            #dashboard main #right-pane #country-container #key-figures-container #flex-key #key-part-2 {
+            #dashboard main #right-pane #country-container #key-figures-container #flex-key #key-2 {
               flex-basis: 50%; }
         #dashboard main #right-pane #country-container #recent-events-container {
           height: 37%;
@@ -187,91 +168,91 @@
     flex-basis: 100%;
     height: calc(5% - 2px);
     box-sizing: border-box; }
-  #country-profile #map-part {
+  #country-profile #map {
     flex-basis: 50%;
     height: calc(45% - 2px);
     padding: 8px;
     box-sizing: border-box; }
-    #country-profile #map-part #map-header {
+    #country-profile #map #map-header {
       border-left: 3px solid #34495e; }
-      #country-profile #map-part #map-header h1 {
+      #country-profile #map #map-header h1 {
         padding-left: 15px;
         line-height: 1;
         color: rgba(0, 0, 0, 0.6);
         font-size: 2em; }
-  #country-profile #chart-part {
+  #country-profile #chart {
     flex-basis: 50%;
     height: calc(45% - 2px);
     padding: 8px;
     box-sizing: border-box;
     display: flex; }
-    #country-profile #chart-part h1 {
+    #country-profile #chart h1 {
       padding-left: 15px;
       line-height: 1;
       color: rgba(0, 0, 0, 0.6);
       font-size: 2em; }
-      #country-profile #chart-part h1 span {
+      #country-profile #chart h1 span {
         padding-left: 4px;
         font-weight: lighter; }
-    #country-profile #chart-part #chart-one {
+    #country-profile #chart #chart-one {
       flex-basis: 50%;
       height: 100%;
       padding: 4px;
       box-sizing: border-box; }
-      #country-profile #chart-part #chart-one #time-series-header {
+      #country-profile #chart #chart-one #time-series-header {
         border-left: 3px solid #34495e; }
-    #country-profile #chart-part #chart-two {
+    #country-profile #chart #chart-two {
       flex-basis: 50%;
       height: 100%;
       padding: 4px;
       box-sizing: border-box; }
-      #country-profile #chart-part #chart-two #bar-chart-header {
+      #country-profile #chart #chart-two #bar-chart-header {
         border-left: 3px solid #34495e; }
-  #country-profile #timeline-part {
+  #country-profile #timeline {
     flex-basis: 50%;
     height: calc(45% - 2px);
     padding: 8px;
     box-sizing: border-box; }
-    #country-profile #timeline-part #timeline-header {
+    #country-profile #timeline #timeline-header {
       border-left: 3px solid #34495e; }
-      #country-profile #timeline-part #timeline-header h1 {
+      #country-profile #timeline #timeline-header h1 {
         padding-left: 15px;
         line-height: 1;
         color: rgba(0, 0, 0, 0.6);
         font-size: 2em; }
-        #country-profile #timeline-part #timeline-header h1 span {
+        #country-profile #timeline #timeline-header h1 span {
           padding-left: 4px;
           font-weight: lighter; }
-  #country-profile #report-part {
+  #country-profile #report {
     flex-basis: 50%;
     height: calc(45% - 2px);
     padding: 8px;
     box-sizing: border-box;
     display: flex; }
-    #country-profile #report-part #text-section {
+    #country-profile #report #text-section {
       flex-basis: 50%;
       height: 100%;
       padding: 4px;
       box-sizing: border-box; }
-      #country-profile #report-part #text-section #report-header {
+      #country-profile #report #text-section #report-header {
         border-left: 3px solid #34495e;
         margin-bottom: 48px; }
-        #country-profile #report-part #text-section #report-header h1 {
+        #country-profile #report #text-section #report-header h1 {
           padding-left: 15px;
           line-height: 1;
           color: rgba(0, 0, 0, 0.6);
           font-size: 2em; }
-          #country-profile #report-part #text-section #report-header h1 span {
+          #country-profile #report #text-section #report-header h1 span {
             padding-left: 4px;
             font-weight: lighter; }
-    #country-profile #report-part #report-text {
+    #country-profile #report #report-text {
       margin-top: 15px;
       font-size: 0.8em;
       text-align: justify; }
-    #country-profile #report-part #thumbnail-one {
+    #country-profile #report #thumbnail-one {
       flex-basis: 25%;
       height: 100%; }
-    #country-profile #report-part #thumbnail-two {
+    #country-profile #report #thumbnail-two {
       flex-basis: 25%;
       height: 100%; }
 

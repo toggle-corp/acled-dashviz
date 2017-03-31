@@ -43,66 +43,49 @@ $primary-color: #34495e;
                 padding: 16px;
                 box-sizing: border-box;
                 display: flex;
+                justify-content: space-between;
 
-                #map-part{
-                    flex-basis: 80%;
+                #map{
+                    flex-basis: 72%;
                     height: 100%;
-                    padding: 4px;
                     box-sizing: border-box;
+
+                    #the-map{
+                        height: 100%;
+
+
+                    }
                 }
-
-                #legend-part{
-                    flex-basis: 20%;
+                #legend{
+                    flex-basis: 25%;
                     height: 100%;
                     padding: 4px;
                     box-sizing: border-box;
-                    font-size: 0.5em;
+                    // border-left: 1px solid rgba(0, 0, 0, 0.1);
+
                     h3{
-                        margin-bottom: 100px;
-                        margin-top: 40px;
-                        text-align: center;
+                        height: 64px;
+                        padding-left: 3%;
                     }
-                    .rect{
-                        padding-left: 10px;
+                    > div{
+                        height: calc(100% - 64px);
                     }
-                    label{
-                        vertical-align: middle;
-                        display: inline-block;
-                        text-align: right;
-                        font-size: 0.8em;
-                        line-height: 2;
-                        padding-left: 4px;
-                        padding-bottom: 2px;
-                    }
-                    p{
-                        display: inline-block;
 
-                    }
-                    #battles{
-                        display: inline-block;
-                        width:15px;
-                        height:15px;
-                        background:blue;
-                    }
-                     #violence-against-citizens{
-                          display: inline-block;
-                          width:15px;
-                          height:15px;
-                          background:black;
-                     }
-                     #remote-violence{
-                         display: inline-block;
-                          width:15px;
-                          height:15px;
-                          background:green;
-                     }
-                      #riots-protests{
-                          display: inline-block;
-                          width:15px;
-                          height:15px;
-                          background:red;
-                     }
+                    .legend-element{
+                        display: flex;
+                        padding: 3%;
 
+                        span{
+                            display: inline-block;
+                            width: 16px;
+                            height: 16px;
+                            margin-right: 8px;
+                        }
+                        label{
+                            font-size: 0.8em;
+                            margin-top: -3px;
+                        }
+                    }
                 }
 
 
@@ -202,12 +185,12 @@ $primary-color: #34495e;
                     }
                         #flex-key{
                             display: flex;
-                            #key-part-1{
+                            #key-1{
                                 flex-basis: 50%;
 
                             }
 
-                            #key-part-2{
+                            #key-2{
                                 flex-basis: 50%;
                             }
                         }
@@ -264,7 +247,7 @@ $primary-color: #34495e;
 
     }
 
-    #map-part{
+    #map{
         flex-basis: 50%;
         height: calc(45% - 2px);
         padding: 8px;
@@ -282,7 +265,7 @@ $primary-color: #34495e;
         }
 
     }
-    #chart-part{
+    #chart{
         flex-basis: 50%;
         height: calc(45% - 2px);
         padding: 8px;
@@ -329,13 +312,9 @@ $primary-color: #34495e;
             }
 
         }
-
-
-
     }
 
-
-    #timeline-part{
+    #timeline{
         flex-basis: 50%;
         height: calc(45% - 2px);
         padding: 8px;
@@ -356,7 +335,7 @@ $primary-color: #34495e;
             }
         }
     }
-    #report-part{
+    #report{
         flex-basis: 50%;
         height: calc(45% - 2px);
         padding: 8px;
