@@ -62,43 +62,47 @@ $(document).ready(function(){
     }
     let acledData = [];
 
+    function loadData(data){
+        acledData = data.data;
 
-    $.ajax({
-        url: 'https://api.acleddata.com/acled/read?limit=0',
-        dataType: 'json',
-        crossDomain: true,
-        success: function(data){
-            acledData = data.data;
-
-            acledData.sort(function(a, b){
-                var ea = a.event_type.toUpperCase();
-                var eb = b.event_type.toUpperCase();
-                return (ea < eb)? -1: (ea > eb)? 1: 0;
-            });
-            let eventGroupedData = [];
-            let currentEvent = "";
-            let currentData = null;
-            for(let i=0; i<acledData.length; i++){
-                if(currentEvent != acledData[i].event_type.toLowerCase()){
-                    currentEvent = acledData[i].event_type.toLowerCase();
-                    currentData = {'event': currentEvent, 'data': [] };
-                    eventGroupedData.push(currentData);
-                }
-                currentData.data.push(acledData[i]);
+        acledData.sort(function(a, b){
+            var ea = a.event_type.toUpperCase();
+            var eb = b.event_type.toUpperCase();
+            return (ea < eb)? -1: (ea > eb)? 1: 0;
+        });
+        let eventGroupedData = [];
+        let currentEvent = "";
+        let currentData = null;
+        for(let i=0; i<acledData.length; i++){
+            if(currentEvent != acledData[i].event_type.toLowerCase()){
+                currentEvent = acledData[i].event_type.toLowerCase();
+                currentData = {'event': currentEvent, 'data': [] };
+                eventGroupedData.push(currentData);
             }
-            let legendElementContainer = $('#legend-elements');
-            for(let i=0; i<eventGroupedData.length; i++){
-                let element = $('.legend-element-template').clone();
-                element.removeClass('legend-element-template');
-                element.addClass('legend-element');
-                element.find('span').css('background-color', '#' + intToRGB(hashCode(eventGroupedData[i].event)));
-                element.find('label').text(eventGroupedData[i].event);
-                element.appendTo(legendElementContainer);
-                //console.log(eventGroupedData[i].data[0].country);
-
-            }
-            reloadMap();
+            currentData.data.push(acledData[i]);
         }
-    });
+        let legendElementContainer = $('#legend-elements');
+        for(let i=0; i<eventGroupedData.length; i++){
+            let element = $('.legend-element-template').clone();
+            element.removeClass('legend-element-template');
+            element.addClass('legend-element');
+            element.find('span').css('background-color', '#' + intToRGB(hashCode(eventGroupedData[i].event)));
+            element.find('label').text(eventGroupedData[i].event);
+            element.appendTo(legendElementContainer);
+            //console.log(eventGroupedData[i].data[0].country);
+
+        }
+        reloadMap();
+    }
+
+    // $.ajax({
+    //     url: 'https://api.acleddata.com/acled/read?limit=0',
+    //     dataType: 'json',
+    //     crossDomain: true,
+    //     success: function(data){
+    //         loadData(data);
+    //     }
+    // });
+    loadData(data);
 
 });
