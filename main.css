@@ -16,71 +16,71 @@
     text-transform: uppercase;
     color: #34495e;
     font-weight: bold; }
-  #dashboard main {
+  #dashboard #main {
     height: 100vh;
     display: flex;
     justify-content: space-between;
     align-items: center; }
-    #dashboard main .boundbox {
+    #dashboard #main .boundbox {
       border: 1px solid rgba(0, 0, 0, 0.1); }
-    #dashboard main #left-pane {
+    #dashboard #main #left-pane {
       flex-basis: 65%;
       height: 100%;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap; }
-      #dashboard main #left-pane #map-container {
+      #dashboard #main #left-pane #map-container {
         flex-basis: 100%;
         height: calc(50% - 2px);
         padding: 16px;
         box-sizing: border-box;
         display: flex;
         justify-content: space-between; }
-        #dashboard main #left-pane #map-container #map {
+        #dashboard #main #left-pane #map-container #map {
           flex-basis: 72%;
           height: 100%;
           box-sizing: border-box; }
-          #dashboard main #left-pane #map-container #map #the-map {
+          #dashboard #main #left-pane #map-container #map #the-map {
             height: 100%; }
-        #dashboard main #left-pane #map-container #legend {
+        #dashboard #main #left-pane #map-container #legend {
           flex-basis: 25%;
           height: 100%;
           padding: 4px;
           box-sizing: border-box; }
-          #dashboard main #left-pane #map-container #legend h3 {
+          #dashboard #main #left-pane #map-container #legend h3 {
             height: 64px;
             padding-left: 3%; }
-          #dashboard main #left-pane #map-container #legend > div {
+          #dashboard #main #left-pane #map-container #legend > div {
             height: calc(100% - 64px); }
-          #dashboard main #left-pane #map-container #legend .legend-element {
+          #dashboard #main #left-pane #map-container #legend .legend-element {
             display: flex;
             padding: 3%; }
-            #dashboard main #left-pane #map-container #legend .legend-element span {
+            #dashboard #main #left-pane #map-container #legend .legend-element span {
               display: inline-block;
               width: 16px;
               height: 16px;
               margin-right: 8px; }
-            #dashboard main #left-pane #map-container #legend .legend-element label {
+            #dashboard #main #left-pane #map-container #legend .legend-element label {
               font-size: 0.8em;
               margin-top: -3px; }
-      #dashboard main #left-pane #chart-container {
+      #dashboard #main #left-pane #chart-container {
         flex-basis: 100%;
         align-self: flex-end;
         height: calc(50% - 2px);
         padding: 16px;
         box-sizing: border-box; }
-    #dashboard main #right-pane {
+    #dashboard #main #right-pane {
       flex-basis: calc(35% - 16px);
       height: 100%;
       padding: 16px;
       box-sizing: border-box; }
-      #dashboard main #right-pane h4 {
+      #dashboard #main #right-pane h4 {
         margin-bottom: 20px; }
-      #dashboard main #right-pane #search-input-container {
+      #dashboard #main #right-pane #search-input-container {
         display: flex;
         justify-content: space-between;
         border: 1px solid rgba(0, 0, 0, 0.1); }
-        #dashboard main #right-pane #search-input-container .fa {
+        #dashboard #main #right-pane #search-input-container .fa {
           color: #34495e;
           flex-basis: 32px;
           margin-top: 2px;
@@ -88,65 +88,65 @@
           text-align: center;
           padding: 4px 10px;
           font-size: 1.1em; }
-        #dashboard main #right-pane #search-input-container input {
+        #dashboard #main #right-pane #search-input-container input {
           flex-basis: calc(100% - 32px);
           border: none;
           outline: none;
           padding: 0px 10px; }
-      #dashboard main #right-pane #country-container {
+      #dashboard #main #right-pane #country-container {
         height: calc(100vh - 115px);
         background-color: #f0f0f0; }
-        #dashboard main #right-pane #country-container h6 {
+        #dashboard #main #right-pane #country-container h6 {
           text-transform: uppercase;
           font-weight: bold;
           color: #34495e;
           font-size: 1.1em;
           padding: none; }
-        #dashboard main #right-pane #country-container #country-report-container {
+        #dashboard #main #right-pane #country-container #country-report-container {
           display: flex;
           margin-top: 20px;
           background-color: #f0f0f0;
           display: flex; }
-          #dashboard main #right-pane #country-container #country-report-container #label-container {
+          #dashboard #main #right-pane #country-container #country-report-container #label-container {
             flex-basis: 60%; }
-            #dashboard main #right-pane #country-container #country-report-container #label-container label {
+            #dashboard #main #right-pane #country-container #country-report-container #label-container label {
               padding-top: 5px;
               font-style: italic;
               color: #34495e; }
-            #dashboard main #right-pane #country-container #country-report-container #label-container p {
+            #dashboard #main #right-pane #country-container #country-report-container #label-container p {
               text-align: justify;
               padding-right: 2px;
               font-size: 0.9em; }
-          #dashboard main #right-pane #country-container #country-report-container #country-map-container {
+          #dashboard #main #right-pane #country-container #country-report-container #country-map-container {
             display: flex;
             flex-basis: 40%;
             justify-content: center;
             align-items: flex-start; }
-            #dashboard main #right-pane #country-container #country-report-container #country-map-container label {
+            #dashboard #main #right-pane #country-container #country-report-container #country-map-container label {
               padding-top: 20px;
               color: #34495e; }
-        #dashboard main #right-pane #country-container #key-figures-container {
+        #dashboard #main #right-pane #country-container #key-figures-container {
           margin-top: 20px; }
-          #dashboard main #right-pane #country-container #key-figures-container label {
+          #dashboard #main #right-pane #country-container #key-figures-container label {
             line-height: 2;
             font-size: 0.9em;
             padding-left: 32px; }
-          #dashboard main #right-pane #country-container #key-figures-container #flex-key {
+          #dashboard #main #right-pane #country-container #key-figures-container #flex-key {
             display: flex; }
-            #dashboard main #right-pane #country-container #key-figures-container #flex-key #key-1 {
+            #dashboard #main #right-pane #country-container #key-figures-container #flex-key #key-1 {
               flex-basis: 50%; }
-            #dashboard main #right-pane #country-container #key-figures-container #flex-key #key-2 {
+            #dashboard #main #right-pane #country-container #key-figures-container #flex-key #key-2 {
               flex-basis: 50%; }
-        #dashboard main #right-pane #country-container #recent-events-container {
+        #dashboard #main #right-pane #country-container #recent-events-container {
           height: 37%;
           margin-top: 20px;
           display: flex; }
-        #dashboard main #right-pane #country-container #button-wrapper {
+        #dashboard #main #right-pane #country-container #button-wrapper {
           text-align: center;
           padding-top: 2px; }
-          #dashboard main #right-pane #country-container #button-wrapper button {
+          #dashboard #main #right-pane #country-container #button-wrapper button {
             background-color: #34495e; }
-            #dashboard main #right-pane #country-container #button-wrapper button span {
+            #dashboard #main #right-pane #country-container #button-wrapper button span {
               padding-left: 5px; }
 
 #country-profile {
