@@ -28,9 +28,13 @@ $(document).ready(function(){
 
     function onEachMapFeature(feature, layer) {
         layer.on('click', function() {
-            layer.setStyle({
-                fillColor: '#80d0d0',
-            });
+            $('#main-content')[0].style.display = 'none';
+            $('#country-profile #country-header #country-name').text(feature.properties.name);
+            $('#country-profile')[0].style.display = 'flex';
+
+            // layer.setStyle({
+            //     fillColor: '#80d0d0',
+            // });
             // feature.properties.iso_a3 gives iso3 code
         });
     }
@@ -74,6 +78,9 @@ $(document).ready(function(){
         let currentEvent = "";
         let currentData = null;
         for(let i=0; i<acledData.length; i++){
+            if(i==0){
+                console.log(acledData[i]);
+            }
             if(currentEvent != acledData[i].event_type.toLowerCase()){
                 currentEvent = acledData[i].event_type.toLowerCase();
                 currentData = {'event': currentEvent, 'data': [] };
@@ -104,5 +111,10 @@ $(document).ready(function(){
     //     }
     // });
     loadData(data);
+
+    $('#back-btn').click(function(){
+        $('#country-profile')[0].style.display = 'none';
+        $('#main-content')[0].style.display = 'flex';
+    });
 
 });
