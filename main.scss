@@ -34,6 +34,9 @@ p{
     padding: 0;
     margin: 0;
 
+    *{
+        box-sizing: border-box;
+    }
     h1, h2, h3, h4, h5, h6{
         margin: 0;
         padding: 0;
@@ -62,15 +65,12 @@ p{
             #map-container{
                 flex-basis: 100%;
                 height: 50%;
-                box-sizing: border-box;
                 display: flex;
                 justify-content: space-between;
 
                 #map{
                     flex-basis: 67%;
                     height: 100%;
-                    box-sizing: border-box;
-
                     #the-map{
                         height: 100%;
                     }
@@ -79,8 +79,6 @@ p{
                     flex-basis: 33%;
                     height: 100%;
                     padding: 4px;
-                    box-sizing: border-box;
-                    // border-left: 1px solid rgba(0, 0, 0, 0.1);
 
                     h5{
                         height: 48px;
@@ -114,13 +112,11 @@ p{
                 flex-basis: 100%;
                 height: calc(50% - 8px);
                 margin-top: 8px;
-                box-sizing: border-box;
             }
         }
         #right-pane{
             flex-basis: calc(35% - 16px);
             height: 100%;
-            box-sizing: border-box;
 
             #crisis-profile{
                 #crisis-profile-header{
@@ -136,7 +132,6 @@ p{
                     #search-input-container{
                         display: flex;
                         justify-content: space-between;
-                        box-sizing: border-box;
                         border-top: 1px solid rgba(0, 0, 0, 0.1);
                         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
@@ -186,7 +181,6 @@ p{
                             height: calc(100% - 48px);
                             flex-basis: 50%;
                             padding: 10px 10px 0 0;
-                            box-sizing: border-box;
                             font-size: 0.9em;
                             font-weight: 300;
                             overflow: hidden;
@@ -204,7 +198,6 @@ p{
                         align-items: center;
                         justify-content: space-between;
                         flex-wrap: wrap;
-                        box-sizing: border-box;
 
                         h6{
                             flex-basis: 100%;
@@ -263,6 +256,7 @@ p{
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    display: none;
 
     h1, h2, h3, h4{
         margin: 0;
@@ -274,7 +268,6 @@ p{
     #country-header{
         flex-basis: 100%;
         height: calc(5% - 2px);
-        box-sizing: border-box;
 
         h3{
             font-size: 1.2em;
@@ -295,7 +288,6 @@ p{
         flex-basis: 50%;
         height: calc(45% - 2px);
         padding: 8px;
-        box-sizing: border-box;
 
         #map-header{
             border-left: 3px solid $primary-color;
@@ -309,11 +301,10 @@ p{
         }
 
     }
-    #chart{
+    #charts{
         flex-basis: 50%;
         height: calc(45% - 2px);
         padding: 8px;
-        box-sizing: border-box;
         display: flex;
 
         h1{
@@ -327,34 +318,32 @@ p{
                 font-weight: lighter;
             }
         }
-        #chart-one{
+        #time-series{
             flex-basis: 50%;
             height: 100%;
-            padding: 4px;
-            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.1);
 
             #time-series-header{
-                border-left: 3px solid $primary-color;
-
+                // border-left: 3px solid $primary-color;
+                height: 56px;
+                display: flex;
+                align-items: center;
             }
-            #time-series{
+            svg{
+                width: 100%;
+                height: calc(100% - 56px);
+                transform: scaleY(-1);
             }
 
         }
-        #chart-two{
+        #bar-chart{
             flex-basis: 50%;
-            height:100%;
+            height: 100%;
             padding: 4px;
-            box-sizing: border-box;
 
             #bar-chart-header{
                 border-left: 3px solid $primary-color;
-
             }
-            #bar-chart{
-
-            }
-
         }
     }
 
@@ -362,7 +351,6 @@ p{
         flex-basis: 50%;
         height: calc(45% - 2px);
         padding: 8px;
-        box-sizing: border-box;
 
         #timeline-header{
             border-left: 3px solid $primary-color;
@@ -383,14 +371,12 @@ p{
         flex-basis: 50%;
         height: calc(45% - 2px);
         padding: 8px;
-        box-sizing: border-box;
         display: flex;
 
         #text-section{
             flex-basis: 50%;
             height: 100%;
             padding: 4px;
-            box-sizing: border-box;
 
             #report-header{
                 border-left: 3px solid $primary-color;
