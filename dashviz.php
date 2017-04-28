@@ -48,19 +48,27 @@ class DashboardVisualization{
             $wp_query->the_post();
             $template = get_page_template();
             rewind_posts();
-            // wp_enqueue_style("leaflet-style", 'https://unpkg.com/leaflet@1.0.3/dist/leaflet.css');
+
             wp_enqueue_script("jquery-script", 'https://code.jquery.com/jquery-3.2.1.min.js', null, null, true);
             wp_enqueue_script("d3-script", 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.8.0/d3.min.js', null, null, true);
-            // wp_enqueue_script("leaflet-script", 'https://unpkg.com/leaflet@1.0.3/dist/leaflet.js', null, null, true);
             wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
             wp_enqueue_script("mapbox-script", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js', null, null, true);
             wp_enqueue_style("mapbox-style", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css');
-            // wp_enqueue_script("data-script", plugins_url().$plugin_dir.'/data.js', null, null, true);
-            wp_enqueue_script("dashviz-script", plugins_url().$plugin_dir.'/main.js', null, null, true);
-            wp_enqueue_style("dashviz-style", plugins_url().$plugin_dir.'/main.css');
+            wp_enqueue_script("selectize-script", plugins_url().$plugin_dir.'/static/js/selectize.js', null, null, true);
+            wp_enqueue_script("dashviz-script", plugins_url().$plugin_dir.'/static/js/main.js', null, null, true);
+            wp_enqueue_style("selectize-style", plugins_url().$plugin_dir.'/static/css/selectize.css');
+            wp_enqueue_style("dashviz-style", plugins_url().$plugin_dir.'/static/css/main.css');
         }
+        // $conn = new mysqli('acled.ampersandstudio.uk', 'acleddat_acled', 'de+KhLk~wxVL', 'acleddat_acleddata');
+        // if (!$conn) {
+        //     die("Connection failed: " . mysqli_connect_error());
+        // }
+        // echo "Connected successfully";
+        // var_dump(mysqli_query($conn,"SHOW TABLES"));
+        // $conn->close();
         return $template;
     }
+
 }
 
 add_filter( 'template_include', array( 'DashboardVisualization', 'init' ) );

@@ -144,11 +144,14 @@ p{
                             font-size: 1.1em;
                         }
 
-                        input{
+                        .selectize-control{
                             flex-basis: calc(100% - 32px);
                             border: none;
                             outline: none;
-                            padding: 0px 10px;
+                            // padding: 0px 10px;
+                            input{
+                                margin: 0;
+                            }
                         }
                     }
 
