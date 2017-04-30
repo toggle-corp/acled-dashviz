@@ -104,6 +104,13 @@ $(document).ready(function(){
                                 let yearGroupedData = [];
                                 let currentYear = null;
                                 let currentData = null;
+                                let toolTip = !d3.select('div.tooltip').empty()
+                                    ?d3.select('div.tooltip')
+                                    :d3.select("body")
+                                        .append("div")
+                                        .attr("class", "tooltip")
+                                        .style("opacity", 0)
+                                        .style("visibility", 'hidden');
 
                                 for (let i=0; i<data.data.length; i++) {
                                     let current = data.data[i];
@@ -118,18 +125,37 @@ $(document).ready(function(){
                                 scaleX.domain(d3.extent(yearGroupedData, function(d) { return d.year; }));
                                 scaleY.domain([0, d3.max(yearGroupedData, function(d) { return d.fatalities; })]);
 
-                                let circles = canvas.selectAll("circle").data(yearGroupedData).enter().append('circle');
-
-                                let circleAttributes = circles.attr("cx", function (d) { return scaleX(d.year) })
-                                    .attr("cy", function (d) { return scaleY(d.fatalities) })
-                                    .attr("r", function (d) { return 3; })
-                                    .style("fill", function(d) { return '#c93844'; });
-
                                 canvas.append("path")
                                     .data([yearGroupedData])
                                     .attr("class", "line")
                                     .attr("d", lineFunction);
 
+                                let circles = canvas.selectAll("circle").data(yearGroupedData).enter().append('circle');
+
+                                let circleAttributes = circles.attr("cx", function (d) { return scaleX(d.year) })
+                                    .attr("cy", function (d) { return scaleY(d.fatalities) })
+                                    .attr("r", function (d) { return 3; })
+                                    .style("fill", function(d) { return '#c93844'; })
+                                    .on("mouseover", function(d) {
+                                        toolTip
+                                            .html('Fatalities: <strong>'+d.fatalities+'</strong>')
+                                            .transition()
+                                            .duration(100)
+                                            .style("opacity", 100)
+                                            .style("visibility", 'visible');
+                                    })
+                                    .on("mousemove", function(d) {
+                                        toolTip
+                                            .style("top", (d3.event.pageY-30)+"px")
+                                            .style("left",(d3.event.pageX+10)+"px");
+                                    })
+                                    .on("mouseout", function(d) {
+                                        toolTip
+                                            .transition()
+                                            .duration(100)
+                                            .style("opacity", 0)
+                                            .style("visibility", 'hidden');
+                                    });
 
                                 // Add the X Axis
                                 canvas.append('g')
