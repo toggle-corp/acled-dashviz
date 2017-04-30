@@ -317,5 +317,13 @@ p {
     transform: scale(1.2) rotate(360deg); }
   100% {
     transform: scale(1) rotate(720deg); } }
+.tooltip {
+  z-index: 10;
+  color: white;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 6px;
+  font: 12px sans-serif;
+  position: absolute; }
 
 /*# sourceMappingURL=main.css.map */
