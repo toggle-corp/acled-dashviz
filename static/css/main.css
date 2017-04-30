@@ -105,11 +105,12 @@ p {
             text-align: center;
             padding: 6px 10px;
             font-size: 1.1em; }
-          #dashboard #main-content #right-pane #crisis-profile #crisis-profile-header #search-input-container input {
+          #dashboard #main-content #right-pane #crisis-profile #crisis-profile-header #search-input-container .selectize-control {
             flex-basis: calc(100% - 32px);
             border: none;
-            outline: none;
-            padding: 0px 10px; }
+            outline: none; }
+            #dashboard #main-content #right-pane #crisis-profile #crisis-profile-header #search-input-container .selectize-control input {
+              margin: 0; }
       #dashboard #main-content #right-pane #crisis-profile #crisis-details {
         height: calc(100vh - 108px); }
         #dashboard #main-content #right-pane #crisis-profile #crisis-details #country-report-container {
