@@ -318,7 +318,7 @@ body {
                 }
                 a {
                     cursor: pointer;
-                    // color: inherit;
+                    color: inherit;
                 }
                 #country-name{
                     color: inherit;
@@ -389,6 +389,104 @@ body {
             }
             #timeline-container {
                 flex-basis: calc(50% - 32px);
+                display: flex;
+                position: relative;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: 16px;
+                    top: calc(50% - 4px);
+                    width: calc(100% - 32px);
+                    height: 8px;
+                    border-radius: 4px;
+                    background-color: #34495e;
+                }
+
+                .timeline-element {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 24px;
+
+                    .number {
+                        order: 2;
+                        font-size: 1.2em;
+                        font-weight: 600;
+                        flex-basis: 33%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 1;
+
+                        span {
+                            width: 56px;
+                            height: 56px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 50%;
+                            background-color: #34495e;
+                            color: #fff;
+                        }
+
+                        &:after {
+                            z-index: 0;
+                            position: absolute;
+                            content: '';
+                            width: 6px;
+                            border-radius: 3px;
+                            height: 7%;
+                            left: calc(50% - 3px);
+                            background-color: #34495e;
+                        }
+                    }
+                    .description {
+                        order: 3;
+                        flex-basis: 33%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+
+                        h5 {
+                            font-size: 1em;
+                        }
+                        p {
+                            font-size: 11px;
+                            line-height: 1.25;
+                            margin: 0;
+                            text-align: justify;
+                        }
+                    }
+                    img {
+                        flex-basis: 33%;
+                        width: 100%;
+                        object-fit: scale-down;
+                        object-position: center center;
+                        order: 1;
+                        flex-grow: 0;
+                        margin: 0;
+                    }
+                    &:nth-child(odd) {
+                        .description {
+                            order: 1;
+                            justify-content: flex-end;
+                        }
+                        img {
+                            order: 2
+                        }
+                        .number:after {
+                            top: calc(50% + 24px);
+                        }
+                    }
+                    &:nth-child(even) {
+                        .number:after {
+                            bottom: calc(50% + 30px);
+                        }
+                    }
+
+                }
             }
             #time-series-container {
                 flex-basis: 25%;
