@@ -87,6 +87,9 @@ class MapLegend extends Element {
         legendElement.find('label').text(label)
         legendElement.appendTo(legendElementsContainer);
     }
+    clearLegendElements() {
+        this.element.find('.legend-elements').empty();
+    }
 }
 
 class DashboardMap extends Element {
@@ -112,10 +115,6 @@ class DashboardMap extends Element {
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); });
     }
     loadDataToMap() {
-        acledData.sort(function(a, b){
-            return (a.latitude != b.latitude)? a.latitude - b.latitude : ((a.longitude != b.longitude)?  a.longitude - b.longitude : a.event_type - b.event_type);
-        });
-
         let locationGroupedData = [];
         let currentLocation = {'latitude': '', 'longitude': ''};
         let currentData = null;
@@ -143,9 +142,6 @@ class DashboardMap extends Element {
         this.refreshMap(locationGroupedData);
     }
     refreshMap(data) {
-
-
-
         // let markerClusters = L.markerClusterGroup({maxClusterRadius: '50'});
         // for (let i=0; i<acledData.length; i++) {
         //     let id = acledData[i].data_id;
@@ -381,12 +377,12 @@ class CountryMap extends Element {
     constructor() {
         super('<div id="country-map-container"></div>');
         this.mapElement = new Element('<div id="country-map"></div>');
-        // this.mapLegend = new MapLegend();
+        this.mapLegend = new MapLegend();
         this.childElements.push(this.mapElement);
-        // this.childElements.push(this.mapLegend);
+        this.childElements.push(this.mapLegend);
     }
     process() {
-        //this.mapLegend.setTitle('Event types');
+        this.mapLegend.setTitle('Event types');
 
         L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
         this.map = L.map('country-map', { preferCanvas: true }).setView([0, 10], 3);
@@ -430,6 +426,58 @@ class CountryMap extends Element {
             that.map.invalidateSize();
             that.map.fitBounds(currentLayer.getBounds());
         });
+
+        let locationGroupedData = [];
+        let currentLocation = {'latitude': '', 'longitude': ''};
+        let currentData = null;
+        let currentEvent = {'name': '', 'count': 0};
+
+        for (let i=0; i<acledData.length; i++) {
+            let cr = acledData[i];  // current row
+            if (cr.country == country) {
+                if (currentLocation.latitude != cr.latitude || currentLocation.longitude != cr.longitude) {
+                    currentLocation = {'latitude': cr.latitude, 'longitude': cr.longitude};
+                    currentData = {'location': currentLocation, 'events': []};
+                    locationGroupedData.push(currentData);
+
+                    currentEvent = {'name': cr.event_type, 'count': 0};
+                    currentData.events.push(currentEvent);
+                } else if(currentEvent.name != cr.event_type) {
+                    currentEvent = {'name': cr.event_type, 'count': 0};
+                    currentData.events.push(currentEvent);
+                }
+                ++currentEvent.count;
+            }
+        }
+
+        if (this.circles) {
+            for (let i=0; i<this.circles.length; i++) {
+                this.map.removeLayer(this.circles[i]);
+            }
+        }
+
+        this.circles = [];
+
+        for (let i=0; i<locationGroupedData.length; i++) {
+            for (let j=0; j<locationGroupedData[i].events.length; j++) {
+                let cd = locationGroupedData[i].events[j];   // current data
+                let radius = Math.sqrt(cd.count)*24000;
+                let color = getEventColor(cd.name);
+                let circle = L.circle([locationGroupedData[i].location.latitude, locationGroupedData[i].location.longitude], radius, {
+                    fillColor: color,
+                    stroke: false,
+                    fillOpacity: 0.6,
+                });
+                circle.addTo(this.map);
+                this.circles.push(circle);
+            }
+        }
+
+        this.mapLegend.clearLegendElements();
+
+        for (let event in acledEvents) {
+            this.mapLegend.addLegendElement(getEventColor(event), event + ' (' + acledEvents[event] + ')');
+        }
     }
 }
 
@@ -461,7 +509,7 @@ class TimeSeries extends Element {
         let width = $('#time-series svg').width();
         let height = $('#time-series svg').height();
 
-        let margin = {top: 16, right: 10, bottom: 48, left: 48};
+        let margin = {top: 24, right: 10, bottom: 48, left: 48};
 
         let scaleX = d3.scaleTime().range([0, (width - margin.left - margin.right)]);
         let scaleY = d3.scaleLinear().range([(height - margin.top - margin.bottom), 0]);
@@ -545,6 +593,19 @@ class TimeSeries extends Element {
                 // Add the Y Axis
                 canvas.append("g")
                     .call(d3.axisLeft(scaleY));
+
+                let legend = svg.append("g");
+                legend.attr("class", "legend")
+                    .attr("x", 0)
+                    .attr("y", 0)
+                    .attr("height", 10)
+                    .attr("width", width);
+
+                legend.append("rect").attr("x", margin.left).attr("y", 0).attr("width", 10).attr("height", 10).style("fill", '#e67e22');
+                legend.append("text").attr("x", margin.left+18).attr("y", 5).attr("dy", ".35em").text("Riots/Protests");
+
+                legend.append("rect").attr("x", (width)/2).attr("y", 0).attr("width", 10).attr("height", 10).style("fill", '#2c3e50');
+                legend.append("text").attr("x", (width)/2 + 18).attr("y", 5).attr("dy", ".35em").text("Others");
             }
         });
     }
@@ -612,24 +673,25 @@ class BarChart extends Element {
                     .append("g")
                     .attr("transform", function(d, i) { return "translate(0," + (i * (barHeight + 8)) + ")"; });
 
-                    bar.append("rect")
-                        .attr("width", function(d) { return scaleX(d.count); })
-                        .attr("height", barHeight);
+                bar.append("rect")
+                    .attr("width", function(d) { return scaleX(d.count); })
+                    .attr("height", barHeight);
 
-                    bar.append("text")
-                        .attr("x", 2 )
-                        .attr("y", barHeight / 2)
-                        .attr("dy", ".35em")
-                        .attr("class", "label")
-                        .text(function(d) { return d.name; });
+                bar.append("text")
+                    .attr("x", 2 )
+                    .attr("y", barHeight / 2)
+                    .attr("dy", ".35em")
+                    .attr("class", "label")
+                    .text(function(d) { return d.name; });
 
-                    // Add the X Axis
-                    canvas.append('g')
-                        .attr('transform', 'translate(0,' + (height - margin.top - margin.bottom) + ')')
-                        .attr('class', 'x-axis')
-                        .call(d3.axisBottom(scaleX));
+                // Add the X Axis
+                canvas.append('g')
+                    .attr('transform', 'translate(0,' + (height - margin.top - margin.bottom) + ')')
+                    .attr('class', 'x-axis')
+                    .call(d3.axisBottom(scaleX));
             }
         });
+
     }
 }
 
@@ -720,6 +782,10 @@ $(document).ready(function(){
                 }
                 acledData.push(currentData);
             }
+
+            acledData.sort(function(a, b){
+                return (a.latitude != b.latitude)? a.latitude - b.latitude : ((a.longitude != b.longitude)?  a.longitude - b.longitude : a.event_type - b.event_type);
+            });
 
             dashboard.loadMainMap();
 

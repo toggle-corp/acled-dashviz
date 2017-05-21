@@ -328,15 +328,52 @@ body {
             }
 
             #country-map-container {
-                flex-basis: calc(50% - 32px);
+                flex-basis: calc(60% - 16px);
                 margin-bottom: 16px;
+                display: flex;
 
                 #country-map {
+                    flex-basis: 64%;
                     height: 100%;
+                }
+                .legend {
+                    flex-basis: 36%;
+
+                    header {
+                        display: flex;
+                        height: 48px;
+                        align-items: center;
+                        padding: 0 10px;
+
+                        h4 {
+                            font-size: 1em;
+                        }
+                    }
+                    .legend-elements{
+                        .legend-element {
+                            min-height: 24px;
+                            display: flex;
+                            align-items: center;
+                            padding: 6px 10px;
+
+                            .color-box {
+                                width: 16px;
+                                height: 16px;
+                                flex-grow: 0;
+                                flex-shrink: 0;
+                                background-color: green;
+                            }
+                            label {
+                                display: inline-block;
+                                margin-left: 10px;
+                            }
+                        }
+
+                    }
                 }
             }
             #country-report-container {
-                flex-basis: calc(50% + 16px);
+                flex-basis: calc(40%);
                 margin-bottom: 16px;
 
                 header {
@@ -387,6 +424,11 @@ body {
                         .x-axis{
                             text{
                                 transform: translate(5px, 5px) rotate(45deg);
+                            }
+                        }
+                        .legend {
+                            text {
+                                font-size: 10px;
                             }
                         }
                     }

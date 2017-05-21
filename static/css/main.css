@@ -222,12 +222,37 @@ body #dashboard {
         font-size: 1em;
         padding: 0 16px; }
     body #dashboard #country-profile #country-map-container {
-      flex-basis: calc(50% - 32px);
-      margin-bottom: 16px; }
+      flex-basis: calc(60% - 16px);
+      margin-bottom: 16px;
+      display: flex; }
       body #dashboard #country-profile #country-map-container #country-map {
+        flex-basis: 64%;
         height: 100%; }
+      body #dashboard #country-profile #country-map-container .legend {
+        flex-basis: 36%; }
+        body #dashboard #country-profile #country-map-container .legend header {
+          display: flex;
+          height: 48px;
+          align-items: center;
+          padding: 0 10px; }
+          body #dashboard #country-profile #country-map-container .legend header h4 {
+            font-size: 1em; }
+        body #dashboard #country-profile #country-map-container .legend .legend-elements .legend-element {
+          min-height: 24px;
+          display: flex;
+          align-items: center;
+          padding: 6px 10px; }
+          body #dashboard #country-profile #country-map-container .legend .legend-elements .legend-element .color-box {
+            width: 16px;
+            height: 16px;
+            flex-grow: 0;
+            flex-shrink: 0;
+            background-color: green; }
+          body #dashboard #country-profile #country-map-container .legend .legend-elements .legend-element label {
+            display: inline-block;
+            margin-left: 10px; }
     body #dashboard #country-profile #country-report-container {
-      flex-basis: calc(50% + 16px);
+      flex-basis: calc(40%);
       margin-bottom: 16px; }
       body #dashboard #country-profile #country-report-container header {
         height: 56px;
@@ -262,6 +287,8 @@ body #dashboard {
             stroke-width: 2px; }
           body #dashboard #country-profile #time-series-container #time-series svg .x-axis text {
             transform: translate(5px, 5px) rotate(45deg); }
+          body #dashboard #country-profile #time-series-container #time-series svg .legend text {
+            font-size: 10px; }
     body #dashboard #country-profile #bar-chart-container {
       flex-basis: 25%; }
       body #dashboard #country-profile #bar-chart-container header {
