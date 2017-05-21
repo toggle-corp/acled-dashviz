@@ -329,11 +329,15 @@ p{
             height: 100%;
             border: 1px solid rgba(0, 0, 0, 0.1);
 
-            #time-series-header{
-                // border-left: 3px solid $primary-color;
+            header{
                 height: 56px;
+                padding: 0 10px;
                 display: flex;
                 align-items: center;
+
+                h4{
+                    font-size: 1em;
+                }
             }
             svg{
                 width: 100%;

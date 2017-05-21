@@ -55,12 +55,12 @@ class DashboardVisualization{
                 wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
                 wp_enqueue_script("mapbox-script", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js', null, null, true);
                 wp_enqueue_style("mapbox-style", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css');
-                wp_enqueue_script("leaflet-cluster-script", 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.5/leaflet.markercluster.js', null, null, true);
-                wp_enqueue_style("leaflet-cluster-style", 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.5/MarkerCluster.css');
+                // wp_enqueue_script("leaflet-cluster-script", 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.5/leaflet.markercluster.js', null, null, true);
+                // wp_enqueue_style("leaflet-cluster-style", 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.5/MarkerCluster.css');
                 // wp_enqueue_style("leaflet-cluster-default-style", 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.5/MarkerCluster.Default.css');
                 wp_enqueue_script("selectize-script", plugins_url().$plugin_dir.'/static/js/selectize.js', null, null, true);
                 wp_enqueue_script("dashviz-script", plugins_url().$plugin_dir.'/static/js/main.js', null, null, true);
-                //wp_add_inline_script('dashviz-script', 'let blabla="Hello world"', 'before');
+                wp_add_inline_script('dashviz-script', 'let pluginDir="'.plugins_url().$plugin_dir.'"', 'before');
                 wp_enqueue_style("selectize-style", plugins_url().$plugin_dir.'/static/css/selectize.css');
                 wp_enqueue_style("dashviz-style", plugins_url().$plugin_dir.'/static/css/main.css');
             }
