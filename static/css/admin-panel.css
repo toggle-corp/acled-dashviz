@@ -1,0 +1,50 @@
+#dashboard-form {
+  padding-right: 16px; }
+  #dashboard-form * {
+    box-sizing: border-box; }
+  #dashboard-form h1, #dashboard-form h2, #dashboard-form h3, #dashboard-form h4 {
+    text-transform: uppercase;
+    margin: 0; }
+  #dashboard-form h1 {
+    min-height: 64px;
+    display: flex;
+    align-items: center; }
+  #dashboard-form h2 {
+    min-height: 32px;
+    display: flex;
+    align-items: center; }
+  #dashboard-form section {
+    padding: 16px 0;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    clear: both; }
+    #dashboard-form section .input-group {
+      padding: 6px 0; }
+      #dashboard-form section .input-group label {
+        color: rgba(0, 0, 0, 0.5);
+        text-transform: uppercase;
+        font-size: 0.9em; }
+      #dashboard-form section .input-group input:not([type="submit"]), #dashboard-form section .input-group select {
+        width: 100%; }
+    #dashboard-form section#carousel .input-group {
+      width: 300px;
+      padding: 16px;
+      float: left; }
+      #dashboard-form section#carousel .input-group .preview {
+        width: 100%;
+        height: 200px;
+        object-position: center center;
+        object-fit: scale-down; }
+    #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-profile {
+      min-height: 32px;
+      display: flex;
+      align-items: center; }
+      #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-profile .crisis-name {
+        flex-basis: 24%; }
+      #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-profile .crisis-date {
+        flex-basis: 16%; }
+      #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-profile .crisis-description {
+        flex-basis: 60%; }
+    #dashboard-form section#crisis-profile-report #add-crisis {
+      display: flex; }
+
+/*# sourceMappingURL=admin-panel.css.map */

@@ -21,9 +21,17 @@ class MainDashboard extends Element {
         );
         this.leftSection.childElements.push(this.carousel);
         let imgContainer = this.carousel.element.find('.carousel');
-        $('<img class="active" src="'+ pluginDir +'/static/img/chart1.png">').appendTo(imgContainer);
-        $('<img src="'+ pluginDir +'/static/img/chart2.png" hidden>').appendTo(imgContainer);
-        $('<img src="'+ pluginDir +'/static/img/chart3.png" hidden>').appendTo(imgContainer);
+        if(carouselData) {
+            for(let imgSrc in carouselData) {
+                if(carouselData[imgSrc]) {
+                    $('<img src="'+ carouselData[imgSrc] +'" hidden>').appendTo(imgContainer);
+                }
+            }
+        }
+        imgContainer.find('img').eq(0).addClass('active').show();
+        // $('<img class="active" src="'+ pluginDir +'/static/img/chart1.png">').appendTo(imgContainer);
+        // $('<img src="'+ pluginDir +'/static/img/chart2.png" hidden>').appendTo(imgContainer);
+        // $('<img src="'+ pluginDir +'/static/img/chart3.png" hidden>').appendTo(imgContainer);
 
         let leftButton = this.carousel.element.find('#carousel-left');
         let rightButton = this.carousel.element.find('#carousel-right');
