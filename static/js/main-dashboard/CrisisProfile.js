@@ -26,9 +26,9 @@ class CrisisProfile extends Element {
             `
             <div id="report">
                 <div class="detail">
-                    <h5 class="title">Report Title</h5>
-                    <date>July 25, 2017</date>
-                    <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+                    <h5 class="title"></h5>
+                    <date></date>
+                    <div class="description"></div>
                 </div>
                 <div class="map">
                 </div>
@@ -36,16 +36,55 @@ class CrisisProfile extends Element {
             `
         );
 
+        this.crisisProfileMap = new CrisisProfileMap();
+
         this.reportSection.childElements.push(this.reportSelectContainer);
         this.reportSection.childElements.push(this.reportDetailContainer);
 
         this.childElements.push(this.reportSection);
         this.childElements.push(this.keyFiguresSection);
         this.childElements.push(this.recentEventsSection);
-
+         
+        this.crisisProfileMap.element.appendTo(this.reportDetailContainer.element.find('.map'));
+    }
+     
+    loadCrisisProfile(cp) {
+        this.reportDetailContainer.element.find('.title').text(cp.title);
+        this.reportDetailContainer.element.find('date').text(cp.date);
+        this.reportDetailContainer.element.find('.description').text(cp.description);
+        this.crisisProfileMap.load(cp.country);
     }
 
     process() {
-        $("#report-search").selectize();
+        let that = this;
+        this.crisisProfileMap.process();
+
+        for(let i=0; i<crisisProfiles.length; i++) {
+            crisisProfiles[i].id = i;
+        }
+
+        $("#report-search").selectize({
+            valueField: 'id',
+            labelField: 'title', 
+            searchField: ['title', 'country'],
+            maxOptions: 5,
+            options: crisisProfiles,
+            create: false,
+            closeAfterSelect: true,
+            openOnFocus: false,
+            render: {
+                option: function(item, escape) {
+                    return '<div class="crisis-profile-select-item"><div class="title">'+escape(item.title)+'</div><div class="country">'+escape(item.country)+'</div></div>';
+                }
+            },
+            onChange: function(val) {
+                if(val) {
+                    that.loadCrisisProfile(crisisProfiles[val]);
+                }
+            }
+        });
+        if(crisisProfiles.length > 0) {
+            this.loadCrisisProfile(crisisProfiles[0]);
+        }
     }
 }

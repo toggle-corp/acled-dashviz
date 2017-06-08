@@ -61,6 +61,15 @@ body #dashboard {
             body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements .legend-element label {
               display: inline-block;
               margin-left: 10px; }
+        @media only screen and (max-width: 512px) {
+          body #dashboard #main-dashboard #left-section .map-container {
+            flex-wrap: wrap;
+            height: auto; }
+            body #dashboard #main-dashboard #left-section .map-container #world-map {
+              flex-basis: 100%;
+              height: 360px; }
+            body #dashboard #main-dashboard #left-section .map-container .legend {
+              flex-basis: 100%; } }
       body #dashboard #main-dashboard #left-section #carousel-container {
         height: 40vh;
         background-color: #fff;
@@ -125,11 +134,15 @@ body #dashboard {
               margin-bottom: 0;
               background-color: transparent;
               font-size: inherit; }
+            body #dashboard #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control .crisis-profile-select-item .title {
+              font-weight: bold; }
+            body #dashboard #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control .crisis-profile-select-item:not(:last-child) {
+              border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         body #dashboard #main-dashboard #right-section #crisis-profile-container #report {
-          height: 22vh;
+          min-height: 22vh;
           display: flex;
           justify-content: space-between;
-          align-items: center;
+          align-items: flex-start;
           padding: 0 16px; }
           body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail {
             flex-basis: calc(100% - 180px);
@@ -141,14 +154,35 @@ body #dashboard {
               color: rgba(0, 0, 0, 0.5);
               font-size: 0.9em; }
             body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail .description {
-              padding: 16px 0;
+              padding: 10px 0;
               color: rgba(0, 0, 0, 0.6);
               text-align: justify; }
           body #dashboard #main-dashboard #right-section #crisis-profile-container #report .map {
             flex-basis: 160px;
             height: 160px;
+            margin-top: 16px;
             flex-shrink: 0;
             background-color: #aaa; }
+            body #dashboard #main-dashboard #right-section #crisis-profile-container #report .map #crisis-profile-map {
+              width: 100%;
+              height: 100%; }
+          @media only screen and (max-width: 1080px) {
+            body #dashboard #main-dashboard #right-section #crisis-profile-container #report {
+              flex-direction: column; }
+              body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between; }
+                body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail .title {
+                  flex-basis: 70%; }
+                body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail .date {
+                  flex-basis: 30%; }
+                body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail .description {
+                  flex-basis: 100%; }
+              body #dashboard #main-dashboard #right-section #crisis-profile-container #report .map {
+                margin-top: 0;
+                flex-basis: 100%;
+                width: 100%; } }
         body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section {
           height: 22vh;
           display: flex;
@@ -192,6 +226,16 @@ body #dashboard {
               font-size: 1em; }
           body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a {
             height: calc(100% - 64px); }
+    @media only screen and (max-width: 768px) {
+      body #dashboard #main-dashboard {
+        flex-wrap: wrap; }
+        body #dashboard #main-dashboard #left-section {
+          flex-basis: 100%;
+          height: auto; }
+        body #dashboard #main-dashboard #right-section {
+          flex-basis: 100%;
+          margin-top: 12px;
+          height: auto; } }
   body #dashboard #country-profile {
     position: fixed;
     left: 0;

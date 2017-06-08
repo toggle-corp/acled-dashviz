@@ -13,6 +13,10 @@
     min-height: 32px;
     display: flex;
     align-items: center; }
+  #dashboard-form .error-msg {
+    color: #c0392b; }
+  #dashboard-form .success-msg {
+    color: #27ae60; }
   #dashboard-form section {
     padding: 16px 0;
     border-top: 2px solid rgba(0, 0, 0, 0.1);
@@ -34,17 +38,123 @@
         height: 200px;
         object-position: center center;
         object-fit: scale-down; }
-    #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-profile {
+    #dashboard-form section .save-button-container {
+      clear: both;
+      width: 84px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #2980b9;
+      color: #fff;
+      border-radius: 3px; }
+      #dashboard-form section .save-button-container button {
+        color: inherit;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        text-transform: uppercase; }
+      #dashboard-form section .save-button-container .fa-spin {
+        display: none; }
+      #dashboard-form section .save-button-container .fa {
+        padding: 0 4px; }
+    #dashboard-form section#crisis-profile-report > header {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start; }
+      #dashboard-form section#crisis-profile-report > header h2 {
+        margin-right: 16px; }
+      #dashboard-form section#crisis-profile-report > header button {
+        padding: 6px 24px;
+        border: none;
+        text-transform: uppercase;
+        margin-left: 10px; }
+    #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-title {
+      flex-basis: 18%; }
+    #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-date {
+      flex-basis: 16%; }
+    #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-country {
+      flex-basis: 16%; }
+    #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-description {
+      flex-basis: 40%; }
+    #dashboard-form section#crisis-profile-report #crisis-profile-list .actions {
+      flex-basis: 10%; }
+    #dashboard-form section#crisis-profile-report #crisis-profile-list > header {
       min-height: 32px;
       display: flex;
-      align-items: center; }
-      #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-profile .crisis-name {
-        flex-basis: 24%; }
-      #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-profile .crisis-date {
-        flex-basis: 16%; }
-      #dashboard-form section#crisis-profile-report #crisis-profile-list .crisis-profile .crisis-description {
-        flex-basis: 60%; }
-    #dashboard-form section#crisis-profile-report #add-crisis {
-      display: flex; }
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+      padding-right: 16px; }
+      #dashboard-form section#crisis-profile-report #crisis-profile-list > header label {
+        padding: 0 6px;
+        text-transform: uppercase; }
+    #dashboard-form section#crisis-profile-report #crisis-profile-list .content {
+      height: 300px;
+      overflow-y: scroll; }
+      #dashboard-form section#crisis-profile-report #crisis-profile-list .content .crisis-profile {
+        min-height: 32px;
+        align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+        #dashboard-form section#crisis-profile-report #crisis-profile-list .content .crisis-profile > * {
+          padding: 0 6px; }
+  #dashboard-form form #form-submit-btn {
+    border: none;
+    background-color: #2980b9;
+    color: #fff;
+    padding: 10px 24px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    box-shadow: 0 3px 16px -5px rgba(0, 0, 0, 0.3);
+    font-size: 1.2em; }
+
+#modal-container {
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  top: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9); }
+  #modal-container .modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    min-width: calc(8% + 320px);
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    box-shadow: 0 3px 16px -5px rgba(0, 0, 0, 0.3); }
+    #modal-container .modal header {
+      height: 64px;
+      display: flex;
+      padding: 0 24px;
+      align-items: center;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.1); }
+      #modal-container .modal header h3 {
+        margin: 0; }
+    #modal-container .modal .content {
+      padding: 24px; }
+      #modal-container .modal .content .input-group {
+        min-height: 32px;
+        display: flex;
+        align-items: center; }
+        #modal-container .modal .content .input-group label {
+          flex-basis: 20%; }
+        #modal-container .modal .content .input-group input {
+          flex-basis: 80%; }
+      #modal-container .modal .content .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 24px; }
+        #modal-container .modal .content .action-buttons > button {
+          padding: 6px 24px;
+          border: none;
+          text-transform: uppercase;
+          margin-left: 10px; }
+        #modal-container .modal .content .action-buttons #add-crisis-btn, #modal-container .modal .content .action-buttons #edit-crisis-btn {
+          background-color: #2980b9;
+          color: #fff; }
 
 /*# sourceMappingURL=admin-panel.css.map */
