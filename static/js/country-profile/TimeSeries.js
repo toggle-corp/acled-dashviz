@@ -25,8 +25,12 @@ class TimeSeries extends Element {
 
         let lineFunction = d3.line()
             .curve(d3.curveLinear)
-            .x(function(d) { return scaleX(d.year) })
-            .y(function(d) { return scaleY(d.events) });
+            .x(function(d) { return scaleX(d.year); })
+            .y(function(d) { return scaleY(d.events); });
+
+         let tip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("display", 'none');
 
         $.ajax({
             method: 'GET',
@@ -52,7 +56,7 @@ class TimeSeries extends Element {
                     let current = response.data[i];
                     if((new Date(currentYear)).getFullYear() != (new Date(current.year)).getFullYear()){
                         currentYear = current.year;
-                        currentData = {'year': current.year, 'events': 0}
+                        currentData = {'year': current.year, 'events': 0};
                         if (current.event_type.toLowerCase().includes('riot')) {
                             riotData.push(currentData);
                         } else {
@@ -66,21 +70,6 @@ class TimeSeries extends Element {
                 scaleX.domain(d3.extent(yearGroupedData, function(d) { return d.year; }));
                 scaleY.domain([0, d3.max(yearGroupedData, function(d) { return d.events; })]);
 
-                //let circles = canvas.selectAll("circle").data(yearGroupedData).enter().append('circle');
-                let riotCircles = canvas.selectAll("circle.riot").data(riotData).enter().append('circle').attr('class', 'riot');
-                let otherCircles = canvas.selectAll("circle.other").data(otherData).enter().append('circle').attr('class', 'other');
-
-
-                let riotCircleAttributes = riotCircles.attr("cx", function (d) { return scaleX(d.year) })
-                    .attr("cy", function (d) { return scaleY(d.events) })
-                    .attr("r", function (d) { return 5; })
-                    .style("fill", function(d) { return '#e67e22'; });
-
-                let otherCircleAttributes = otherCircles.attr("cx", function (d) { return scaleX(d.year) })
-                    .attr("cy", function (d) { return scaleY(d.events) })
-                    .attr("r", function (d) { return 5; })
-                    .style("fill", function(d) { return '#2c3e50'; });
-
                 canvas.append("path")
                     .data([riotData])
                     .attr("class", "riot-line")
@@ -90,6 +79,39 @@ class TimeSeries extends Element {
                     .data([otherData])
                     .attr("class", "other-line")
                     .attr("d", lineFunction);
+                 
+                let riotCircles = canvas.selectAll("circle.riot").data(riotData).enter().append('circle').attr('class', 'riot');
+                let otherCircles = canvas.selectAll("circle.other").data(otherData).enter().append('circle').attr('class', 'other');
+
+
+                let riotCircleAttributes = riotCircles.attr("cx", function (d) { return scaleX(d.year); })
+                    .attr("cy", function (d) { return scaleY(d.events); })
+                    .attr("r", function (d) { return 4; })
+                    .style("fill", function(d) { return '#e67e22'; });
+
+                let otherCircleAttributes = otherCircles.attr("cx", function (d) { return scaleX(d.year); })
+                    .attr("cy", function (d) { return scaleY(d.events); })
+                    .attr("r", function (d) { return 4; })
+                    .style("fill", function(d) { return '#2c3e50'; });
+
+                riotCircles.on('mouseenter', function(d) {
+                    tip.style('display', 'block');
+                    tip.html('<div><label>Year</label><span>'+d.year.getFullYear()+'</span></div><div><label>No. of events</label><span>'+d.events+'</span></div>')
+                        .style("left", (d3.event.pageX + 10) + "px")		
+                        .style("top", (d3.event.pageY - 10) + "px"); 
+                });
+                riotCircles.on('mouseleave', function(d) { tip.style('display', 'none'); } );
+                
+                otherCircles.on('mouseenter', function(d) {
+                    tip.style('display', 'block');
+                    tip.html('<div><label>Year</label><span>'+d.year.getFullYear()+'</span></div><div><label>No. of events</label><span>'+d.events+'</span></div>')
+                        .style("left", (d3.event.pageX + 10) + "px")		
+                        .style("top", (d3.event.pageY - 10) + "px"); 
+                });
+                otherCircles.on('mouseleave', function(d) { tip.style('display', 'none'); } );
+
+                 
+
 
                 // Add the X Axis
                 canvas.append('g')
@@ -99,7 +121,9 @@ class TimeSeries extends Element {
 
                 // Add the Y Axis
                 canvas.append("g")
+                    .attr('class', 'y-axis')
                     .call(d3.axisLeft(scaleY));
+
 
                 let legend = svg.append("g");
                 legend.attr("class", "legend")

@@ -60,8 +60,9 @@ body #dashboard {
               background-color: green; }
             body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements .legend-element label {
               display: inline-block;
-              margin-left: 10px;
-              text-transform: capitalize; }
+              margin-left: 10px; }
+              body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements .legend-element label:first-letter {
+                text-transform: uppercase; }
         @media only screen and (max-width: 512px) {
           body #dashboard #main-dashboard #left-section .map-container {
             flex-wrap: wrap;
@@ -401,13 +402,16 @@ body #dashboard {
           body #dashboard #country-profile #time-series-container #time-series svg .riot-line {
             fill: none;
             stroke: #e67e22;
-            stroke-width: 2px; }
+            stroke-width: 1px; }
           body #dashboard #country-profile #time-series-container #time-series svg .other-line {
             fill: none;
             stroke: #2c3e50;
-            stroke-width: 2px; }
+            stroke-width: 1px; }
           body #dashboard #country-profile #time-series-container #time-series svg .x-axis text {
-            transform: translate(5px, 5px) rotate(45deg); }
+            transform: translate(5px, 5px) rotate(45deg);
+            font-size: 10px; }
+          body #dashboard #country-profile #time-series-container #time-series svg .y-axis {
+            font-size: 10px; }
           body #dashboard #country-profile #time-series-container #time-series svg .legend text {
             font-size: 10px; }
     body #dashboard #country-profile #bar-chart-container {
@@ -454,12 +458,20 @@ body .leaflet-popup-content div {
     color: rgba(0, 0, 0, 0.5); }
 
 .tooltip {
-  z-index: 10;
-  color: white;
-  padding: 8px;
+  z-index: 1111;
+  color: #fff;
+  padding: 8px 16px;
   background-color: rgba(0, 0, 0, 0.75);
-  border-radius: 6px;
-  font: 12px sans-serif;
+  border-radius: 3px;
   position: absolute; }
+  .tooltip label {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    margin-right: 6px;
+    color: rgba(255, 255, 255, 0.6); }
+    .tooltip label:after {
+      content: ":"; }
+  .tooltip span {
+    font-weight: bold; }
 
 /*# sourceMappingURL=main.css.map */

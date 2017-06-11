@@ -13,11 +13,6 @@ class Timeline extends Element {
         return elem;
     }
 
-    process() {
-        // this.getTimelineElement("01", "Hello World", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut",  pluginDir +'/static/img/chart2.png').appendTo(this.element);
-
-    }
-
     load(country) {
         this.element.empty();
 

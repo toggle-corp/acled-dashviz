@@ -101,7 +101,7 @@ class CountryMap extends Element {
         this.mapLegend.clearLegendElements();
 
         for (let event in acledEvents) {
-            this.mapLegend.addLegendElement(getEventColor(event), event + ' (' + acledEvents[event] + ')');
+            this.mapLegend.addLegendElement(getEventColor(event), event);
         }
     }
 }
