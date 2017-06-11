@@ -59,7 +59,41 @@
             <i class="fa fa-spin fa-circle-o-notch" hidden></i>
             <button onclick="submitCrisisProfiles(this);">Save</button>
         </div>
-        
+    </section>
+    
+    
+    <section id="timeline">
+        <header>
+            <h2>Timeline</h2>
+            <button onclick="showModal('#add-timeline-country-modal');">Add country</button>
+        </header>
+        <label>Select country:</label>
+        <select id="timeline-country-select" data-target="<?php echo get_home_url().'/?pagename=timeline_country__'; ?>">
+            <option value="">Select country</option>
+            <?php
+                $timeline_countries = get_option('timeline_countries', array());
+                foreach($timeline_countries as $ck => $cn) {
+                    echo '<option value="'.$ck.'">'.$cn.'</option>';
+                }
+            ?>
+        </select>
+        <div id="timeline-elements">
+        </div>
+        <button id="add-timeline-element-button" onclick="addTimelineElement()">Add timeline element</button>
+        <div class="timeline-element-template" hidden>
+            <div class="number"><span contenteditable="true">00</span></div>
+            <div class="description">
+                <h5 contenteditable="true">Title</h5>
+                <p contenteditable="true">Description</p>
+            </div>
+            <img alt="click to add image">
+            <input type="file" accept="image/*" hidden>
+        </div>
+        <div class="save-button-container">
+            <i class="fa fa-save"></i>
+            <i class="fa fa-spin fa-circle-o-notch" hidden></i>
+            <button onclick="submitTimelineCountry(this);">Save</button>
+        </div>
     </section>
 
     <form id="carousel-image1-form" method="POST" data-target="<?php echo get_home_url().'/?pagename=post__carousel_image1'; ?>"/>
@@ -73,6 +107,10 @@
     </form>
     <form id="crisis-profiles-form" method="POST" data-target="<?php echo get_home_url().'/?pagename=post__crisis_profiles'; ?>">
         <input type="text" value="" name="crisis-profiles" id="crisis-profiles-input" hidden>
+    </form>
+    <form id="timeline-country-form" method="POST" data-target="<?php echo get_home_url().'/?pagename=post__timeline_country___'; ?>">
+        <input type="text" value="" name="timeline-country-data" id="timeline-country-data-input" hidden>
+        <input type="text" value="" name="timeline-country-name" id="timeline-country-name-input" hidden>
     </form>
 </div>
  
@@ -137,6 +175,22 @@
             <div class="action-buttons">
                 <button onclick="hideModal()">Cancel</button>
                 <button id="edit-crisis-btn">Save</button>
+            </div>
+        </div>
+    </div>
+     
+    <div id="add-timeline-country-modal" class="modal" hidden>
+        <header>
+            <h3>Add country</h3>
+        </header>
+        <div class="content">
+            <div class="input-group">
+                <label>Name</label>
+                <input type="text" name="timeline-country" id="timeline-country-input">
+            </div>
+            <div class="action-buttons">
+                <button onclick="hideModal()">Cancel</button>
+                <button id="add-timeline-country-btn">Add</button>
             </div>
         </div>
     </div>

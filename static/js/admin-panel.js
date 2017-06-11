@@ -1,3 +1,5 @@
+let timelineData = [];
+
 $(document).ready(function() {
     $('#carousel input').on('change', function() {
         if (this.files && this.files[0]) {
@@ -31,6 +33,52 @@ $(document).ready(function() {
         hideModal();
     });
 
+    $('#add-timeline-country-btn').on('click', function() {
+        hideModal('#add-timeline-country-modal');
+         
+        newCountryName = $('#timeline-country-input').val();
+        $('#timeline-country-input').val('');
+         
+        if($('#timeline-country-select option[value="'+getCountryKey(newCountryName)+'"]').length > 0) {
+            alert('Country already exists');
+        } else {
+            $('<option value="'+getCountryKey(newCountryName)+'">'+newCountryName+'</option>').appendTo($('#timeline-country-select'));
+        }
+    });
+
+    $('#timeline-country-select').on('change', function() {
+        if($(this).val()) {
+            $.ajax({
+                type: "GET",
+                url: $(this).data('target')+$(this).val(), 
+                success: function(response) {
+                    timelineData = JSON.parse(response);
+                    loadTimelineData();
+
+                }
+            });
+
+        }
+    });
+
+    $('#timeline-elements').on('click', '.timeline-element img', function() {
+        $(this).closest('.timeline-element').find('input').click().on('change', function() {
+            if (this.files && this.files[0]) {
+
+                var fr = new FileReader();
+
+                let that = this;
+
+                fr.addEventListener("load", function(e) {
+                    $(that).closest('.timeline-element').find('img')[0].src = e.target.result;
+                }); 
+
+                fr.readAsDataURL(this.files[0]);
+            }
+        });
+
+    });
+
     loadData();
 
     function loadData() {
@@ -48,9 +96,6 @@ $(document).ready(function() {
         }
         
 
-        // if(crisisProfiles) {
-        //    crisisProfiles = [];
-        // } 
         refreshCrisisList();
     }
      
@@ -93,10 +138,14 @@ function showProgress(buttonSelector) {
     $(buttonSelector).closest('.save-button-container').find('.fa-spin').show();
 }
  
-function showProgress(buttonSelector) {
+function hideProgress(buttonSelector) {
     $(buttonSelector).prop('disabled', false);
     $(buttonSelector).closest('.save-button-container').find('.fa-spin').hide();
     $(buttonSelector).closest('.save-button-container').find('.fa-save').show();
+}
+
+function getCountryKey(country) {
+    return country.toLowerCase().split(' ').join('_');
 }
 
 function submitCarouselData(caller, formSelector) {
@@ -110,11 +159,13 @@ function submitCarouselData(caller, formSelector) {
             if(response && response=='success') {
                 let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('.input-group'));
                 setTimeout(()=>{successMsg.hide();}, 1000);
+                hideProgress(caller);
             }
         },
         error: function(error) {
             let errorMsg = $('<p class="error-msg">Failed to save!</p>').appendTo($(caller).closest('.input-group'));
             setTimeout(()=>{errorMsg.hide();}, 1000);
+            hideProgress(caller);
         }
     });
 }
@@ -133,11 +184,71 @@ function submitCrisisProfiles(caller) {
             if(response && response=='success') {
                 let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#crisis-profile-report'));
                 setTimeout(()=>{successMsg.hide();}, 1000);
+                hideProgress(caller);
             }
         },
         error: function(error) {
             let errorMsg = $('<p class="error-msg">Failed to save!</p>').appendTo($(caller).closest('#crisis-profile-report'));
             setTimeout(()=>{errorMsg.hide();}, 1000);
+            hideProgress(caller);
         }
+    });
+}
+
+function submitTimelineCountry(caller) {
+    console.log($('#timeline-country-form').data('target') + $('#timeline-country-select').val());
+    if(!$('#timeline-country-select').val()) {
+        console.log('bye');
+        return;
+    }
+    showProgress(caller);
+    grabTimelineData();
+
+    $('#timeline-country-data-input').val(JSON.stringify(timelineData));
+    $('#timeline-country-name-input').val($('#timeline-country-select option:selected').text());
+
+    $.ajax({
+        type: 'POST',
+        url: $('#timeline-country-form').data('target') + $('#timeline-country-select').val(),
+        data: $('#timeline-country-form').serialize(),
+        success: function(response) {
+            console.log(response);
+            if(response && response=='success') {
+                let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#timeline'));
+                setTimeout(()=>{successMsg.hide();}, 1000);
+                hideProgress(caller);
+            }
+        }
+    });        
+}
+
+function addTimelineElement(num='00', title='Title', description='Description', img=null) {
+    let newElement = $('.timeline-element-template').clone().removeClass('timeline-element-template').addClass('timeline-element');
+    newElement.appendTo($('#timeline-elements'));
+    newElement.find('.number').find('span').text(num);
+    newElement.find('h5').text(title);
+    newElement.find('p').text(description);
+    if(img) {
+        newElement.find('img').prop('src', img);
+    }
+}
+
+function loadTimelineData() {
+    for(let i=0; i<timelineData.length; i++) {
+        let cd=timelineData[i];
+        addTimelineElement(cd.num, cd.title, cd.description, cd.img);
+    }
+}
+
+function grabTimelineData() {
+    timelineData = [];
+    $('.timeline-element').each(function() {
+        el = $(this);
+        timelineData.push({
+            'num': el.find('.number').find('span').text(),
+            'title': el.find('h5').text(),
+            'description': el.find('p').text(),
+            'img': el.find('img').prop('src')
+        });
     });
 }

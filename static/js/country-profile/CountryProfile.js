@@ -4,17 +4,18 @@ class CountryProfile extends Element {
         this.header = new Element('<header><h3><a id="back-btn" class="fa fa-arrow-left"></a><span id="country-name">Country_name</span></h3></header>');
         this.childElements.push(this.header);
 
-        this.countryMap = new CountryMap;
+        this.countryMap = new CountryMap();
         this.childElements.push(this.countryMap);
 
-        this.childElements.push(new CountryReport);
+        this.childElements.push(new CountryReport());
 
-        this.childElements.push(new Timeline);
+        this.timeline = new Timeline();
+        this.childElements.push(this.timeline);
 
-        this.timeSeries = new TimeSeries;
+        this.timeSeries = new TimeSeries();
         this.childElements.push(this.timeSeries);
 
-        this.barChart = new BarChart;
+        this.barChart = new BarChart();
         this.childElements.push(this.barChart);
 
         let that = this;
@@ -28,6 +29,7 @@ class CountryProfile extends Element {
         this.timeSeries.load(country);
         this.barChart.load(country);
         this.countryMap.load(country);
+        this.timeline.load(country);
     }
     hide() {
         this.element.css('display', 'none');

@@ -1,6 +1,6 @@
 class Timeline extends Element {
     constructor() {
-        super('<div id="timeline-container"></div>')
+        super('<div id="timeline-container"></div>');
         this.timelineElementTemplate = $('<div class="timeline-element"><div class="number"><span></span></div><div class="description"><h5></h5><p></p></div><img></div>');
     }
 
@@ -14,9 +14,25 @@ class Timeline extends Element {
     }
 
     process() {
-        this.getTimelineElement("01", "Hello World", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut",  pluginDir +'/static/img/chart2.png').appendTo(this.element);
-        this.getTimelineElement("02", "Item 2", "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",  pluginDir +'/static/img/chart1.png').appendTo(this.element);
-        this.getTimelineElement("03", "Item 3", "dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",  pluginDir +'/static/img/chart3.png').appendTo(this.element);
+        // this.getTimelineElement("01", "Hello World", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut",  pluginDir +'/static/img/chart2.png').appendTo(this.element);
 
+    }
+
+    load(country) {
+        this.element.empty();
+
+        let that = this;
+        $.ajax({
+            type: 'GET',
+            url: homeUrl+'/?pagename=timeline_country__'+country,
+            success: function(response) {
+                let timeElements = JSON.parse(response);
+
+                for(let i=0; i<timeElements.length; i++) {
+                    let cd = timeElements[i];
+                    that.getTimelineElement(cd.num, cd.title, cd.description, cd.img).appendTo(that.element);
+                }
+            }
+        });
     }
 }

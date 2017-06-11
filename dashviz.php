@@ -23,9 +23,15 @@ class DashboardVisualization {
             echo stripslashes(get_option('crisis_profiles', '[]'));
             header('Crisis profiles', true, 200);
             return null;
-        }
-
-        if(substr($query, 0, 6) === 'post__') {
+        } elseif(substr($query, 0, 18) == 'timeline_country__') {
+            header('Crisis profiles', true, 200);
+            $wp_query = null;
+            $wp_query = new WP_Query();
+            $country = substr($query, 18, strlen($query)-18);
+            $data = stripslashes(get_option('timeline_country__'.$country, '[]'));
+            echo $data; 
+            return null;
+        } elseif(substr($query, 0, 6) === 'post__') {
             $wp_query = null;
             $wp_query = new WP_Query();
 
@@ -61,20 +67,29 @@ class DashboardVisualization {
                 }
             }
             else {
-                if(substr($post_var, 0, 24) === 'crisis_profile_search___') {
-                    $search = substr($post_var, 24, strlen($post_var)-24);
-                    echo 'Search request: ';
-                    echo $search;
+                if(substr($post_var, 0, 19) === 'timeline_country___') {
+                    $country = substr($post_var, 19, strlen($post_var)-19);
+                    if(isset($_POST['timeline-country-data'])) {
+                        update_option('timeline_country__'.$country, $_POST['timeline-country-data']);
+                        $timeline_countries = get_option('timeline_countries', array());
+                        $timeline_countries[$country] = $_POST['timeline-country-name'];
+
+                        update_option('timeline_countries', $timeline_countries);
+
+                        echo 'success';
+                    } else {
+                        echo 'failed';
+                    }
                 } else {
+                    echo $post_var;
                     echo 'Invalid request';
                 }
             }
 
-            header('Crisis profiles', true, 200);
+            header('ACLED Dashboard', true, 200);
             return null;
         }
 
-        
 
         if((is_page('Dashboard') || is_home())) {
             $page_check = get_page_by_title("Dashboard");
@@ -144,6 +159,7 @@ class DashboardVisualization {
                 wp_enqueue_script("dashboard-script", plugins_url().$plugin_dir.'/static/js/Dashboard.js', null, null, true);
                 wp_enqueue_script("dashviz-main-script", plugins_url().$plugin_dir.'/static/js/main.js', null, null, true);
                 wp_add_inline_script('dashviz-main-script', 'let pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
+                wp_add_inline_script('dashviz-main-script', 'let homeUrl="'.get_home_url().'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let carouselImage1="'.get_option('carousel_image1', '').'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let carouselImage2="'.get_option('carousel_image2', '').'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let carouselImage3="'.get_option('carousel_image3', '').'";', 'before');

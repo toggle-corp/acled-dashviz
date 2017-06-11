@@ -60,7 +60,8 @@ body #dashboard {
               background-color: green; }
             body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements .legend-element label {
               display: inline-block;
-              margin-left: 10px; }
+              margin-left: 10px;
+              text-transform: capitalize; }
         @media only screen and (max-width: 512px) {
           body #dashboard #main-dashboard #left-section .map-container {
             flex-wrap: wrap;
@@ -324,7 +325,8 @@ body #dashboard {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 24px; }
+        padding: 24px;
+        max-width: 320px; }
         body #dashboard #country-profile #timeline-container .timeline-element .number {
           order: 2;
           font-size: 1.2em;
