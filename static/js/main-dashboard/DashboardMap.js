@@ -15,11 +15,15 @@ class DashboardMap extends Element {
             attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
 
+        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 1000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
+		//var layerControl = L.control.layers([], {"Circles" :conditionalLayer}).addTo(map);
+
         // Toggle scroll-zoom by clicking on and outside map
         this.map.scrollWheelZoom.disable();
         this.map.on('focus', function() { this.scrollWheelZoom.enable(); });
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); });
     }
+     
     loadDataToMap() {
         let locationGroupedData = [];
         let currentLocation = {'latitude': '', 'longitude': ''};
@@ -40,30 +44,34 @@ class DashboardMap extends Element {
             }
             ++currentEvent.count;
             addEvent(cr.event_type);
+            addCountry(cr.country);
             addFatalities(cr.fatalities);
         }
         for (let event in acledEvents) {
             this.mapLegend.addLegendElement(getEventColor(event), event + ' (' + acledEvents[event] + ')');
         }
-        this.refreshMap(locationGroupedData);
+        setTimeout(()=>{this.refreshMap(locationGroupedData);}, 0);
     }
     refreshMap(data) {
         for (let i=0; i<data.length; i++) {
             for (let j=0; j<data[i].events.length; j++) {
                 let cd = data[i].events[j];   // current data
-                let radius = Math.sqrt(cd.count)*24000;
+                let radius = Math.sqrt(cd.count)*8000;
                 let color = getEventColor(cd.name);
-                L.circle([data[i].location.latitude, data[i].location.longitude], radius, {
+                 
+                this.conditionalLayer.addLayer(L.circle([data[i].location.latitude, data[i].location.longitude], radius, {
                     fillColor: color,
                     stroke: false,
-                    fillOpacity: 0.6,
-                }).addTo(this.map);
+                    fillOpacity: 0.5,
+                }));
+                //this.map.indexLayer(circle);
             }
         }
-
-
+         
+        this.conditionalLayer.addTo(this.map);
         let geoJsonLayer = null;
         let that = this;
+        let countries = Object.keys(acledCountries);
         $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
             geoJsonLayer = L.geoJson(data, {
                 onEachFeature: function(feature, layer) {
@@ -73,7 +81,7 @@ class DashboardMap extends Element {
                         stroke: false,
                     });
 
-                    let data = acledData.find(d => compareCountryNames(d.country, feature.properties.admin));
+                    let data = countries.find(c => compareCountryNames(c, feature.properties.admin));
                     if (data) {
                         layer.on('mouseover', function() { layer.setStyle({ fillOpacity: 0.5, }); });
                         layer.on('mouseout', function() { layer.setStyle({ fillOpacity: 0, }); });

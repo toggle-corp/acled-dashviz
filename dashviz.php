@@ -137,6 +137,9 @@ class DashboardVisualization {
                 wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
                 wp_enqueue_script("mapbox-script", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js', null, null, true);
                 wp_enqueue_style("mapbox-style", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css');
+                 
+                //wp_enqueue_script("rtree-script", plugins_url().$plugin_dir.'/static/js/rtree.js', null, null, true);
+                wp_enqueue_script("leaflet-conditionalLayer-script", plugins_url().$plugin_dir.'/static/js/leaflet.conditionalLayer.js', null, null, true);
 
                 wp_enqueue_script("selectize-script", plugins_url().$plugin_dir.'/static/js/selectize.js', null, null, true);
                 wp_enqueue_script("utils-script", plugins_url().$plugin_dir.'/static/js/common/utils.js', null, null, true);

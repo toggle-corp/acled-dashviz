@@ -86,7 +86,7 @@ class CountryMap extends Element {
         for (let i=0; i<locationGroupedData.length; i++) {
             for (let j=0; j<locationGroupedData[i].events.length; j++) {
                 let cd = locationGroupedData[i].events[j];   // current data
-                let radius = Math.sqrt(cd.count)*24000;
+                let radius = Math.sqrt(cd.count)*8000;
                 let color = getEventColor(cd.name);
                 let circle = L.circle([locationGroupedData[i].location.latitude, locationGroupedData[i].location.longitude], radius, {
                     fillColor: color,

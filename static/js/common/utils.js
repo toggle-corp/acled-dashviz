@@ -1,5 +1,13 @@
 let acledData = [];
-let dashboard = null
+let dashboard = null;
+
+let acledCountries = {};
+function addCountry(countryName) {
+    if(!acledCountries[countryName]) {
+        acledCountries[countryName] = 0;
+    }
+    ++acledCountries[countryName];
+}
 
 let acledEvents = {};
 function addEvent(eventName) {
@@ -27,7 +35,7 @@ eventColors = {
 
 function getEventColor(eventName) {
     if(eventName.includes('battle')) {
-        return eventColors['battle'];
+        return eventColors.battle;
     }
     return eventColors[eventName];
 }
