@@ -48,6 +48,7 @@ $(document).ready(function() {
 
     $('#timeline-country-select').on('change', function() {
         if($(this).val()) {
+            $('#add-timeline-element-btn').prop('disabled', false);
             $.ajax({
                 type: "GET",
                 url: $(this).data('target')+$(this).val(), 
@@ -58,7 +59,9 @@ $(document).ready(function() {
                 }
             });
 
-        }
+        } else {
+            $('#add-timeline-element-btn').prop('disabled', true);
+        } 
     });
 
     $('#timeline-elements').on('click', '.timeline-element img', function() {
@@ -79,6 +82,8 @@ $(document).ready(function() {
 
     });
 
+     
+    $('#add-timeline-element-btn').prop('disabled', true);
     loadData();
 
     function loadData() {
@@ -234,6 +239,7 @@ function addTimelineElement(num='00', title='Title', description='Description', 
 }
 
 function loadTimelineData() {
+    $('#timeline-elements').empty();
     for(let i=0; i<timelineData.length; i++) {
         let cd=timelineData[i];
         addTimelineElement(cd.num, cd.title, cd.description, cd.img);

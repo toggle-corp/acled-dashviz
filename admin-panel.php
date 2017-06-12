@@ -79,7 +79,7 @@
         </select>
         <div id="timeline-elements">
         </div>
-        <button id="add-timeline-element-button" onclick="addTimelineElement()">Add timeline element</button>
+        <button id="add-timeline-element-btn" onclick="addTimelineElement()">Add timeline element</button>
         <div class="timeline-element-template" hidden>
             <div class="number"><span contenteditable="true">00</span></div>
             <div class="description">

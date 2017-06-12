@@ -53,7 +53,8 @@
         background-color: transparent;
         border: none;
         outline: none;
-        text-transform: uppercase; }
+        text-transform: uppercase;
+        cursor: pointer; }
       #dashboard-form section .save-button-container .fa-spin {
         display: none; }
       #dashboard-form section .save-button-container .fa {
@@ -120,7 +121,7 @@
     padding: 6px 16px;
     text-transform: uppercase;
     margin-left: 26px; }
-#timeline #add-timeline-element-button {
+#timeline #add-timeline-element-btn {
   display: block;
   border: none;
   padding: 6px 16px;
@@ -181,7 +182,9 @@
       justify-content: flex-start; }
       #timeline #timeline-elements .timeline-element .description h5 {
         font-size: 1em;
-        margin: 0; }
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: normal; }
       #timeline #timeline-elements .timeline-element .description p {
         font-size: 11px;
         line-height: 1.25;
@@ -190,10 +193,12 @@
     #timeline #timeline-elements .timeline-element img {
       flex-basis: 33%;
       width: 100%;
+      max-height: 33%;
       object-fit: scale-down;
       object-position: center center;
       order: 1;
       flex-grow: 0;
+      flex-shrink: 0;
       margin: 0; }
     #timeline #timeline-elements .timeline-element:nth-child(odd) .description {
       order: 1;

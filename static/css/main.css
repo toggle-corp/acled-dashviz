@@ -371,10 +371,12 @@ body #dashboard {
         body #dashboard #country-profile #timeline-container .timeline-element img {
           flex-basis: 33%;
           width: 100%;
+          max-height: 33%;
           object-fit: scale-down;
           object-position: center center;
           order: 1;
           flex-grow: 0;
+          flex-shrink: 0;
           margin: 0; }
         body #dashboard #country-profile #timeline-container .timeline-element:nth-child(odd) .description {
           order: 1;
