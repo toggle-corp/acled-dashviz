@@ -86,7 +86,7 @@ class DashboardMap extends Element {
                         layer.on('mouseover', function() { layer.setStyle({ fillOpacity: 0.5, }); });
                         layer.on('mouseout', function() { layer.setStyle({ fillOpacity: 0, }); });
                         layer.on('click', function(){
-                            dashboard.show(data.country);
+                            dashboard.show(data);
                         });
                     }
                 },
