@@ -41,6 +41,18 @@ $(document).ready(function() {
             fr.readAsDataURL(this.files[0]);
         } 
     }); 
+     
+    $('#timeline-static-image-input').on('change', function() {
+        if (this.files && this.files[0]) {
+            let fr = new FileReader();
+
+            fr.addEventListener("load", function(e) {
+                $('#timeline-static-image-preview')[0].src = e.target.result;
+            }); 
+
+            fr.readAsDataURL(this.files[0]);
+        } 
+    });
 
 
     $('#add-crisis-btn').on('click', function() {
@@ -92,8 +104,10 @@ $(document).ready(function() {
                 url: $(this).data('target')+$(this).val(), 
                 success: function(response) {
                     timelineData = JSON.parse(response);
+                    if($.isArray(timelineData)) {
+                        timelineData = {'staticImage': false, 'timelineElements': timelineData };
+                    }
                     loadTimelineData();
-
                 }
             });
 
@@ -377,24 +391,42 @@ function addTimelineElement(num='00', title='Title', description='Description', 
 }
 
 function loadTimelineData() {
-    $('#timeline-elements').empty();
-    for(let i=0; i<timelineData.length; i++) {
-        let cd=timelineData[i];
-        addTimelineElement(cd.num, cd.title, cd.description, cd.img);
+    if (timelineData.staticImage) {
+        $('#timeline-static-image-preview').prop('src', timelineData.img);
+        $('#timeline-use-static-check').prop('checked', true);
+    } else {
+        $('#timeline-use-static-check').prop('checked', false);
+        
+        $('#timeline-elements').empty();
+
+        if(timelineData.timelineElements) {
+            for(let i=0; i<timelineData.timelineElements.length; i++) {
+                let cd=timelineData.timelineElements[i];
+                addTimelineElement(cd.num, cd.title, cd.description, cd.img);
+            }
+        }
     }
 }
 
 function grabTimelineData() {
-    timelineData = [];
-    $('.timeline-element').each(function() {
-        el = $(this);
-        timelineData.push({
-            'num': el.find('.number').find('span').text(),
-            'title': el.find('h5').text(),
-            'description': el.find('p').text(),
-            'img': el.find('img').prop('src')
+    timelineData = {};
+    if ($('#timeline-use-static-check').prop('checked')) {
+        timelineData.staticImage = true;
+        timelineData.img = $('#timeline-static-image-preview').prop('src');
+    } else {
+        timelineData.staticImage = false;
+        timelineData.timelineElements = [];
+
+        $('.timeline-element').each(function() {
+            el = $(this);
+            timelineData.timelineElements.push({
+                'num': el.find('.number').find('span').text(),
+                'title': el.find('h5').text(),
+                'description': el.find('p').text(),
+                'img': el.find('img').prop('src')
+            });
         });
-    });
+    }
 }
  
 

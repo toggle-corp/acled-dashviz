@@ -28,7 +28,7 @@ class DashboardVisualization {
             $wp_query = null;
             $wp_query = new WP_Query();
             $country = substr($query, 18, strlen($query)-18);
-            $data = stripslashes(get_option('timeline_country__'.$country, '[]'));
+            $data = stripslashes(get_option('timeline_country__'.$country, '{}'));
             echo $data; 
             return null;
         } elseif(substr($query, 0, 16) == 'report_country__') {

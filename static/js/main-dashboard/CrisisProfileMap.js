@@ -43,7 +43,9 @@ class CrisisProfileMap extends Element {
             });
             that.geoJsonLayer.addTo(that.map);
             that.map.invalidateSize();
-            that.map.fitBounds(currentLayer.getBounds(), {padding: [-10, -10]});
+            if(currentLayer) {
+                that.map.fitBounds(currentLayer.getBounds(), {padding: [0, 0]});
+            }
         });
     }
 }
