@@ -396,7 +396,6 @@ function loadTimelineData() {
         $('#timeline-use-static-check').prop('checked', true);
     } else {
         $('#timeline-use-static-check').prop('checked', false);
-        
         $('#timeline-elements').empty();
 
         if(timelineData.timelineElements) {
@@ -406,6 +405,7 @@ function loadTimelineData() {
             }
         }
     }
+    $('#timeline-use-static-check').trigger('change');
 }
 
 function grabTimelineData() {
