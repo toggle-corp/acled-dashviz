@@ -152,6 +152,11 @@
                     ?>
                 </select>
             </div>
+            <label id="timeline-use-static-check-container"><input type="checkbox" id="timeline-use-static-check">Use static image</label>
+            <div id="timeline-static-image">
+                <input type="file" accept="image/*" id="timeline-static-image-input">
+                <img class="preview" id="timeline-static-image-preview" alt="no preview available">
+            </div> 
             <div id="timeline-elements">
             </div>
             <button id="add-timeline-element-btn" onclick="addTimelineElement()">Add timeline element</button>
@@ -163,6 +168,7 @@
                 </div>
                 <img alt="click to add image">
                 <input type="file" accept="image/*" hidden>
+                <button><i class="fa fa-times"></i></button> 
             </div>
             <div class="save-button-container">
                 <i class="fa fa-save"></i>

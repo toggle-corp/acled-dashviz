@@ -137,6 +137,16 @@ $(document).ready(function() {
 
     });
 
+    $('#timeline-use-static-check').on('change', function() {
+        if ($(this).prop('checked')) {
+            $('#timeline-elements')[0].style.display = 'none';
+            $('#timeline-static-image').show();
+        } else {
+            $('#timeline-static-image').hide();
+            $('#timeline-elements')[0].style.display = 'flex';
+        }
+    }); 
+
      
     $('#add-timeline-element-btn').prop('disabled', true);
     $('#country-reports input').prop('disabled', true);
@@ -351,6 +361,7 @@ function submitRecentEvent(caller) {
     });
 }
 
+
 function addTimelineElement(num='00', title='Title', description='Description', img=null) {
     let newElement = $('.timeline-element-template').clone().removeClass('timeline-element-template').addClass('timeline-element');
     newElement.appendTo($('#timeline-elements'));
@@ -360,6 +371,9 @@ function addTimelineElement(num='00', title='Title', description='Description', 
     if(img) {
         newElement.find('img').prop('src', img);
     }
+    newElement.find('button').on('click', function() {
+        $(this).closest('.timeline-element').remove();
+    });
 }
 
 function loadTimelineData() {

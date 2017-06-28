@@ -213,6 +213,20 @@
 
     }
 
+    #timeline-use-static-check-container {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    #timeline-static-image {
+        display: none;
+
+        #timeline-static-image-input {
+            display: block;
+        }
+    }
+
     #timeline-elements {
         display: flex;
         position: relative;
@@ -236,6 +250,7 @@
             align-items: center;
             padding: 24px;
             max-width: 320px;
+            border: 1px dashed rgba(0, 0, 0, 0.1);
 
             .number {
                 order: 2;
@@ -301,6 +316,12 @@
                 flex-shrink: 0;
                 margin: 0;
             }
+            button {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+             
             &:nth-child(odd) {
                 .description {
                     order: 1;
