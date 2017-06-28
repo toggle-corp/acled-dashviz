@@ -1,10 +1,11 @@
 let timelineData = [];
+let reportData = {};
 
 $(document).ready(function() {
     $('#carousel input').on('change', function() {
         if (this.files && this.files[0]) {
 
-            var fr = new FileReader();
+            let fr = new FileReader();
 
             let that = this;
 
@@ -16,6 +17,30 @@ $(document).ready(function() {
             fr.readAsDataURL(this.files[0]);
         }
     });
+
+    $('#report-image-input').on('change', function() {
+        if (this.files && this.files[0]) {
+            let fr = new FileReader();
+
+            fr.addEventListener("load", function(e) {
+                $('#report-img-preview')[0].src = e.target.result;
+            }); 
+
+            fr.readAsDataURL(this.files[0]);
+        } 
+    });
+
+    $('#recent-event-image-input').on('change', function() {
+        if (this.files && this.files[0]) {
+            let fr = new FileReader();
+
+            fr.addEventListener("load", function(e) {
+                $('#recent-event-image-preview')[0].src = e.target.result;
+            }); 
+
+            fr.readAsDataURL(this.files[0]);
+        } 
+    }); 
 
 
     $('#add-crisis-btn').on('click', function() {
@@ -45,6 +70,19 @@ $(document).ready(function() {
             $('<option value="'+getCountryKey(newCountryName)+'">'+newCountryName+'</option>').appendTo($('#timeline-country-select'));
         }
     });
+     
+    $('#add-report-country-btn').on('click', function() {
+        hideModal('#add-report-ecountry-modal');
+         
+        newCountryName = $('#report-country-input').val();
+        $('#report-country-input').val('');
+         
+        if($('#report-country-select option[value="'+getCountryKey(newCountryName)+'"]').length > 0) {
+            alert('Country already exists');
+        } else {
+            $('<option value="'+getCountryKey(newCountryName)+'">'+newCountryName+'</option>').appendTo($('#report-country-select'));
+        }
+    }); 
 
     $('#timeline-country-select').on('change', function() {
         if($(this).val()) {
@@ -61,6 +99,23 @@ $(document).ready(function() {
 
         } else {
             $('#add-timeline-element-btn').prop('disabled', true);
+        } 
+    });
+     
+     $('#report-country-select').on('change', function() {
+        if($(this).val()) {
+            $('#country-reports input').prop('disabled', false);
+            $.ajax({
+                type: "GET",
+                url: $(this).data('target')+$(this).val(), 
+                success: function(response) {
+                    reportData = JSON.parse(response);
+                    loadReportData();
+                }
+            });
+
+        } else {
+            $('#country-reports input').prop('disabled', true);
         } 
     });
 
@@ -84,6 +139,8 @@ $(document).ready(function() {
 
      
     $('#add-timeline-element-btn').prop('disabled', true);
+    $('#country-reports input').prop('disabled', true);
+     
     loadData();
 
     function loadData() {
@@ -91,17 +148,27 @@ $(document).ready(function() {
             $('#carousel #image-1-container .preview')[0].src = carouselImage1;
             $('#image-1-input').val(carouselImage1);
         }
+        if (carouselUrl1) {
+            $('#carousel-url-1-input').val(carouselUrl1);
+        }
         if(carouselImage2) {
             $('#carousel #image-2-container .preview')[0].src = carouselImage2;
             $('#image-2-input').val(carouselImage2);
+        }
+        if (carouselUrl2) {
+            $('#carousel-url-2-input').val(carouselUrl2);
         }
         if(carouselImage3) {
             $('#carousel #image-3-container .preview')[0].src = carouselImage3;
             $('#image-3-input').val(carouselImage3);
         }
-        
+        if (carouselUrl3) {
+            $('#carousel-url-3-input').val(carouselUrl3);
+        }
 
         refreshCrisisList();
+
+        loadRecentEvent();
     }
      
     function addCrisisElement(title, date, country, description){
@@ -153,8 +220,10 @@ function getCountryKey(country) {
     return country.toLowerCase().split(' ').join('_');
 }
 
-function submitCarouselData(caller, formSelector) {
+function submitCarouselData(caller, formSelector, urlInputSelector) {
     showProgress(caller);
+
+    $(formSelector).find('.url-input').val($(urlInputSelector).val());
      
     $.ajax({
         type: 'POST',
@@ -201,9 +270,7 @@ function submitCrisisProfiles(caller) {
 }
 
 function submitTimelineCountry(caller) {
-    console.log($('#timeline-country-form').data('target') + $('#timeline-country-select').val());
     if(!$('#timeline-country-select').val()) {
-        console.log('bye');
         return;
     }
     showProgress(caller);
@@ -225,6 +292,63 @@ function submitTimelineCountry(caller) {
             }
         }
     });        
+}
+
+function submitReportCountry(caller) {
+    if(!$('#report-country-select').val()) {
+        return;
+    }
+
+    if (grabReportData()) {
+        showProgress(caller);
+
+        $('#report-country-data-input').val(JSON.stringify(reportData));
+        $('#report-country-name-input').val($('#report-country-select option:selected').text());
+
+        $.ajax({
+            type: 'POST',
+            url: $('#report-country-form').data('target') + $('#report-country-select').val(),
+            data: $('#report-country-form').serialize(),
+            success: function(response) {
+                console.log(response);
+                if(response && response=='success') {
+                    let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#country-reports'));
+                    setTimeout(()=>{successMsg.hide();}, 1000);
+                }
+                hideProgress(caller);
+            },
+            error: function(error) {
+                console.log(error);
+                hideProgress(caller);
+            }
+        });
+    }
+}
+
+function submitRecentEvent(caller) {
+    if ( !grabRecentEventData() ) {
+        return;
+    }
+    showProgress(caller);
+    $('#recent-event-data-input').val(JSON.stringify(recentEvent));
+
+    $.ajax({
+        type: 'POST',
+        url: $('#recent-event-form').data('target'),
+        data: $('#recent-event-form').serialize(),
+        success: function(response) {
+            console.log(response);
+            if(response && response=='success') {
+                let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#recent-event'));
+                setTimeout(()=>{successMsg.hide();}, 1000);
+            }
+            hideProgress(caller);
+        },
+        error: function(error) {
+            console.log(error);
+            hideProgress(caller);
+        } 
+    });
 }
 
 function addTimelineElement(num='00', title='Title', description='Description', img=null) {
@@ -257,4 +381,78 @@ function grabTimelineData() {
             'img': el.find('img').prop('src')
         });
     });
+}
+ 
+
+function loadReportData() {
+    let cr = $('#country-reports');
+    $('#country-reports input').val('');
+
+    if (reportData.title) {
+        cr.find('#report-title-input').val(reportData.title);
+    }
+    if (reportData.summary) {
+        cr.find('#report-summary-input').val(reportData.summary);
+    }
+    if (reportData.date) {
+        cr.find('#report-date-input').val(reportData.date);
+    }
+    if (reportData.url) {
+        cr.find('#report-url-input').val(reportData.url);
+    }
+     
+    if (reportData.img && reportData.img.length > 0) {
+        cr.find('#report-img-preview').prop('src', reportData.img);
+    }
+}
+
+function grabReportData() {
+    reportData = {};
+    cr = $('#country-reports');
+    
+    let title = cr.find('#report-title-input').val();
+    let summary = cr.find('#report-summary-input').val();
+    let date = cr.find('#report-date-input').val();
+    let url = cr.find('#report-url-input').val();
+    let img = cr.find('#report-img-preview').prop('src');
+
+    if(title && summary && date && url && img) {
+        reportData.title = title;
+        reportData.summary = summary;
+        reportData.date = date;
+        reportData.url = url;
+        reportData.img = img;
+         
+        return true;
+    } else {
+        alert('please fill all the report data first');
+    }
+    return false;
+}
+
+function grabRecentEventData() {
+    recentEvent = {};
+
+    let url = $('#recent-event-url-input').val();
+    let img = $('#recent-event-image-preview').prop('src');
+
+    if(url && img) {
+        recentEvent.url = url;
+        recentEvent.img = img;
+
+        return true;
+    } else {
+        alert('please fill all event data first');
+    }
+
+    return false;
+}
+
+function loadRecentEvent() {
+    if (recentEvent.url) {
+        $('#recent-event-url-input').val(recentEvent.url);
+    }
+    if (recentEvent.img && recentEvent.img.length > 0) {
+        $('#recent-event-image-preview').prop('src', recentEvent.img);
+    }
 }

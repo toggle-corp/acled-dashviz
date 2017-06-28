@@ -7,11 +7,19 @@ class CrisisProfile extends Element {
         this.recentEventsSection = new Element(
             `
             <div id="recent-events-section">
-                <header><h5>Recent events</h5></header>
+                <header><h5>Recent event</h5></header>
                 <a><img alt="Report image"></a>
             </div>
             `
         );
+        if(recentEvent) {
+            if(recentEvent.url) {
+                this.recentEventsSection.element.find('a').prop('href', recentEvent.url);
+            }
+            if(recentEvent.img) {
+                this.recentEventsSection.element.find('img').prop('src', recentEvent.img);
+            }
+        }
 
         this.reportSelectContainer = new Element(
             `

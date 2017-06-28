@@ -22,16 +22,16 @@ class MainDashboard extends Element {
         this.leftSection.childElements.push(this.carousel);
         let imgContainer = this.carousel.element.find('.carousel');
         if (carouselImage1) {
-            $('<img src="'+ carouselImage1 +'" hidden>').appendTo(imgContainer);
+            $('<a href="'+carouselUrl1+'" hidden><img src="'+ carouselImage1 +'"></a>').appendTo(imgContainer);
         }
         if (carouselImage2) {
-            $('<img src="'+ carouselImage2 +'" hidden>').appendTo(imgContainer);
+            $('<a href="'+carouselUrl2+'" hidden><img src="'+ carouselImage2 +'"></a>').appendTo(imgContainer);
         }
         if (carouselImage3) {
-            $('<img src="'+ carouselImage3 +'" hidden>').appendTo(imgContainer);
+            $('<a href="'+carouselUrl3+'" hidden><img src="'+ carouselImage3 +'"></a>').appendTo(imgContainer);
         }
         
-        imgContainer.find('img').eq(0).addClass('active').show();
+        imgContainer.find('a').eq(0).addClass('active').show();
         let leftButton = this.carousel.element.find('#carousel-left');
         let rightButton = this.carousel.element.find('#carousel-right');
 
@@ -40,10 +40,10 @@ class MainDashboard extends Element {
         rightButton.on('click', function() {
             let parent = $(this).closest('#carousel-container');
 
-            parent.find('img.active').fadeOut(function(){
+            parent.find('a.active').fadeOut(function(){
                 $(this).removeClass('active');
-                if( $(this).is(parent.find('img').last()) ){
-                    parent.find('img').first().fadeIn().addClass('active');
+                if( $(this).is(parent.find('a').last()) ){
+                    parent.find('a').first().fadeIn().addClass('active');
                 } else {
                     $(this).next().fadeIn().addClass('active');
                 }
@@ -55,10 +55,10 @@ class MainDashboard extends Element {
         leftButton.on('click', function() {
             let parent = $(this).closest('#carousel-container');
 
-            parent.find('img.active').fadeOut(function(){
+            parent.find('a.active').fadeOut(function(){
                 $(this).removeClass('active');
-                if( $(this).is(parent.find('img').first()) ){
-                    parent.find('img').last().fadeIn().addClass('active');
+                if( $(this).is(parent.find('a').first()) ){
+                    parent.find('a').last().fadeIn().addClass('active');
                 } else {
                     $(this).prev().fadeIn().addClass('active');
                 }

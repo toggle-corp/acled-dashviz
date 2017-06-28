@@ -7,7 +7,8 @@ class CountryProfile extends Element {
         this.countryMap = new CountryMap();
         this.childElements.push(this.countryMap);
 
-        this.childElements.push(new CountryReport());
+        this.countryReport = new CountryReport();
+        this.childElements.push(this.countryReport);
 
         this.timeline = new Timeline();
         this.childElements.push(this.timeline);
@@ -26,9 +27,10 @@ class CountryProfile extends Element {
     show(country) {
         this.element.css('display', 'flex');
         this.header.element.find('#country-name').text(country);
+        this.countryMap.load(country);
+        this.countryReport.load(country);
         this.timeSeries.load(country);
         this.barChart.load(country);
-        this.countryMap.load(country);
         this.timeline.load(country);
     }
     hide() {

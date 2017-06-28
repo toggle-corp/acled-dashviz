@@ -22,13 +22,20 @@
     border-top: 2px solid rgba(0, 0, 0, 0.1);
     clear: both; }
     #dashboard-form section .input-group {
-      padding: 6px 0; }
+      padding: 6px 0;
+      max-width: 320px; }
       #dashboard-form section .input-group label {
         color: rgba(0, 0, 0, 0.5);
         text-transform: uppercase;
         font-size: 0.9em; }
       #dashboard-form section .input-group input:not([type="submit"]), #dashboard-form section .input-group select {
         width: 100%; }
+    #dashboard-form section img.preview {
+      float: none;
+      width: 320px;
+      height: 200px;
+      object-fit: contain;
+      object-position: center center; }
     #dashboard-form section#carousel .input-group {
       width: 300px;
       padding: 16px;

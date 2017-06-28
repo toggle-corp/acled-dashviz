@@ -16,22 +16,31 @@ class DashboardVisualization {
         $query = $wp_query->get('pagename');
          
         if($query == 'crisis_profiles'){
+            header('Crisis profiles', true, 200);
             $wp_query = null;
             $wp_query = new WP_Query();
              
             /* $opts = json_decode(stripslashes(get_option('dashboard-data', '{}')), true); */
             echo stripslashes(get_option('crisis_profiles', '[]'));
-            header('Crisis profiles', true, 200);
             return null;
         } elseif(substr($query, 0, 18) == 'timeline_country__') {
-            header('Crisis profiles', true, 200);
+            header('Timeline country', true, 200);
             $wp_query = null;
             $wp_query = new WP_Query();
             $country = substr($query, 18, strlen($query)-18);
             $data = stripslashes(get_option('timeline_country__'.$country, '[]'));
             echo $data; 
             return null;
+        } elseif(substr($query, 0, 16) == 'report_country__') {
+            header('Report country', true, 200);
+            $wp_query = null;
+            $wp_query = new WP_Query();
+            $country = substr($query, 16, strlen($query)-16);
+            $data = stripslashes(get_option('report_country__'.$country, '{}'));
+            echo $data; 
+            return null;
         } elseif(substr($query, 0, 6) === 'post__') {
+            header('ACLED Dashboard', true, 200);
             $wp_query = null;
             $wp_query = new WP_Query();
 
@@ -40,6 +49,7 @@ class DashboardVisualization {
             if($post_var === 'carousel_image1') {
                 if(isset($_POST['carousel-image1'])) {
                     update_option('carousel_image1', $_POST['carousel-image1']);
+                    update_option('carousel_url1', $_POST['carousel-url1']);
                     echo 'success';
                 } else {
                     echo 'failed';
@@ -47,6 +57,7 @@ class DashboardVisualization {
             } elseif($post_var === 'carousel_image2') {
                 if(isset($_POST['carousel-image2'])){
                     update_option('carousel_image2', $_POST['carousel-image2']);
+                    update_option('carousel_url2', $_POST['carousel-url2']);
                     echo 'success';
                 } else {
                     echo 'failed';
@@ -54,19 +65,26 @@ class DashboardVisualization {
             } elseif($post_var === 'carousel_image3') {
                 if(isset($_POST['carousel-image3'])){
                     update_option('carousel_image3', $_POST['carousel-image3']);
+                    update_option('carousel_url3', $_POST['carousel-url3']);
                     echo 'success';
                 } else {
                     echo 'failed';
                 }
-            } else if($post_var === 'crisis_profiles') {
+            } elseif($post_var === 'crisis_profiles') {
                 if(isset($_POST['crisis-profiles'])) {
                     update_option('crisis_profiles', $_POST['crisis-profiles']);
                     echo 'success';
                 } else {
                     echo 'failed';
                 }
-            }
-            else {
+            } elseif($post_var === 'recent_event') {
+                if(isset($_POST['recent-event-data'])) {
+                    update_option('recent_event', $_POST['recent-event-data']);
+                    echo 'success';
+                } else {
+                    echo 'failed';
+                } 
+            } else {
                 if(substr($post_var, 0, 19) === 'timeline_country___') {
                     $country = substr($post_var, 19, strlen($post_var)-19);
                     if(isset($_POST['timeline-country-data'])) {
@@ -80,13 +98,26 @@ class DashboardVisualization {
                     } else {
                         echo 'failed';
                     }
+                } elseif(substr($post_var, 0, 17) === 'report_country___') {
+                    $country = substr($post_var, 17, strlen($post_var)-17);
+                    if(isset($_POST['report-country-data'])) {
+                        update_option('report_country__'.$country, $_POST['report-country-data']);
+                        $timeline_countries = get_option('report_countries', array());
+                        $timeline_countries[$country] = $_POST['report-country-name'];
+
+                        update_option('report_countries', $timeline_countries);
+
+                        echo 'success';
+                    } else {
+                        echo 'failed';
+                    }
+
                 } else {
                     echo $post_var;
                     echo 'Invalid request';
                 }
             }
 
-            header('ACLED Dashboard', true, 200);
             return null;
         }
 
@@ -164,9 +195,14 @@ class DashboardVisualization {
                 wp_add_inline_script('dashviz-main-script', 'let pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let homeUrl="'.get_home_url().'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let carouselImage1="'.get_option('carousel_image1', '').'";', 'before');
+                wp_add_inline_script('dashviz-main-script', 'let carouselUrl1="'.get_option('carousel_url1', '').'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let carouselImage2="'.get_option('carousel_image2', '').'";', 'before');
+                wp_add_inline_script('dashviz-main-script', 'let carouselUrl2="'.get_option('carousel_url2', '').'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let carouselImage3="'.get_option('carousel_image3', '').'";', 'before');
+                wp_add_inline_script('dashviz-main-script', 'let carouselUrl3="'.get_option('carousel_url3', '').'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let crisisProfiles=JSON.parse("'.get_option('crisis_profiles', '[]').'");', 'before');
+                 
+                wp_add_inline_script('dashviz-main-script', 'let recentEvent=JSON.parse("'.get_option('recent_event', '{}').'");', 'before');
 
                 /* if (isset($opts['carousel'])) { */
                 /*     wp_add_inline_script('dashviz-main-script', 'let carouselData=JSON.parse("'.addslashes(json_encode($opts['carousel'])).'");', 'before'); */
@@ -208,12 +244,15 @@ class AdminPanel {
         wp_enqueue_script("jquery-script", 'https://code.jquery.com/jquery-3.2.1.min.js', null, null, true);
         wp_enqueue_style( 'admin-panel-style', plugins_url('/static/css/admin-panel.css', __FILE__) );
         wp_enqueue_script("admin-panel-script", plugins_url('/static/js/admin-panel.js', __FILE__), null, null, true);
-        //wp_add_inline_script('admin-panel-script', 'var data=JSON.parse("'.get_option('dashboard-data', '{}').'");', 'before');
         wp_add_inline_script('admin-panel-script', 'let pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
         wp_add_inline_script('admin-panel-script', 'let carouselImage1="'.get_option('carousel_image1', '').'";', 'before');
+        wp_add_inline_script('admin-panel-script', 'let carouselUrl1="'.get_option('carousel_url1', '').'";', 'before');
         wp_add_inline_script('admin-panel-script', 'let carouselImage2="'.get_option('carousel_image2', '').'";', 'before');
+        wp_add_inline_script('admin-panel-script', 'let carouselUrl2="'.get_option('carousel_url2', '').'";', 'before');
         wp_add_inline_script('admin-panel-script', 'let carouselImage3="'.get_option('carousel_image3', '').'";', 'before');
+        wp_add_inline_script('admin-panel-script', 'let carouselUrl3="'.get_option('carousel_url3', '').'";', 'before');
         wp_add_inline_script('admin-panel-script', 'let crisisProfiles=JSON.parse("'.get_option('crisis_profiles', '[]').'");', 'before');
+        wp_add_inline_script('admin-panel-script', 'let recentEvent=JSON.parse("'.get_option('recent_event', '{}').'");', 'before');
          
         wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
@@ -228,12 +267,5 @@ add_action('init', array($api, 'init'), 10, 0);
 add_action('admin_enqueue_scripts', array($admin_panel, 'load_style'));
 add_action('admin_menu', array($admin_panel, 'init'));
 add_filter('template_include', array( $dashviz, 'init'));
-
-// function wpse_203745_wp_headers( $headers ) {
-    // $headers['Status Code'] = '200 OK';
-    // return $headers;
-// }
-
-// add_filter( 'wp_headers', 'wpse_203745_wp_headers' );
-
+ 
 ?>

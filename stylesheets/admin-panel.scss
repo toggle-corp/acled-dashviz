@@ -36,6 +36,7 @@
 
         .input-group {
             padding: 6px 0;
+            max-width: 320px;
 
             label {
                 color: rgba(0, 0, 0, 0.5);
@@ -46,6 +47,15 @@
             input:not([type="submit"]), select {
                 width: 100%;
             }   
+        }
+
+        img.preview {
+            float: none;
+
+            width: 320px;
+            height: 200px;
+            object-fit: contain;
+            object-position: center center;
         }
 
         &#carousel {
