@@ -70,6 +70,22 @@ $(document).ready(function() {
         hideModal();
     });
 
+    $('#edit-crisis-btn').on('click', function() {
+        let ecm = $('#edit-crisis-modal');
+         
+        let index = ecm.data('crisis-index');
+        let cp = crisisProfiles[index];
+
+
+        cp.title = ecm.find('.crisis-title').val(); 
+        cp.country = ecm.find('.crisis-country').val();
+        cp.date = ecm.find('.crisis-date').val();
+        cp.description = ecm.find('.crisis-description').val();
+
+        refreshCrisisList();
+        hideModal();
+    });
+
     $('#add-timeline-country-btn').on('click', function() {
         hideModal('#add-timeline-country-modal');
          
@@ -195,7 +211,7 @@ $(document).ready(function() {
         loadRecentEvent();
     }
      
-    function addCrisisElement(title, date, country, description){
+    function addCrisisElement(index, title, date, country, description){
         let crisisElement = $('.crisis-profile-template').clone().removeClass('crisis-profile-template').addClass('crisis-profile').appendTo($('#crisis-profile-list .content'));
          
         crisisElement.find('.crisis-title').text(title);
@@ -204,6 +220,17 @@ $(document).ready(function() {
         crisisElement.find('.crisis-description').text(description);
          
         crisisElement.css('display', 'flex');
+
+        crisisElement.data('index', index);
+
+        crisisElement.find('.btn-delete').on('click', function(){
+            let index = $(this).closest('.crisis-profile').data('index');
+            crisisProfiles.splice(index, 1);
+            refreshCrisisList();
+        });
+        crisisElement.find('.btn-edit').on('click', function() {
+            editCrisis(this);
+        });
     }
      
     function refreshCrisisList(){
@@ -211,7 +238,7 @@ $(document).ready(function() {
 
         for (let i=0; i<crisisProfiles.length; i++) {
             let ccp = crisisProfiles[i];
-            addCrisisElement(ccp.title, ccp.date, ccp.country, ccp.description);
+            addCrisisElement(i, ccp.title, ccp.date, ccp.country, ccp.description);
         }
     }
 
@@ -501,4 +528,20 @@ function loadRecentEvent() {
     if (recentEvent.img && recentEvent.img.length > 0) {
         $('#recent-event-image-preview').prop('src', recentEvent.img);
     }
+}
+
+function editCrisis(caller) {
+    let index = $(caller).closest('.crisis-profile').data('index');
+    let cp = crisisProfiles[index];
+
+    let ecm = $('#edit-crisis-modal');
+
+    ecm.find('.crisis-title').val(cp.title);
+    ecm.find('.crisis-country').val(cp.country);
+    ecm.find('.crisis-date').val(cp.date);
+    ecm.find('.crisis-description').val(cp.description);
+
+    ecm.data('crisis-index', index);
+
+    showModal('#edit-crisis-modal');
 }

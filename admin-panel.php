@@ -217,7 +217,10 @@
     <date class="crisis-date"></date>
     <div class="crisis-country"></div>
     <div class="crisis-description"></div>
-    <div class="actions"></div>
+    <div class="actions">
+        <button class="btn-edit"><i class="fa fa-edit"></i></button>
+        <button class="btn-delete"><i class="fa fa-trash"></i></button>
+    </div>
 </div> 
 
 <div id="modal-container" hidden>

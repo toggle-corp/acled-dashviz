@@ -70,6 +70,13 @@
                     object-position: center center;
                     object-fit: scale-down;
                 }
+
+                input {
+                    display: block;
+                }
+            }
+            .save-button-container {
+                margin-top: 10px;
             }
              
         }
@@ -120,8 +127,6 @@
                 }
             }
             #crisis-profile-list {
-                // box-shadow: 0 3px 16px -5px rgba(0, 0, 0, 0.3);
-                
                 .crisis-title {
                     flex-basis: 18%;
                 }
@@ -136,6 +141,33 @@
                 }
                 .actions {
                     flex-basis: 10%;
+
+                    button {
+                        background-color: transparent;
+                        border: none;
+                        outline: none;
+                        border-radius: 50%;
+                        width: 36px;
+                        height: 36px;
+                        color: inherit;
+                        padding: 0;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: rgba(0, 0, 0, 0.1);
+                        } 
+
+                        &.btn-edit {
+                            color: #2980b9;
+                        }
+                        &.btn-delete {
+                            color: #e05646;
+                        }
+                    }
+
                 }
 
                 >header {

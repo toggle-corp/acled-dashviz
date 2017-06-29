@@ -1,13 +1,14 @@
 class BarChart extends Element {
     constructor() {
-        super('<div id="bar-chart-container"></div>')
+        super('<div id="bar-chart-container"></div>');
 
-        this.header = new Element('<header><h4>Top actors</h4></header>')
+        this.header = new Element('<header><h4>Top actors</h4></header>');
         this.barChart = new Element('<div id="bar-chart"></div>');
 
         this.childElements.push(this.header);
         this.childElements.push(this.barChart);
     }
+     
     load(country) {
         $("#bar-chart svg").remove();
 
@@ -46,7 +47,7 @@ class BarChart extends Element {
                         currentData = {'name': data[i], 'count': 0};
                         actors.push(currentData);
                     }
-                    ++currentData.count;;
+                    ++currentData.count;
                 }
                 actors.sort(function(a, b) { return b.count - a.count; });
                 actors.splice(Math.min(10, actors.length));

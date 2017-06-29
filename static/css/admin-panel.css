@@ -45,6 +45,10 @@
         height: 200px;
         object-position: center center;
         object-fit: scale-down; }
+      #dashboard-form section#carousel .input-group input {
+        display: block; }
+    #dashboard-form section#carousel .save-button-container {
+      margin-top: 10px; }
     #dashboard-form section .save-button-container {
       clear: both;
       width: 84px;
@@ -88,6 +92,25 @@
       flex-basis: 40%; }
     #dashboard-form section#crisis-profile-report #crisis-profile-list .actions {
       flex-basis: 10%; }
+      #dashboard-form section#crisis-profile-report #crisis-profile-list .actions button {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        color: inherit;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer; }
+        #dashboard-form section#crisis-profile-report #crisis-profile-list .actions button:hover {
+          background-color: rgba(0, 0, 0, 0.1); }
+        #dashboard-form section#crisis-profile-report #crisis-profile-list .actions button.btn-edit {
+          color: #2980b9; }
+        #dashboard-form section#crisis-profile-report #crisis-profile-list .actions button.btn-delete {
+          color: #e05646; }
     #dashboard-form section#crisis-profile-report #crisis-profile-list > header {
       min-height: 32px;
       display: flex;
