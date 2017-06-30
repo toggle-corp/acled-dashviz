@@ -404,6 +404,9 @@ function submitRecentEvent(caller) {
 
 
 function addTimelineElement(num='00', title='Title', description='Description', img=null) {
+    if ($('.timeline-element').length >= 6) {
+        return;
+    }
     let newElement = $('.timeline-element-template').clone().removeClass('timeline-element-template').addClass('timeline-element');
     newElement.appendTo($('#timeline-elements'));
     newElement.find('.number').find('span').text(num);
