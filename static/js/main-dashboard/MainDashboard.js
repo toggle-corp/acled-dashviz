@@ -37,7 +37,9 @@ class MainDashboard extends Element {
 
         let skipSlide = false;
 
-        rightButton.on('click', function() {
+        rightButton.on('click', function(e) {
+            e.stopPropagation();
+
             let parent = $(this).closest('#carousel-container');
 
             parent.find('a.active').fadeOut(function(){
@@ -52,7 +54,9 @@ class MainDashboard extends Element {
             skipSlide = true;
         });
 
-        leftButton.on('click', function() {
+        leftButton.on('click', function(e) {
+            e.stopPropagation();
+
             let parent = $(this).closest('#carousel-container');
 
             parent.find('a.active').fadeOut(function(){
