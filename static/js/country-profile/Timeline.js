@@ -32,7 +32,6 @@ class Timeline extends Element {
                     timelineData = {'staticImage': false, 'timelineElements': timelineData};
                 }
 
-                console.log(timelineData);
 
                 if (timelineData.staticImage) {
                     that.staticImage.element.prop('src', timelineData.img);

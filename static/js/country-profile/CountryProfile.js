@@ -1,23 +1,26 @@
 class CountryProfile extends Element {
     constructor() {
         super('<div id="country-profile"></div>');
+        this.scrollWrapper = new Element('<div class="scroll-wrapper"></div>');
+        this.childElements.push(this.scrollWrapper);
+
         this.header = new Element('<header><h3><a id="back-btn" class="fa fa-arrow-left"></a><span id="country-name">Country_name</span></h3></header>');
-        this.childElements.push(this.header);
+        this.scrollWrapper.childElements.push(this.header);
 
         this.countryMap = new CountryMap();
-        this.childElements.push(this.countryMap);
+        this.scrollWrapper.childElements.push(this.countryMap);
 
         this.countryReport = new CountryReport();
-        this.childElements.push(this.countryReport);
+        this.scrollWrapper.childElements.push(this.countryReport);
 
         this.timeline = new Timeline();
-        this.childElements.push(this.timeline);
+        this.scrollWrapper.childElements.push(this.timeline);
 
         this.timeSeries = new TimeSeries();
-        this.childElements.push(this.timeSeries);
+        this.scrollWrapper.childElements.push(this.timeSeries);
 
         this.barChart = new BarChart();
-        this.childElements.push(this.barChart);
+        this.scrollWrapper.childElements.push(this.barChart);
 
         let that = this;
         this.header.element.find('a').on('click', function() {
@@ -25,7 +28,8 @@ class CountryProfile extends Element {
         });
     }
     show(country) {
-        this.element.css('display', 'flex');
+        $('html').css('overflow', 'hidden');
+        this.element.show();
         this.header.element.find('#country-name').text(country);
         this.countryMap.load(country);
         this.countryReport.load(country);
@@ -34,6 +38,7 @@ class CountryProfile extends Element {
         this.timeline.load(country);
     }
     hide() {
-        this.element.css('display', 'none');
+        $('html').css('overflow', 'auto');
+        this.element.hide();
     }
 }

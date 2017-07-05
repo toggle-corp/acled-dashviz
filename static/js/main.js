@@ -39,5 +39,9 @@ $(document).ready(function(){
             $('#total-fatalities').find('.number').html(totalFatalities);
         }
     });
+     
 
+    $(window).scroll(function(){
+        $('#country-profile')[0].scrollTop=$(window).scrollTop();
+    });
 });
