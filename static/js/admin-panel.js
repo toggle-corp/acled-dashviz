@@ -273,8 +273,12 @@ function getCountryKey(country) {
 
 function submitCarouselData(caller, formSelector, urlInputSelector) {
     showProgress(caller);
+    let url = $(urlInputSelector).val();
+    url = (url.indexOf('://') === -1) ? 'http://' + url: url;
+    $(urlInputSelector).val(url);
 
-    $(formSelector).find('.url-input').val($(urlInputSelector).val());
+
+    $(formSelector).find('.url-input').val(url);
      
     $.ajax({
         type: 'POST',
@@ -510,6 +514,9 @@ function grabRecentEventData() {
     recentEvent = {};
 
     let url = $('#recent-event-url-input').val();
+    url = (url.indexOf('://') === -1) ? 'http://' + url : url;
+    $('#recent-event-url-input').val(url);
+
     let img = $('#recent-event-image-preview').prop('src');
 
     if(url && img) {
