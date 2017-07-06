@@ -71,7 +71,7 @@ class CrisisProfile extends Element {
             crisisProfiles[i].id = i;
         }
 
-        $("#report-search").selectize({
+        $('#report-search').selectize({
             valueField: 'id',
             labelField: 'title', 
             searchField: ['title', 'country'],
@@ -88,11 +88,17 @@ class CrisisProfile extends Element {
             onChange: function(val) {
                 if(val) {
                     that.loadCrisisProfile(crisisProfiles[val]);
+                    that.keyFiguresSection.load(crisisProfiles[val].country);
                 }
             }
         });
+         
+    }
+
+    load () {
         if(crisisProfiles.length > 0) {
             this.loadCrisisProfile(crisisProfiles[0]);
+            this.keyFiguresSection.load(crisisProfiles[0].country);
         }
     }
 }

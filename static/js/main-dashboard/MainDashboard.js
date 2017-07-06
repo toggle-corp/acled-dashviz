@@ -83,7 +83,12 @@ class MainDashboard extends Element {
         this.crisisProfile = new CrisisProfile();
         this.rightSection.childElements.push(this.crisisProfile);
     }
+     
     loadMap() {
         this.dashboardMap.loadDataToMap();
+    }
+
+    load() {
+        this.crisisProfile.load();
     }
 }

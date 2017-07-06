@@ -10,7 +10,7 @@ $(document).ready(function(){
         method: 'GET',
         url: 'https://api.acleddata.com/acled/read.csv',
         data: {'limit': '1000', 'fields': 'country|event_type|latitude|longitude|fatalities'},
-        success: function(data){
+        success: function(data) {
             let rows = data.split('\n');
             let keys = rows[0].split(',');
 
@@ -34,9 +34,11 @@ $(document).ready(function(){
 
             dashboard.loadMainMap();
 
+            dashboard.load();
+
             // fill in key figures
-            $('#number-of-events').find('.number').html(acledData.length);
-            $('#total-fatalities').find('.number').html(totalFatalities);
+  //          $('#number-of-events').find('.number').html(acledData.length);
+   //         $('#total-fatalities').find('.number').html(totalFatalities);
         }
     });
      
