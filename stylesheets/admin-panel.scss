@@ -29,9 +29,29 @@
         color: #27ae60;
     }
 
+    .tabs {
+        border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+         
+        .tab {
+            padding: 0px 10px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            margin-bottom: -2px;
+            user-select: none;
+
+            &.active {
+                border-bottom-color: #2980b9;
+            }
+        }
+    }
+       
+
     section {
+        display: none;
         padding: 16px 0;
-        border-top: 2px solid rgba(0, 0, 0, 0.1);
         clear: both;
 
         .input-group {
@@ -109,7 +129,6 @@
         }
         
         &#crisis-profile-report {
-
             > header {
                 height: 56px;
                 display: flex;
@@ -137,7 +156,22 @@
                     flex-basis: 16%;
                 }
                 .crisis-description {
-                    flex-basis: 40%;
+                    flex-basis: 30%;
+                }
+                .crisis-recent-event {
+                    flex-basis: 10%;
+
+                    a {
+                        width: 100%;
+                        height: 100%;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: contain;
+                            object-position: center center;
+                        }
+                    }
                 }
                 .actions {
                     flex-basis: 10%;
@@ -178,8 +212,6 @@
                     background-color: #fff;
                     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
                     padding-right: 16px;
-
-
                     
                     label {
                         padding: 0 6px;
@@ -188,7 +220,7 @@
                 }
 
                 .content {
-                    height: 300px;
+                    height: 500px;
                     overflow-y: scroll;
 
                     .crisis-profile {
@@ -206,6 +238,25 @@
 
             }
             
+        }
+
+        &#country-reports {
+            > header {
+                height: 56px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
+                h2 {
+                    margin-right: 16px;
+                }
+                button {
+                    padding: 6px 24px;
+                    border: none;
+                    text-transform: uppercase;
+                    margin-left: 10px;
+                }
+            }
         }
     }
 
@@ -371,7 +422,6 @@
                     bottom: calc(50% + 30px);
                 }
             }
-
         }
     }
 }
@@ -420,6 +470,29 @@
                 }
                 input {
                     flex-basis: 80%;
+                }
+
+                &.recent-event-input-group {
+                    flex-wrap: wrap;
+                     
+                    >div {
+                        flex-basis: 40%;
+                        
+                        input {
+                            width: 100%;
+                        }
+                    }
+
+                    img {
+                        padding: 8px;
+                        flex-basis: calc(40% - 16px);
+                        width: calc(40% - 16px);
+                        height: 144px;
+                        flex-grow: none;
+                        flex-shrink: none;
+                        object-position: center center;
+                        object-fit: contain;
+                    }
                 }
             }
 

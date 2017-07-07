@@ -13,12 +13,7 @@ class CrisisProfile extends Element {
             `
         );
         if(recentEvent) {
-            if(recentEvent.url) {
-                this.recentEventsSection.element.find('a').prop('href', recentEvent.url);
-            }
-            if(recentEvent.img) {
-                this.recentEventsSection.element.find('img').prop('src', recentEvent.img);
-            }
+            
         }
 
         this.reportSelectContainer = new Element(
@@ -89,6 +84,19 @@ class CrisisProfile extends Element {
                 if(val) {
                     that.loadCrisisProfile(crisisProfiles[val]);
                     that.keyFiguresSection.load(crisisProfiles[val].country);
+                     
+                    if(crisisProfiles[val]['recent-event-url']) {
+                        that.recentEventsSection.element.find('a').prop('href', crisisProfiles[val]['recent-event-url']);
+                    } else {
+                        that.recentEventsSection.element.find('a').prop('href', '');
+                         
+                    }
+                     
+                    if(crisisProfiles[val]['recent-event-img']) {
+                        that.recentEventsSection.element.find('img').prop('src', crisisProfiles[val]['recent-event-img']);
+                    } else {
+                        that.recentEventsSection.element.find('img').prop('src', '');
+                    }
                 }
             }
         });
@@ -99,6 +107,12 @@ class CrisisProfile extends Element {
         if(crisisProfiles.length > 0) {
             this.loadCrisisProfile(crisisProfiles[0]);
             this.keyFiguresSection.load(crisisProfiles[0].country);
+            if(crisisProfiles[0]['recent-event-url']) {
+                this.recentEventsSection.element.find('a').prop('href', crisisProfiles[0]['recent-event-url']);
+            }
+            if(crisisProfiles[0]['recent-event-img']) {
+                this.recentEventsSection.element.find('img').prop('src', crisisProfiles[0]['recent-event-img']);
+            } 
         }
     }
 }

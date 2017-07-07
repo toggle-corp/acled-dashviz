@@ -51,13 +51,13 @@ body {
                     box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.5);
 
                     #world-map {
-                        height: 50vh;
+                        height: calc(56vh - 84px);
                         flex-basis: 64%;
                         background-color: rgba(0, 0, 0, 0.1);
                     }
                     .legend {
                         padding-bottom: 10px;
-                        min-height: 64px;
+                        height: 84px;
                          
                         header {
                             display: flex;
@@ -115,7 +115,7 @@ body {
                 }
 
                 #carousel-container {
-                    height: 40vh;
+                    height: calc(44vh - 16px); 
                     background-color: #fff;
                     position: relative;
                     box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.5);
@@ -345,6 +345,7 @@ body {
 
                         a {
                             height: calc(100% - 48px);
+                            padding: 0 16px 10px 16px;
 
                             img {
                                 width: 100%;
@@ -433,7 +434,7 @@ body {
 
                         header {
                             display: flex;
-                            height: 48px;
+                            height: 32px;
                             align-items: center;
                             padding: 0 10px;
 

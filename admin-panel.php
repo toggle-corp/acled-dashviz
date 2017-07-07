@@ -2,6 +2,13 @@
 
     <h1>ACLED dashboard</h1>
 
+    <div class="tabs">
+        <a class="tab" data-target="#carousel">Carousel</a>
+        <a class="tab" data-target="#crisis-profile-report">Crisis Profile</a>
+        <a class="tab" data-target="#country-reports">Country Report</a>
+        <a class="tab" data-target="#timeline">Timeline</a>
+    </div>
+
     <section id="carousel">
         <h2>Carousel</h2>
         <div class="input-group" id="image-1-container">
@@ -53,6 +60,7 @@
                 <label class="crisis-date">Date</label>
                 <label class="crisis-country">Country</label>
                 <label class="crisis-description">Description</label>
+                <label class="criris-recent-event">Recent Event</label>
                 <label class="actions">Actions</label>
             </header>
             <div class="content">
@@ -64,7 +72,7 @@
             <button onclick="submitCrisisProfiles(this);">Save</button>
         </div>
     </section>
-
+<!--
     <section id="recent-event">
         <header>
             <h2>Recent event</h2>
@@ -86,6 +94,7 @@
             </div>
         </div>
     </section>
+-->
      
     <section id="country-reports">
         <header>
@@ -217,6 +226,7 @@
     <date class="crisis-date"></date>
     <div class="crisis-country"></div>
     <div class="crisis-description"></div>
+    <div class="crisis-recent-event"><a><img></a></div>
     <div class="actions">
         <button class="btn-edit"><i class="fa fa-edit"></i></button>
         <button class="btn-delete"><i class="fa fa-trash"></i></button>
@@ -245,7 +255,15 @@
                 <label>Description</label>
                 <input type="text" name="crisis-description" class="crisis-description">
             </div>
-             <div class="action-buttons">
+            <div class="input-group recent-event-input-group">
+                <label>Recent event</label>
+                <div>
+                    <input type="text" class="crisis-recent-event-url" placeholder="Url (eg: http://www.example.com)">
+                    <input type="file" accept="image/*" id="add-crisis-recent-event-image-input">
+                </div>
+                <img class="preview" id="add-crisis-recent-event-image-preview" alt="no preview available">
+            </div>
+            <div class="action-buttons">
                 <button onclick="hideModal()">Cancel</button>
                 <button id="add-crisis-btn">Add crisis</button>
             </div>
@@ -273,6 +291,14 @@
                 <label>Description</label>
                 <input type="text" name="crisis-description" class="crisis-description">
             </div>
+            <div class="input-group recent-event-input-group">
+                <label>Recent event</label>
+                <div>
+                    <input type="text" class="crisis-recent-event-url" placeholder="Url (eg: http://www.example.com)">
+                    <input type="file" accept="image/*" id="edit-crisis-recent-event-image-input">
+                </div>
+                <img class="preview" id="edit-crisis-recent-event-image-preview" alt="no preview available">
+            </div> 
             <div class="action-buttons">
                 <button onclick="hideModal()">Cancel</button>
                 <button id="edit-crisis-btn">Save</button>

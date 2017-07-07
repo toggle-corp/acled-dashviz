@@ -53,6 +53,29 @@ $(document).ready(function() {
             fr.readAsDataURL(this.files[0]);
         } 
     });
+     
+    $('#add-crisis-recent-event-image-input').on('change', function() {
+        if (this.files && this.files[0]) {
+            let fr = new FileReader();
+
+            fr.addEventListener("load", function(e) {
+                $('#add-crisis-recent-event-image-preview')[0].src = e.target.result;
+            }); 
+
+            fr.readAsDataURL(this.files[0]);
+        } 
+    });
+    $('#edit-crisis-recent-event-image-input').on('change', function() {
+        if (this.files && this.files[0]) {
+            let fr = new FileReader();
+
+            fr.addEventListener("load", function(e) {
+                $('#edit-crisis-recent-event-image-preview')[0].src = e.target.result;
+            }); 
+
+            fr.readAsDataURL(this.files[0]);
+        } 
+    }); 
 
 
     $('#add-crisis-btn').on('click', function() {
@@ -61,12 +84,18 @@ $(document).ready(function() {
         let newCrisisDateInput = newCrisis.find('.crisis-date');
         let newCrisisCountryInput = newCrisis.find('.crisis-country');
         let newCrisisDescriptionInput = newCrisis.find('.crisis-description');
+         
+        let url = newCrisis.find('.crisis-recent-event-url').val();
+        let newCrisisRecentEventImage = newCrisis.find('.preview').prop('src');
+         
+        url = (url.indexOf('://') === -1) ? 'http://' + url: url;
         
-        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'country': newCrisisCountryInput.val(), 'description': newCrisisDescriptionInput.val()}); 
+        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'country': newCrisisCountryInput.val(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage }); 
         // crisisProfiles.sort(function(a, b) { return a.country - b.country; });
         refreshCrisisList();
 
         newCrisis.find('input').val('');
+        newCrisisRecentEventImage.prop('src', '');
         hideModal();
     });
 
@@ -76,11 +105,16 @@ $(document).ready(function() {
         let index = ecm.data('crisis-index');
         let cp = crisisProfiles[index];
 
-
         cp.title = ecm.find('.crisis-title').val(); 
         cp.country = ecm.find('.crisis-country').val();
         cp.date = ecm.find('.crisis-date').val();
         cp.description = ecm.find('.crisis-description').val();
+         
+        let url = ecm.find('.crisis-recent-event-url').val();
+        url = (url.indexOf('://') === -1) ? 'http://' + url: url;
+
+        cp['recent-event-url'] = url;
+        cp['recent-event-img'] = ecm.find('.preview').prop('src');
 
         refreshCrisisList();
         hideModal();
@@ -211,7 +245,7 @@ $(document).ready(function() {
         loadRecentEvent();
     }
      
-    function addCrisisElement(index, title, date, country, description){
+    function addCrisisElement(index, title, date, country, description, recentEventImage, recentEventUrl){
         let crisisElement = $('.crisis-profile-template').clone().removeClass('crisis-profile-template').addClass('crisis-profile').appendTo($('#crisis-profile-list .content'));
          
         crisisElement.find('.crisis-title').text(title);
@@ -231,6 +265,12 @@ $(document).ready(function() {
         crisisElement.find('.btn-edit').on('click', function() {
             editCrisis(this);
         });
+
+        if(recentEventImage) {
+            let re = crisisElement.find('.crisis-recent-event');
+            re.find('img').prop('src', recentEventImage);
+            re.find('a').prop('href', recentEventUrl);
+        }
     }
      
     function refreshCrisisList(){
@@ -238,9 +278,20 @@ $(document).ready(function() {
 
         for (let i=0; i<crisisProfiles.length; i++) {
             let ccp = crisisProfiles[i];
-            addCrisisElement(i, ccp.title, ccp.date, ccp.country, ccp.description);
+            addCrisisElement(i, ccp.title, ccp.date, ccp.country, ccp.description, ccp['recent-event-img'], ccp['recent-event-url']);
         }
     }
+
+    $('.tab').on('click', function() {
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+
+        let target = $(this).data('target');
+        $(target).siblings('section').hide();
+        $(target).show();
+    });
+
+    $('.tab').eq(0).trigger('click');
 
 });
 
@@ -406,7 +457,6 @@ function submitRecentEvent(caller) {
     });
 }
 
-
 function addTimelineElement(num='00', title='Title', description='Description', img=null) {
     if ($('.timeline-element').length >= 6) {
         return;
@@ -462,7 +512,6 @@ function grabTimelineData() {
         });
     }
 }
- 
 
 function loadReportData() {
     let cr = $('#country-reports');
@@ -550,6 +599,9 @@ function editCrisis(caller) {
     ecm.find('.crisis-country').val(cp.country);
     ecm.find('.crisis-date').val(cp.date);
     ecm.find('.crisis-description').val(cp.description);
+
+    ecm.find('.crisis-recent-event-url').val(cp['recent-event-url']);
+    ecm.find('.preview').prop('src', cp['recent-event-image']);
 
     ecm.data('crisis-index', index);
 

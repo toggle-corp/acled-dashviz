@@ -36,9 +36,6 @@ $(document).ready(function(){
 
             dashboard.load();
 
-            // fill in key figures
-  //          $('#number-of-events').find('.number').html(acledData.length);
-   //         $('#total-fatalities').find('.number').html(totalFatalities);
         }
     });
      

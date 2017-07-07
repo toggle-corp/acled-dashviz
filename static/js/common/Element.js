@@ -9,7 +9,7 @@ class Element {
         }
     }
     initDomAll(parent) {
-        if(this.element == null) {
+        if(!this.element) {
             return;
         }
         this.initDom(parent);
