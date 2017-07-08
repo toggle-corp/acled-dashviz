@@ -450,9 +450,22 @@ body #dashboard {
           height: 56px;
           padding: 0 24px;
           display: flex;
-          align-items: center; }
+          align-items: center;
+          justify-content: space-between; }
           body #dashboard #country-profile .scroll-wrapper #time-series-container header h4 {
             font-size: 1em; }
+          body #dashboard #country-profile .scroll-wrapper #time-series-container header button {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: rgba(0, 0, 0, 0.5);
+            border: none;
+            outline: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%; }
+            body #dashboard #country-profile .scroll-wrapper #time-series-container header button:hover {
+              background-color: rgba(0, 0, 0, 0.1); }
         body #dashboard #country-profile .scroll-wrapper #time-series-container #time-series {
           height: calc(100% - 48px); }
           body #dashboard #country-profile .scroll-wrapper #time-series-container #time-series svg {
@@ -480,9 +493,22 @@ body #dashboard {
           height: 56px;
           padding: 0 24px;
           display: flex;
-          align-items: center; }
+          align-items: center;
+          justify-content: space-between; }
           body #dashboard #country-profile .scroll-wrapper #bar-chart-container header h4 {
             font-size: 1em; }
+          body #dashboard #country-profile .scroll-wrapper #bar-chart-container header button {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: rgba(0, 0, 0, 0.5);
+            border: none;
+            outline: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%; }
+            body #dashboard #country-profile .scroll-wrapper #bar-chart-container header button:hover {
+              background-color: rgba(0, 0, 0, 0.1); }
         body #dashboard #country-profile .scroll-wrapper #bar-chart-container #bar-chart {
           height: calc(100% - 48px); }
           body #dashboard #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg {

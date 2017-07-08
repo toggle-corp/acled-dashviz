@@ -65,6 +65,7 @@ $(document).ready(function() {
             fr.readAsDataURL(this.files[0]);
         } 
     });
+     
     $('#edit-crisis-recent-event-image-input').on('change', function() {
         if (this.files && this.files[0]) {
             let fr = new FileReader();

@@ -649,9 +649,27 @@ body {
                         padding: 0 24px;
                         display: flex;
                         align-items: center;
+                        justify-content: space-between;
 
                         h4{
                             font-size: 1em;
+                        }
+                         
+                        button{
+                            margin: 0;
+                            padding: 0;
+                            background-color: transparent;
+                            color: rgba(0, 0, 0, 0.5);
+                            border: none;
+                            outline: none;
+                            width: 36px;
+                            height: 36px;
+                            border-radius: 50%;
+                            
+                            &:hover {
+                                background-color: rgba(0, 0, 0, 0.1);
+                            }
+
                         }
                     }
 
@@ -698,10 +716,28 @@ body {
                         padding: 0 24px;
                         display: flex;
                         align-items: center;
+                        justify-content: space-between;
 
                         h4 {
                             font-size: 1em;
                         }
+                         
+                        button{
+                            margin: 0;
+                            padding: 0;
+                            background-color: transparent;
+                            color: rgba(0, 0, 0, 0.5);
+                            border: none;
+                            outline: none;
+                            width: 36px;
+                            height: 36px;
+                            border-radius: 50%;
+
+                            &:hover {
+                                background-color: rgba(0, 0, 0, 0.1);
+                            }
+
+                        } 
                     }
 
                     #bar-chart {
