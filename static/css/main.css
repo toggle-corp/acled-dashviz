@@ -5,8 +5,8 @@ body #page, body .inner-wrap {
   width: 100% !important;
   box-sizing: border-box; }
 body #page {
-  background-color: #eee;
-  padding: 32px; }
+  background-color: #f8f8f8;
+  padding: 0 32px; }
 body #main {
   padding: 0; }
 body #header-text-nav-container {
@@ -443,18 +443,75 @@ body #dashboard {
           object-fit: contain;
           object-position: center center;
           display: none; }
+      body #dashboard #country-profile .scroll-wrapper .filter-wrapper {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff; }
+        body #dashboard #country-profile .scroll-wrapper .filter-wrapper > header {
+          padding: 0 24px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between; }
+          body #dashboard #country-profile .scroll-wrapper .filter-wrapper > header h4 {
+            font-size: 1em; }
+          body #dashboard #country-profile .scroll-wrapper .filter-wrapper > header button {
+            margin: 0;
+            background-color: transparent;
+            text-transform: uppercase;
+            padding: 0;
+            border: none;
+            outline: none;
+            margin-left: 24px;
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 0.9em;
+            box-shadow: none; }
+            body #dashboard #country-profile .scroll-wrapper .filter-wrapper > header button:hover {
+              color: rgba(0, 0, 0, 0.9); }
+        body #dashboard #country-profile .scroll-wrapper .filter-wrapper section {
+          padding: 0 24px 10px 24px; }
+          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section:not(:last-child) {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section > header {
+            height: 48px;
+            display: flex;
+            align-items: center; }
+            body #dashboard #country-profile .scroll-wrapper .filter-wrapper section > header h5 {
+              font-size: 1em;
+              color: rgba(0, 0, 0, 0.5); }
+          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .checkbox-input, body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .radio-input {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 24px 3px 0;
+            cursor: pointer; }
+            body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .checkbox-input input, body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .radio-input input {
+              margin-right: 8px; }
+          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section#filter-year .content {
+            display: flex;
+            justify-content: space-between; }
+            body #dashboard #country-profile .scroll-wrapper .filter-wrapper section#filter-year .content .input-container {
+              display: flex; }
+              body #dashboard #country-profile .scroll-wrapper .filter-wrapper section#filter-year .content .input-container label {
+                margin-right: 8px; }
+              body #dashboard #country-profile .scroll-wrapper .filter-wrapper section#filter-year .content .input-container input {
+                margin: 0; }
       body #dashboard #country-profile .scroll-wrapper #time-series-container {
         height: 50vh;
-        flex-basis: calc(50% - 8px); }
-        body #dashboard #country-profile .scroll-wrapper #time-series-container header {
+        flex-basis: calc(50% - 8px);
+        position: relative; }
+        body #dashboard #country-profile .scroll-wrapper #time-series-container > header {
           height: 56px;
           padding: 0 24px;
           display: flex;
           align-items: center;
           justify-content: space-between; }
-          body #dashboard #country-profile .scroll-wrapper #time-series-container header h4 {
+          body #dashboard #country-profile .scroll-wrapper #time-series-container > header h4 {
             font-size: 1em; }
-          body #dashboard #country-profile .scroll-wrapper #time-series-container header button {
+          body #dashboard #country-profile .scroll-wrapper #time-series-container > header button {
             margin: 0;
             padding: 0;
             background-color: transparent;
@@ -464,7 +521,7 @@ body #dashboard {
             width: 36px;
             height: 36px;
             border-radius: 50%; }
-            body #dashboard #country-profile .scroll-wrapper #time-series-container header button:hover {
+            body #dashboard #country-profile .scroll-wrapper #time-series-container > header button:hover {
               background-color: rgba(0, 0, 0, 0.1); }
         body #dashboard #country-profile .scroll-wrapper #time-series-container #time-series {
           height: calc(100% - 48px); }

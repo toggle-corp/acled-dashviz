@@ -18,6 +18,13 @@ function addEvent(eventName) {
     ++acledEvents[eventName];
 }
 
+function compareEvents(e1, e2) {
+    if(e1.toLowerCase().includes('battle') && e2.toLowerCase().includes('battle')) {
+        return true;
+    }
+    return e1.toLowerCase() == e2.toLowerCase();
+}
+
 let totalFatalities = 0;
 function addFatalities(fatalities) {
     totalFatalities += (fatalities >> 0);

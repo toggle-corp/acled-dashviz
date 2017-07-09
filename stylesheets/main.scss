@@ -10,8 +10,8 @@ body {
         box-sizing: border-box;
     }
     #page{
-        background-color: #eee;
-        padding: 32px;
+        background-color: #f8f8f8;
+        padding: 0 32px;
     }
     #main{
         padding: 0;
@@ -640,11 +640,103 @@ body {
                         display: none;
                     }
                 }
+                 
+                .filter-wrapper{
+                    display: none;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: #fff;
+
+                    >header {
+                        padding: 0 24px;
+                        height: 48px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        h4 {
+                            font-size: 1em;
+                        }
+
+                        button {
+                            margin: 0;
+                            background-color: transparent;
+                            text-transform: uppercase;
+                            padding: 0;
+                            border: none;
+                            outline: none;
+                            margin-left: 24px;
+                            color: rgba(0, 0, 0, 0.3);
+                            font-size: 0.9em;
+                            box-shadow: none;
+
+                            &:hover {
+                                color: rgba(0, 0, 0, 0.9);
+                            }
+
+
+                        }
+                    }
+
+                    section {
+                        padding: 0 24px 10px 24px;
+
+                        &:not(:last-child) {
+                            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                        }
+
+                        >header{
+                            height: 48px;
+                            display: flex;
+                            align-items: center;
+
+                            h5 {
+                                font-size: 1em;
+                                color: rgba(0, 0, 0, 0.5);
+                            }
+                        }
+                        .checkbox-input, .radio-input {
+                            display: inline-flex;
+                            align-items: center;
+                            padding: 3px 24px 3px 0;
+                            cursor: pointer;
+
+                            input {
+                                margin-right: 8px;
+                            }
+                        }
+                        
+                        &#filter-year {
+                            .content {
+                                display: flex;
+                                justify-content: space-between;
+
+                                .input-container {
+                                    display: flex;
+
+                                    label {
+                                        margin-right: 8px;
+                                    }
+
+                                    input {
+                                        margin: 0;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+                 
                 #time-series-container {
                     height: 50vh;
                     flex-basis: calc(50% - 8px);
+                    position: relative;
 
-                    header{
+                    >header{
                         height: 56px;
                         padding: 0 24px;
                         display: flex;
