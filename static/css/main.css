@@ -356,8 +356,7 @@ body #dashboard {
               padding: 10px 0; }
       body #dashboard #country-profile .scroll-wrapper #timeline-container {
         flex-basis: 100%;
-        height: 60vh;
-        margin-bottom: 16px; }
+        height: 60vh; }
         body #dashboard #country-profile .scroll-wrapper #timeline-container #timeline-elements {
           display: flex;
           height: 100%;
@@ -502,7 +501,8 @@ body #dashboard {
       body #dashboard #country-profile .scroll-wrapper #time-series-container {
         height: 50vh;
         flex-basis: calc(50% - 8px);
-        position: relative; }
+        position: relative;
+        margin-bottom: 16px; }
         body #dashboard #country-profile .scroll-wrapper #time-series-container > header {
           height: 56px;
           padding: 0 24px;
@@ -545,7 +545,8 @@ body #dashboard {
               font-size: 10px; }
       body #dashboard #country-profile .scroll-wrapper #bar-chart-container {
         height: 50vh;
-        flex-basis: calc(50% - 8px); }
+        flex-basis: calc(50% - 8px);
+        margin-bottom: 16px; }
         body #dashboard #country-profile .scroll-wrapper #bar-chart-container header {
           height: 56px;
           padding: 0 24px;

@@ -13,14 +13,14 @@ class CountryProfile extends Element {
         this.countryReport = new CountryReport();
         this.scrollWrapper.childElements.push(this.countryReport);
 
-        this.timeline = new Timeline();
-        this.scrollWrapper.childElements.push(this.timeline);
-
         this.timeSeries = new TimeSeries();
         this.scrollWrapper.childElements.push(this.timeSeries);
 
         this.barChart = new BarChart();
         this.scrollWrapper.childElements.push(this.barChart);
+
+        this.timeline = new Timeline();
+        this.scrollWrapper.childElements.push(this.timeline);
 
         let that = this;
         this.header.element.find('a').on('click', function() {
