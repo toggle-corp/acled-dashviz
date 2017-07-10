@@ -78,7 +78,7 @@ class BarChart extends Element {
     }
 
     filterByEvents() {
-        let container = this.filterWrapper.element.find('#filter-event-type .content');
+        let container = this.filterWrapper.element.find('.filter-event-type .content');
         let requiredEvents = container.find('input[type="checkbox"]:checked').map(function() {
             return $(this).data('target');
         }).get();
@@ -87,7 +87,7 @@ class BarChart extends Element {
     }
 
     filterByInteraction() {
-        let container = this.filterWrapper.element.find('#filter-interaction .content');
+        let container = this.filterWrapper.element.find('.filter-interaction .content');
         let lowerLimit = 0;
         let upperLimit = 0;
          
@@ -119,7 +119,7 @@ class BarChart extends Element {
     }
 
     filterByFatalities() {
-        let container = this.filterWrapper.element.find('#filter-fatalities .content');
+        let container = this.filterWrapper.element.find('.filter-fatalities .content');
         let lowerLimit = 0;
         let upperLimit = 0;
          
@@ -155,7 +155,7 @@ class BarChart extends Element {
     }
 
     filterByYear() {
-        let container = this.filterWrapper.element.find('#filter-year');
+        let container = this.filterWrapper.element.find('.filter-year');
          
         let startYear = container.find('.start-year').val(); 
         startYear = startYear? (new Date(startYear)) : (new Date(0));
