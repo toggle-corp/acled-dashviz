@@ -4,7 +4,7 @@ class TimeSeries extends Element {
         this.header = new Element('<header><h4>Events over year</h4><button id="time-series-filter"><i class="fa fa-filter"></i></button></header>');
         this.timeSeries = new Element('<div id="time-series"></div>');
 
-        this.filterWrapper = new FilterWrapper();
+        this.filterWrapper = new FilterWrapper('time-series');
 
         this.childElements.push(this.header);
         this.childElements.push(this.timeSeries);

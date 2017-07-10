@@ -471,6 +471,9 @@ body #dashboard {
             box-shadow: none; }
             body #dashboard #country-profile .scroll-wrapper .filter-wrapper > header button:hover {
               color: rgba(0, 0, 0, 0.9); }
+        body #dashboard #country-profile .scroll-wrapper .filter-wrapper .content {
+          height: calc(100% - 48px);
+          overflow-y: auto; }
         body #dashboard #country-profile .scroll-wrapper .filter-wrapper section {
           padding: 0 24px 10px 24px; }
           body #dashboard #country-profile .scroll-wrapper .filter-wrapper section:not(:last-child) {
@@ -489,14 +492,14 @@ body #dashboard {
             cursor: pointer; }
             body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .checkbox-input input, body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .radio-input input {
               margin-right: 8px; }
-          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section#filter-year .content {
+          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section.filter-year .content {
             display: flex;
             justify-content: space-between; }
-            body #dashboard #country-profile .scroll-wrapper .filter-wrapper section#filter-year .content .input-container {
+            body #dashboard #country-profile .scroll-wrapper .filter-wrapper section.filter-year .content .input-container {
               display: flex; }
-              body #dashboard #country-profile .scroll-wrapper .filter-wrapper section#filter-year .content .input-container label {
+              body #dashboard #country-profile .scroll-wrapper .filter-wrapper section.filter-year .content .input-container label {
                 margin-right: 8px; }
-              body #dashboard #country-profile .scroll-wrapper .filter-wrapper section#filter-year .content .input-container input {
+              body #dashboard #country-profile .scroll-wrapper .filter-wrapper section.filter-year .content .input-container input {
                 margin: 0; }
       body #dashboard #country-profile .scroll-wrapper #time-series-container {
         height: 50vh;
@@ -546,16 +549,17 @@ body #dashboard {
       body #dashboard #country-profile .scroll-wrapper #bar-chart-container {
         height: 50vh;
         flex-basis: calc(50% - 8px);
-        margin-bottom: 16px; }
-        body #dashboard #country-profile .scroll-wrapper #bar-chart-container header {
+        margin-bottom: 16px;
+        position: relative; }
+        body #dashboard #country-profile .scroll-wrapper #bar-chart-container > header {
           height: 56px;
           padding: 0 24px;
           display: flex;
           align-items: center;
           justify-content: space-between; }
-          body #dashboard #country-profile .scroll-wrapper #bar-chart-container header h4 {
+          body #dashboard #country-profile .scroll-wrapper #bar-chart-container > header h4 {
             font-size: 1em; }
-          body #dashboard #country-profile .scroll-wrapper #bar-chart-container header button {
+          body #dashboard #country-profile .scroll-wrapper #bar-chart-container > header button {
             margin: 0;
             padding: 0;
             background-color: transparent;
@@ -565,7 +569,7 @@ body #dashboard {
             width: 36px;
             height: 36px;
             border-radius: 50%; }
-            body #dashboard #country-profile .scroll-wrapper #bar-chart-container header button:hover {
+            body #dashboard #country-profile .scroll-wrapper #bar-chart-container > header button:hover {
               background-color: rgba(0, 0, 0, 0.1); }
         body #dashboard #country-profile .scroll-wrapper #bar-chart-container #bar-chart {
           height: calc(100% - 48px); }

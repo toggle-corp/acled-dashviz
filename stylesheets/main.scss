@@ -680,6 +680,11 @@ body {
                         }
                     }
 
+                    .content {
+                        height: calc(100% - 48px);
+                        overflow-y: auto;
+                    }
+
                     section {
                         padding: 0 24px 10px 24px;
 
@@ -708,7 +713,7 @@ body {
                             }
                         }
                         
-                        &#filter-year {
+                        &.filter-year {
                             .content {
                                 display: flex;
                                 justify-content: space-between;
@@ -803,8 +808,9 @@ body {
                     height: 50vh;
                     flex-basis: calc(50% - 8px);
                     margin-bottom: 16px;
+                    position: relative;
 
-                    header {
+                    > header {
                         height: 56px;
                         padding: 0 24px;
                         display: flex;
