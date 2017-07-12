@@ -15,7 +15,7 @@ class DashboardMap extends Element {
             attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
 
-        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 1000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
+        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 8000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
 		//var layerControl = L.control.layers([], {"Circles" :conditionalLayer}).addTo(map);
 
         // Toggle scroll-zoom by clicking on and outside map

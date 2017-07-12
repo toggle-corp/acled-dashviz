@@ -59,6 +59,7 @@ class CountryProfile extends Element {
         this.filterByInteraction();
         this.filterByFatalities();
         this.filterByYear();
+        this.filterByAdmin1s();
         this.filterWrapper.element.hide();
         this.render();
     }
@@ -70,6 +71,18 @@ class CountryProfile extends Element {
         }).get();
 
         this.filteredData = this.filteredData.filter(x => requiredEvents.find(y => compareEvents(x.event_type, y)));
+    }
+
+    filterByAdmin1s() {
+        let container = this.filterWrapper.element.find('.filter-admin1 .selected-admin1s');
+        let requiredAdmin1s = container.find('.selected-admin1').map(function() {
+            return $(this).find('.name').text();
+        }).get();
+
+        if (requiredAdmin1s.length > 0) {
+            this.filteredData = this.filteredData.filter(x => requiredAdmin1s.find(y => x.admin1 == y));
+        }
+
     }
 
     filterByInteraction() {
