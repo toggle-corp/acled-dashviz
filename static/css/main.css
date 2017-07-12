@@ -265,19 +265,29 @@ body #dashboard {
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      padding: 16px;
+      padding: 10px 32px;
       padding-top: 0;
       background-color: #eee;
       overflow-y: scroll;
-      height: 100vh; }
+      height: 100vh;
+      padding-top: 100px; }
       body #dashboard #country-profile .scroll-wrapper > div {
-        box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.5);
-        background-color: #fff; }
+        box-shadow: 0 2px 10px -5px rgba(0, 0, 0, 0.5);
+        background-color: #fafafa; }
       body #dashboard #country-profile .scroll-wrapper > header {
-        height: 64px;
+        height: 84px;
         flex-basis: 100%;
         display: flex;
-        align-items: center; }
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 24px;
+        z-index: 1111;
+        background-color: #fff;
+        box-shadow: 0 2px 10px -5px rgba(0, 0, 0, 0.3); }
         body #dashboard #country-profile .scroll-wrapper > header a {
           cursor: pointer;
           color: inherit; }
@@ -285,10 +295,25 @@ body #dashboard {
           color: inherit;
           font-size: 1em;
           padding: 0 16px; }
+        body #dashboard #country-profile .scroll-wrapper > header #filter-btn {
+          margin: 0;
+          border: none;
+          background-color: transparent;
+          color: rgba(0, 0, 0, 0.5);
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: none;
+          outline: none; }
+          body #dashboard #country-profile .scroll-wrapper > header #filter-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1); }
       body #dashboard #country-profile .scroll-wrapper #country-map-container {
-        flex-basis: calc(60% - 16px);
+        flex-basis: calc(50% - 8px);
         margin-bottom: 16px;
-        height: 60vh; }
+        height: 50vh; }
         body #dashboard #country-profile .scroll-wrapper #country-map-container #country-map {
           height: calc(100% - 96px); }
         body #dashboard #country-profile .scroll-wrapper #country-map-container .legend {
@@ -322,9 +347,9 @@ body #dashboard {
                 body #dashboard #country-profile .scroll-wrapper #country-map-container .legend .legend-elements .legend-element label:first-letter {
                   text-transform: uppercase; }
       body #dashboard #country-profile .scroll-wrapper #country-report-container {
-        flex-basis: calc(40%);
+        flex-basis: calc(50% - 8px);
         margin-bottom: 16px;
-        height: 60vh; }
+        height: 50vh; }
         body #dashboard #country-profile .scroll-wrapper #country-report-container header {
           height: 56px;
           padding: 0 24px;
@@ -442,65 +467,6 @@ body #dashboard {
           object-fit: contain;
           object-position: center center;
           display: none; }
-      body #dashboard #country-profile .scroll-wrapper .filter-wrapper {
-        display: none;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #fff; }
-        body #dashboard #country-profile .scroll-wrapper .filter-wrapper > header {
-          padding: 0 24px;
-          height: 48px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between; }
-          body #dashboard #country-profile .scroll-wrapper .filter-wrapper > header h4 {
-            font-size: 1em; }
-          body #dashboard #country-profile .scroll-wrapper .filter-wrapper > header button {
-            margin: 0;
-            background-color: transparent;
-            text-transform: uppercase;
-            padding: 0;
-            border: none;
-            outline: none;
-            margin-left: 24px;
-            color: rgba(0, 0, 0, 0.3);
-            font-size: 0.9em;
-            box-shadow: none; }
-            body #dashboard #country-profile .scroll-wrapper .filter-wrapper > header button:hover {
-              color: rgba(0, 0, 0, 0.9); }
-        body #dashboard #country-profile .scroll-wrapper .filter-wrapper .content {
-          height: calc(100% - 48px);
-          overflow-y: auto; }
-        body #dashboard #country-profile .scroll-wrapper .filter-wrapper section {
-          padding: 0 24px 10px 24px; }
-          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section:not(:last-child) {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section > header {
-            height: 48px;
-            display: flex;
-            align-items: center; }
-            body #dashboard #country-profile .scroll-wrapper .filter-wrapper section > header h5 {
-              font-size: 1em;
-              color: rgba(0, 0, 0, 0.5); }
-          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .checkbox-input, body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .radio-input {
-            display: inline-flex;
-            align-items: center;
-            padding: 3px 24px 3px 0;
-            cursor: pointer; }
-            body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .checkbox-input input, body #dashboard #country-profile .scroll-wrapper .filter-wrapper section .radio-input input {
-              margin-right: 8px; }
-          body #dashboard #country-profile .scroll-wrapper .filter-wrapper section.filter-year .content {
-            display: flex;
-            justify-content: space-between; }
-            body #dashboard #country-profile .scroll-wrapper .filter-wrapper section.filter-year .content .input-container {
-              display: flex; }
-              body #dashboard #country-profile .scroll-wrapper .filter-wrapper section.filter-year .content .input-container label {
-                margin-right: 8px; }
-              body #dashboard #country-profile .scroll-wrapper .filter-wrapper section.filter-year .content .input-container input {
-                margin: 0; }
       body #dashboard #country-profile .scroll-wrapper #time-series-container {
         height: 50vh;
         flex-basis: calc(50% - 8px);
@@ -583,6 +549,98 @@ body #dashboard {
               font-size: 0.6em; }
             body #dashboard #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg .x-axis text {
               transform: translate(5px, 5px) rotate(45deg); }
+    body #dashboard #country-profile .filter-wrapper {
+      display: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.66);
+      z-index: 1111; }
+      body #dashboard #country-profile .filter-wrapper .container {
+        padding: 16px;
+        display: none;
+        width: 600px;
+        background-color: #fff;
+        margin-left: 50%;
+        margin-top: 64px;
+        transform: translateX(-50%); }
+        body #dashboard #country-profile .filter-wrapper .container > header {
+          padding: 0 24px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between; }
+          body #dashboard #country-profile .filter-wrapper .container > header h4 {
+            font-size: 1.33em; }
+          body #dashboard #country-profile .filter-wrapper .container > header button {
+            margin: 0;
+            background-color: transparent;
+            text-transform: uppercase;
+            padding: 0;
+            border: none;
+            outline: none;
+            margin-left: 24px;
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 0.9em;
+            box-shadow: none; }
+            body #dashboard #country-profile .filter-wrapper .container > header button:hover {
+              color: rgba(0, 0, 0, 0.9); }
+        body #dashboard #country-profile .filter-wrapper .container .content {
+          height: calc(100% - 48px);
+          overflow-y: auto; }
+        body #dashboard #country-profile .filter-wrapper .container section {
+          padding: 0 24px 10px 24px; }
+          body #dashboard #country-profile .filter-wrapper .container section:not(:last-child) {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+          body #dashboard #country-profile .filter-wrapper .container section > header {
+            height: 48px;
+            display: flex;
+            align-items: center; }
+            body #dashboard #country-profile .filter-wrapper .container section > header h5 {
+              font-size: 1em;
+              color: rgba(0, 0, 0, 0.5); }
+          body #dashboard #country-profile .filter-wrapper .container section .checkbox-input, body #dashboard #country-profile .filter-wrapper .container section .radio-input {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 24px 3px 0;
+            cursor: pointer; }
+            body #dashboard #country-profile .filter-wrapper .container section .checkbox-input input, body #dashboard #country-profile .filter-wrapper .container section .radio-input input {
+              margin-right: 8px; }
+          body #dashboard #country-profile .filter-wrapper .container section.filter-year .content {
+            display: flex;
+            justify-content: space-between; }
+            body #dashboard #country-profile .filter-wrapper .container section.filter-year .content .input-container {
+              display: flex; }
+              body #dashboard #country-profile .filter-wrapper .container section.filter-year .content .input-container label {
+                margin-right: 8px; }
+              body #dashboard #country-profile .filter-wrapper .container section.filter-year .content .input-container input {
+                margin: 0; }
+          body #dashboard #country-profile .filter-wrapper .container section.filter-admin1 .content .selected-admin1s {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px 0; }
+            body #dashboard #country-profile .filter-wrapper .container section.filter-admin1 .content .selected-admin1s .selected-admin1 {
+              padding: 3px 6px;
+              margin: 2px;
+              border: 1px solid rgba(0, 0, 0, 0.1); }
+              body #dashboard #country-profile .filter-wrapper .container section.filter-admin1 .content .selected-admin1s .selected-admin1 button {
+                margin: 0;
+                width: 22px;
+                height: 22px;
+                padding: 0;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                background-color: transparent;
+                border: none;
+                box-shadow: none;
+                outline: none;
+                margin-left: 5px;
+                color: rgba(255, 0, 0, 0.5); }
+                body #dashboard #country-profile .filter-wrapper .container section.filter-admin1 .content .selected-admin1s .selected-admin1 button:hover {
+                  background-color: rgba(0, 0, 0, 0.05); }
 body .marker-cluster {
   background-clip: padding-box;
   display: flex;

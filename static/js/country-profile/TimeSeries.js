@@ -1,29 +1,11 @@
 class TimeSeries extends Element {
     constructor() {
         super('<div id="time-series-container"></div>');
-        this.header = new Element('<header><h4>Events over year</h4><button id="time-series-filter"><i class="fa fa-filter"></i></button></header>');
+        this.header = new Element('<header><h4>Events over year</h4></header>');
         this.timeSeries = new Element('<div id="time-series"></div>');
-
-        this.filterWrapper = new FilterWrapper('time-series');
 
         this.childElements.push(this.header);
         this.childElements.push(this.timeSeries);
-        this.childElements.push(this.filterWrapper);
-    }
-
-    process() {
-        let that = this;
-        this.element.find('#time-series-filter').on('click', function(){
-            that.filterWrapper.element.show();
-        });
-
-        this.element.find('.btn-apply-filter').on('click', () => { this.applyFilters(); });
-        this.element.find('.btn-cancel').on('click', () => { this.filterWrapper.element.hide(); });
-        this.element.find('.btn-reset').on('click', () => { this.resetFilters(); });
-    }
-
-    resetFilters() {
-        this.filterWrapper.init();
     }
 
     init() {
@@ -52,10 +34,9 @@ class TimeSeries extends Element {
          this.tip = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("display", 'none');
-        
-        this.filterWrapper.init();
     }
-
+     
+/*
     loadData(country) {
         let that = this;
          
@@ -85,113 +66,29 @@ class TimeSeries extends Element {
         });
     }
 
-    applyFilters() {
-        this.filteredData = this.data.slice();
-        this.filterByEvents();
-        this.filterByInteraction();
-        this.filterByFatalities();
-        this.filterByYear();
-        this.filterWrapper.element.hide();
-        this.render();
-    }
+    */
 
-    filterByEvents() {
-        let container = this.filterWrapper.element.find('.filter-event-type .content');
-        let requiredEvents = container.find('input[type="checkbox"]:checked').map(function() {
-            return $(this).data('target');
-        }).get();
+    render (data) {
+        let that = this;
 
-        this.filteredData = this.filteredData.filter(x => requiredEvents.find(y => compareEvents(x.event_type, y)));
-    }
+        if(data) {
+            this.filteredData = data.map((d) => {
+                return Object.assign({}, d, {
+                    year: that.parseTime(d.year),
+                    event_type: d.event_type || '',
+                    interaction: +d.interaction,
+                    fatalities: +d.fatalities,
+                });
+            });
 
-    filterByInteraction() {
-        let container = this.filterWrapper.element.find('.filter-interaction .content');
-        let lowerLimit = 0;
-        let upperLimit = 0;
-         
-        switch(container.find('input[type="radio"]:checked').data('value')) {
-            case 'less than 100':
-                lowerLimit = 0;
-                upperLimit = 100;
-                break;
-            case '100 - 1000':
-                lowerLimit = 100;
-                upperLimit = 1000;
-                break;
-            case '1000 - 10000':
-                lowerLimit = 1000;
-                upperLimit = 10000;
-                break;
-            case 'more than 10000':
-                lowerLimit = 1000;
-                upperLimit = Infinity;
-                break;
-            case 'all':
-                lowerLimit = 0;
-                upperLimit = Infinity;
-                break;
+            this.filteredData = this.filteredData.filter(x => x.year);
+            
+            this.filteredData.sort(function(a, b) { 
+                return (new Date(a.year)).getFullYear() - (new Date(b.year)).getFullYear(); 
+            });
+             
         }
-
-        this.filteredData = this.filteredData.filter(x => x.interaction >= lowerLimit && x.interaction < upperLimit);
- 
-    }
-
-    filterByFatalities() {
-        let container = this.filterWrapper.element.find('.filter-fatalities .content');
-        let lowerLimit = 0;
-        let upperLimit = 0;
          
-        switch(container.find('input[type="radio"]:checked').data('value')) {
-            case 'less than 100':
-                lowerLimit = 0;
-                upperLimit = 100;
-                break;
-            case '100 - 1000':
-                lowerLimit = 100;
-                upperLimit = 1000;
-                break;
-            case '1000 - 10000':
-                lowerLimit = 1000;
-                upperLimit = 10000;
-                break;
-            case '10000 - 100000':
-                lowerLimit = 10000;
-                upperLimit = 100000;
-                break;
-            case 'more than 10000':
-                lowerLimit = 1000;
-                upperLimit = Infinity;
-                break;
-            case 'all':
-                lowerLimit = 0;
-                upperLimit = Infinity;
-                break;
-        }
-
-        this.filteredData = this.filteredData.filter(x => x.fatalities >= lowerLimit && x.fatalities < upperLimit);
- 
-    }
-
-    filterByYear() {
-        let container = this.filterWrapper.element.find('.filter-year');
-         
-        let startYear = container.find('.start-year').val(); 
-        startYear = startYear? (new Date(startYear)) : (new Date(0));
-         
-        let endYear = container.find('.end-year').val();
-        endYear = endYear? (new Date(endYear)) : (new Date());
-
-        function isDateYearInRange(d, d1, d2) {
-            return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
-        }
-
-        this.filteredData = this.filteredData.filter(x => {
-            return isDateYearInRange((new Date(x.year)), startYear, endYear);
-        });
-
-    }
-
-    render() {
         let yearGroupedData = [];
          
         let riotData = this.filteredData.slice();
@@ -214,7 +111,10 @@ class TimeSeries extends Element {
                  
                 yearGroupedData.push(currentData);
             }
-            ++currentData.events;
+
+            if (currentData) {
+                ++currentData.events;
+            }
         }
 
         currentYear = 0;
@@ -231,7 +131,9 @@ class TimeSeries extends Element {
                 yearGroupedRiotData.push(currentData);
             }
              
-            ++currentData.events;
+            if (currentData) {
+                ++currentData.events;
+            }
         }
          
         currentYear = 0;
@@ -247,10 +149,11 @@ class TimeSeries extends Element {
                  
                 yearGroupedOtherData.push(currentData);
             }
-             
-            ++currentData.events;
+               
+           if (currentData) { 
+               ++currentData.events;
+           }
         }
-         
 
         this.scaleX.domain(d3.extent(yearGroupedData, function(d) { return d.year; }));
         this.scaleY.domain([0, d3.max(yearGroupedData, function(d) { return d.events; })]);
@@ -282,7 +185,6 @@ class TimeSeries extends Element {
         let otherCircles = this.canvas.selectAll("circle.other").data(yearGroupedOtherData).enter().append('circle').attr('class', 'other');
 
 
-        let that = this;
         let riotCircleAttributes = riotCircles.attr("cx", function (d) { return that.scaleX(d.year); })
             .attr("cy", function (d) { return that.scaleY(d.events); })
             .style("fill", function(d) { return '#e67e22'; })
@@ -306,7 +208,7 @@ class TimeSeries extends Element {
 
         riotCircles.on('mouseenter', function(d) {
             that.tip.style('display', 'block');
-            that.tip.html('<div><label>Year</label><span>'+d.year.getFullYear()+'</span></div><div><label>No. of events</label><span>'+d.events+'</span></div>')
+            that.tip.html('<div><label>Year</label><span>'+new Date(d.year).getFullYear()+'</span></div><div><label>No. of events</label><span>'+d.events+'</span></div>')
                 .style("left", (d3.event.pageX + 10) + "px")		
                 .style("top", (d3.event.pageY - 10) + "px"); 
         });
@@ -347,11 +249,8 @@ class TimeSeries extends Element {
         legend.append("text").attr("x", (this.width)/2 + 18).attr("y", 5).attr("dy", ".35em").text("Others"); 
     }
      
-    load(country){
+    load (country){
         let that = this;
         this.init();
-        this.loadData(country).then(function() {
-            that.render();
-        });
-   }
+    }
 }

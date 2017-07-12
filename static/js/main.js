@@ -9,7 +9,7 @@ $(document).ready(function(){
     $.ajax({
         method: 'GET',
         url: 'https://api.acleddata.com/acled/read.csv',
-        data: {'limit': '1000', 'fields': 'country|event_type|latitude|longitude|fatalities'},
+        data: {'limit': '1000', 'fields': 'country|event_type|latitude|longitude'},
         success: function(data) {
             let rows = data.split('\n');
             let keys = rows[0].split(',');

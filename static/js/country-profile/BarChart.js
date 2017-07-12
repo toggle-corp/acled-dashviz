@@ -2,29 +2,11 @@ class BarChart extends Element {
     constructor() {
         super('<div id="bar-chart-container"></div>');
 
-        this.header = new Element('<header><h4>Top actors</h4><button id="bar-chart-filter"><i class="fa fa-filter"></i></button></header>');
+        this.header = new Element('<header><h4>Top actors</h4></header>');
         this.barChart = new Element('<div id="bar-chart"></div>');
-
-        this.filterWrapper = new FilterWrapper('bar-chart');
 
         this.childElements.push(this.header);
         this.childElements.push(this.barChart);
-        this.childElements.push(this.filterWrapper);
-    }
-    
-    process() {
-        let that = this;
-        this.element.find('#bar-chart-filter').on('click', function(){
-            that.filterWrapper.element.show();
-        });
-         
-        this.element.find('.btn-apply-filter').on('click', () => { this.applyFilters(); });
-        this.element.find('.btn-cancel').on('click', () => { this.filterWrapper.element.hide(); });
-        this.element.find('.btn-reset').on('click', () => { this.resetFilters(); });
-    }
-
-    resetFilters() {
-        this.filterWrapper.init();
     }
 
     init() {
@@ -44,8 +26,6 @@ class BarChart extends Element {
         this.barHeight = ((this.height - this.margin.top - this.margin.bottom) / 10) - 8;
 
         this.canvas = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')'); 
-
-        this.filterWrapper.init();
     }
 
     loadData(country){
@@ -172,12 +152,17 @@ class BarChart extends Element {
         });
 
     }
-    render() {
+    render(data) {
+        if(data) {
+            this.filteredData = data;
+        }
+         
         let that = this;
 
         let actors = [];
         let currentActor = "";
         let currentData = null;
+         
         for (let i=0; i<this.filteredData.length; i++) {
             let cfd = this.filteredData[i].actor1;
             if (currentActor != cfd) {
@@ -226,9 +211,6 @@ class BarChart extends Element {
         let that = this;
          
         this.init();
-        this.loadData(country).then(function() {
-            that.render();
-        });
 
     }
 }

@@ -11,20 +11,16 @@ class KeyFigures extends Element {
     }
 
     load (country) {
-        let countryData = acledData.filter(x => compareCountryNames(x.country, country));
+        //let countryData = acledData.filter(x => compareCountryNames(x.country, country));
         
         let numberOfEvents = this.keyFigureTemplate.clone();
         numberOfEvents.prop('id', 'number-of-events');
         numberOfEvents.find('label').text('Number of events:');
-        numberOfEvents.find('.number').text(countryData.length);
 
         let fatalities = this.keyFigureTemplate.clone();
         fatalities.prop('id', 'total-fatalities');
         fatalities.find('label').text('fatalities:');
 
-        fatalities.find('.number').text(countryData.length===0? '0': countryData.reduce(function(a, b){
-            return {'fatalities': +a.fatalities + (+b.fatalities)};
-        }).fatalities);
 
         let numberOfCivilianDeaths = this.keyFigureTemplate.clone();
         numberOfCivilianDeaths.prop('id', 'number-of-civilian-deaths');
@@ -33,6 +29,26 @@ class KeyFigures extends Element {
         let numberOfArmedActiveAgents = this.keyFigureTemplate.clone();
         numberOfArmedActiveAgents.prop('id', 'number-of-armed-active-agents');
         numberOfArmedActiveAgents.find('label').text('Number of armed active agents:');
+         
+        $.ajax({
+            method: 'GET',
+            url: 'https://api.acleddata.com/acled/read',
+            data: {
+                'limit': '0',
+                'country': country,
+                'fields': 'fatalities'
+            },
+            success: function(response) {
+                if(response && response.data) {
+                    numberOfEvents.find('.number').text(response.data.length);
+                     
+                    fatalities.find('.number').text(response.data.length===0? '0': response.data.reduce(function(a, b){
+                        return {'fatalities': +a.fatalities + (+b.fatalities)};
+                    }).fatalities);
+                }
+            }
+        });
+                
          
         $.ajax({
             method: 'GET',

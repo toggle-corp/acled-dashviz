@@ -6,6 +6,7 @@ class CountryMap extends Element {
         this.childElements.push(this.mapElement);
         this.childElements.push(this.mapLegend);
     }
+     
     process() {
         this.mapLegend.setTitle('Event types');
 
@@ -20,19 +21,39 @@ class CountryMap extends Element {
         this.map.on('focus', function() { this.scrollWheelZoom.enable(); });
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); });
     }
-    load(country) {
+
+
+    reset(resetView=false) {
         if(this.geoJsonLayer) {
+            this.geoJsonLayer.clearLayers();
             this.map.removeLayer(this.geoJsonLayer);
         }
+         
+        if (resetView) {
+            this.map.setView([0, 10], 3);
+        }
+         
         this.geoJsonLayer = null;
+        //this.map.invalidateSize();
+         
+        if (this.circles) {
+            for (let i=0; i<this.circles.length; i++) {
+                this.map.removeLayer(this.circles[i]);
+            }
+        }
+         
+    }
+     
+    load(country, countryData) {
+        this.reset();
         let that = this;
         let currentLayer = null;
+         
         $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
             that.geoJsonLayer = L.geoJson(data, {
                 onEachFeature: function(feature, layer) {
                     if (compareCountryNames(country, feature.properties.admin)) {
                         layer.setStyle({
-                            fillColor: '#2c3e50',
                             fillOpacity: 0,
                             stroke: true,
                             color: '#2c3e50',
@@ -40,7 +61,6 @@ class CountryMap extends Element {
                         currentLayer = layer;
                     } else {
                         layer.setStyle({
-                            fillColor: '#000',
                             fillOpacity: 0,
                             stroke: false,
                         });
@@ -57,28 +77,20 @@ class CountryMap extends Element {
         let currentData = null;
         let currentEvent = {'name': '', 'count': 0};
 
-        for (let i=0; i<acledData.length; i++) {
-            let cr = acledData[i];  // current row
-            if (cr.country == country) {
-                if (currentLocation.latitude != cr.latitude || currentLocation.longitude != cr.longitude) {
-                    currentLocation = {'latitude': cr.latitude, 'longitude': cr.longitude};
-                    currentData = {'location': currentLocation, 'events': []};
-                    locationGroupedData.push(currentData);
+        for (let i=0; i<countryData.length; i++) {
+            let cr = countryData[i];  // current row
+            if (currentLocation.latitude != cr.latitude || currentLocation.longitude != cr.longitude) {
+                currentLocation = {'latitude': cr.latitude, 'longitude': cr.longitude};
+                currentData = {'location': currentLocation, 'events': []};
+                locationGroupedData.push(currentData);
 
-                    currentEvent = {'name': cr.event_type, 'count': 0};
-                    currentData.events.push(currentEvent);
-                } else if(currentEvent.name != cr.event_type) {
-                    currentEvent = {'name': cr.event_type, 'count': 0};
-                    currentData.events.push(currentEvent);
-                }
-                ++currentEvent.count;
+                currentEvent = {'name': cr.event_type, 'count': 0};
+                currentData.events.push(currentEvent);
+            } else if(currentEvent.name != cr.event_type) {
+                currentEvent = {'name': cr.event_type, 'count': 0};
+                currentData.events.push(currentEvent);
             }
-        }
-
-        if (this.circles) {
-            for (let i=0; i<this.circles.length; i++) {
-                this.map.removeLayer(this.circles[i]);
-            }
+            ++currentEvent.count;
         }
 
         this.circles = [];
@@ -86,7 +98,7 @@ class CountryMap extends Element {
         for (let i=0; i<locationGroupedData.length; i++) {
             for (let j=0; j<locationGroupedData[i].events.length; j++) {
                 let cd = locationGroupedData[i].events[j];   // current data
-                let radius = Math.sqrt(cd.count)*8000;
+                let radius = Math.sqrt(cd.count)*10000;
                 let color = getEventColor(cd.name);
                 let circle = L.circle([locationGroupedData[i].location.latitude, locationGroupedData[i].location.longitude], radius, {
                     fillColor: color,
