@@ -581,6 +581,7 @@ body {
                             padding: 24px;
                             max-width: 320px;
 
+
                             .number {
                                 order: 2;
                                 font-size: 1.2em;
@@ -659,6 +660,16 @@ body {
                                 }
                             }
 
+                            &.no-img {
+                                .number {
+                                    &:after {
+                                        display: none;
+                                    }
+                                }
+                                img {
+                                    display: none;
+                                }
+                            }
                         }
                     }
                     #timeline-static-image {
@@ -880,6 +891,15 @@ body {
 
                             input {
                                 margin-right: 8px;
+                            }
+                        }
+
+                        &.filter-event-type {
+                            .checkbox-input {
+                                 
+                                .name::first-letter {
+                                    text-transform: uppercase;
+                                }
                             }
                         }
 

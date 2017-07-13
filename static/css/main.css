@@ -461,6 +461,10 @@ body #dashboard {
               top: calc(50% + 24px); }
             body #dashboard #country-profile .scroll-wrapper #timeline-container #timeline-elements .timeline-element:nth-child(even) .number:after {
               bottom: calc(50% + 30px); }
+            body #dashboard #country-profile .scroll-wrapper #timeline-container #timeline-elements .timeline-element.no-img .number:after {
+              display: none; }
+            body #dashboard #country-profile .scroll-wrapper #timeline-container #timeline-elements .timeline-element.no-img img {
+              display: none; }
         body #dashboard #country-profile .scroll-wrapper #timeline-container #timeline-static-image {
           width: 100%;
           height: 100%;
@@ -608,6 +612,8 @@ body #dashboard {
             cursor: pointer; }
             body #dashboard #country-profile .filter-wrapper .container section .checkbox-input input, body #dashboard #country-profile .filter-wrapper .container section .radio-input input {
               margin-right: 8px; }
+          body #dashboard #country-profile .filter-wrapper .container section.filter-event-type .checkbox-input .name::first-letter {
+            text-transform: uppercase; }
           body #dashboard #country-profile .filter-wrapper .container section.filter-year .content {
             display: flex;
             justify-content: space-between; }

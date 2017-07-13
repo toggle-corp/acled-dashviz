@@ -16,7 +16,12 @@ class Timeline extends Element {
         elem.find('.number > span').text(num);
         elem.find('h5').text(title);
         elem.find('p').text(descText);
-        elem.find('img').prop('src', imgUri);
+
+        if(imgUri && imgUri.length > 0) {
+            elem.find('img').prop('src', imgUri);
+        } else {
+            elem.addClass('no-img');
+        }
         return elem;
     }
 
