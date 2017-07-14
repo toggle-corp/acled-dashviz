@@ -162,9 +162,12 @@ class BarChart extends Element {
         let actors = [];
         let currentActor = "";
         let currentData = null;
+
+        this.filteredData.sort((a, b) => (a.actor1||'').localeCompare((b.actor1) || ''));
          
         for (let i=0; i<this.filteredData.length; i++) {
             let cfd = this.filteredData[i].actor1;
+             
             if (currentActor != cfd) {
                 currentActor = cfd;
                 currentData = {'name': cfd, 'count': 0};
@@ -172,6 +175,7 @@ class BarChart extends Element {
             }
             ++currentData.count;
         }
+         
         actors.sort(function(a, b) { return b.count - a.count; });
         actors.splice(Math.min(10, actors.length));
 
