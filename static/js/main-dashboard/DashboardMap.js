@@ -10,12 +10,13 @@ class DashboardMap extends Element {
         this.mapLegend.setTitle('Event types');
 
         L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
-        this.map = L.map('world-map', { preferCanvas: true }).setView([0, 10], 3);
+        this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
         L.tileLayer('https://api.mapbox.com/styles/v1/frozenhelium/cj1lpbp1g000l2rmr9kwg12b3/tiles/256/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
             attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
 
-        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 8000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
+        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 4000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
+
 		//var layerControl = L.control.layers([], {"Circles" :conditionalLayer}).addTo(map);
 
         // Toggle scroll-zoom by clicking on and outside map
@@ -23,7 +24,7 @@ class DashboardMap extends Element {
         this.map.on('focus', function() { this.scrollWheelZoom.enable(); });
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); });
     }
-     
+
     loadDataToMap() {
         let locationGroupedData = [];
         let currentLocation = {'latitude': '', 'longitude': ''};
@@ -58,17 +59,18 @@ class DashboardMap extends Element {
                 let cd = data[i].events[j];   // current data
                 let radius = Math.sqrt(cd.count)*8000;
                 let color = getEventColor(cd.name);
-                 
+
                 this.conditionalLayer.addLayer(L.circle([data[i].location.latitude, data[i].location.longitude], radius, {
                     fillColor: color,
                     stroke: false,
                     fillOpacity: 0.5,
+                    interactive: false,
                 }));
-                //this.map.indexLayer(circle);
             }
         }
-         
+
         this.conditionalLayer.addTo(this.map);
+
         let geoJsonLayer = null;
         let that = this;
         let countries = Object.keys(acledCountries);

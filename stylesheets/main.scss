@@ -24,8 +24,8 @@ body {
         background-color: transparent;
         box-shadow: none!important;
     }
-     
-     
+
+
     #dashboard {
         padding-bottom: 16px;
 
@@ -54,11 +54,15 @@ body {
                         height: calc(56vh - 84px);
                         flex-basis: 64%;
                         background-color: rgba(0, 0, 0, 0.1);
+
+                        path.leaflet-map-pane {
+                            z-index: 11;
+                        }
                     }
                     .legend {
                         padding-bottom: 10px;
                         height: 84px;
-                         
+
                         header {
                             display: flex;
                             height: 32px;
@@ -93,11 +97,32 @@ body {
                                     margin-left: 6px;
 
                                     &:first-letter{
-                                        text-transform: uppercase; 
+                                        text-transform: uppercase;
                                     }
                                 }
                             }
 
+                        }
+                    }
+                    @media only screen and (max-width: 1080px) {
+                        #world-map {
+                            height: calc(56vh - 108px);
+                        }
+                        .legend {
+                            height: 108px;
+                        }
+                    }
+                    @media only screen and (max-width: 720px) {
+                        flex-wrap: wrap;
+                        height: auto;
+
+                        #world-map{
+                            flex-basis: 100%;
+                            height: 360px;
+                        }
+                        .legend{
+                            flex-basis: 100%;
+                            height: auto;
                         }
                     }
                     @media only screen and (max-width: 512px) {
@@ -115,7 +140,7 @@ body {
                 }
 
                 #carousel-container {
-                    height: calc(44vh - 16px); 
+                    height: calc(44vh - 16px);
                     background-color: #fff;
                     position: relative;
                     box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.5);
@@ -158,7 +183,7 @@ body {
                         a {
                             width: 100%;
                             height: 100%;
-                        } 
+                        }
 
                         img {
                             width: 100%;
@@ -169,8 +194,10 @@ body {
                             object-position: center center;
                         }
                     }
+                    @media screen and (max-width: 720px) {
+                        height: auto;
+                    }
                 }
-
             }
             #right-section{
                 // border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -251,7 +278,7 @@ body {
                             margin-top: 16px;
                             flex-shrink: 0;
                             background-color: #aaa;
-                            
+
                             #crisis-profile-map {
                                 width: 100%;
                                 height: 100%;
@@ -354,6 +381,14 @@ body {
                                 object-position: center center;
                             }
                         }
+                        @media screen and (max-width: 720px) {
+                            a {
+                                height: auto;
+                            }
+                        }
+                    }
+                    @media screen and (max-width: 720px) {
+                        height: auto;
                     }
                 }
             }
@@ -494,7 +529,7 @@ body {
                                     margin-left: 6px;
 
                                     &:first-letter{
-                                        text-transform: uppercase; 
+                                        text-transform: uppercase;
                                     }
                                 }
                             }
@@ -502,7 +537,7 @@ body {
                         }
                     }
                 }
-                 
+
                 #country-report-container {
                     flex-basis: calc(50% - 8px);
                     margin-bottom: 16px;
@@ -680,9 +715,9 @@ body {
                         display: none;
                     }
                 }
-                 
-                
-                 
+
+
+
                 #time-series-container {
                     height: 50vh;
                     flex-basis: calc(50% - 8px);
@@ -699,7 +734,7 @@ body {
                         h4{
                             font-size: 1em;
                         }
-                         
+
                         button{
                             margin: 0;
                             padding: 0;
@@ -710,7 +745,7 @@ body {
                             width: 36px;
                             height: 36px;
                             border-radius: 50%;
-                            
+
                             &:hover {
                                 background-color: rgba(0, 0, 0, 0.1);
                             }
@@ -768,7 +803,7 @@ body {
                         h4 {
                             font-size: 1em;
                         }
-                         
+
                         button{
                             margin: 0;
                             padding: 0;
@@ -784,7 +819,7 @@ body {
                                 background-color: rgba(0, 0, 0, 0.1);
                             }
 
-                        } 
+                        }
                     }
 
                     #bar-chart {
@@ -812,7 +847,7 @@ body {
                     }
                 }
             }
-             
+
             .filter-wrapper {
                 display: none;
                 position: fixed;
@@ -831,7 +866,7 @@ body {
                     margin-left: 50%;
                     margin-top: 64px;
                     transform: translateX(-50%);
-                     
+
                     >header {
                         padding: 0 24px;
                         height: 48px;
@@ -896,7 +931,7 @@ body {
 
                         &.filter-event-type {
                             .checkbox-input {
-                                 
+
                                 .name::first-letter {
                                     text-transform: uppercase;
                                 }
@@ -958,11 +993,9 @@ body {
                                 }
                             }
                         }
-
                     }
                 }
-
-            } 
+            }
         }
     }
     // .marker-cluster-small {

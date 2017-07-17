@@ -36,6 +36,8 @@ body #dashboard {
           height: calc(56vh - 84px);
           flex-basis: 64%;
           background-color: rgba(0, 0, 0, 0.1); }
+          body #dashboard #main-dashboard #left-section .map-container #world-map path.leaflet-map-pane {
+            z-index: 11; }
         body #dashboard #main-dashboard #left-section .map-container .legend {
           padding-bottom: 10px;
           height: 84px; }
@@ -67,6 +69,21 @@ body #dashboard {
                 margin-left: 6px; }
                 body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements .legend-element label:first-letter {
                   text-transform: uppercase; }
+        @media only screen and (max-width: 1080px) {
+          body #dashboard #main-dashboard #left-section .map-container #world-map {
+            height: calc(56vh - 108px); }
+          body #dashboard #main-dashboard #left-section .map-container .legend {
+            height: 108px; } }
+        @media only screen and (max-width: 720px) {
+          body #dashboard #main-dashboard #left-section .map-container {
+            flex-wrap: wrap;
+            height: auto; }
+            body #dashboard #main-dashboard #left-section .map-container #world-map {
+              flex-basis: 100%;
+              height: 360px; }
+            body #dashboard #main-dashboard #left-section .map-container .legend {
+              flex-basis: 100%;
+              height: auto; } }
         @media only screen and (max-width: 512px) {
           body #dashboard #main-dashboard #left-section .map-container {
             flex-wrap: wrap;
@@ -115,6 +132,9 @@ body #dashboard {
             margin: 0;
             object-fit: scale-down;
             object-position: center center; }
+        @media screen and (max-width: 720px) {
+          body #dashboard #main-dashboard #left-section #carousel-container {
+            height: auto; } }
     body #dashboard #main-dashboard #right-section {
       flex-basis: 36%;
       height: 100vh; }
@@ -242,6 +262,12 @@ body #dashboard {
               height: 100%;
               object-fit: contain;
               object-position: center center; }
+          @media screen and (max-width: 720px) {
+            body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a {
+              height: auto; } }
+        @media screen and (max-width: 720px) {
+          body #dashboard #main-dashboard #right-section #crisis-profile-container {
+            height: auto; } }
     @media only screen and (max-width: 768px) {
       body #dashboard #main-dashboard {
         flex-wrap: wrap; }
