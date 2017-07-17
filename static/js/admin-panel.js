@@ -632,7 +632,7 @@ function editCrisis(caller) {
     ecm.find('.crisis-description').val(cp.description);
 
     ecm.find('.crisis-recent-event-url').val(cp['recent-event-url']);
-    ecm.find('.preview').prop('src', cp['recent-event-image']);
+    ecm.find('.preview').prop('src', cp['recent-event-img'] || '');
 
     ecm.data('crisis-index', index);
 

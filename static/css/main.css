@@ -450,7 +450,7 @@ body #page, body .inner-wrap {
   box-sizing: border-box; }
 body #page {
   background-color: #f8f8f8;
-  padding: 0 32px; }
+  padding: 0 24px; }
 body #main {
   padding: 0; }
 body #header-text-nav-container {
@@ -627,7 +627,7 @@ body #dashboard {
             body #dashboard #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control .crisis-profile-select-item:not(:last-child) {
               border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         body #dashboard #main-dashboard #right-section #crisis-profile-container #report {
-          min-height: 22vh;
+          height: 22vh;
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
@@ -657,7 +657,9 @@ body #dashboard {
               height: 100%; }
           @media only screen and (max-width: 1080px) {
             body #dashboard #main-dashboard #right-section #crisis-profile-container #report {
-              flex-direction: column; }
+              flex-direction: column;
+              height: auto;
+              min-height: 22vh; }
               body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail {
                 display: flex;
                 flex-wrap: wrap;

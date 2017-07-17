@@ -12,7 +12,7 @@ body {
     }
     #page{
         background-color: #f8f8f8;
-        padding: 0 32px;
+        padding: 0 24px;
     }
     #main{
         padding: 0;
@@ -265,7 +265,7 @@ body {
                         }
                     }
                     #report {
-                        min-height: 22vh;
+                        height: 22vh;
                         display: flex;
                         justify-content: space-between;
                         align-items: flex-start;
@@ -305,6 +305,8 @@ body {
                         }
                         @media only screen and (max-width: 1080px) {
                             flex-direction: column;
+                            height: auto;
+                            min-height: 22vh;
 
                             .detail{
                                 display: flex;
