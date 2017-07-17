@@ -664,6 +664,10 @@ body #dashboard {
                 margin-right: 8px; }
               body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section #key-figures .key-figure:nth-child(odd) {
                 background-color: #f0f0f0; }
+          @media screen and (max-width: 720px) {
+            body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section {
+              height: auto;
+              margin-bottom: 10px; } }
         body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section {
           height: calc(100% - 44vh - 48px - 64px);
           display: flex;

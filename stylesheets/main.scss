@@ -352,6 +352,10 @@ body {
                                 }
                             }
                         }
+                        @media screen and (max-width: 720px) {
+                            height: auto;
+                            margin-bottom: 10px;
+                        }
                     }
 
                     #recent-events-section {
