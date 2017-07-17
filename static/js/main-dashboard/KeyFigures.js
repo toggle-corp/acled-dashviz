@@ -40,11 +40,11 @@ class KeyFigures extends Element {
             },
             success: function(response) {
                 if(response && response.data) {
-                    numberOfEvents.find('.number').text(response.data.length);
+                    numberOfEvents.find('.number').text(response.data.length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                      
                     fatalities.find('.number').text(response.data.length===0? '0': response.data.reduce(function(a, b){
                         return {'fatalities': +a.fatalities + (+b.fatalities)};
-                    }).fatalities);
+                    }).fatalities.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 }
             }
         });
@@ -84,16 +84,18 @@ class KeyFigures extends Element {
                             ++armedActiveAgents[cd.actor2];
                         }
                     }
-                    numberOfCivilianDeaths.find('.number').text(totalCivilianDeaths);
-                    numberOfArmedActiveAgents.find('.number').text(Object.keys(armedActiveAgents).length);
+                    numberOfCivilianDeaths.find('.number').text(totalCivilianDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    numberOfArmedActiveAgents.find('.number').text(Object.keys(armedActiveAgents).length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 } else {
                     numberOfCivilianDeaths.find('.number').text('N/A');
+                    numberOfArmedActiveAgents.find('.number').text('N/A');
                 }
 
             },
             error: function(error) {
                 console.log(error);
                 numberOfCivilianDeaths.find('.number').text('N/A');
+                numberOfArmedActiveAgents.find('.number').text('N/A');
             }
         });
 
