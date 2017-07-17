@@ -546,6 +546,7 @@ function grabTimelineData() {
 function loadReportData() {
     let cr = $('#country-reports');
     $('#country-reports input').val('');
+    $('#country-reports .preview').prop('src', '');
 
     if (reportData.title) {
         cr.find('#report-title-input').val(reportData.title);

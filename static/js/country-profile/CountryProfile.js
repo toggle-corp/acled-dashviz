@@ -218,6 +218,7 @@ class CountryProfile extends Element {
         $('html').css('overflow', 'hidden');
          
         let that = this;
+
          
         this.element.fadeIn('fast', function() {
             that.header.element.find('#country-name').text(country);
@@ -233,6 +234,7 @@ class CountryProfile extends Element {
             });
         });
          
+        setTimeout( () => { this.scrollWrapper.element.scrollTop(0); }, 0);
     }
      
     hide() {

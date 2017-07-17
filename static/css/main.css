@@ -108,9 +108,16 @@
         align-items: center; }
         #country-profile .scroll-wrapper #country-report-container header h4 {
           font-size: 1em; }
-      #country-profile .scroll-wrapper #country-report-container .content {
+      #country-profile .scroll-wrapper #country-report-container #country-report-empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
         height: calc(100% - 56px);
-        display: flex; }
+        font-size: 3em;
+        color: rgba(0, 0, 0, 0.1); }
+      #country-profile .scroll-wrapper #country-report-container .content {
+        height: calc(100% - 56px); }
         #country-profile .scroll-wrapper #country-report-container .content .preview {
           flex-basis: 50%;
           padding: 10px 16px; }
@@ -133,9 +140,16 @@
     #country-profile .scroll-wrapper #timeline-container {
       flex-basis: 100%;
       height: 60vh; }
-      #country-profile .scroll-wrapper #timeline-container #timeline-elements {
+      #country-profile .scroll-wrapper #timeline-container > header {
+        height: 64px;
         display: flex;
-        height: 100%;
+        align-items: center;
+        padding: 0 24px; }
+        #country-profile .scroll-wrapper #timeline-container > header h4 {
+          font-size: 1em; }
+      #country-profile .scroll-wrapper #timeline-container #timeline-elements {
+        display: none;
+        height: calc(100% - 64px);
         position: relative; }
         #country-profile .scroll-wrapper #timeline-container #timeline-elements:after {
           content: '';
@@ -218,10 +232,18 @@
             display: none; }
       #country-profile .scroll-wrapper #timeline-container #timeline-static-image {
         width: 100%;
-        height: 100%;
+        height: calc(100% - 64px);
         object-fit: contain;
         object-position: center center;
         display: none; }
+      #country-profile .scroll-wrapper #timeline-container #timeline-empty {
+        width: 100%;
+        height: calc(100% - 64px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3em;
+        color: rgba(0, 0, 0, 0.1); }
     #country-profile .scroll-wrapper #time-series-container {
       height: 50vh;
       flex-basis: calc(50% - 8px);
