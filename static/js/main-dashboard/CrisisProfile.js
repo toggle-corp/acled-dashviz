@@ -41,7 +41,7 @@ class CrisisProfile extends Element {
 
         this.crisisProfileMap = new CrisisProfileMap();
 
-        this.reportSection.childElements.push(this.reportSelectContainer);
+        this.childElements.push(this.reportSelectContainer);
         this.reportSection.childElements.push(this.reportDetailContainer);
 
         this.childElements.push(this.reportSection);
@@ -86,16 +86,15 @@ class CrisisProfile extends Element {
                     that.keyFiguresSection.load(crisisProfiles[val].country);
                      
                     if(crisisProfiles[val]['recent-event-url']) {
-                        that.recentEventsSection.element.find('a').prop('href', crisisProfiles[val]['recent-event-url']);
+                        that.recentEventsSection.element.find('a').prop('href', crisisProfiles[val]['recent-event-url']).text('');
                     } else {
-                        that.recentEventsSection.element.find('a').prop('href', '');
-                         
+                        that.recentEventsSection.element.find('a').prop('href', '#').text('Not available');
                     }
                      
                     if(crisisProfiles[val]['recent-event-img']) {
-                        that.recentEventsSection.element.find('img').prop('src', crisisProfiles[val]['recent-event-img']);
+                        that.recentEventsSection.element.find('img').prop('src', crisisProfiles[val]['recent-event-img']).removeClass('no-img');
                     } else {
-                        that.recentEventsSection.element.find('img').prop('src', '');
+                        that.recentEventsSection.element.find('img').prop('src', '').addClass('no-img');
                     }
                 }
             }

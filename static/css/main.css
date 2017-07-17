@@ -609,7 +609,8 @@ body #dashboard {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          padding: 0 16px; }
+          padding: 0 16px;
+          overflow: hidden; }
           body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail {
             flex-basis: calc(100% - 180px);
             flex-grow: 0; }
@@ -683,11 +684,7 @@ body #dashboard {
               height: auto;
               margin-bottom: 10px; } }
         body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section {
-          height: calc(100% - 44vh - 48px - 64px);
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: center; }
+          height: calc(100% - 44vh - 64px - 32px - 16px); }
           body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section header {
             flex-basis: 100%;
             height: 48px;
@@ -696,13 +693,23 @@ body #dashboard {
             body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section header h5 {
               font-size: 1em; }
           body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a {
+            display: block;
+            width: 100%;
+            text-align: center;
+            outline: none;
+            box-shadow: none;
+            color: rgba(0, 0, 0, 0.3);
             height: calc(100% - 48px);
-            padding: 0 16px 10px 16px; }
+            cursor: pointer;
+            padding: 0 8px; }
             body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a img {
               width: 100%;
               height: 100%;
               object-fit: contain;
-              object-position: center center; }
+              object-position: center center;
+              margin: 0; }
+              body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a img.no-img {
+                display: none; }
           @media screen and (max-width: 720px) {
             body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a {
               height: auto; } }

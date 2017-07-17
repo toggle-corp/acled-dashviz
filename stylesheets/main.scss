@@ -270,6 +270,7 @@ body {
                         justify-content: space-between;
                         align-items: flex-start;
                         padding: 0 16px;
+                        overflow: hidden;
 
                         .detail {
                             flex-basis: calc(100% - 180px);
@@ -374,11 +375,7 @@ body {
                     }
 
                     #recent-events-section {
-                        height: calc(100% - 44vh - 48px - 64px);
-                        display: flex;
-                        flex-wrap: wrap;
-                        align-items: center;
-                        justify-content: center;
+                        height: calc(100% - 44vh - 64px - 32px - 16px);
 
                         header {
                             flex-basis: 100%;
@@ -392,14 +389,26 @@ body {
                         }
 
                         a {
+                            display: block;
+                            width: 100%;
+                            text-align: center;
+                            outline: none;
+                            box-shadow: none;
+                            color: rgba(0, 0, 0, 0.3);
                             height: calc(100% - 48px);
-                            padding: 0 16px 10px 16px;
+                            cursor: pointer;
+                            padding: 0 8px;
 
                             img {
                                 width: 100%;
                                 height: 100%;
                                 object-fit: contain;
                                 object-position: center center;
+                                margin: 0;
+
+                                &.no-img {
+                                    display: none;
+                                }
                             }
                         }
                         @media screen and (max-width: 720px) {
