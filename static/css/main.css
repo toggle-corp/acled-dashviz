@@ -533,17 +533,31 @@ body #dashboard {
           background-color: rgba(0, 0, 0, 0.6);
           color: #fff;
           transition: 0.2s all ease-in-out;
-          outline: none; }
+          outline: none;
+          z-index: 11; }
           body #dashboard #main-dashboard #left-section #carousel-container button#carousel-left {
             left: 10px; }
           body #dashboard #main-dashboard #left-section #carousel-container button#carousel-right {
             right: 10px; }
           body #dashboard #main-dashboard #left-section #carousel-container button:hover {
             opacity: 1; }
+        body #dashboard #main-dashboard #left-section #carousel-container .loader {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #fff;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2em; }
         body #dashboard #main-dashboard #left-section #carousel-container .carousel {
           width: 100%;
           height: 100%;
-          padding: 16px 24px; }
+          padding: 16px 24px;
+          z-index: 1; }
           body #dashboard #main-dashboard #left-section #carousel-container .carousel a {
             width: 100%;
             height: 100%; }

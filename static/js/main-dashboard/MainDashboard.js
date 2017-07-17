@@ -16,11 +16,13 @@ class MainDashboard extends Element {
                 <button id="carousel-right"><i class="fa fa-chevron-right"></i></button>
                 <div class="carousel">
                 </div>
+                <div class="loader"><i class="fa fa-circle-o-notch fa-spin"></i></div>
             </div>
             `
         );
         this.leftSection.childElements.push(this.carousel);
         let imgContainer = this.carousel.element.find('.carousel');
+         
         if (carouselImage1) {
             $('<a href="'+carouselUrl1+'" hidden><img src="'+ carouselImage1 +'"></a>').appendTo(imgContainer);
         }
@@ -31,9 +33,11 @@ class MainDashboard extends Element {
             $('<a href="'+carouselUrl3+'" hidden><img src="'+ carouselImage3 +'"></a>').appendTo(imgContainer);
         }
         
-        imgContainer.find('a').eq(0).addClass('active').show();
+        setTimeout(() => { imgContainer.find('a').eq(0).addClass('active').show(); }, 0);
         let leftButton = this.carousel.element.find('#carousel-left');
         let rightButton = this.carousel.element.find('#carousel-right');
+
+        this.carousel.element.find('.loader').hide();
 
         let skipSlide = false;
 
