@@ -179,7 +179,7 @@ class CountryProfile extends Element {
         return $.ajax({
             method: 'GET',
             url: 'https://api.acleddata.com/acled/read.csv',
-            data: {'limit': 0, 'country': country, 'fields': 'actor1|year|event_type|interaction|fatalities|latitude|longitude|admin1' },
+            data: {'limit': 0, 'country': country, 'fields': 'actor1|year|event_type|interaction|fatalities|latitude|longitude|admin1|country' },
             crossDomain: true,
             success: function(data) {
                 let rows = data.split('\n');
@@ -191,7 +191,7 @@ class CountryProfile extends Element {
                     let currentData = {};
                      
                     for (let j=0; j<keys.length; j++) {
-                        if(keys[j] == 'event_type') {
+                        if(keys[j] == 'event_type' || keys[j] == 'country') {
                             currentData[keys[j]] = (currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim().toLowerCase();
                         } else {
                             currentData[keys[j]] = currentRow[j];
@@ -200,6 +200,8 @@ class CountryProfile extends Element {
                      
                     that.data.push(currentData);
                 }
+
+                that.data = that.data.filter(x => compareCountryNames(x.country, country));
 
                 that.admin1s = that.data.map(x => x.admin1 || '').sort().filter((item, pos, array) => !pos || item != array[pos - 1]); 
                 that.filteredData = that.data.slice();
