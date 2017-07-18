@@ -1,7 +1,7 @@
 class KeyFigures extends Element {
     constructor () {
         super('<div id="key-figures-section"></div>');
-        this.header = new Element('<header><h5>Key Events</h5></header>');
+        this.header = new Element('<header><h5>Key Figures</h5></header>');
         this.keyFigureList = new Element('<div id="key-figures"></div>');
         this.childElements.push(this.header);
         this.childElements.push(this.keyFigureList);
