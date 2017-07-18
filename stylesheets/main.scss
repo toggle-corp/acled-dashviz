@@ -391,12 +391,11 @@ body {
                         }
 
                         a {
-                            display: block;
+                            display: none;
                             width: 100%;
                             text-align: center;
                             outline: none;
                             box-shadow: none;
-                            color: rgba(0, 0, 0, 0.3);
                             height: calc(100% - 48px);
                             cursor: pointer;
                             padding: 0 8px;
@@ -413,9 +412,23 @@ body {
                                 }
                             }
                         }
+                         
+                        #report-image-empty {
+                            font-size: 2em;
+                            color: rgba(0, 0, 0, 0.3);
+                            height: calc(100% - 48px);
+                            min-height: 96px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                         
                         @media screen and (max-width: 720px) {
                             a {
                                 height: auto;
+                            }
+                            #report-image-empty{
+                                font-size: 2em;
                             }
                         }
                     }

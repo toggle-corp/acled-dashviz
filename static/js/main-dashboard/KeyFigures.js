@@ -36,10 +36,12 @@ class KeyFigures extends Element {
             data: {
                 'limit': '0',
                 'country': country,
-                'fields': 'fatalities'
+                'fields': 'fatalities|country'
             },
             success: function(response) {
                 if(response && response.data) {
+                    response.data = response.data.filter(x => compareCountryNames(x.country, country));
+                     
                     numberOfEvents.find('.number').text(response.data.length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                      
                     fatalities.find('.number').text(response.data.length===0? '0': response.data.reduce(function(a, b){
@@ -57,10 +59,12 @@ class KeyFigures extends Element {
                 'limit': '0',
                 'INTER1': '7:OR:INTER2=7',
                 'country': country,
-                'fields': 'fatalities|actor1|actor2'
+                'fields': 'fatalities|actor1|actor2|country'
             },
             success: function(response) {
                 if(response && response.data) {
+                    response.data = response.data.filter(x => compareCountryNames(x.country, country));
+                     
                     let totalCivilianDeaths = 0;
                     let armedActiveAgents = {};
 
@@ -84,6 +88,7 @@ class KeyFigures extends Element {
                             ++armedActiveAgents[cd.actor2];
                         }
                     }
+                     
                     numberOfCivilianDeaths.find('.number').text(totalCivilianDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     numberOfArmedActiveAgents.find('.number').text(Object.keys(armedActiveAgents).length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 } else {

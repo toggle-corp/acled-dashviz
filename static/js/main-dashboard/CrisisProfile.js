@@ -8,7 +8,8 @@ class CrisisProfile extends Element {
             `
             <div id="recent-events-section">
                 <header><h5>Recent event</h5></header>
-                <a><img alt="Report image"></a>
+                <a hidden><img alt="Report image"></a>
+                <div id="report-image-empty">Not available</div>
             </div>
             `
         );
@@ -86,15 +87,19 @@ class CrisisProfile extends Element {
                     that.keyFiguresSection.load(crisisProfiles[val].country);
                      
                     if(crisisProfiles[val]['recent-event-url']) {
-                        that.recentEventsSection.element.find('a').prop('href', crisisProfiles[val]['recent-event-url']).text('');
+                        that.recentEventsSection.element.find('a').prop('href', crisisProfiles[val]['recent-event-url']).css('display', 'block');
                     } else {
-                        that.recentEventsSection.element.find('a').prop('href', '#').text('Not available');
+                        that.recentEventsSection.element.find('a').prop('href', '#').css('display', 'none');
                     }
                      
                     if(crisisProfiles[val]['recent-event-img']) {
                         that.recentEventsSection.element.find('img').prop('src', crisisProfiles[val]['recent-event-img']).removeClass('no-img');
+                        that.recentEventsSection.element.find('#report-image-empty').css('display', 'none');
+                        that.recentEventsSection.element.find('a').css('display', 'block');
                     } else {
                         that.recentEventsSection.element.find('img').prop('src', '').addClass('no-img');
+                        that.recentEventsSection.element.find('a').css('display', 'none');
+                        that.recentEventsSection.element.find('#report-image-empty').css('display', 'flex');
                     }
                 }
             }
@@ -106,12 +111,23 @@ class CrisisProfile extends Element {
         if(crisisProfiles.length > 0) {
             this.loadCrisisProfile(crisisProfiles[0]);
             this.keyFiguresSection.load(crisisProfiles[0].country);
+             
             if(crisisProfiles[0]['recent-event-url']) {
-                this.recentEventsSection.element.find('a').prop('href', crisisProfiles[0]['recent-event-url']);
+                this.recentEventsSection.element.find('a').prop('href', crisisProfiles[0]['recent-event-url']).css('display', 'block');
+            } else {
+                this.recentEventsSection.element.find('a').prop('href', '#').css('display', 'none');
             }
+             
             if(crisisProfiles[0]['recent-event-img']) {
-                this.recentEventsSection.element.find('img').prop('src', crisisProfiles[0]['recent-event-img']);
-            } 
+                this.recentEventsSection.element.find('img').prop('src', crisisProfiles[0]['recent-event-img']).removeClass('no-img');
+                this.recentEventsSection.element.find('#report-image-empty').css('display', 'none');
+                this.recentEventsSection.element.find('a').css('display', 'block');
+            } else {
+                this.recentEventsSection.element.find('img').prop('src', '').addClass('no-img');
+                this.recentEventsSection.element.find('a').css('display', 'none');
+                this.recentEventsSection.element.find('#report-image-empty').css('display', 'flex');
+            }
+
         }
     }
 }
