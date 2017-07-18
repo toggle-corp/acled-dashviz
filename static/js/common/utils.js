@@ -11,11 +11,28 @@ function addCountry(countryName) {
 
 let acledEvents = {};
 function addEvent(eventName) {
-    eventName = eventName.includes('battle')? 'battle' : eventName;
+    eventName = eventName.includes('battle')? 'battles' : eventName;
     if (!acledEvents[eventName]) {
         acledEvents[eventName] = 0;
     }
     ++acledEvents[eventName];
+}
+
+let acledEventOrder = [ 'battles', 'violence against civilians', 'remote violence', 'riots/protests' ];
+
+
+function getSortedAcledEventKeys() {
+    let keys = Object.keys(acledEvents);
+
+    function getOrder(i) {
+        return i==-1? 9999 : i;
+    }
+
+    keys.sort(function(a, b) {
+        return getOrder(acledEventOrder.findIndex((el) => compareEvents(el, a))) - getOrder(acledEventOrder.findIndex((el) => compareEvents(el, b)));
+    });
+
+    return keys;
 }
 
 function compareEvents(e1, e2) {
