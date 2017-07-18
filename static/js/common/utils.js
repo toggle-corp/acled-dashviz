@@ -31,13 +31,13 @@ function addFatalities(fatalities) {
 }
 
 eventColors = {
-    'battle': '#e74c3c',
-    'headquarters or base established': '#008080',
-    'non-violent transfer of territory': '#27ae60',
-    'remote violence': '#2c3e50',
-    'riots/protests': '#e67e22',
-    'strategic development': '#2980b9',
-    'violence against civilians': '#8e44ad',
+    'battle': '#093746',
+    'headquarters or base established': '#0D657D',
+    'non-violent transfer of territory': '#898989 ',
+    'remote violence': '#FFBB7A',
+    'riots/protests': '#FF7F0E',
+    'strategic development': '#A2C8EC',
+    'violence against civilians': '#C95200',
 };
 
 function getEventColor(eventName) {
