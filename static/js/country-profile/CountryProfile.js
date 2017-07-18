@@ -4,7 +4,7 @@ class CountryProfile extends Element {
         this.scrollWrapper = new Element('<div class="scroll-wrapper"></div>');
         this.childElements.push(this.scrollWrapper);
 
-        this.header = new Element('<header><h3><a id="back-btn" class="fa fa-arrow-left"></a><span id="country-name">country_name</span></h3><button id="filter-btn"><i class="fa fa-filter"></i></button></header>');
+        this.header = new Element('<header><h3><a id="back-btn" class="fa fa-arrow-left"></a><span id="country-name">country_name</span></h3><button id="filter-btn"><i class="fa fa-filter"></i><span>Apply filters</span></button></header>');
         this.scrollWrapper.childElements.push(this.header);
 
         this.countryMap = new CountryMap();
