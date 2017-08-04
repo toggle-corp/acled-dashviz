@@ -22,7 +22,7 @@ class DashboardVisualization {
             $page_check = get_page_by_title("Dashboard");
             $post_id = 0;
             $plugin_dir = '/acled-dashviz';
-            $post_content = file_get_contents(plugins_url().$plugin_dir.'/main.html');
+            $post_content = file_get_contents(plugins_url().$plugin_dir.'/static/main.html');
             $post_title = 'Dashboard';
 
             if(!isset($page_check->ID)) {
