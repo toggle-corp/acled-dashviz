@@ -1,6 +1,6 @@
 class Dashboard extends Element {
     constructor() {
-        super('<div id="dashboard"></div>');
+        super('<div id="dashboard-container"></div>');
         this.mainDashboard = new MainDashboard();
         this.childElements.push(this.mainDashboard);
         this.countryProfile = new CountryProfile();

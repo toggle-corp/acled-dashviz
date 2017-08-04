@@ -496,92 +496,92 @@ body .header-post-title-container {
   border-bottom: 1px solid transparent !important;
   background-color: transparent;
   box-shadow: none !important; }
-body #dashboard {
+body #dashboard-container {
   padding-bottom: 16px; }
-  body #dashboard * {
+  body #dashboard-container * {
     box-sizing: border-box; }
-  body #dashboard h1, body #dashboard h2, body #dashboard h3, body #dashboard h4, body #dashboard h5 {
+  body #dashboard-container h1, body #dashboard-container h2, body #dashboard-container h3, body #dashboard-container h4, body #dashboard-container h5 {
     margin: 0;
     padding: 0;
     text-transform: uppercase; }
-  body #dashboard #main-dashboard {
+  body #dashboard-container #main-dashboard {
     display: flex;
     justify-content: space-between; }
-    body #dashboard #main-dashboard #left-section {
+    body #dashboard-container #main-dashboard #left-section {
       flex-basis: calc(64% - 16px); }
-      body #dashboard #main-dashboard #left-section .map-container {
+      body #dashboard-container #main-dashboard #left-section .map-container {
         margin-bottom: 16px;
         background-color: #fff;
         box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.5); }
-        body #dashboard #main-dashboard #left-section .map-container #world-map {
+        body #dashboard-container #main-dashboard #left-section .map-container #world-map {
           height: calc(56vh - 84px);
           flex-basis: 64%;
           background-color: rgba(0, 0, 0, 0.1); }
-          body #dashboard #main-dashboard #left-section .map-container #world-map path.leaflet-map-pane {
+          body #dashboard-container #main-dashboard #left-section .map-container #world-map path.leaflet-map-pane {
             z-index: 11; }
-        body #dashboard #main-dashboard #left-section .map-container .legend {
+        body #dashboard-container #main-dashboard #left-section .map-container .legend {
           padding-bottom: 10px;
           height: 84px; }
-          body #dashboard #main-dashboard #left-section .map-container .legend header {
+          body #dashboard-container #main-dashboard #left-section .map-container .legend header {
             display: flex;
             height: 32px;
             align-items: center;
             padding: 0 10px; }
-            body #dashboard #main-dashboard #left-section .map-container .legend header h4 {
+            body #dashboard-container #main-dashboard #left-section .map-container .legend header h4 {
               font-size: 13px; }
-          body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements {
+          body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements {
             display: flex;
             flex-wrap: wrap;
             align-items: center; }
-            body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements .legend-element {
+            body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element {
               display: flex;
               align-items: center;
               padding: 0 10px; }
-              body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements .legend-element .color-box {
+              body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element .color-box {
                 width: 12px;
                 height: 12px;
                 flex-grow: 0;
                 flex-shrink: 0;
                 background-color: green;
                 border-radius: 50%; }
-              body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements .legend-element label {
+              body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element label {
                 font-size: 13px;
                 display: inline-block;
                 margin-left: 6px; }
-                body #dashboard #main-dashboard #left-section .map-container .legend .legend-elements .legend-element label:first-letter {
+                body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element label:first-letter {
                   text-transform: uppercase; }
         @media only screen and (max-width: 1080px) {
-          body #dashboard #main-dashboard #left-section .map-container #world-map {
+          body #dashboard-container #main-dashboard #left-section .map-container #world-map {
             height: calc(56vh - 108px); }
-          body #dashboard #main-dashboard #left-section .map-container .legend {
+          body #dashboard-container #main-dashboard #left-section .map-container .legend {
             height: 108px; } }
         @media only screen and (max-width: 720px) {
-          body #dashboard #main-dashboard #left-section .map-container {
+          body #dashboard-container #main-dashboard #left-section .map-container {
             flex-wrap: wrap;
             height: auto; }
-            body #dashboard #main-dashboard #left-section .map-container #world-map {
+            body #dashboard-container #main-dashboard #left-section .map-container #world-map {
               flex-basis: 100%;
               height: 360px; }
-            body #dashboard #main-dashboard #left-section .map-container .legend {
+            body #dashboard-container #main-dashboard #left-section .map-container .legend {
               flex-basis: 100%;
               height: auto; } }
         @media only screen and (max-width: 512px) {
-          body #dashboard #main-dashboard #left-section .map-container {
+          body #dashboard-container #main-dashboard #left-section .map-container {
             flex-wrap: wrap;
             height: auto; }
-            body #dashboard #main-dashboard #left-section .map-container #world-map {
+            body #dashboard-container #main-dashboard #left-section .map-container #world-map {
               flex-basis: 100%;
               height: 360px; }
-            body #dashboard #main-dashboard #left-section .map-container .legend {
+            body #dashboard-container #main-dashboard #left-section .map-container .legend {
               flex-basis: 100%; } }
-      body #dashboard #main-dashboard #left-section #carousel-container {
+      body #dashboard-container #main-dashboard #left-section #carousel-container {
         height: calc(44vh - 16px);
         background-color: #fff;
         position: relative;
         box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.5); }
-        body #dashboard #main-dashboard #left-section #carousel-container:hover button {
+        body #dashboard-container #main-dashboard #left-section #carousel-container:hover button {
           opacity: 0.3; }
-        body #dashboard #main-dashboard #left-section #carousel-container button {
+        body #dashboard-container #main-dashboard #left-section #carousel-container button {
           position: absolute;
           width: 48px;
           height: 48px;
@@ -594,13 +594,13 @@ body #dashboard {
           transition: 0.2s all ease-in-out;
           outline: none;
           z-index: 11; }
-          body #dashboard #main-dashboard #left-section #carousel-container button#carousel-left {
+          body #dashboard-container #main-dashboard #left-section #carousel-container button#carousel-left {
             left: 10px; }
-          body #dashboard #main-dashboard #left-section #carousel-container button#carousel-right {
+          body #dashboard-container #main-dashboard #left-section #carousel-container button#carousel-right {
             right: 10px; }
-          body #dashboard #main-dashboard #left-section #carousel-container button:hover {
+          body #dashboard-container #main-dashboard #left-section #carousel-container button:hover {
             opacity: 1; }
-        body #dashboard #main-dashboard #left-section #carousel-container .loader {
+        body #dashboard-container #main-dashboard #left-section #carousel-container .loader {
           position: absolute;
           left: 0;
           top: 0;
@@ -612,15 +612,15 @@ body #dashboard {
           align-items: center;
           justify-content: center;
           font-size: 2em; }
-        body #dashboard #main-dashboard #left-section #carousel-container .carousel {
+        body #dashboard-container #main-dashboard #left-section #carousel-container .carousel {
           width: 100%;
           height: 100%;
           padding: 16px 24px;
           z-index: 1; }
-          body #dashboard #main-dashboard #left-section #carousel-container .carousel a {
+          body #dashboard-container #main-dashboard #left-section #carousel-container .carousel a {
             width: 100%;
             height: 100%; }
-          body #dashboard #main-dashboard #left-section #carousel-container .carousel img {
+          body #dashboard-container #main-dashboard #left-section #carousel-container .carousel img {
             width: 100%;
             height: 100%;
             padding: 0;
@@ -628,132 +628,132 @@ body #dashboard {
             object-fit: scale-down;
             object-position: center center; }
         @media screen and (max-width: 720px) {
-          body #dashboard #main-dashboard #left-section #carousel-container {
+          body #dashboard-container #main-dashboard #left-section #carousel-container {
             height: auto;
             min-height: 196px; } }
-    body #dashboard #main-dashboard #right-section {
+    body #dashboard-container #main-dashboard #right-section {
       flex-basis: 36%;
       height: 100vh; }
-      body #dashboard #main-dashboard #right-section #crisis-profile-container {
+      body #dashboard-container #main-dashboard #right-section #crisis-profile-container {
         background-color: #fff;
         height: 100%;
         box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.5); }
-        body #dashboard #main-dashboard #right-section #crisis-profile-container > header {
+        body #dashboard-container #main-dashboard #right-section #crisis-profile-container > header {
           padding: 0 16px;
           height: 64px;
           display: flex;
           align-items: center; }
-        body #dashboard #main-dashboard #right-section #crisis-profile-container .select-wrapper {
+        body #dashboard-container #main-dashboard #right-section #crisis-profile-container .select-wrapper {
           height: 32px;
           display: flex;
           align-items: center;
           padding: 0 10px;
           margin-bottom: 16px;
           border-bottom: 2px solid rgba(0, 0, 0, 0.1); }
-          body #dashboard #main-dashboard #right-section #crisis-profile-container .select-wrapper .fa {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container .select-wrapper .fa {
             flex-basis: 32px;
             text-align: center; }
-          body #dashboard #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control {
             .flex-basis: calc(100% - 32px); }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control input {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control input {
               margin-bottom: 0;
               background-color: transparent;
               font-size: inherit; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control .crisis-profile-select-item .title {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control .crisis-profile-select-item .title {
               font-weight: bold; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control .crisis-profile-select-item:not(:last-child) {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container .select-wrapper .selectize-control .crisis-profile-select-item:not(:last-child) {
               border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
-        body #dashboard #main-dashboard #right-section #crisis-profile-container #report {
+        body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report {
           height: 22vh;
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
           padding: 0 16px;
           overflow: hidden; }
-          body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .detail {
             flex-basis: calc(100% - 180px);
             flex-grow: 0; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail .title {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .detail .title {
               font-size: 1em;
               text-transform: uppercase; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail date {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .detail date {
               color: rgba(0, 0, 0, 0.5);
               font-size: 0.9em; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail .description {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .detail .description {
               padding: 10px 0;
               color: rgba(0, 0, 0, 0.6);
               text-align: justify; }
-          body #dashboard #main-dashboard #right-section #crisis-profile-container #report .map {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .map {
             flex-basis: 160px;
             height: 160px;
             margin-top: 16px;
             flex-shrink: 0;
             background-color: #aaa; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #report .map #crisis-profile-map {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .map #crisis-profile-map {
               width: 100%;
               height: 100%; }
           @media only screen and (max-width: 1080px) {
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #report {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report {
               flex-direction: column;
               height: auto;
               min-height: 22vh; }
-              body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail {
+              body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .detail {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between; }
-                body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail .title {
+                body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .detail .title {
                   flex-basis: 70%; }
-                body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail .date {
+                body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .detail .date {
                   flex-basis: 30%; }
-                body #dashboard #main-dashboard #right-section #crisis-profile-container #report .detail .description {
+                body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .detail .description {
                   flex-basis: 100%; }
-              body #dashboard #main-dashboard #right-section #crisis-profile-container #report .map {
+              body #dashboard-container #main-dashboard #right-section #crisis-profile-container #report .map {
                 margin-top: 0;
                 flex-basis: 100%;
                 width: 100%; } }
-        body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section {
+        body #dashboard-container #main-dashboard #right-section #crisis-profile-container #key-figures-section {
           height: 22vh;
           display: flex;
           align-items: center;
           flex-wrap: wrap; }
-          body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section header {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container #key-figures-section header {
             flex-basis: 100%;
             height: 48px;
             padding: 0 16px;
             display: flex;
             align-items: center; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section header h5 {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #key-figures-section header h5 {
               font-size: 1em; }
-          body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section #key-figures {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container #key-figures-section #key-figures {
             width: 100%;
             height: calc(100% - 48px); }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section #key-figures .key-figure {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #key-figures-section #key-figures .key-figure {
               flex-basis: 100%;
               min-height: 32px;
               padding: 0 16px;
               display: flex;
               align-items: center; }
-              body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section #key-figures .key-figure label {
+              body #dashboard-container #main-dashboard #right-section #crisis-profile-container #key-figures-section #key-figures .key-figure label {
                 font-size: 0.8em;
                 text-transform: uppercase;
                 color: rgba(0, 0, 0, 0.5);
                 margin-right: 8px; }
-              body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section #key-figures .key-figure:nth-child(odd) {
+              body #dashboard-container #main-dashboard #right-section #crisis-profile-container #key-figures-section #key-figures .key-figure:nth-child(odd) {
                 background-color: #f0f0f0; }
           @media screen and (max-width: 720px) {
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #key-figures-section {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #key-figures-section {
               height: auto;
               margin-bottom: 10px; } }
-        body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section {
+        body #dashboard-container #main-dashboard #right-section #crisis-profile-container #recent-events-section {
           height: calc(100% - 44vh - 64px - 32px - 16px); }
-          body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section header {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container #recent-events-section header {
             flex-basis: 100%;
             height: 48px;
             padding: 0 16px;
             align-items: center; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section header h5 {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #recent-events-section header h5 {
               font-size: 1em; }
-          body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container #recent-events-section a {
             display: none;
             width: 100%;
             text-align: center;
@@ -762,15 +762,15 @@ body #dashboard {
             height: calc(100% - 48px);
             cursor: pointer;
             padding: 0 8px; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a img {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #recent-events-section a img {
               width: 100%;
               height: 100%;
               object-fit: contain;
               object-position: center center;
               margin: 0; }
-              body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a img.no-img {
+              body #dashboard-container #main-dashboard #right-section #crisis-profile-container #recent-events-section a img.no-img {
                 display: none; }
-          body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section #report-image-empty {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container #recent-events-section #report-image-empty {
             font-size: 2em;
             color: rgba(0, 0, 0, 0.3);
             height: calc(100% - 48px);
@@ -779,20 +779,20 @@ body #dashboard {
             align-items: center;
             justify-content: center; }
           @media screen and (max-width: 720px) {
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section a {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #recent-events-section a {
               height: auto; }
-            body #dashboard #main-dashboard #right-section #crisis-profile-container #recent-events-section #report-image-empty {
+            body #dashboard-container #main-dashboard #right-section #crisis-profile-container #recent-events-section #report-image-empty {
               font-size: 2em; } }
         @media screen and (max-width: 720px) {
-          body #dashboard #main-dashboard #right-section #crisis-profile-container {
+          body #dashboard-container #main-dashboard #right-section #crisis-profile-container {
             height: auto; } }
     @media only screen and (max-width: 768px) {
-      body #dashboard #main-dashboard {
+      body #dashboard-container #main-dashboard {
         flex-wrap: wrap; }
-        body #dashboard #main-dashboard #left-section {
+        body #dashboard-container #main-dashboard #left-section {
           flex-basis: 100%;
           height: auto; }
-        body #dashboard #main-dashboard #right-section {
+        body #dashboard-container #main-dashboard #right-section {
           flex-basis: 100%;
           margin-top: 12px;
           height: auto; } }

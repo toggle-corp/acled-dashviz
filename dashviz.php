@@ -9,7 +9,6 @@ Version: 1.0
 
 define( 'DASHVIZ__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-
 class DashboardVisualization {
     function init($template) {
         global $wp_query;
