@@ -1,7 +1,10 @@
+let dashboard = null;
+
 $(document).ready(function(){
     $('#main').empty();
     let root = new Element();
     root.element = $('#main');
+     
     dashboard = new Dashboard();
     dashboard.initDomAll(root);
     dashboard.processAll();

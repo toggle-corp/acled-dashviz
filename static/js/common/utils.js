@@ -1,5 +1,5 @@
 let acledData = [];
-let dashboard = null;
+//let dashboard = null;
 
 let acledCountries = {};
 function addCountry(countryName) {
