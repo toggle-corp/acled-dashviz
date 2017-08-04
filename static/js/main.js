@@ -1,4 +1,4 @@
-let dashboard = null;
+var dashboard = null;
 
 $(document).ready(function(){
     $('#main').empty();

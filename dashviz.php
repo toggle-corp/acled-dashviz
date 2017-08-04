@@ -9,117 +9,14 @@ Version: 1.0
 
 define( 'DASHVIZ__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
+
 class DashboardVisualization {
     function init($template) {
         global $wp_query;
-        $query = $wp_query->get('pagename');
-         
-        if($query == 'crisis_profiles'){
-            header('Crisis profiles', true, 200);
-            $wp_query = null;
-            $wp_query = new WP_Query();
-             
-            /* $opts = json_decode(stripslashes(get_option('dashboard-data', '{}')), true); */
-            echo stripslashes(get_option('crisis_profiles', '[]'));
-            return null;
-        } elseif(substr($query, 0, 18) == 'timeline_country__') {
-            header('Timeline country', true, 200);
-            $wp_query = null;
-            $wp_query = new WP_Query();
-            $country = substr($query, 18, strlen($query)-18);
-            $data = stripslashes(get_option('timeline_country__'.$country, '{}'));
-            echo $data; 
-            return null;
-        } elseif(substr($query, 0, 16) == 'report_country__') {
-            header('Report country', true, 200);
-            $wp_query = null;
-            $wp_query = new WP_Query();
-            $country = substr($query, 16, strlen($query)-16);
-            $data = stripslashes(get_option('report_country__'.$country, '{}'));
-            echo $data; 
-            return null;
-        } elseif(substr($query, 0, 6) === 'post__') {
-            header('ACLED Dashboard', true, 200);
-            $wp_query = null;
-            $wp_query = new WP_Query();
 
-            $post_var = substr($query, 6, strlen($query)-6); 
-
-            if($post_var === 'carousel_image1') {
-                if(isset($_POST['carousel-image1'])) {
-                    update_option('carousel_image1', $_POST['carousel-image1']);
-                    update_option('carousel_url1', $_POST['carousel-url1']);
-                    echo 'success';
-                } else {
-                    echo 'failed';
-                }
-            } elseif($post_var === 'carousel_image2') {
-                if(isset($_POST['carousel-image2'])){
-                    update_option('carousel_image2', $_POST['carousel-image2']);
-                    update_option('carousel_url2', $_POST['carousel-url2']);
-                    echo 'success';
-                } else {
-                    echo 'failed';
-                }
-            } elseif($post_var === 'carousel_image3') {
-                if(isset($_POST['carousel-image3'])){
-                    update_option('carousel_image3', $_POST['carousel-image3']);
-                    update_option('carousel_url3', $_POST['carousel-url3']);
-                    echo 'success';
-                } else {
-                    echo 'failed';
-                }
-            } elseif($post_var === 'crisis_profiles') {
-                if(isset($_POST['crisis-profiles'])) {
-                    update_option('crisis_profiles', $_POST['crisis-profiles']);
-                    echo 'success';
-                } else {
-                    echo 'failed';
-                }
-            } elseif($post_var === 'recent_event') {
-                if(isset($_POST['recent-event-data'])) {
-                    update_option('recent_event', $_POST['recent-event-data']);
-                    echo 'success';
-                } else {
-                    echo 'failed';
-                } 
-            } else {
-                if(substr($post_var, 0, 19) === 'timeline_country___') {
-                    $country = substr($post_var, 19, strlen($post_var)-19);
-                    if(isset($_POST['timeline-country-data'])) {
-                        update_option('timeline_country__'.$country, $_POST['timeline-country-data']);
-                        $timeline_countries = get_option('timeline_countries', array());
-                        $timeline_countries[$country] = $_POST['timeline-country-name'];
-
-                        update_option('timeline_countries', $timeline_countries);
-
-                        echo 'success';
-                    } else {
-                        echo 'failed';
-                    }
-                } elseif(substr($post_var, 0, 17) === 'report_country___') {
-                    $country = substr($post_var, 17, strlen($post_var)-17);
-                    if(isset($_POST['report-country-data'])) {
-                        update_option('report_country__'.$country, $_POST['report-country-data']);
-                        $timeline_countries = get_option('report_countries', array());
-                        $timeline_countries[$country] = $_POST['report-country-name'];
-
-                        update_option('report_countries', $timeline_countries);
-
-                        echo 'success';
-                    } else {
-                        echo 'failed';
-                    }
-
-                } else {
-                    echo $post_var;
-                    echo 'Invalid request';
-                }
-            }
-
+        if ($this->process_query()) {
             return null;
         }
-
 
         if((is_page('Dashboard') || is_home())) {
             $page_check = get_page_by_title("Dashboard");
@@ -216,6 +113,121 @@ class DashboardVisualization {
         return $template;
     }
 
+    function process_query() {
+        global $wp_query;
+        $query = $wp_query->get('pagename');
+         
+        if($query == 'crisis_profiles'){
+            header('Crisis profiles', true, 200);
+            $wp_query = null;
+            $wp_query = new WP_Query();
+             
+            /* $opts = json_decode(stripslashes(get_option('dashboard-data', '{}')), true); */
+            echo stripslashes(get_option('crisis_profiles', '[]'));
+            return true;
+             
+        } elseif(substr($query, 0, 18) === 'timeline_country__') {
+            header('Timeline country', true, 200);
+            $wp_query = null;
+            $wp_query = new WP_Query();
+            $country = substr($query, 18, strlen($query)-18);
+            $data = stripslashes(get_option('timeline_country__'.$country, '{}'));
+            echo $data; 
+            return true;
+             
+        } elseif(substr($query, 0, 16) === 'report_country__') {
+            header('Report country', true, 200);
+            $wp_query = null;
+            $wp_query = new WP_Query();
+            $country = substr($query, 16, strlen($query)-16);
+            $data = stripslashes(get_option('report_country__'.$country, '{}'));
+            echo $data; 
+            return true;
+             
+        } elseif(substr($query, 0, 6) === 'post__') {
+            header('ACLED Dashboard', true, 200);
+            $wp_query = null;
+            $wp_query = new WP_Query();
+
+            $post_var = substr($query, 6, strlen($query)-6); 
+
+            if($post_var === 'carousel_image1') {
+                if(isset($_POST['carousel-image1'])) {
+                    update_option('carousel_image1', $_POST['carousel-image1']);
+                    update_option('carousel_url1', $_POST['carousel-url1']);
+                    echo 'success';
+                } else {
+                    echo 'failed';
+                }
+            } elseif($post_var === 'carousel_image2') {
+                if(isset($_POST['carousel-image2'])){
+                    update_option('carousel_image2', $_POST['carousel-image2']);
+                    update_option('carousel_url2', $_POST['carousel-url2']);
+                    echo 'success';
+                } else {
+                    echo 'failed';
+                }
+            } elseif($post_var === 'carousel_image3') {
+                if(isset($_POST['carousel-image3'])){
+                    update_option('carousel_image3', $_POST['carousel-image3']);
+                    update_option('carousel_url3', $_POST['carousel-url3']);
+                    echo 'success';
+                } else {
+                    echo 'failed';
+                }
+            } elseif($post_var === 'crisis_profiles') {
+                if(isset($_POST['crisis-profiles'])) {
+                    update_option('crisis_profiles', $_POST['crisis-profiles']);
+                    echo 'success';
+                } else {
+                    echo 'failed';
+                }
+            } elseif($post_var === 'recent_event') {
+                if(isset($_POST['recent-event-data'])) {
+                    update_option('recent_event', $_POST['recent-event-data']);
+                    echo 'success';
+                } else {
+                    echo 'failed';
+                } 
+            } else {
+                if(substr($post_var, 0, 19) === 'timeline_country___') {
+                    $country = substr($post_var, 19, strlen($post_var)-19);
+                    if(isset($_POST['timeline-country-data'])) {
+                        update_option('timeline_country__'.$country, $_POST['timeline-country-data']);
+                        $timeline_countries = get_option('timeline_countries', array());
+                        $timeline_countries[$country] = $_POST['timeline-country-name'];
+
+                        update_option('timeline_countries', $timeline_countries);
+
+                        echo 'success';
+                    } else {
+                        echo 'failed';
+                    }
+                } elseif(substr($post_var, 0, 17) === 'report_country___') {
+                    $country = substr($post_var, 17, strlen($post_var)-17);
+                    if(isset($_POST['report-country-data'])) {
+                        update_option('report_country__'.$country, $_POST['report-country-data']);
+                        $timeline_countries = get_option('report_countries', array());
+                        $timeline_countries[$country] = $_POST['report-country-name'];
+
+                        update_option('report_countries', $timeline_countries);
+
+                        echo 'success';
+                    } else {
+                        echo 'failed';
+                    }
+
+                } else {
+                    echo $post_var;
+                    echo 'Invalid request';
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }
 
 class AdminPanel {
