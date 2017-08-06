@@ -54,7 +54,11 @@ class CrisisProfile extends Element {
 
     loadCrisisProfile(cp) {
         this.reportDetailContainer.element.find('.title').text(cp.title).prop('title', cp.title);
-        this.reportDetailContainer.element.find('date').text(cp.date);
+        if (cp['end-date'] ) {
+            this.reportDetailContainer.element.find('date').text(cp.date + ' to ' + cp['end-date']);
+        } else {
+            this.reportDetailContainer.element.find('date').text(cp.date + ' (ongoing)');
+        }
         this.reportDetailContainer.element.find('.description').text(cp.description);
         this.crisisProfileMap.load(cp.country);
     }
@@ -114,7 +118,7 @@ class CrisisProfile extends Element {
         let cp = crisisProfiles[index];
          
         this.loadCrisisProfile(cp);
-        this.keyFiguresSection.load(cp.country);
+        this.keyFiguresSection.load(cp.country, cp.date, cp['end-date']);
          
         if(cp['recent-event-url']) {
             this.recentEventsSection.element.find('a').prop('href', cp['recent-event-url']).css('display', 'block');

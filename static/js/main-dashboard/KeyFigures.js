@@ -10,7 +10,7 @@ class KeyFigures extends Element {
 
     }
 
-    load (country) {
+    load (country, startDate, endDate) {
         //let countryData = acledData.filter(x => compareCountryNames(x.country, country));
         
         let numberOfEvents = this.keyFigureTemplate.clone();
@@ -29,6 +29,9 @@ class KeyFigures extends Element {
         let numberOfArmedActiveAgents = this.keyFigureTemplate.clone();
         numberOfArmedActiveAgents.prop('id', 'number-of-armed-active-agents');
         numberOfArmedActiveAgents.find('label').text('Number of armed active agents:');
+
+        startDate = new Date(startDate? startDate: 0);
+        endDate = endDate? (new Date(endDate)) : (new Date());
          
         $.ajax({
             method: 'GET',
@@ -36,11 +39,11 @@ class KeyFigures extends Element {
             data: {
                 'limit': '0',
                 'country': country,
-                'fields': 'fatalities|country'
+                'fields': 'fatalities|country|event_date'
             },
             success: function(response) {
                 if(response && response.data) {
-                    response.data = response.data.filter(x => compareCountryNames(x.country, country));
+                    response.data = response.data.filter(x => compareCountryNames(x.country, country) && startDate <= (new Date(x.event_date)) && endDate >= (new Date(x.event_date)));
                      
                     numberOfEvents.find('.number').text(response.data.length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                      
