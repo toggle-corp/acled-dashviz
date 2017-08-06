@@ -27,6 +27,20 @@ body {
     }
 
 
+    #dashboard-container-before {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .fa {
+            margin-right: 10px;
+        }
+
+        >div {
+            font-size: 2em;
+        }
+    }
     #dashboard-container {
         padding-bottom: 16px;
 

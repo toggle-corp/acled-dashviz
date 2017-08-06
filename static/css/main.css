@@ -496,6 +496,15 @@ body .header-post-title-container {
   border-bottom: 1px solid transparent !important;
   background-color: transparent;
   box-shadow: none !important; }
+body #dashboard-container-before {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  body #dashboard-container-before .fa {
+    margin-right: 10px; }
+  body #dashboard-container-before > div {
+    font-size: 2em; }
 body #dashboard-container {
   padding-bottom: 16px; }
   body #dashboard-container * {
