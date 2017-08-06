@@ -52,6 +52,7 @@
 
         .detail {
             flex-basis: calc(100% - 180px);
+            width: calc(100% - 180px);
             flex-grow: 0;
             height: 160px;
 
@@ -60,13 +61,20 @@
                 text-transform: uppercase;
                 height: 1em;
                 margin-bottom: 6px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                line-height: 1;
             }
+             
             date {
                 color: rgba(0, 0, 0, 0.5);
                 font-size: 0.9em;
                 display: block;
                 height: 0.9em;
+                line-height: 1;
             }
+             
             .description {
                 margin-top: 10px;
                 height: calc(100% - 1em - 6px - 0.9em - 10px);
@@ -77,6 +85,7 @@
         }
         .map {
             flex-basis: 160px;
+            width: 160px;
             height: 160px;
             flex-shrink: 0;
             background-color: #aaa;

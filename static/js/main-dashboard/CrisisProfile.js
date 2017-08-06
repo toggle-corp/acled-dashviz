@@ -53,7 +53,7 @@ class CrisisProfile extends Element {
     }
 
     loadCrisisProfile(cp) {
-        this.reportDetailContainer.element.find('.title').text(cp.title);
+        this.reportDetailContainer.element.find('.title').text(cp.title).prop('title', cp.title);
         this.reportDetailContainer.element.find('date').text(cp.date);
         this.reportDetailContainer.element.find('.description').text(cp.description);
         this.crisisProfileMap.load(cp.country);
@@ -75,7 +75,7 @@ class CrisisProfile extends Element {
             options: crisisProfiles,
             create: false,
             closeAfterSelect: true,
-            openOnFocus: false,
+            //openOnFocus: false,
             render: {
                 option: function(item, escape) {
                     return '<div class="crisis-profile-select-item"><div class="title">'+escape(item.title)+'</div><div class="country">'+escape(item.country)+'</div></div>';
@@ -83,6 +83,7 @@ class CrisisProfile extends Element {
             },
             onChange: function(val) {
                 if(val) {
+                    /*
                     that.loadCrisisProfile(crisisProfiles[val]);
                     that.keyFiguresSection.load(crisisProfiles[val].country);
 
@@ -101,14 +102,42 @@ class CrisisProfile extends Element {
                         that.recentEventsSection.element.find('a').css('display', 'none');
                         that.recentEventsSection.element.find('#report-image-empty').css('display', 'flex');
                     }
+                    */
+                    that.renderData(val);
                 }
             }
         });
 
     }
 
-    load () {
+    renderData(index) {
+        let cp = crisisProfiles[index];
+         
+        this.loadCrisisProfile(cp);
+        this.keyFiguresSection.load(cp.country);
+         
+        if(cp['recent-event-url']) {
+            this.recentEventsSection.element.find('a').prop('href', cp['recent-event-url']).css('display', 'block');
+        } else {
+            this.recentEventsSection.element.find('a').prop('href', '#').css('display', 'none');
+        }
+
+        if(cp['recent-event-img']) {
+            this.recentEventsSection.element.find('img').prop('src', cp['recent-event-img']).removeClass('no-img');
+            this.recentEventsSection.element.find('#report-image-empty').css('display', 'none');
+            this.recentEventsSection.element.find('a').css('display', 'block');
+        } else {
+            this.recentEventsSection.element.find('img').prop('src', '').addClass('no-img');
+            this.recentEventsSection.element.find('a').css('display', 'none');
+            this.recentEventsSection.element.find('#report-image-empty').css('display', 'flex');
+        }
+
+    }
+
+    load() {
         if(crisisProfiles.length > 0) {
+            this.renderData(0);
+            /*
             this.loadCrisisProfile(crisisProfiles[0]);
             this.keyFiguresSection.load(crisisProfiles[0].country);
 
@@ -127,6 +156,7 @@ class CrisisProfile extends Element {
                 this.recentEventsSection.element.find('a').css('display', 'none');
                 this.recentEventsSection.element.find('#report-image-empty').css('display', 'flex');
             }
+            */
 
         }
     }
