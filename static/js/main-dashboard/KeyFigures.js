@@ -62,11 +62,11 @@ class KeyFigures extends Element {
                 'limit': '0',
                 'INTER1': '7:OR:INTER2=7',
                 'country': country,
-                'fields': 'fatalities|actor1|actor2|country'
+                'fields': 'fatalities|actor1|actor2|country|event_date'
             },
             success: function(response) {
                 if(response && response.data) {
-                    response.data = response.data.filter(x => compareCountryNames(x.country, country));
+                    response.data = response.data.filter(x => compareCountryNames(x.country, country) && startDate <= (new Date(x.event_date)) && endDate >= (new Date(x.event_date)));
                      
                     let totalCivilianDeaths = 0;
                     let armedActiveAgents = {};

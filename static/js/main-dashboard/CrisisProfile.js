@@ -135,7 +135,6 @@ class CrisisProfile extends Element {
             this.recentEventsSection.element.find('a').css('display', 'none');
             this.recentEventsSection.element.find('#report-image-empty').css('display', 'flex');
         }
-
     }
 
     load() {
