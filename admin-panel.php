@@ -248,8 +248,12 @@
                 <input type="text" name="crisis-country" class="crisis-country">
             </div>
             <div class="input-group">
-                <label>Date</label>
+                <label>Start Date</label>
                 <input type="date" name="crisis-date" class="crisis-date">
+            </div>
+            <div class="input-group">
+                <label>End Date</label>
+                <input type="date" name="crisis-end-date" class="crisis-end-date">
             </div>
             <div class="input-group"> 
                 <label>Description</label>
@@ -284,8 +288,12 @@
                 <input type="text" name="crisis-country" class="crisis-country">
             </div>
             <div class="input-group">
-                <label>Date</label>
+                <label>Start Date</label>
                 <input type="date" name="crisis-date" class="crisis-date">
+            </div>
+            <div class="input-group">
+                <label>End Date</label>
+                <input type="date" name="crisis-end-date" class="crisis-end-date">
             </div>
             <div class="input-group"> 
                 <label>Description</label>

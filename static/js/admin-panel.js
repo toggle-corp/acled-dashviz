@@ -85,15 +85,19 @@ $(document).ready(function() {
         let newCrisis = $('#add-crisis-modal .content');
         let newCrisisTitleInput = newCrisis.find('.crisis-title');
         let newCrisisDateInput = newCrisis.find('.crisis-date');
+        let newCrisisEndDateInput = newCrisis.find('.crisis-end-date');
         let newCrisisCountryInput = newCrisis.find('.crisis-country');
         let newCrisisDescriptionInput = newCrisis.find('.crisis-description');
          
         let url = newCrisis.find('.crisis-recent-event-url').val();
         let newCrisisRecentEventImage = newCrisis.find('.preview').prop('src');
-         
-        url = (url.indexOf('://') === -1) ? 'http://' + url: url;
         
-        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'country': newCrisisCountryInput.val(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage }); 
+        if (url) {
+            url = (url.indexOf('://') === -1) ? 'http://' + url: url;
+        }
+            
+        
+        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'end-date': newCrisisEndDate.val(), 'country': newCrisisCountryInput.val(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage }); 
         // crisisProfiles.sort(function(a, b) { return a.country - b.country; });
         refreshCrisisList();
 
@@ -111,10 +115,13 @@ $(document).ready(function() {
         cp.title = ecm.find('.crisis-title').val(); 
         cp.country = ecm.find('.crisis-country').val();
         cp.date = ecm.find('.crisis-date').val();
+        cp['end-date'] = ecm.find('.crisis-end-date').val();
         cp.description = ecm.find('.crisis-description').val();
          
         let url = ecm.find('.crisis-recent-event-url').val();
-        url = (url.indexOf('://') === -1) ? 'http://' + url: url;
+        if (url) {
+            url = (url.indexOf('://') === -1) ? 'http://' + url: url;
+        }
 
         cp['recent-event-url'] = url;
         cp['recent-event-img'] = ecm.find('.preview').prop('src');
@@ -273,11 +280,11 @@ $(document).ready(function() {
     loadData();
 
      
-    function addCrisisElement(index, title, date, country, description, recentEventImage, recentEventUrl){
+    function addCrisisElement(index, title, date, endDate, country, description, recentEventImage, recentEventUrl){
         let crisisElement = $('.crisis-profile-template').clone().removeClass('crisis-profile-template').addClass('crisis-profile').appendTo($('#crisis-profile-list .content'));
          
         crisisElement.find('.crisis-title').text(title);
-        crisisElement.find('.crisis-date').text(date);
+        crisisElement.find('.crisis-date').text(date + ' to ' + (endDate? endDate : '-'));
         crisisElement.find('.crisis-country').text(country);
         crisisElement.find('.crisis-description').text(description);
          
@@ -306,7 +313,7 @@ $(document).ready(function() {
 
         for (let i=0; i<crisisProfiles.length; i++) {
             let ccp = crisisProfiles[i];
-            addCrisisElement(i, ccp.title, ccp.date, ccp.country, ccp.description, ccp['recent-event-img'], ccp['recent-event-url']);
+            addCrisisElement(i, ccp.title, ccp.date, ccp['end-date'], ccp.country, ccp.description, ccp['recent-event-img'], ccp['recent-event-url']);
         }
     }
 
@@ -629,6 +636,7 @@ function editCrisis(caller) {
     ecm.find('.crisis-title').val(cp.title);
     ecm.find('.crisis-country').val(cp.country);
     ecm.find('.crisis-date').val(cp.date);
+    ecm.find('.crisis-end-date').val(cp['end-date']);
     ecm.find('.crisis-description').val(cp.description);
 
     ecm.find('.crisis-recent-event-url').val(cp['recent-event-url']);
