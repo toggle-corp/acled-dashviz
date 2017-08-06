@@ -153,6 +153,88 @@
           #country-profile .scroll-wrapper #country-report-container .content .details p {
             margin: 0;
             padding: 10px 0; }
+    #country-profile .scroll-wrapper #time-series-container {
+      height: 50vh;
+      flex-basis: calc(50% - 8px);
+      position: relative;
+      margin-bottom: 16px; }
+      #country-profile .scroll-wrapper #time-series-container > header {
+        height: 56px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between; }
+        #country-profile .scroll-wrapper #time-series-container > header h4 {
+          font-size: 1em; }
+        #country-profile .scroll-wrapper #time-series-container > header button {
+          margin: 0;
+          padding: 0;
+          background-color: transparent;
+          color: rgba(0, 0, 0, 0.5);
+          border: none;
+          outline: none;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%; }
+          #country-profile .scroll-wrapper #time-series-container > header button:hover {
+            background-color: rgba(0, 0, 0, 0.1); }
+      #country-profile .scroll-wrapper #time-series-container #time-series {
+        height: calc(100% - 48px); }
+        #country-profile .scroll-wrapper #time-series-container #time-series svg {
+          width: 100%;
+          height: 100%; }
+          #country-profile .scroll-wrapper #time-series-container #time-series svg .riot-line {
+            fill: none;
+            stroke: #e67e22;
+            stroke-width: 1px; }
+          #country-profile .scroll-wrapper #time-series-container #time-series svg .other-line {
+            fill: none;
+            stroke: #2c3e50;
+            stroke-width: 1px; }
+          #country-profile .scroll-wrapper #time-series-container #time-series svg .x-axis text {
+            transform: translate(5px, 5px) rotate(45deg);
+            font-size: 10px; }
+          #country-profile .scroll-wrapper #time-series-container #time-series svg .y-axis {
+            font-size: 10px; }
+          #country-profile .scroll-wrapper #time-series-container #time-series svg .legend text {
+            font-size: 10px; }
+    #country-profile .scroll-wrapper #bar-chart-container {
+      height: 50vh;
+      flex-basis: calc(50% - 8px);
+      margin-bottom: 16px;
+      position: relative; }
+      #country-profile .scroll-wrapper #bar-chart-container > header {
+        height: 56px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between; }
+        #country-profile .scroll-wrapper #bar-chart-container > header h4 {
+          font-size: 1em; }
+        #country-profile .scroll-wrapper #bar-chart-container > header button {
+          margin: 0;
+          padding: 0;
+          background-color: transparent;
+          color: rgba(0, 0, 0, 0.5);
+          border: none;
+          outline: none;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%; }
+          #country-profile .scroll-wrapper #bar-chart-container > header button:hover {
+            background-color: rgba(0, 0, 0, 0.1); }
+      #country-profile .scroll-wrapper #bar-chart-container #bar-chart {
+        height: calc(100% - 48px); }
+        #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg {
+          width: 100%;
+          height: 100%; }
+          #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg rect {
+            fill: rgba(62, 88, 173, 0.3);
+            stroke: rgba(62, 88, 173, 0.33); }
+          #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg .label {
+            font-size: 0.6em; }
+          #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg .x-axis text {
+            transform: translate(5px, 5px) rotate(45deg); }
     #country-profile .scroll-wrapper #timeline-container {
       flex-basis: 100%;
       height: 60vh; }
@@ -260,88 +342,6 @@
         justify-content: center;
         font-size: 3em;
         color: rgba(0, 0, 0, 0.1); }
-    #country-profile .scroll-wrapper #time-series-container {
-      height: 50vh;
-      flex-basis: calc(50% - 8px);
-      position: relative;
-      margin-bottom: 16px; }
-      #country-profile .scroll-wrapper #time-series-container > header {
-        height: 56px;
-        padding: 0 24px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between; }
-        #country-profile .scroll-wrapper #time-series-container > header h4 {
-          font-size: 1em; }
-        #country-profile .scroll-wrapper #time-series-container > header button {
-          margin: 0;
-          padding: 0;
-          background-color: transparent;
-          color: rgba(0, 0, 0, 0.5);
-          border: none;
-          outline: none;
-          width: 36px;
-          height: 36px;
-          border-radius: 50%; }
-          #country-profile .scroll-wrapper #time-series-container > header button:hover {
-            background-color: rgba(0, 0, 0, 0.1); }
-      #country-profile .scroll-wrapper #time-series-container #time-series {
-        height: calc(100% - 48px); }
-        #country-profile .scroll-wrapper #time-series-container #time-series svg {
-          width: 100%;
-          height: 100%; }
-          #country-profile .scroll-wrapper #time-series-container #time-series svg .riot-line {
-            fill: none;
-            stroke: #e67e22;
-            stroke-width: 1px; }
-          #country-profile .scroll-wrapper #time-series-container #time-series svg .other-line {
-            fill: none;
-            stroke: #2c3e50;
-            stroke-width: 1px; }
-          #country-profile .scroll-wrapper #time-series-container #time-series svg .x-axis text {
-            transform: translate(5px, 5px) rotate(45deg);
-            font-size: 10px; }
-          #country-profile .scroll-wrapper #time-series-container #time-series svg .y-axis {
-            font-size: 10px; }
-          #country-profile .scroll-wrapper #time-series-container #time-series svg .legend text {
-            font-size: 10px; }
-    #country-profile .scroll-wrapper #bar-chart-container {
-      height: 50vh;
-      flex-basis: calc(50% - 8px);
-      margin-bottom: 16px;
-      position: relative; }
-      #country-profile .scroll-wrapper #bar-chart-container > header {
-        height: 56px;
-        padding: 0 24px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between; }
-        #country-profile .scroll-wrapper #bar-chart-container > header h4 {
-          font-size: 1em; }
-        #country-profile .scroll-wrapper #bar-chart-container > header button {
-          margin: 0;
-          padding: 0;
-          background-color: transparent;
-          color: rgba(0, 0, 0, 0.5);
-          border: none;
-          outline: none;
-          width: 36px;
-          height: 36px;
-          border-radius: 50%; }
-          #country-profile .scroll-wrapper #bar-chart-container > header button:hover {
-            background-color: rgba(0, 0, 0, 0.1); }
-      #country-profile .scroll-wrapper #bar-chart-container #bar-chart {
-        height: calc(100% - 48px); }
-        #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg {
-          width: 100%;
-          height: 100%; }
-          #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg rect {
-            fill: rgba(62, 88, 173, 0.3);
-            stroke: rgba(62, 88, 173, 0.33); }
-          #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg .label {
-            font-size: 0.6em; }
-          #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg .x-axis text {
-            transform: translate(5px, 5px) rotate(45deg); }
     @media screen and (max-width: 720px) {
       #country-profile .scroll-wrapper #country-map-container {
         flex-basis: 100%; }
@@ -796,27 +796,6 @@ body #dashboard-container {
           flex-basis: 100%;
           margin-top: 12px;
           height: auto; } }
-body .marker-cluster {
-  background-clip: padding-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.3); }
-  body .marker-cluster div {
-    border-radius: 50%; }
-  body .marker-cluster span {
-    font-size: 0.9em;
-    font-weight: bold; }
-body .leaflet-popup-content div {
-  display: flex; }
-  body .leaflet-popup-content div label {
-    display: inline-block;
-    margin-right: 10px;
-    font-size: 0.9em;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: rgba(0, 0, 0, 0.5); }
 
 .tooltip {
   z-index: 1111;

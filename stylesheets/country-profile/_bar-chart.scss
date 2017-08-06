@@ -1,0 +1,59 @@
+#bar-chart-container {
+    height: 50vh;
+    flex-basis: calc(50% - 8px);
+    margin-bottom: 16px;
+    position: relative;
+
+    > header {
+        height: 56px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h4 {
+            font-size: 1em;
+        }
+
+        button {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: rgba(0, 0, 0, 0.5);
+            border: none;
+            outline: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+        }
+    }
+
+    #bar-chart {
+        height: calc(100% - 48px);
+
+        svg {
+            width: 100%;
+            height: 100%;
+
+            rect {
+                fill: rgba(62, 88, 173, 0.3);
+                stroke: rgba(62, 88, 173, 0.33);
+            }
+
+            .label {
+                font-size: 0.6em;
+            }
+
+            .x-axis{
+                text{
+                    transform: translate(5px, 5px) rotate(45deg);
+                }
+            }
+        }
+    }
+}

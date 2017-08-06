@@ -1,0 +1,73 @@
+#country-map-container {
+    flex-basis: calc(50% - 8px);
+    margin-bottom: 16px;
+    height: 50vh;
+
+    #country-map {
+        height: calc(100% - 96px);
+    }
+    .legend {
+        padding-bottom: 10px;
+        height: 96px;
+
+        header {
+            display: flex;
+            height: 32px;
+            align-items: center;
+            padding: 0 10px;
+
+            h4 {
+                font-size: 13px;
+            }
+        }
+        .legend-elements{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+            .legend-element {
+                display: flex;
+                align-items: center;
+                padding: 1px 10px;
+
+                .color-box {
+                    width: 12px;
+                    height: 12px;
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    border-radius: 50%;
+                }
+                label {
+                    font-size: 12px;
+                    display: inline-block;
+                    margin-left: 6px;
+
+                    &:first-letter{
+                        text-transform: uppercase;
+                    }
+                }
+            }
+
+        }
+    }
+    @media screen and (max-width: 1080px) {
+        #country-map {
+            height: calc(100% - 108px);
+        }
+        .legend {
+            height: 108px;
+        }
+    }
+    @media screen and (max-width: 720px) {
+        height: auto;
+
+
+
+        #country-map {
+            height: 360px;
+        }
+        .legend {
+            height: auto;
+        }
+    }
+}

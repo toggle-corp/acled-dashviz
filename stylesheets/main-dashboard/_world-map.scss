@@ -1,0 +1,93 @@
+.map-container {
+    margin-bottom: 16px;
+    background-color: #fff;
+    box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.5);
+
+    #world-map {
+        height: calc(56vh - 84px);
+        flex-basis: 64%;
+        background-color: rgba(0, 0, 0, 0.1);
+
+        path.leaflet-map-pane {
+            z-index: 11;
+        }
+    }
+    .legend {
+        padding-bottom: 10px;
+        height: 84px;
+
+        header {
+            display: flex;
+            height: 32px;
+            align-items: center;
+            padding: 0 10px;
+
+            h4 {
+                font-size: 13px;
+            }
+        }
+        .legend-elements{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+            .legend-element {
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+
+                .color-box {
+                    width: 12px;
+                    height: 12px;
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    background-color: green;
+                    border-radius: 50%;
+                }
+                label {
+                    font-size: 13px;
+                    display: inline-block;
+                    margin-left: 6px;
+
+                    &:first-letter{
+                        text-transform: uppercase;
+                    }
+                }
+            }
+
+        }
+    }
+    @media only screen and (max-width: 1080px) {
+        #world-map {
+            height: calc(56vh - 108px);
+        }
+        .legend {
+            height: 108px;
+        }
+    }
+    @media only screen and (max-width: 720px) {
+        flex-wrap: wrap;
+        height: auto;
+
+        #world-map{
+            flex-basis: 100%;
+            height: 360px;
+        }
+        .legend{
+            flex-basis: 100%;
+            height: auto;
+        }
+    }
+    @media only screen and (max-width: 512px) {
+        flex-wrap: wrap;
+        height: auto;
+
+        #world-map{
+            flex-basis: 100%;
+            height: 360px;
+        }
+        .legend{
+            flex-basis: 100%;
+        }
+    }
+}

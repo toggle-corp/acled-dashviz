@@ -1,0 +1,69 @@
+#time-series-container {
+    height: 50vh;
+    flex-basis: calc(50% - 8px);
+    position: relative;
+    margin-bottom: 16px;
+
+    >header{
+        height: 56px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h4{
+            font-size: 1em;
+        }
+
+        button{
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: rgba(0, 0, 0, 0.5);
+            border: none;
+            outline: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+        }
+    }
+
+    #time-series {
+        height: calc(100% - 48px);
+
+        svg{
+            width: 100%;
+            height: 100%;
+
+            .riot-line {
+                fill: none;
+                stroke: #e67e22;
+                stroke-width: 1px;
+            }
+            .other-line {
+                fill: none;
+                stroke: #2c3e50;
+                stroke-width: 1px;
+            }
+            .x-axis{
+                text{
+                    transform: translate(5px, 5px) rotate(45deg);
+                    font-size: 10px;
+                }
+            }
+            .y-axis {
+                font-size: 10px;
+            }
+            .legend {
+                text {
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+}
