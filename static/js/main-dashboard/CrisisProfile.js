@@ -7,14 +7,14 @@ class CrisisProfile extends Element {
         this.recentEventsSection = new Element(
             `
             <div id="recent-events-section">
-                <header><h5>Recent event</h5></header>
+                <header></header>
                 <a hidden><img alt="Report image"></a>
                 <div id="report-image-empty">Not available</div>
             </div>
             `
         );
         if(recentEvent) {
-            
+
         }
 
         this.reportSelectContainer = new Element(
@@ -48,10 +48,10 @@ class CrisisProfile extends Element {
         this.childElements.push(this.reportSection);
         this.childElements.push(this.keyFiguresSection);
         this.childElements.push(this.recentEventsSection);
-         
+
         this.crisisProfileMap.element.appendTo(this.reportDetailContainer.element.find('.map'));
     }
-     
+
     loadCrisisProfile(cp) {
         this.reportDetailContainer.element.find('.title').text(cp.title);
         this.reportDetailContainer.element.find('date').text(cp.date);
@@ -69,7 +69,7 @@ class CrisisProfile extends Element {
 
         $('#report-search').selectize({
             valueField: 'id',
-            labelField: 'title', 
+            labelField: 'title',
             searchField: ['title', 'country'],
             maxOptions: 5,
             options: crisisProfiles,
@@ -85,13 +85,13 @@ class CrisisProfile extends Element {
                 if(val) {
                     that.loadCrisisProfile(crisisProfiles[val]);
                     that.keyFiguresSection.load(crisisProfiles[val].country);
-                     
+
                     if(crisisProfiles[val]['recent-event-url']) {
                         that.recentEventsSection.element.find('a').prop('href', crisisProfiles[val]['recent-event-url']).css('display', 'block');
                     } else {
                         that.recentEventsSection.element.find('a').prop('href', '#').css('display', 'none');
                     }
-                     
+
                     if(crisisProfiles[val]['recent-event-img']) {
                         that.recentEventsSection.element.find('img').prop('src', crisisProfiles[val]['recent-event-img']).removeClass('no-img');
                         that.recentEventsSection.element.find('#report-image-empty').css('display', 'none');
@@ -104,20 +104,20 @@ class CrisisProfile extends Element {
                 }
             }
         });
-         
+
     }
 
     load () {
         if(crisisProfiles.length > 0) {
             this.loadCrisisProfile(crisisProfiles[0]);
             this.keyFiguresSection.load(crisisProfiles[0].country);
-             
+
             if(crisisProfiles[0]['recent-event-url']) {
                 this.recentEventsSection.element.find('a').prop('href', crisisProfiles[0]['recent-event-url']).css('display', 'block');
             } else {
                 this.recentEventsSection.element.find('a').prop('href', '#').css('display', 'none');
             }
-             
+
             if(crisisProfiles[0]['recent-event-img']) {
                 this.recentEventsSection.element.find('img').prop('src', crisisProfiles[0]['recent-event-img']).removeClass('no-img');
                 this.recentEventsSection.element.find('#report-image-empty').css('display', 'none');

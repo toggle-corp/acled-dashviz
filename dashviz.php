@@ -58,13 +58,13 @@ class DashboardVisualization {
                 rewind_posts();
 
                 /* $opts = json_decode(stripslashes(get_option('dashboard-data', '{}')), true); */
-               
+
                 wp_enqueue_script("jquery-script", 'https://code.jquery.com/jquery-3.2.1.min.js', null, null, true);
                 wp_enqueue_script("d3-script", 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.8.0/d3.min.js', null, null, true);
                 wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
                 wp_enqueue_script("mapbox-script", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js', null, null, true);
                 wp_enqueue_style("mapbox-style", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css');
-                 
+
                 //wp_enqueue_script("rtree-script", plugins_url().$plugin_dir.'/static/js/rtree.js', null, null, true);
                 wp_enqueue_script("leaflet-conditionalLayer-script", plugins_url().$plugin_dir.'/static/js/leaflet.conditionalLayer.js', null, null, true);
 
@@ -98,7 +98,7 @@ class DashboardVisualization {
                 wp_add_inline_script('dashviz-main-script', 'let carouselImage3="'.get_option('carousel_image3', '').'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let carouselUrl3="'.get_option('carousel_url3', '').'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let crisisProfiles=JSON.parse("'.get_option('crisis_profiles', '[]').'");', 'before');
-                 
+
                 wp_add_inline_script('dashviz-main-script', 'let recentEvent=JSON.parse("'.get_option('recent_event', '{}').'");', 'before');
 
                 /* if (isset($opts['carousel'])) { */
@@ -116,40 +116,40 @@ class DashboardVisualization {
     function process_query() {
         global $wp_query;
         $query = $wp_query->get('pagename');
-         
+
         if($query == 'crisis_profiles'){
             header('Crisis profiles', true, 200);
             $wp_query = null;
             $wp_query = new WP_Query();
-             
+
             /* $opts = json_decode(stripslashes(get_option('dashboard-data', '{}')), true); */
             echo stripslashes(get_option('crisis_profiles', '[]'));
             return true;
-             
+
         } elseif(substr($query, 0, 18) === 'timeline_country__') {
             header('Timeline country', true, 200);
             $wp_query = null;
             $wp_query = new WP_Query();
             $country = substr($query, 18, strlen($query)-18);
             $data = stripslashes(get_option('timeline_country__'.$country, '{}'));
-            echo $data; 
+            echo $data;
             return true;
-             
+
         } elseif(substr($query, 0, 16) === 'report_country__') {
             header('Report country', true, 200);
             $wp_query = null;
             $wp_query = new WP_Query();
             $country = substr($query, 16, strlen($query)-16);
             $data = stripslashes(get_option('report_country__'.$country, '{}'));
-            echo $data; 
+            echo $data;
             return true;
-             
+
         } elseif(substr($query, 0, 6) === 'post__') {
             header('ACLED Dashboard', true, 200);
             $wp_query = null;
             $wp_query = new WP_Query();
 
-            $post_var = substr($query, 6, strlen($query)-6); 
+            $post_var = substr($query, 6, strlen($query)-6);
 
             if($post_var === 'carousel_image1') {
                 if(isset($_POST['carousel-image1'])) {
@@ -188,7 +188,7 @@ class DashboardVisualization {
                     echo 'success';
                 } else {
                     echo 'failed';
-                } 
+                }
             } else {
                 if(substr($post_var, 0, 19) === 'timeline_country___') {
                     $country = substr($post_var, 19, strlen($post_var)-19);
@@ -246,7 +246,7 @@ class AdminPanel {
         if (isset($_POST['dashboard-data'])) {
             update_option('dashboard-data', $_POST['dashboard-data']);
             echo '<p>Successfully saved!</p>';
-        } 
+        }
         include 'admin-panel.php';
     }
     function load_style($hook) {
@@ -265,19 +265,19 @@ class AdminPanel {
         wp_add_inline_script('admin-panel-script', 'let carouselUrl3="'.get_option('carousel_url3', '').'";', 'before');
         wp_add_inline_script('admin-panel-script', 'let crisisProfiles=JSON.parse("'.get_option('crisis_profiles', '[]').'");', 'before');
         wp_add_inline_script('admin-panel-script', 'let recentEvent=JSON.parse("'.get_option('recent_event', '{}').'");', 'before');
-         
+
         wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
     }
 }
 
 
-$admin_panel = new AdminPanel;
-$dashviz = new DashboardVisualization;
- 
-add_action('init', array($api, 'init'), 10, 0);
+$admin_panel = new AdminPanel();
+$dashviz = new DashboardVisualization();
+
+//add_action('init', array($api, 'init'), 10, 0);
 add_action('admin_enqueue_scripts', array($admin_panel, 'load_style'));
 add_action('admin_menu', array($admin_panel, 'init'));
 add_filter('template_include', array( $dashviz, 'init'));
- 
+
 ?>

@@ -6,9 +6,9 @@ class CountryMap extends Element {
         this.childElements.push(this.mapElement);
         this.childElements.push(this.mapLegend);
     }
-     
+
     process() {
-        this.mapLegend.setTitle('Event types');
+        // this.mapLegend.setTitle('Event types');
 
         L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
         this.map = L.map('country-map', { preferCanvas: true }).setView([0, 10], 3);
@@ -28,27 +28,27 @@ class CountryMap extends Element {
             this.geoJsonLayer.clearLayers();
             this.map.removeLayer(this.geoJsonLayer);
         }
-         
+
         if (resetView) {
             this.map.setView([0, 10], 3);
         }
-         
+
         this.geoJsonLayer = null;
         //this.map.invalidateSize();
-         
+
         if (this.circles) {
             for (let i=0; i<this.circles.length; i++) {
                 this.map.removeLayer(this.circles[i]);
             }
         }
-         
+
     }
-     
+
     load(country, countryData) {
         this.reset();
         let that = this;
         let currentLayer = null;
-         
+
         $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
             that.geoJsonLayer = L.geoJson(data, {
                 onEachFeature: function(feature, layer) {
@@ -111,8 +111,8 @@ class CountryMap extends Element {
         }
 
         this.mapLegend.clearLegendElements();
-         
-         
+
+
         let acledEventKeys = getSortedAcledEventKeys();
         for (let i in acledEventKeys) {
             this.mapLegend.addLegendElement(getEventColor(acledEventKeys[i]), acledEventKeys[i]);

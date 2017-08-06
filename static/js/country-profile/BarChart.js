@@ -2,7 +2,7 @@ class BarChart extends Element {
     constructor() {
         super('<div id="bar-chart-container"></div>');
 
-        this.header = new Element('<header><h4>Top actors</h4></header>');
+        this.header = new Element('<header><h4>Events Involving Main Actors</h4></header>');
         this.barChart = new Element('<div id="bar-chart"></div>');
 
         this.childElements.push(this.header);
@@ -25,7 +25,7 @@ class BarChart extends Element {
         // 10 sections, 8px margin
         this.barHeight = ((this.height - this.margin.top - this.margin.bottom) / 10) - 8;
 
-        this.canvas = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')'); 
+        this.canvas = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
     }
 
     loadData(country){
@@ -41,12 +41,12 @@ class BarChart extends Element {
                 that.data = response.data;
                 that.data.sort(function(a, b) {
                     return b.actor1.localeCompare(a.actor1);
-                }); 
+                });
                 that.filteredData = that.data.slice();
             }
         });
     }
-     
+
     applyFilters() {
         this.filteredData = this.data.slice();
         this.filterByEvents();
@@ -70,7 +70,7 @@ class BarChart extends Element {
         let container = this.filterWrapper.element.find('.filter-interaction .content');
         let lowerLimit = 0;
         let upperLimit = 0;
-         
+
         switch(container.find('input[type="radio"]:checked').data('value')) {
             case 'less than 100':
                 lowerLimit = 0;
@@ -95,14 +95,14 @@ class BarChart extends Element {
         }
 
         this.filteredData = this.filteredData.filter(x => x.interaction >= lowerLimit && x.interaction < upperLimit);
- 
+
     }
 
     filterByFatalities() {
         let container = this.filterWrapper.element.find('.filter-fatalities .content');
         let lowerLimit = 0;
         let upperLimit = 0;
-         
+
         switch(container.find('input[type="radio"]:checked').data('value')) {
             case 'less than 100':
                 lowerLimit = 0;
@@ -131,15 +131,15 @@ class BarChart extends Element {
         }
 
         this.filteredData = this.filteredData.filter(x => x.fatalities >= lowerLimit && x.fatalities < upperLimit);
- 
+
     }
 
     filterByYear() {
         let container = this.filterWrapper.element.find('.filter-year');
-         
-        let startYear = container.find('.start-year').val(); 
+
+        let startYear = container.find('.start-year').val();
         startYear = startYear? (new Date(startYear)) : (new Date(0));
-         
+
         let endYear = container.find('.end-year').val();
         endYear = endYear? (new Date(endYear)) : (new Date());
 
@@ -156,7 +156,7 @@ class BarChart extends Element {
         if(data) {
             this.filteredData = data;
         }
-         
+
         let that = this;
 
         let actors = [];
@@ -164,10 +164,10 @@ class BarChart extends Element {
         let currentData = null;
 
         this.filteredData.sort((a, b) => (a.actor1||'').localeCompare((b.actor1) || ''));
-         
+
         for (let i=0; i<this.filteredData.length; i++) {
             let cfd = this.filteredData[i].actor1;
-             
+
             if (currentActor != cfd) {
                 currentActor = cfd;
                 currentData = {'name': cfd, 'count': 0};
@@ -175,13 +175,13 @@ class BarChart extends Element {
             }
             ++currentData.count;
         }
-         
+
         actors.sort(function(a, b) { return b.count - a.count; });
         actors.splice(Math.min(10, actors.length));
 
         this.scaleX.domain([0, d3.max(actors, function(d) { return d.count; })]);
 
-        this.canvas.selectAll("*").remove(); 
+        this.canvas.selectAll("*").remove();
         let bar = this.canvas.selectAll("g")
             .data(actors)
             .enter()
@@ -210,10 +210,10 @@ class BarChart extends Element {
             .call(d3.axisBottom(this.scaleX));
 
     }
-     
+
     load(country) {
         let that = this;
-         
+
         this.init();
 
     }

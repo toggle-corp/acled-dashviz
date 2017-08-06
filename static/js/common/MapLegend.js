@@ -1,7 +1,8 @@
 class MapLegend extends Element {
     constructor() {
         super('<div class="legend"></div>');
-        this.element.append('<header><h4></h4></header><div class="legend-elements"></div>');
+        this.element.append('<div class="legend-elements"></div>');
+        // this.element.append('<header><h4></h4></header><div class="legend-elements"></div>');
         this.legendElementTemplate = $('<div class="legend-element"><div class="color-box"></div><label></label></div>');
     }
     setTitle(title){

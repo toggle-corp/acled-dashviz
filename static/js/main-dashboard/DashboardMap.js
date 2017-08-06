@@ -7,7 +7,7 @@ class DashboardMap extends Element {
         this.childElements.push(this.mapLegend);
     }
     process() {
-        this.mapLegend.setTitle('Event types');
+        //this.mapLegend.setTitle('Event types');
 
         L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
         this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
