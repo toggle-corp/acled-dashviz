@@ -50,7 +50,6 @@ class CountryProfile extends Element {
         this.filterWrapper.element.find('.btn-reset').on('click', function(){
             that.filterWrapper.init(that.admin1s);
         });
-
     }
      
     applyFilters() {
@@ -220,7 +219,6 @@ class CountryProfile extends Element {
         $('html').css('overflow', 'hidden');
          
         let that = this;
-
          
         this.element.fadeIn('fast', function() {
             that.header.element.find('#country-name').text(country);
@@ -228,7 +226,6 @@ class CountryProfile extends Element {
             that.timeSeries.load(country);
             that.barChart.load(country);
             that.timeline.load(country);
-
              
             that.loadData(country).then(function() {
                 that.filterWrapper.init(that.admin1s);

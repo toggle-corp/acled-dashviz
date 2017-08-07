@@ -65,30 +65,29 @@ class DashboardVisualization {
                 wp_enqueue_script("mapbox-script", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js', null, null, true);
                 wp_enqueue_style("mapbox-style", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css');
 
-                //wp_enqueue_script("rtree-script", plugins_url().$plugin_dir.'/static/js/rtree.js', null, null, true);
-                wp_enqueue_script("leaflet-conditionalLayer-script", plugins_url().$plugin_dir.'/static/js/leaflet.conditionalLayer.js', null, null, true);
+                wp_enqueue_script("leaflet-conditionalLayer-script", plugins_url().$plugin_dir.'/static/js-build/leaflet.conditionalLayer.js', null, null, true);
 
-                wp_enqueue_script("selectize-script", plugins_url().$plugin_dir.'/static/js/selectize.js', null, null, true);
-                wp_enqueue_script("utils-script", plugins_url().$plugin_dir.'/static/js/common/utils.js', null, null, true);
-                wp_enqueue_script("element-script", plugins_url().$plugin_dir.'/static/js/common/Element.js', null, null, true);
-                wp_enqueue_script("map-legend-script", plugins_url().$plugin_dir.'/static/js/common/MapLegend.js', null, null, true);
+                wp_enqueue_script("selectize-script", plugins_url().$plugin_dir.'/static/js-build/selectize.js', null, null, true);
+                wp_enqueue_script("utils-script", plugins_url().$plugin_dir.'/static/js-build/common/utils.js', null, null, true);
+                wp_enqueue_script("element-script", plugins_url().$plugin_dir.'/static/js-build/common/Element.js', null, null, true);
+                wp_enqueue_script("map-legend-script", plugins_url().$plugin_dir.'/static/js-build/common/MapLegend.js', null, null, true);
 
-                wp_enqueue_script("dashboard-map-script", plugins_url().$plugin_dir.'/static/js/main-dashboard/DashboardMap.js', null, null, true);
-                wp_enqueue_script("crisis-profile-map-script", plugins_url().$plugin_dir.'/static/js/main-dashboard/CrisisProfileMap.js', null, null, true);
-                wp_enqueue_script("crisis-profile-script", plugins_url().$plugin_dir.'/static/js/main-dashboard/CrisisProfile.js', null, null, true);
-                wp_enqueue_script("key-figures-script", plugins_url().$plugin_dir.'/static/js/main-dashboard/KeyFigures.js', null, null, true);
-                wp_enqueue_script("main-dashboard-script", plugins_url().$plugin_dir.'/static/js/main-dashboard/MainDashboard.js', null, null, true);
+                wp_enqueue_script("dashboard-map-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/DashboardMap.js', null, null, true);
+                wp_enqueue_script("crisis-profile-map-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/CrisisProfileMap.js', null, null, true);
+                wp_enqueue_script("crisis-profile-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/CrisisProfile.js', null, null, true);
+                wp_enqueue_script("key-figures-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/KeyFigures.js', null, null, true);
+                wp_enqueue_script("main-dashboard-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/MainDashboard.js', null, null, true);
 
-                wp_enqueue_script("country-map-script", plugins_url().$plugin_dir.'/static/js/country-profile/CountryMap.js', null, null, true);
-                wp_enqueue_script("country-report-script", plugins_url().$plugin_dir.'/static/js/country-profile/CountryReport.js', null, null, true);
-                wp_enqueue_script("timeline-script", plugins_url().$plugin_dir.'/static/js/country-profile/Timeline.js', null, null, true);
-                wp_enqueue_script("filter-wrapper-script", plugins_url().$plugin_dir.'/static/js/country-profile/filter-wrapper.js', null, null, true);
-                wp_enqueue_script("time-series-script", plugins_url().$plugin_dir.'/static/js/country-profile/TimeSeries.js', null, null, true);
-                wp_enqueue_script("bar-chart-script", plugins_url().$plugin_dir.'/static/js/country-profile/BarChart.js', null, null, true);
-                wp_enqueue_script("country-profile-script", plugins_url().$plugin_dir.'/static/js/country-profile/CountryProfile.js', null, null, true);
+                wp_enqueue_script("country-map-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/CountryMap.js', null, null, true);
+                wp_enqueue_script("country-report-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/CountryReport.js', null, null, true);
+                wp_enqueue_script("timeline-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/Timeline.js', null, null, true);
+                wp_enqueue_script("filter-wrapper-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/filter-wrapper.js', null, null, true);
+                wp_enqueue_script("time-series-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/TimeSeries.js', null, null, true);
+                wp_enqueue_script("bar-chart-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/BarChart.js', null, null, true);
+                wp_enqueue_script("country-profile-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/CountryProfile.js', null, null, true);
 
-                wp_enqueue_script("dashboard-script", plugins_url().$plugin_dir.'/static/js/Dashboard.js', null, null, true);
-                wp_enqueue_script("dashviz-main-script", plugins_url().$plugin_dir.'/static/js/main.js', null, null, true);
+                wp_enqueue_script("dashboard-script", plugins_url().$plugin_dir.'/static/js-build/Dashboard.js', null, null, true);
+                wp_enqueue_script("dashviz-main-script", plugins_url().$plugin_dir.'/static/js-build/main.js', null, null, true);
                 wp_add_inline_script('dashviz-main-script', 'let pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let homeUrl="'.get_home_url().'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let carouselImage1="'.get_option('carousel_image1', '').'";', 'before');
@@ -255,7 +254,7 @@ class AdminPanel {
         }
         wp_enqueue_script("jquery-script", 'https://code.jquery.com/jquery-3.2.1.min.js', null, null, true);
         wp_enqueue_style( 'admin-panel-style', plugins_url('/static/css/admin-panel.css', __FILE__) );
-        wp_enqueue_script("admin-panel-script", plugins_url('/static/js/admin-panel.js', __FILE__), null, null, true);
+        wp_enqueue_script("admin-panel-script", plugins_url('/static/js-build/admin-panel.js', __FILE__), null, null, true);
         wp_add_inline_script('admin-panel-script', 'let pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
         wp_add_inline_script('admin-panel-script', 'let carouselImage1="'.get_option('carousel_image1', '').'";', 'before');
         wp_add_inline_script('admin-panel-script', 'let carouselUrl1="'.get_option('carousel_url1', '').'";', 'before');

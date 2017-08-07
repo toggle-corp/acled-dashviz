@@ -52,7 +52,7 @@ function addFatalities(fatalities) {
     totalFatalities += fatalities >> 0;
 }
 
-eventColors = {
+var eventColors = {
     'battle': '#093746',
     'headquarters or base established': '#0D657D',
     'non-violent transfer of territory': '#898989 ',
