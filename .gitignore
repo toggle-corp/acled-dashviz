@@ -1,2 +1,6 @@
 # SASS cache
 .sass-cache/
+node_modules/
+
+*.js.map
+*.css.map
