@@ -41,8 +41,8 @@
             height: 100%;
 
             rect {
-                fill: rgba(141,206,222, 0.8);
-                stroke: rgba(141,206,222, 0.88);
+                fill: #0D657D;
+                stroke: #0D657D;
             }
 
             .label {
@@ -52,7 +52,7 @@
             .x-axis{
                 text{
                     transform: translate(5px, 5px) rotate(45deg);
-                    font-size: 13px;
+                    font-size: 14px;
                 }
             }
         }
