@@ -14,7 +14,7 @@ $(document).ready(function () {
     $.ajax({
         method: 'GET',
         url: 'https://api.acleddata.com/acled/read.csv',
-        data: { 'limit': '0', 'fields': 'country|event_type|latitude|longitude' },
+        data: { 'limit': '100', 'fields': 'country|event_type|latitude|longitude' },
         success: function success(data) {
             var rows = data.split('\n');
             var keys = rows[0].split(',');
@@ -23,13 +23,17 @@ $(document).ready(function () {
             for (var i = 1; i < rows.length - 1; i++) {
                 var currentRow = rows[i].split(',');
                 var currentData = {};
+
                 for (var j = 0; j < keys.length; j++) {
-                    if (keys[j] == 'event_type' || keys[j] == 'country') {
+                    if (keys[j] == 'event_type') {
+                        currentData[keys[j]] = getAcledEventName(currentRow[j].replace(/^"(.*)"$/, '$1').trim().toLowerCase());
+                    } else if (keys[j] == 'country') {
                         currentData[keys[j]] = currentRow[j].replace(/^"(.*)"$/, '$1').trim().toLowerCase();
                     } else {
                         currentData[keys[j]] = currentRow[j];
                     }
                 }
+
                 acledData.push(currentData);
             }
 

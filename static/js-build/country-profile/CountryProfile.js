@@ -224,7 +224,9 @@ var CountryProfile = function (_Element) {
                         var currentData = {};
 
                         for (var j = 0; j < keys.length; j++) {
-                            if (keys[j] == 'event_type' || keys[j] == 'country') {
+                            if (keys[j] == 'event_type') {
+                                currentData[keys[j]] = getAcledEventName((currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim().toLowerCase());
+                            } else if (keys[j] == 'country') {
                                 currentData[keys[j]] = (currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim().toLowerCase();
                             } else {
                                 currentData[keys[j]] = currentRow[j];
@@ -243,6 +245,12 @@ var CountryProfile = function (_Element) {
                     }).sort().filter(function (item, pos, array) {
                         return !pos || item != array[pos - 1];
                     });
+
+                    // remove the empty ones 
+                    that.admin1s = that.admin1s.filter(function (x) {
+                        return x;
+                    });
+
                     that.filteredData = that.data.slice();
                 }
             });

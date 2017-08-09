@@ -87,8 +87,9 @@ class FilterWrapper extends Element {
                 elem.find('button').on('click', function() {
                     $(this).closest('.selected-admin1').remove();         
                 });
-                $(this).val('');
             }
+             
+            $(this).val('');
         });
     }
 

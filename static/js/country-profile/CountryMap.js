@@ -112,7 +112,6 @@ class CountryMap extends Element {
 
         this.mapLegend.clearLegendElements();
 
-
         let acledEventKeys = getSortedAcledEventKeys();
         for (let i in acledEventKeys) {
             this.mapLegend.addLegendElement(getEventColor(acledEventKeys[i]), acledEventKeys[i]);

@@ -190,12 +190,14 @@ class CountryProfile extends Element {
                     let currentData = {};
                      
                     for (let j=0; j<keys.length; j++) {
-                        if(keys[j] == 'event_type' || keys[j] == 'country') {
+                        if(keys[j] == 'event_type') {
+                            currentData[keys[j]] = getAcledEventName((currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim().toLowerCase());
+                        } else if(keys[j] == 'country') {
                             currentData[keys[j]] = (currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim().toLowerCase();
                         } else {
                             currentData[keys[j]] = currentRow[j];
                         }
-                    }
+                    } 
                      
                     that.data.push(currentData);
                 }
@@ -203,6 +205,10 @@ class CountryProfile extends Element {
                 that.data = that.data.filter(x => compareCountryNames(x.country, country));
 
                 that.admin1s = that.data.map(x => x.admin1 || '').sort().filter((item, pos, array) => !pos || item != array[pos - 1]); 
+                 
+                // remove the empty ones 
+                that.admin1s = that.admin1s.filter(x => x);
+                 
                 that.filteredData = that.data.slice();
             }, 
         }); 

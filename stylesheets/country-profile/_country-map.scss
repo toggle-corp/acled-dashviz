@@ -10,21 +10,12 @@
         padding-bottom: 10px;
         height: 96px;
 
-        // header {
-        //     display: flex;
-        //     height: 32px;
-        //     align-items: center;
-        //     padding: 0 10px;
-        //
-        //     h4 {
-        //         font-size: 13px;
-        //     }
-        // }
         .legend-elements{
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             align-content: center;
+            justify-content: center;
             height: 100%;
 
             .legend-element {

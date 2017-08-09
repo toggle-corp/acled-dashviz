@@ -19,8 +19,11 @@ var TimeSeries = function (_Element) {
         _this.header = new Element('<header><h4>Events over year</h4></header>');
         _this.timeSeries = new Element('<div id="time-series"></div>');
 
+        _this.mapLegend = new MapLegend();
+
         _this.childElements.push(_this.header);
         _this.childElements.push(_this.timeSeries);
+        _this.childElements.push(_this.mapLegend);
         return _this;
     }
 
@@ -47,47 +50,16 @@ var TimeSeries = function (_Element) {
             this.lineFunction = d3.line().curve(d3.curveMonotoneX).x(function (d) {
                 return that.scaleX(d.year);
             }).y(function (d) {
-                return that.scaleY(d.events);
+                return that.scaleY(d.count);
             });
 
             this.tip = d3.select("body").append("div").attr("class", "tooltip").style("display", 'none');
         }
-
-        /*
-            loadData(country) {
-                let that = this;
-                 
-                return $.ajax({
-                    method: 'GET',
-                    url: 'https://api.acleddata.com/acled/read',
-                    data: {'limit': 0, 'country': country, 'fields': 'year|event_type|interaction|fatalities' },
-                    dataType: 'json',
-                    crossDomain: true,
-                    success: function(response) {
-                        that.data = response.data;
-                        that.data.forEach(function(d){
-                            // Ensure proper formatting
-                            d.year = that.parseTime(d.year);
-                            d.event_type = d.event_type;
-                            d.interaction = +d.interaction;
-                            d.fatalities = +d.fatalities;
-                        });
-                         
-                        // sort by year 
-                        that.data.sort(function(a, b){ return (new Date(a.year)).getFullYear() - (new Date(b.year)).getFullYear(); });
-        
-                        // create copy by value
-                        that.filteredData = that.data.slice();
-                    }
-        
-                });
-            }
-        
-            */
-
     }, {
         key: 'render',
         value: function render(data) {
+            var _this2 = this;
+
             var that = this;
 
             if (data) {
@@ -111,134 +83,97 @@ var TimeSeries = function (_Element) {
 
             var yearGroupedData = [];
 
-            var riotData = this.filteredData.slice();
-            var otherData = this.filteredData.slice();
-
             var currentYear = 0;
             var currentData = null;
 
-            riotData = riotData.filter(function (x) {
+            var riotData = this.filteredData.filter(function (x) {
                 return x.event_type.toLowerCase().includes('riots');
             });
-            otherData = otherData.filter(function (x) {
+            var otherData = this.filteredData.filter(function (x) {
                 return !x.event_type.toLowerCase().includes('riots');
             });
 
-            for (var i = 0; i < this.filteredData.length; i++) {
-                var current = this.filteredData[i];
+            var acledEventData = {};
 
-                if (new Date(currentYear).getFullYear() != new Date(current.year).getFullYear()) {
-                    currentYear = current.year;
-                    currentData = { 'year': current.year, 'events': 0 };
+            var _loop = function _loop(e) {
+                acledEventData[e] = _this2.filteredData.filter(function (x) {
+                    return x.event_type == e;
+                });
+            };
 
-                    yearGroupedData.push(currentData);
-                }
-
-                if (currentData) {
-                    ++currentData.events;
-                }
+            for (var e in acledEvents) {
+                _loop(e);
             }
 
-            currentYear = 0;
-            currentData = null;
-            var yearGroupedRiotData = [];
+            var acledYearlyEventCount = [];
 
-            for (var _i = 0; _i < riotData.length; _i++) {
-                var _current = riotData[_i];
+            var _loop2 = function _loop2(e) {
+                var counts = [];
+                acledEventData[e].reduce(function (a, b) {
+                    if (!a[b.year]) {
+                        a[b.year] = { count: 0, year: b.year };
+                        counts.push(a[b.year]);
+                    }
 
-                if (new Date(currentYear).getFullYear() != new Date(_current.year).getFullYear()) {
-                    currentYear = _current.year;
-                    currentData = { 'year': _current.year, 'events': 0 };
+                    a[b.year].count++;
+                    return a;
+                }, {});
+                acledYearlyEventCount.push({ event_type: e, data: counts, color: getEventColor(e) });
+            };
 
-                    yearGroupedRiotData.push(currentData);
-                }
-
-                if (currentData) {
-                    ++currentData.events;
-                }
+            for (var e in acledEventData) {
+                _loop2(e);
             }
 
-            currentYear = 0;
-            currentData = null;
-            var yearGroupedOtherData = [];
-
-            for (var _i2 = 0; _i2 < otherData.length; _i2++) {
-                var _current2 = otherData[_i2];
-
-                if (new Date(currentYear).getFullYear() != new Date(_current2.year).getFullYear()) {
-                    currentYear = _current2.year;
-                    currentData = { 'year': _current2.year, 'events': 0 };
-
-                    yearGroupedOtherData.push(currentData);
-                }
-
-                if (currentData) {
-                    ++currentData.events;
-                }
-            }
-
-            this.scaleX.domain(d3.extent(yearGroupedData, function (d) {
-                return d.year;
-            }));
-            this.scaleY.domain([0, d3.max(yearGroupedData, function (d) {
-                return d.events;
+            this.scaleX.domain([d3.min(acledYearlyEventCount, function (e) {
+                return d3.min(e.data, function (d) {
+                    return d.year;
+                });
+            }), d3.max(acledYearlyEventCount, function (e) {
+                return d3.max(e.data, function (d) {
+                    return d.year;
+                });
+            })]);
+            this.scaleY.domain([0, d3.max(acledYearlyEventCount, function (e) {
+                return d3.max(e.data, function (d) {
+                    return d.count;
+                });
             })]);
 
-            this.canvas.selectAll("*").remove();
-            this.canvas.append("path").data([yearGroupedRiotData]).attr("class", "riot-line").attr("d", this.lineFunction).attr("stroke-dasharray", function () {
+            this.canvas.selectAll('*').remove();
+
+            var eventType = this.canvas.selectAll('.event').data(acledYearlyEventCount).enter().append('g').attr('class', 'event');
+
+            eventType.append('path').attr('fill', 'none').attr('stroke', function (e) {
+                return e.color;
+            }).attr('stroke-width', 2).attr('d', function (e) {
+                return _this2.lineFunction(e.data);
+            }).attr('stroke-dasharray', function () {
                 return this.getTotalLength();
-            }).attr("stroke-dashoffset", function () {
+            }).attr('stroke-dashoffset', function () {
                 return this.getTotalLength();
-            }).transition().duration(500).attr("stroke-dashoffset", 0);
+            }).transition().delay(function (e, i) {
+                return i * 200 + 100;
+            }).duration(500).attr('stroke-dashoffset', 0);
 
-            this.canvas.append("path").data([yearGroupedOtherData]).attr("class", "other-line").attr("d", this.lineFunction).attr("stroke-dasharray", function () {
-                return this.getTotalLength();
-            }).attr("stroke-dashoffset", function () {
-                return this.getTotalLength();
-            }).transition().delay(200).duration(500).attr("stroke-dashoffset", 0);
-
-            var riotCircles = this.canvas.selectAll("circle.riot").data(yearGroupedRiotData).enter().append('circle').attr('class', 'riot');
-            var otherCircles = this.canvas.selectAll("circle.other").data(yearGroupedOtherData).enter().append('circle').attr('class', 'other');
-
-            var riotCircleAttributes = riotCircles.attr("cx", function (d) {
-                return that.scaleX(d.year);
-            }).attr("cy", function (d) {
-                return that.scaleY(d.events);
-            }).style("fill", function (d) {
-                return '#e67e22';
-            }).attr("r", 0).transition().duration(500).delay(function (d, i) {
-                return 500.0 * that.scaleX(d.year) / that.width;
-            }).attr("r", function (d) {
-                return 4;
-            });
-
-            var otherCircleAttributes = otherCircles.attr("cx", function (d) {
-                return that.scaleX(d.year);
-            }).style("fill", function (d) {
-                return '#2c3e50';
-            }).attr("cy", function (d) {
-                return that.scaleY(d.events);
-            }).attr("r", 0).transition().duration(500).delay(function (d, i) {
-                return 500.0 * that.scaleX(d.year) / that.width;
-            }).attr("r", function (d) {
-                return 4;
-            });
-
-            riotCircles.on('mouseenter', function (d) {
-                that.tip.style('display', 'block');
-                that.tip.html('<div><label>Year</label><span>' + new Date(d.year).getFullYear() + '</span></div><div><label>No. of events</label><span>' + d.events + '</span></div>').style("left", d3.event.pageX + 10 + "px").style("top", d3.event.pageY - 10 + "px");
-            });
-            riotCircles.on('mouseleave', function (d) {
-                that.tip.style('display', 'none');
-            });
-
-            otherCircles.on('mouseenter', function (d) {
-                that.tip.style('display', 'block');
-                that.tip.html('<div><label>Year</label><span>' + d.year.getFullYear() + '</span></div><div><label>No. of events</label><span>' + d.events + '</span></div>').style("left", d3.event.pageX + 10 + "px").style("top", d3.event.pageY - 10 + "px");
-            });
-            otherCircles.on('mouseleave', function (d) {
-                that.tip.style('display', 'none');
-            });
+            eventType.selectAll('circle').data(function (e, i) {
+                return e.data.map(function (d) {
+                    return { color: e.color, year: d.year, count: d.count, index: i };
+                });
+            }).enter().append('circle').attr('fill', function (d) {
+                return d.color;
+            }).attr('r', 0).attr('cx', function (d) {
+                return _this2.scaleX(d.year);
+            }).attr('cy', function (d) {
+                return _this2.scaleY(d.count);
+            }).on('mouseenter', function (d) {
+                _this2.tip.style('display', 'block');
+                _this2.tip.html('<div><label>Year</label><span>' + new Date(d.year).getFullYear() + '</span></div><div><label>No. of events</label><span>' + d.count + '</span></div>').style("left", d3.event.pageX + 10 + "px").style("top", d3.event.pageY - 10 + "px");
+            }).on('mouseleave', function (d) {
+                return _this2.tip.style('display', 'none');
+            }).transition().duration(200).delay(function (d) {
+                return d.index * 200 + 500 * _this2.scaleX(d.year) / _this2.width;
+            }).attr('r', 4);
 
             // Add the X Axis
             this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX));
@@ -246,15 +181,12 @@ var TimeSeries = function (_Element) {
             // Add the Y Axis
             this.canvas.append("g").attr('class', 'y-axis').call(d3.axisLeft(this.scaleY));
 
-            this.svg.selectAll(".legend").remove();
-            var legend = this.svg.append("g");
-            legend.attr("class", "legend").attr("x", 0).attr("y", 0).attr("height", 10).attr("width", this.width);
+            this.mapLegend.clearLegendElements();
 
-            legend.append("rect").attr("x", this.margin.left).attr("y", 0).attr("width", 10).attr("height", 10).style("fill", '#e67e22');
-            legend.append("text").attr("x", this.margin.left + 18).attr("y", 5).attr("dy", ".35em").text("Riots/Protests");
-
-            legend.append("rect").attr("x", this.width / 2).attr("y", 0).attr("width", 10).attr("height", 10).style("fill", '#2c3e50');
-            legend.append("text").attr("x", this.width / 2 + 18).attr("y", 5).attr("dy", ".35em").text("Others");
+            var acledEventKeys = getSortedAcledEventKeys();
+            for (var i in acledEventKeys) {
+                this.mapLegend.addLegendElement(getEventColor(acledEventKeys[i]), acledEventKeys[i]);
+            }
         }
     }, {
         key: 'load',

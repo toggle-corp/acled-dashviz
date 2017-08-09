@@ -9,19 +9,35 @@ function addCountry(countryName) {
     ++acledCountries[countryName];
 }
 
-let acledEvents = {};
-function addEvent(eventName) {
-    eventName = eventName.includes('battle')? 'battles' : eventName;
-    if (!acledEvents[eventName]) {
-        acledEvents[eventName] = 0;
+let acledEvents = {
+    'battles': 0,
+    'violence against civilians': 0, 
+    'remote violence': 0, 
+    'riots/protests': 0,
+    'others': 0
+};
+
+function getAcledEventName(eventName) {
+    if (eventName.includes('battle')) {
+        return 'battles';
+    } else if (eventName in acledEvents) {
+        return eventName;
     }
-    ++acledEvents[eventName];
+
+    return 'others';
+}
+ 
+function addEvent(eventName) {
+    if (acledEvents[eventName]) {
+        ++acledEvents[eventName];
+    }
 }
 
-let acledEventOrder = [ 'battles', 'violence against civilians', 'remote violence', 'riots/protests' ];
+let acledEventOrder = [ 'battles', 'violence against civilians', 'remote violence', 'riots/protests', 'others'];
 
 
 function getSortedAcledEventKeys() {
+    /* 
     let keys = Object.keys(acledEvents);
 
     function getOrder(i) {
@@ -33,12 +49,17 @@ function getSortedAcledEventKeys() {
     });
 
     return keys;
+    */
+    return acledEventOrder;
+     
 }
 
 function compareEvents(e1, e2) {
+    /*
     if(e1.toLowerCase().includes('battle') && e2.toLowerCase().includes('battle')) {
         return true;
     }
+    */
     return e1.toLowerCase() == e2.toLowerCase();
 }
 
@@ -48,18 +69,17 @@ function addFatalities(fatalities) {
 }
 
 let eventColors = {
-    'battle': '#093746',
-    'headquarters or base established': '#0D657D',
-    'non-violent transfer of territory': '#898989 ',
+    'battles': '#093746',
+    'violence against civilians': '#C95200',
     'remote violence': '#FFBB7A',
     'riots/protests': '#FF7F0E',
-    'strategic development': '#A2C8EC',
-    'violence against civilians': '#C95200',
+    'others': '#0D657D',
 };
 
 function getEventColor(eventName) {
-    if(eventName.includes('battle')) {
-        return eventColors.battle;
+    if(eventName in eventColors) {
+    } else {
+        //console.log(eventName);
     }
     return eventColors[eventName];
 }
