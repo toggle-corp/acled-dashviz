@@ -194,6 +194,8 @@ class CountryProfile extends Element {
                             currentData[keys[j]] = getAcledEventName((currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim().toLowerCase());
                         } else if(keys[j] == 'country') {
                             currentData[keys[j]] = (currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim().toLowerCase();
+                        } else if(keys[j] == 'actor1') {
+                            currentData[keys[j]] = (currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim();
                         } else {
                             currentData[keys[j]] = currentRow[j];
                         }

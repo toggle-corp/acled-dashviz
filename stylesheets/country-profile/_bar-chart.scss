@@ -46,12 +46,13 @@
             }
 
             .label {
-                font-size: 0.6em;
+                //font-size: 13px;
             }
 
             .x-axis{
                 text{
                     transform: translate(5px, 5px) rotate(45deg);
+                    font-size: 13px;
                 }
             }
         }
