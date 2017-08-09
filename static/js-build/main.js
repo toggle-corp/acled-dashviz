@@ -14,7 +14,7 @@ $(document).ready(function () {
     $.ajax({
         method: 'GET',
         url: 'https://api.acleddata.com/acled/read.csv',
-        data: { 'limit': '100', 'fields': 'country|event_type|latitude|longitude' },
+        data: { 'limit': '0', 'fields': 'country|event_type|latitude|longitude' },
         success: function success(data) {
             var rows = data.split('\n');
             var keys = rows[0].split(',');
