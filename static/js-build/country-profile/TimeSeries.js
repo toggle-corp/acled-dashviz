@@ -38,7 +38,7 @@ var TimeSeries = function (_Element) {
             this.width = $('#time-series svg').width();
             this.height = $('#time-series svg').height();
 
-            this.margin = { top: 24, right: 24, bottom: 56, left: 56 };
+            this.margin = { top: 8, right: 16, bottom: 64, left: 56 };
 
             this.scaleX = d3.scaleTime().range([0, this.width - this.margin.left - this.margin.right]);
             this.scaleY = d3.scaleLinear().range([this.height - this.margin.top - this.margin.bottom, 0]);
@@ -176,17 +176,14 @@ var TimeSeries = function (_Element) {
             }).attr('r', 4);
 
             // Add the X Axis
-            this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX));
+            this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX)).append('text').text('Years').attr('x', this.canvas.node().getBoundingClientRect().width / 2).attr('y', function () {
+                return (that.margin.bottom + this.getBBox().height) / 2;
+            }).attr('dy', '1em').attr('fill', '#000').attr('class', 'axis-name');
 
             // Add the Y Axis
-            this.canvas.append("g").attr('class', 'y-axis').call(d3.axisLeft(this.scaleY));
+            this.canvas.append("g").attr('class', 'y-axis').call(d3.axisLeft(this.scaleY)).append('text').attr('transform', 'rotate(-90)').text('No. of events ').attr('x', 0).attr('y', 0).attr('dy', '1em').attr('fill', '#000').attr('class', 'axis-name');
 
-            this.mapLegend.clearLegendElements();
-
-            var acledEventKeys = getSortedAcledEventKeys();
-            for (var i in acledEventKeys) {
-                this.mapLegend.addLegendElement(getEventColor(acledEventKeys[i]), acledEventKeys[i]);
-            }
+            this.mapLegend.fillAcledEvents();
         }
     }, {
         key: 'load',

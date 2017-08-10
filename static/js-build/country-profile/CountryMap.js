@@ -134,12 +134,7 @@ var CountryMap = function (_Element) {
                 }
             }
 
-            this.mapLegend.clearLegendElements();
-
-            var acledEventKeys = getSortedAcledEventKeys();
-            for (var _i2 in acledEventKeys) {
-                this.mapLegend.addLegendElement(getEventColor(acledEventKeys[_i2]), acledEventKeys[_i2]);
-            }
+            this.mapLegend.fillAcledEvents();
         }
     }]);
 

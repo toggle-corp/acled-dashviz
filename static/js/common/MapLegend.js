@@ -5,9 +5,11 @@ class MapLegend extends Element {
         // this.element.append('<header><h4></h4></header><div class="legend-elements"></div>');
         this.legendElementTemplate = $('<div class="legend-element"><div class="color-box"></div><label></label></div>');
     }
+     
     setTitle(title){
-        this.element.find('h4').text(title);
+        // this.element.find('h4').text(title);
     }
+     
     addLegendElement(color, label){
         let legendElementsContainer = this.element.find('.legend-elements');
         let legendElement = this.legendElementTemplate.clone();
@@ -15,7 +17,18 @@ class MapLegend extends Element {
         legendElement.find('label').text(label);
         legendElement.appendTo(legendElementsContainer);
     }
+     
     clearLegendElements() {
         this.element.find('.legend-elements').empty();
+    }
+     
+     
+    fillAcledEvents() {
+        this.clearLegendElements();
+         
+        let orderedAcledEvents = getSortedAcledEvents();
+        for (let i=0; i<orderedAcledEvents.length; i++) {
+            this.addLegendElement(getEventColor(orderedAcledEvents[i]), orderedAcledEvents[i]);
+        }
     }
 }

@@ -49,10 +49,8 @@ class DashboardMap extends Element {
             addFatalities(cr.fatalities);
         }
 
-        let acledEventKeys = getSortedAcledEventKeys();
-        for (let i in acledEventKeys) {
-            this.mapLegend.addLegendElement(getEventColor(acledEventKeys[i]), acledEventKeys[i]);
-        }
+        this.mapLegend.fillAcledEvents();
+         
         setTimeout(()=>{this.refreshMap(locationGroupedData);}, 0);
     }
     refreshMap(data) {

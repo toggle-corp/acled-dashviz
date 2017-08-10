@@ -77,10 +77,8 @@ var DashboardMap = function (_Element) {
                 addFatalities(cr.fatalities);
             }
 
-            var acledEventKeys = getSortedAcledEventKeys();
-            for (var _i in acledEventKeys) {
-                this.mapLegend.addLegendElement(getEventColor(acledEventKeys[_i]), acledEventKeys[_i]);
-            }
+            this.mapLegend.fillAcledEvents();
+
             setTimeout(function () {
                 _this2.refreshMap(locationGroupedData);
             }, 0);

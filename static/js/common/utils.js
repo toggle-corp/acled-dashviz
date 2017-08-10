@@ -36,6 +36,9 @@ function addEvent(eventName) {
 let acledEventOrder = [ 'battles', 'violence against civilians', 'remote violence', 'riots/protests', 'others'];
 
 
+function getSortedAcledEvents() {
+    return acledEventOrder;
+}
 function getSortedAcledEventKeys() {
     /* 
     let keys = Object.keys(acledEvents);
@@ -70,10 +73,10 @@ function addFatalities(fatalities) {
 
 let eventColors = {
     'battles': '#093746',
-    'violence against civilians': '#C95200',
+    'violence against civilians': '#CFCFCF',
     'remote violence': '#FFBB7A',
-    'riots/protests': '#FF7F0E',
-    'others': '#0D657D',
+    'riots/protests': '#C95200',
+    'others': '#A2C8EC',
 };
 
 function getEventColor(eventName) {

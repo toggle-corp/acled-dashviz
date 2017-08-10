@@ -25,7 +25,7 @@ var MapLegend = function (_Element) {
     _createClass(MapLegend, [{
         key: 'setTitle',
         value: function setTitle(title) {
-            this.element.find('h4').text(title);
+            // this.element.find('h4').text(title);
         }
     }, {
         key: 'addLegendElement',
@@ -40,6 +40,16 @@ var MapLegend = function (_Element) {
         key: 'clearLegendElements',
         value: function clearLegendElements() {
             this.element.find('.legend-elements').empty();
+        }
+    }, {
+        key: 'fillAcledEvents',
+        value: function fillAcledEvents() {
+            this.clearLegendElements();
+
+            var orderedAcledEvents = getSortedAcledEvents();
+            for (var i = 0; i < orderedAcledEvents.length; i++) {
+                this.addLegendElement(getEventColor(orderedAcledEvents[i]), orderedAcledEvents[i]);
+            }
         }
     }]);
 
