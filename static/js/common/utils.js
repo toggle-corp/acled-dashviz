@@ -14,7 +14,7 @@ let acledEvents = {
     'violence against civilians': 0, 
     'remote violence': 0, 
     'riots/protests': 0,
-    'others': 0
+    'other': 0
 };
 
 function getAcledEventName(eventName) {
@@ -24,7 +24,7 @@ function getAcledEventName(eventName) {
         return eventName;
     }
 
-    return 'others';
+    return 'other';
 }
  
 function addEvent(eventName) {
@@ -33,7 +33,7 @@ function addEvent(eventName) {
     }
 }
 
-let acledEventOrder = [ 'battles', 'violence against civilians', 'remote violence', 'riots/protests', 'others'];
+let acledEventOrder = [ 'battles', 'violence against civilians', 'remote violence', 'riots/protests', 'other'];
 
 
 function getSortedAcledEvents() {
@@ -76,14 +76,10 @@ let eventColors = {
     'violence against civilians': '#CFCFCF',
     'remote violence': '#FFBB7A',
     'riots/protests': '#C95200',
-    'others': '#A2C8EC',
+    'other': '#A2C8EC',
 };
 
 function getEventColor(eventName) {
-    if(eventName in eventColors) {
-    } else {
-        //console.log(eventName);
-    }
     return eventColors[eventName];
 }
 

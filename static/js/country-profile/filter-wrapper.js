@@ -1,4 +1,3 @@
-
 class FilterWrapper extends Element {
     constructor(name) {
         super(`
