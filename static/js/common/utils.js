@@ -73,10 +73,10 @@ function addFatalities(fatalities) {
 
 let eventColors = {
     'battles': '#093746',
-    'violence against civilians': '#CFCFCF',
+    'violence against civilians': '#A2C8EC',
     'remote violence': '#FFBB7A',
     'riots/protests': '#C95200',
-    'other': '#A2C8EC',
+    'other': '#CFCFCF',
 };
 
 function getEventColor(eventName) {
@@ -87,4 +87,16 @@ function compareCountryNames(name1, name2) {
     name1 = name1.toLowerCase().replace(/\b((the)|(a)|(an)|(of))\b/g, '').replace(/\s\s+/g, ' ');
     name2 = name2.toLowerCase().replace(/\b((the)|(a)|(an)|(of))\b/g, '').replace(/\s\s+/g, ' ');
     return (name1 == name2);
+}
+
+ 
+let mapScaleFactor = 24000;
+ 
+function getMapCircleRadius(noOfEvents) {
+    let radius = Math.sqrt(noOfEvents)*mapScaleFactor;
+    return radius;
+}
+
+function getMapScaleNumber(num, zoomLevel) {
+    return Math.round(num * num / (zoomLevel*zoomLevel*zoomLevel));
 }

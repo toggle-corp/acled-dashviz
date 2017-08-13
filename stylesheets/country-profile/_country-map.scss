@@ -5,6 +5,32 @@
 
     #country-map {
         height: calc(100% - 96px);
+         
+        .map-scale {
+            >div {
+                height: 14px;
+                overflow-y: hidden;
+                display: flex;
+                align-items: center;
+                margin: 10px 0;
+                 
+                span {
+                    display: inline-block;
+                    background-color: #717171;
+                    border-top-left-radius: 50%;
+                    border-top-right-radius: 50%;
+                    border-bottom-left-radius: 50%;
+                    border-bottom-right-radius: 50%;
+                }
+
+                label {
+                    margin-right: 10px;
+                    width: 32px;
+                    text-align: right;
+                }
+
+            }
+        }
     }
     .legend {
         padding-bottom: 10px;

@@ -20,12 +20,18 @@ var DashboardMap = function (_Element) {
         _this.mapLegend = new MapLegend();
         _this.childElements.push(_this.mapElement);
         _this.childElements.push(_this.mapLegend);
+
+        _this.mapScale = null;
         return _this;
     }
 
     _createClass(DashboardMap, [{
         key: 'process',
         value: function process() {
+            var _this2 = this;
+
+            var that = this;
+
             //this.mapLegend.setTitle('Event types');
 
             L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
@@ -38,7 +44,7 @@ var DashboardMap = function (_Element) {
                     return b._mRadius - a._mRadius;
                 } });
 
-            //var layerControl = L.control.layers([], {"Circles" :conditionalLayer}).addTo(map);
+            this.mapScale = new MapScale(this.map);
 
             // Toggle scroll-zoom by clicking on and outside map
             this.map.scrollWheelZoom.disable();
@@ -48,11 +54,15 @@ var DashboardMap = function (_Element) {
             this.map.on('blur', function () {
                 this.scrollWheelZoom.disable();
             });
+
+            this.map.on('zoomend ', function () {
+                _this2.mapScale.updateControl();
+            });
         }
     }, {
         key: 'loadDataToMap',
         value: function loadDataToMap() {
-            var _this2 = this;
+            var _this3 = this;
 
             var locationGroupedData = [];
             var currentLocation = { 'latitude': '', 'longitude': '' };
@@ -80,31 +90,40 @@ var DashboardMap = function (_Element) {
             this.mapLegend.fillAcledEvents();
 
             setTimeout(function () {
-                _this2.refreshMap(locationGroupedData);
+                _this3.refreshMap(locationGroupedData);
             }, 0);
+        }
+    }, {
+        key: 'getScaledRadius',
+        value: function getScaledRadius(num) {
+            return Math.sqrt(num);
         }
     }, {
         key: 'refreshMap',
         value: function refreshMap(data) {
+            var that = this;
+            var maxEventCount = 0;
+
             for (var i = 0; i < data.length; i++) {
                 for (var j = 0; j < data[i].events.length; j++) {
                     var cd = data[i].events[j]; // current data
-                    var radius = Math.sqrt(cd.count) * 8000;
+                    var radius = getMapCircleRadius(cd.count);
                     var color = getEventColor(cd.name);
 
                     this.conditionalLayer.addLayer(L.circle([data[i].location.latitude, data[i].location.longitude], radius, {
                         fillColor: color,
                         stroke: false,
-                        fillOpacity: 0.5,
+                        fillOpacity: 0.8,
                         interactive: false
-                    }));
+                    })
+                    //.bindPopup(String(`No. of Events: ${(cd.count)}`))
+                    );
                 }
             }
 
             this.conditionalLayer.addTo(this.map);
 
             var geoJsonLayer = null;
-            var that = this;
             var countries = Object.keys(acledCountries);
             $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function (data) {
                 geoJsonLayer = L.geoJson(data, {

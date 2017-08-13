@@ -1,5 +1,6 @@
 @import 'base';
 @import 'country-profile';
+@import 'country-profile/filter-modal';
 
 body {
     .header-post-title-container {
@@ -25,7 +26,6 @@ body {
         background-color: transparent;
         box-shadow: none!important;
     }
-
 
     #dashboard-container-before {
         min-height: 80vh;
@@ -56,6 +56,41 @@ body {
         #main-dashboard {
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
+
+            >header {
+                flex-basis: 100%;
+                height: 56px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                 
+                button {
+                    text-transform: uppercase;
+                    background-color: #fff;
+                    padding: 6px 16px;
+                    color: rgba(0, 0, 0, 0.7);
+                    margin: 0;
+                    border-radius: 3px;
+                    outline: none;
+                    border: 1px solid rgba(0, 0, 0, 0.05);
+                    box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
+                     
+                    i {
+                        margin-right: 8px;
+                    }
+
+                    &:hover {
+                        box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
+                        background-color: #f0f0f0;
+                    }
+
+                    &:active {
+                        box-shadow: 0 3px 9px -5px rgba(0, 0, 0, 0.3);
+                        transform: translateY(1px);
+                    }
+                }
+            }
 
             #left-section {
                 flex-basis: calc(64% - 16px);

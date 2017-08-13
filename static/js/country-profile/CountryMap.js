@@ -5,6 +5,8 @@ class CountryMap extends Element {
         this.mapLegend = new MapLegend();
         this.childElements.push(this.mapElement);
         this.childElements.push(this.mapLegend);
+         
+        this.mapScale = null; 
     }
 
     process() {
@@ -15,13 +17,16 @@ class CountryMap extends Element {
         L.tileLayer('https://api.mapbox.com/styles/v1/frozenhelium/cj1lpbp1g000l2rmr9kwg12b3/tiles/256/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
             attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
+         
+        this.mapScale = new MapScale(this.map);
 
         // Toggle scroll-zoom by clicking on and outside map
         this.map.scrollWheelZoom.disable();
         this.map.on('focus', function() { this.scrollWheelZoom.enable(); });
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); });
+         
+        this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
     }
-
 
     reset(resetView=false) {
         if(this.geoJsonLayer) {
@@ -34,7 +39,6 @@ class CountryMap extends Element {
         }
 
         this.geoJsonLayer = null;
-        //this.map.invalidateSize();
 
         if (this.circles) {
             for (let i=0; i<this.circles.length; i++) {
@@ -98,12 +102,14 @@ class CountryMap extends Element {
         for (let i=0; i<locationGroupedData.length; i++) {
             for (let j=0; j<locationGroupedData[i].events.length; j++) {
                 let cd = locationGroupedData[i].events[j];   // current data
-                let radius = Math.sqrt(cd.count)*10000;
+                let radius = getMapCircleRadius(cd.count);
                 let color = getEventColor(cd.name);
+                 
                 let circle = L.circle([locationGroupedData[i].location.latitude, locationGroupedData[i].location.longitude], radius, {
                     fillColor: color,
                     stroke: false,
-                    fillOpacity: 0.6,
+                    fillOpacity: 0.8,
+                    interactive: false,
                 });
                 circle.addTo(this.map);
                 this.circles.push(circle);

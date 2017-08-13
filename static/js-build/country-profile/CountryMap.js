@@ -20,12 +20,16 @@ var CountryMap = function (_Element) {
         _this.mapLegend = new MapLegend();
         _this.childElements.push(_this.mapElement);
         _this.childElements.push(_this.mapLegend);
+
+        _this.mapScale = null;
         return _this;
     }
 
     _createClass(CountryMap, [{
         key: 'process',
         value: function process() {
+            var _this2 = this;
+
             // this.mapLegend.setTitle('Event types');
 
             L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
@@ -34,6 +38,8 @@ var CountryMap = function (_Element) {
                 attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(this.map);
 
+            this.mapScale = new MapScale(this.map);
+
             // Toggle scroll-zoom by clicking on and outside map
             this.map.scrollWheelZoom.disable();
             this.map.on('focus', function () {
@@ -41,6 +47,10 @@ var CountryMap = function (_Element) {
             });
             this.map.on('blur', function () {
                 this.scrollWheelZoom.disable();
+            });
+
+            this.map.on('zoomend ', function () {
+                _this2.mapScale.updateControl();
             });
         }
     }, {
@@ -58,7 +68,6 @@ var CountryMap = function (_Element) {
             }
 
             this.geoJsonLayer = null;
-            //this.map.invalidateSize();
 
             if (this.circles) {
                 for (var i = 0; i < this.circles.length; i++) {
@@ -122,12 +131,14 @@ var CountryMap = function (_Element) {
             for (var _i = 0; _i < locationGroupedData.length; _i++) {
                 for (var j = 0; j < locationGroupedData[_i].events.length; j++) {
                     var cd = locationGroupedData[_i].events[j]; // current data
-                    var radius = Math.sqrt(cd.count) * 10000;
+                    var radius = getMapCircleRadius(cd.count);
                     var color = getEventColor(cd.name);
+
                     var circle = L.circle([locationGroupedData[_i].location.latitude, locationGroupedData[_i].location.longitude], radius, {
                         fillColor: color,
                         stroke: false,
-                        fillOpacity: 0.6
+                        fillOpacity: 0.8,
+                        interactive: false
                     });
                     circle.addTo(this.map);
                     this.circles.push(circle);

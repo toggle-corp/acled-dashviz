@@ -16,15 +16,19 @@ var MainDashboard = function (_Element) {
 
         var _this = _possibleConstructorReturn(this, (MainDashboard.__proto__ || Object.getPrototypeOf(MainDashboard)).call(this, '<div id="main-dashboard"></div>'));
 
+        _this.header = new Element('<header><h2>Acled Dashboard</h2><button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Apply filters</button></header>');
+
         _this.leftSection = new Element('<div id="left-section"></div>');
         _this.rightSection = new Element('<div id="right-section"></div>');
 
+        _this.childElements.push(_this.header);
         _this.childElements.push(_this.leftSection);
         _this.childElements.push(_this.rightSection);
 
         _this.dashboardMap = new DashboardMap();
         _this.leftSection.childElements.push(_this.dashboardMap);
         _this.carousel = new Element('\n            <div id="carousel-container">\n                <button id="carousel-left"><i class="fa fa-chevron-left"></i></button>\n                <button id="carousel-right"><i class="fa fa-chevron-right"></i></button>\n                <div class="carousel">\n                </div>\n                <div class="loader"><i class="fa fa-circle-o-notch fa-spin"></i></div>\n            </div>\n            ');
+
         _this.leftSection.childElements.push(_this.carousel);
         var imgContainer = _this.carousel.element.find('.carousel');
 
@@ -93,10 +97,147 @@ var MainDashboard = function (_Element) {
 
         _this.crisisProfile = new CrisisProfile();
         _this.rightSection.childElements.push(_this.crisisProfile);
+
+        _this.filterWrapper = new FilterWrapper('main');
+        _this.childElements.push(_this.filterWrapper);
         return _this;
     }
 
     _createClass(MainDashboard, [{
+        key: 'process',
+        value: function process() {
+            var that = this;
+
+            this.filterWrapper.init();
+
+            this.header.element.find('#apply-filter-main-btn').on('click', function () {
+                that.filterWrapper.show();
+            });
+
+            this.filterWrapper.element.find('.btn-apply-filter').on('click', function () {
+                that.applyFilters();
+                that.filterWrapper.hide();
+            });
+
+            this.filterWrapper.element.find('.btn-cancel').on('click', function () {
+                that.filterWrapper.hide();
+            });
+
+            this.filterWrapper.element.find('.btn-reset').on('click', function () {
+                that.filterWrapper.init();
+            });
+        }
+    }, {
+        key: 'applyFilters',
+        value: function applyFilters() {
+            this.filteredData = $.extend(true, {}, this.data);
+        }
+    }, {
+        key: 'filterByEvents',
+        value: function filterByEvents() {
+            var container = this.filterWrapper.element.find('.filter-event-type .content');
+            var requiredEvents = container.find('input[type="checkbox"]:checked').map(function () {
+                return $(this).data('target');
+            }).get();
+
+            this.filteredData = this.filteredData.filter(function (x) {
+                return requiredEvents.find(function (y) {
+                    return compareEvents(x.event_type, y);
+                });
+            });
+        }
+    }, {
+        key: 'filterByInteraction',
+        value: function filterByInteraction() {
+            var container = this.filterWrapper.element.find('.filter-interaction .content');
+            var lowerLimit = 0;
+            var upperLimit = 0;
+
+            switch (container.find('input[type="radio"]:checked').data('value')) {
+                case 'less than 100':
+                    lowerLimit = 0;
+                    upperLimit = 100;
+                    break;
+                case '100 - 1000':
+                    lowerLimit = 100;
+                    upperLimit = 1000;
+                    break;
+                case '1000 - 10000':
+                    lowerLimit = 1000;
+                    upperLimit = 10000;
+                    break;
+                case 'more than 10000':
+                    lowerLimit = 1000;
+                    upperLimit = Infinity;
+                    break;
+                case 'all':
+                    lowerLimit = 0;
+                    upperLimit = Infinity;
+                    break;
+            }
+
+            this.filteredData = this.filteredData.filter(function (x) {
+                return x.interaction >= lowerLimit && x.interaction < upperLimit;
+            });
+        }
+    }, {
+        key: 'filterByFatalities',
+        value: function filterByFatalities() {
+            var container = this.filterWrapper.element.find('.filter-fatalities .content');
+            var lowerLimit = 0;
+            var upperLimit = 0;
+
+            switch (container.find('input[type="radio"]:checked').data('value')) {
+                case 'less than 100':
+                    lowerLimit = 0;
+                    upperLimit = 100;
+                    break;
+                case '100 - 1000':
+                    lowerLimit = 100;
+                    upperLimit = 1000;
+                    break;
+                case '1000 - 10000':
+                    lowerLimit = 1000;
+                    upperLimit = 10000;
+                    break;
+                case '10000 - 100000':
+                    lowerLimit = 10000;
+                    upperLimit = 100000;
+                    break;
+                case 'more than 10000':
+                    lowerLimit = 1000;
+                    upperLimit = Infinity;
+                    break;
+                case 'all':
+                    lowerLimit = 0;
+                    upperLimit = Infinity;
+                    break;
+            }
+
+            this.filteredData = this.filteredData.filter(function (x) {
+                return x.fatalities >= lowerLimit && x.fatalities < upperLimit;
+            });
+        }
+    }, {
+        key: 'filterByYear',
+        value: function filterByYear() {
+            var container = this.filterWrapper.element.find('.filter-year');
+
+            var startYear = container.find('.start-year').val();
+            startYear = startYear ? new Date(startYear) : new Date(0);
+
+            var endYear = container.find('.end-year').val();
+            endYear = endYear ? new Date(endYear) : new Date();
+
+            function isDateYearInRange(d, d1, d2) {
+                return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
+            }
+
+            this.filteredData = this.filteredData.filter(function (x) {
+                return isDateYearInRange(new Date(x.year), startYear, endYear);
+            });
+        }
+    }, {
         key: 'loadMap',
         value: function loadMap() {
             this.dashboardMap.loadDataToMap();

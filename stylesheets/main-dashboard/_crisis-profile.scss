@@ -25,6 +25,11 @@
         }
         .selectize-control {
             .flex-basis: calc(100% - 32px);
+            cursor: default;
+
+            .selectize-input {
+                cursor: pointer;
+            }
 
             input {
                 margin-bottom: 0;

@@ -16,7 +16,7 @@ var acledEvents = {
     'violence against civilians': 0,
     'remote violence': 0,
     'riots/protests': 0,
-    'others': 0
+    'other': 0
 };
 
 function getAcledEventName(eventName) {
@@ -26,7 +26,7 @@ function getAcledEventName(eventName) {
         return eventName;
     }
 
-    return 'others';
+    return 'other';
 }
 
 function addEvent(eventName) {
@@ -35,7 +35,7 @@ function addEvent(eventName) {
     }
 }
 
-var acledEventOrder = ['battles', 'violence against civilians', 'remote violence', 'riots/protests', 'others'];
+var acledEventOrder = ['battles', 'violence against civilians', 'remote violence', 'riots/protests', 'other'];
 
 function getSortedAcledEvents() {
     return acledEventOrder;
@@ -70,16 +70,13 @@ function addFatalities(fatalities) {
 
 var eventColors = {
     'battles': '#093746',
-    'violence against civilians': '#CFCFCF',
+    'violence against civilians': '#A2C8EC',
     'remote violence': '#FFBB7A',
     'riots/protests': '#C95200',
-    'others': '#A2C8EC'
+    'other': '#CFCFCF'
 };
 
 function getEventColor(eventName) {
-    if (eventName in eventColors) {} else {
-        //console.log(eventName);
-    }
     return eventColors[eventName];
 }
 
@@ -87,5 +84,16 @@ function compareCountryNames(name1, name2) {
     name1 = name1.toLowerCase().replace(/\b((the)|(a)|(an)|(of))\b/g, '').replace(/\s\s+/g, ' ');
     name2 = name2.toLowerCase().replace(/\b((the)|(a)|(an)|(of))\b/g, '').replace(/\s\s+/g, ' ');
     return name1 == name2;
+}
+
+var mapScaleFactor = 24000;
+
+function getMapCircleRadius(noOfEvents) {
+    var radius = Math.sqrt(noOfEvents) * mapScaleFactor;
+    return radius;
+}
+
+function getMapScaleNumber(num, zoomLevel) {
+    return Math.round(num * num / (zoomLevel * zoomLevel * zoomLevel));
 }
 //# sourceMappingURL=utils.js.map

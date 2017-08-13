@@ -14,7 +14,7 @@ $(document).ready(function () {
     $.ajax({
         method: 'GET',
         url: 'https://api.acleddata.com/acled/read.csv',
-        data: { 'limit': '8000', 'fields': 'country|event_type|latitude|longitude' },
+        data: { 'limit': '0', 'fields': 'country|event_type|latitude|longitude' },
         success: function success(data) {
             var rows = data.split('\n');
             var keys = rows[0].split(',');
@@ -51,4 +51,17 @@ $(document).ready(function () {
         $('#country-profile')[0].scrollTop = $(window).scrollTop();
     });
 });
+
+// Put this code after you've included Selectize
+// but before any selectize fields are initialized
+var prevSetup = Selectize.prototype.setup;
+
+Selectize.prototype.setup = function () {
+    prevSetup.call(this);
+
+    // This property is set in native setup
+    // Unless the source code changes, it should
+    // work with any version
+    this.$control_input.prop('readonly', true);
+};
 //# sourceMappingURL=main.js.map

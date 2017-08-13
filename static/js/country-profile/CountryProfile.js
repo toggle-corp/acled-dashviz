@@ -27,7 +27,7 @@ class CountryProfile extends Element {
             that.hide();
         });
 
-        this.filterWrapper = new FilterWrapper();
+        this.filterWrapper = new FilterWrapper('country');
         this.childElements.push(this.filterWrapper);
     }
 
@@ -53,13 +53,16 @@ class CountryProfile extends Element {
     }
      
     applyFilters() {
-        this.filteredData = this.data.slice();
+        //this.filteredData = this.data.slice();
+        this.filteredData = $.extend(true, {}, this.data);
+         
         this.filterByEvents();
         this.filterByInteraction();
         this.filterByFatalities();
         this.filterByYear();
         this.filterByAdmin1s();
         this.filterWrapper.element.hide();
+         
         this.render();
     }
 

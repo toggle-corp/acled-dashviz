@@ -72,6 +72,7 @@ class DashboardVisualization {
                 wp_enqueue_script("utils-script", plugins_url().$plugin_dir.'/static/js-build/common/utils.js', null, null, true);
                 wp_enqueue_script("element-script", plugins_url().$plugin_dir.'/static/js-build/common/Element.js', null, null, true);
                 wp_enqueue_script("map-legend-script", plugins_url().$plugin_dir.'/static/js-build/common/MapLegend.js', null, null, true);
+                wp_enqueue_script("map-scale-script", plugins_url().$plugin_dir.'/static/js-build/common/MapScale.js', null, null, true);
 
                 wp_enqueue_script("dashboard-map-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/DashboardMap.js', null, null, true);
                 wp_enqueue_script("crisis-profile-map-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/CrisisProfileMap.js', null, null, true);
@@ -82,7 +83,7 @@ class DashboardVisualization {
                 wp_enqueue_script("country-map-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/CountryMap.js', null, null, true);
                 wp_enqueue_script("country-report-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/CountryReport.js', null, null, true);
                 wp_enqueue_script("timeline-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/Timeline.js', null, null, true);
-                wp_enqueue_script("filter-wrapper-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/filter-wrapper.js', null, null, true);
+                wp_enqueue_script("filter-wrapper-script", plugins_url().$plugin_dir.'/static/js-build/common/FilterWrapper.js', null, null, true);
                 wp_enqueue_script("time-series-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/TimeSeries.js', null, null, true);
                 wp_enqueue_script("bar-chart-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/BarChart.js', null, null, true);
                 wp_enqueue_script("country-profile-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/CountryProfile.js', null, null, true);

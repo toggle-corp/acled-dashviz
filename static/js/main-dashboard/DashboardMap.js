@@ -5,8 +5,13 @@ class DashboardMap extends Element {
         this.mapLegend = new MapLegend();
         this.childElements.push(this.mapElement);
         this.childElements.push(this.mapLegend);
+         
+        this.mapScale = null; 
     }
+     
     process() {
+        let that = this;
+         
         //this.mapLegend.setTitle('Event types');
 
         L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
@@ -17,12 +22,14 @@ class DashboardMap extends Element {
 
         this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 4000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
 
-		//var layerControl = L.control.layers([], {"Circles" :conditionalLayer}).addTo(map);
+        this.mapScale = new MapScale(this.map);
 
         // Toggle scroll-zoom by clicking on and outside map
         this.map.scrollWheelZoom.disable();
         this.map.on('focus', function() { this.scrollWheelZoom.enable(); });
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); });
+         
+        this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
     }
 
     loadDataToMap() {
@@ -53,26 +60,35 @@ class DashboardMap extends Element {
          
         setTimeout(()=>{this.refreshMap(locationGroupedData);}, 0);
     }
+     
+    getScaledRadius(num) {
+        return Math.sqrt(num);
+    }
+     
     refreshMap(data) {
+        let that = this;
+        let maxEventCount = 0;
+         
         for (let i=0; i<data.length; i++) {
             for (let j=0; j<data[i].events.length; j++) {
                 let cd = data[i].events[j];   // current data
-                let radius = Math.sqrt(cd.count)*8000;
+                let radius = getMapCircleRadius(cd.count);
                 let color = getEventColor(cd.name);
 
                 this.conditionalLayer.addLayer(L.circle([data[i].location.latitude, data[i].location.longitude], radius, {
                     fillColor: color,
                     stroke: false,
-                    fillOpacity: 0.5,
+                    fillOpacity: 0.8,
                     interactive: false,
-                }));
+                })
+                    //.bindPopup(String(`No. of Events: ${(cd.count)}`))
+                );
             }
         }
 
         this.conditionalLayer.addTo(this.map);
-
+         
         let geoJsonLayer = null;
-        let that = this;
         let countries = Object.keys(acledCountries);
         $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
             geoJsonLayer = L.geoJson(data, {

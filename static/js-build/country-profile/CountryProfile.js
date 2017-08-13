@@ -42,7 +42,7 @@ var CountryProfile = function (_Element) {
             that.hide();
         });
 
-        _this.filterWrapper = new FilterWrapper();
+        _this.filterWrapper = new FilterWrapper('country');
         _this.childElements.push(_this.filterWrapper);
         return _this;
     }
@@ -72,13 +72,16 @@ var CountryProfile = function (_Element) {
     }, {
         key: 'applyFilters',
         value: function applyFilters() {
-            this.filteredData = this.data.slice();
+            //this.filteredData = this.data.slice();
+            this.filteredData = $.extend(true, {}, this.data);
+
             this.filterByEvents();
             this.filterByInteraction();
             this.filterByFatalities();
             this.filterByYear();
             this.filterByAdmin1s();
             this.filterWrapper.element.hide();
+
             this.render();
         }
     }, {
