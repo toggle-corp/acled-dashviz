@@ -122,7 +122,9 @@ class MainDashboard extends Element {
      
 
     applyFilters() {
-        this.filteredData = $.extend(true, {}, this.data);
+        this.filteredData = $.extend(true, [], this.data);
+        this.filterByEvents();
+        this.render();
     }
      
     filterByEvents() {
@@ -136,70 +138,22 @@ class MainDashboard extends Element {
 
     filterByInteraction() {
         let container = this.filterWrapper.element.find('.filter-interaction .content');
-        let lowerLimit = 0;
-        let upperLimit = 0;
-
-        switch(container.find('input[type="radio"]:checked').data('value')) {
-            case 'less than 100':
-                lowerLimit = 0;
-                upperLimit = 100;
-                break;
-            case '100 - 1000':
-                lowerLimit = 100;
-                upperLimit = 1000;
-                break;
-            case '1000 - 10000':
-                lowerLimit = 1000;
-                upperLimit = 10000;
-                break;
-            case 'more than 10000':
-                lowerLimit = 1000;
-                upperLimit = Infinity;
-                break;
-            case 'all':
-                lowerLimit = 0;
-                upperLimit = Infinity;
-                break;
-        }
+        let input = container.find('input[type="radio"]:checked');
+         
+        let lowerLimit = input.data('lowerlimit');
+        let upperLimit = input.data('upperlimit');
 
         this.filteredData = this.filteredData.filter(x => x.interaction >= lowerLimit && x.interaction < upperLimit);
-
     }
 
     filterByFatalities() {
         let container = this.filterWrapper.element.find('.filter-fatalities .content');
-        let lowerLimit = 0;
-        let upperLimit = 0;
-
-        switch(container.find('input[type="radio"]:checked').data('value')) {
-            case 'less than 100':
-                lowerLimit = 0;
-                upperLimit = 100;
-                break;
-            case '100 - 1000':
-                lowerLimit = 100;
-                upperLimit = 1000;
-                break;
-            case '1000 - 10000':
-                lowerLimit = 1000;
-                upperLimit = 10000;
-                break;
-            case '10000 - 100000':
-                lowerLimit = 10000;
-                upperLimit = 100000;
-                break;
-            case 'more than 10000':
-                lowerLimit = 1000;
-                upperLimit = Infinity;
-                break;
-            case 'all':
-                lowerLimit = 0;
-                upperLimit = Infinity;
-                break;
-        }
-
+        let input = container.find('input[type="radio"]:checked');
+         
+        let lowerLimit = input.data('lowerlimit');
+        let upperLimit = input.data('upperlimit');
+        
         this.filteredData = this.filteredData.filter(x => x.fatalities >= lowerLimit && x.fatalities < upperLimit);
-
     }
 
     filterByYear() {
@@ -219,12 +173,27 @@ class MainDashboard extends Element {
             return isDateYearInRange((new Date(x.year)), startYear, endYear);
         });
     }    
+     
+    render() {
+        this.filteredData = d3.nest()
+            .key((d) => d.latitude + ' ' + d.longitude)
+            .key((d) => d.event_type )
+            .object(this.filteredData);
+         
+        this.dashboardMap.refreshMap(this.filteredData);
+    }
 
-    loadMap() {
-        this.dashboardMap.loadDataToMap();
+    loadMap(data) {
+        this.data = data;
+        this.dashboardMap.init();
+        this.applyFilters();
     }
 
     load() {
         this.crisisProfile.load();
+    }
+     
+    processRawData(data) {
+        this.dashboardMap.processData(data);
     }
 }

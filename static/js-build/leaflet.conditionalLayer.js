@@ -26,14 +26,14 @@
     	this.onMap= false;
 	},
     setMaxMarkers: function (i) {
-    	if (this.options.maxMarkers != undefined) {
+    	if (this.options.maxMarkers) {
 	    	this.options.maxMarkers=i;
     	}
     },
 
     addLayer: function (layer) {
       this._markers.push(layer);
-      if (this._map !=undefined){
+      if (this._map){
         this._update();
       }
     },
@@ -58,7 +58,7 @@
       this._map = map;
       var self = this;
       this.onMap = true;
-      if (map != null) {
+      if (map) {
         map.on("moveend", this._update, this );
       }
 
@@ -71,7 +71,7 @@
       L.FeatureGroup.prototype.onAdd.call(this, map);
     },
 
-    onRemove: function() {
+    onRemove: function(map) {
       this._removeMarkers();
       this.onMap = false;
       map.off("moveend", this._update);
@@ -79,7 +79,7 @@
 
     _update: function (e) {
       // Perform updates to markers on map
-      if (this.onMap==true) {
+      if (this.onMap===true) {
         this._removeMarkers();
         this._addMarkers();
         this._cleanupMarkers();

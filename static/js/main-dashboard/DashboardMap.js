@@ -7,12 +7,11 @@ class DashboardMap extends Element {
         this.childElements.push(this.mapLegend);
          
         this.mapScale = null; 
+        this.conditionalLayer = null;
     }
      
     process() {
         let that = this;
-         
-        //this.mapLegend.setTitle('Event types');
 
         L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
         this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
@@ -20,73 +19,28 @@ class DashboardMap extends Element {
             attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
 
-        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 4000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
 
         this.mapScale = new MapScale(this.map);
 
         // Toggle scroll-zoom by clicking on and outside map
         this.map.scrollWheelZoom.disable();
         this.map.on('focus', function() { this.scrollWheelZoom.enable(); });
-        this.map.on('blur', function() { this.scrollWheelZoom.disable(); });
+        this.map.on('blur', function() { this.scrollWheelZoom.disable(); }); 
          
         this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
     }
+     
+    processData(data) {
+        this.locationGroupedData = d3.nest()
+            .key((d) => d.latitude + ' ' + d.longitude)
+            .key((d) => d.event_type)
+            .entries(data);
+    }
 
-    loadDataToMap() {
-        let locationGroupedData = [];
-        let currentLocation = {'latitude': '', 'longitude': ''};
-        let currentData = null;
-        let currentEvent = {'name': '', 'count': 0};
-        for (let i=0; i<acledData.length; i++) {
-            let cr = acledData[i];  // current row
-            if(currentLocation.latitude != cr.latitude || currentLocation.longitude != cr.longitude) {
-                currentLocation = {'latitude': cr.latitude, 'longitude': cr.longitude};
-                currentData = {'location': currentLocation, 'events': []};
-                locationGroupedData.push(currentData);
-
-                currentEvent = {'name': cr.event_type, 'count': 0};
-                currentData.events.push(currentEvent);
-            } else if(currentEvent.name != cr.event_type) {
-                currentEvent = {'name': cr.event_type, 'count': 0};
-                currentData.events.push(currentEvent);
-            }
-            ++currentEvent.count;
-            addEvent(cr.event_type);
-            addCountry(cr.country);
-            addFatalities(cr.fatalities);
-        }
+    init() {
+        let that = this;
 
         this.mapLegend.fillAcledEvents();
-         
-        setTimeout(()=>{this.refreshMap(locationGroupedData);}, 0);
-    }
-     
-    getScaledRadius(num) {
-        return Math.sqrt(num);
-    }
-     
-    refreshMap(data) {
-        let that = this;
-        let maxEventCount = 0;
-         
-        for (let i=0; i<data.length; i++) {
-            for (let j=0; j<data[i].events.length; j++) {
-                let cd = data[i].events[j];   // current data
-                let radius = getMapCircleRadius(cd.count);
-                let color = getEventColor(cd.name);
-
-                this.conditionalLayer.addLayer(L.circle([data[i].location.latitude, data[i].location.longitude], radius, {
-                    fillColor: color,
-                    stroke: false,
-                    fillOpacity: 0.8,
-                    interactive: false,
-                })
-                    //.bindPopup(String(`No. of Events: ${(cd.count)}`))
-                );
-            }
-        }
-
-        this.conditionalLayer.addTo(this.map);
          
         let geoJsonLayer = null;
         let countries = Object.keys(acledCountries);
@@ -99,7 +53,7 @@ class DashboardMap extends Element {
                         stroke: false,
                     });
 
-                    let data = countries.find(c => compareCountryNames(c, feature.properties.admin));
+                    let data = countries.find(c => compareCountryNames(c, feature.properties.geounit));
                     if (data) {
                         layer.on('mouseover', function() { layer.setStyle({ fillOpacity: 0.5, }); });
                         layer.on('mouseout', function() { layer.setStyle({ fillOpacity: 0, }); });
@@ -111,5 +65,40 @@ class DashboardMap extends Element {
             });
             geoJsonLayer.addTo(that.map);
         });
+         
+    }
+     
+     
+    refreshMap(data) {
+        let that = this;
+        let maxEventCount = 0;
+
+        if (this.conditionalLayer) {
+            this.map.removeLayer(this.conditionalLayer);
+        }
+        
+        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 2000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
+         
+        for (let location in data) {
+            let cld = data[location]; // current location data 
+             
+            for (let event in cld) {
+                let cr = cld[event]; 
+                let cd = cr[0];
+                let radius = getMapCircleRadius(cr.length);
+                let color = getEventColor(cd.event_type);
+                 
+                this.conditionalLayer.addLayer(L.circle([cd.latitude, cd.longitude], radius, {
+                    fillColor: color,
+                    stroke: false,
+                    fillOpacity: 0.6,
+                    //interactive: false,
+                })
+                    .bindPopup(String(`Event type: ${event}<br>No. of Events: ${cr.length}`))
+                );
+            }
+        }
+
+        this.conditionalLayer.addTo(this.map);
     }
 }

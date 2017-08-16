@@ -22,7 +22,7 @@ var CrisisProfile = function (_Element) {
         _this.recentEventsSection = new Element('\n            <div id="recent-events-section">\n                <header></header>\n                <a hidden><img alt="Report image"></a>\n                <div id="report-image-empty">Not available</div>\n            </div>\n            ');
         if (recentEvent) {}
 
-        _this.reportSelectContainer = new Element('\n            <div class="select-wrapper">\n                <i class="fa fa-search"></i>\n                <select id="report-search" placeholder="Search for an event"></select>\n            </div>\n            ');
+        _this.reportSelectContainer = new Element('\n            <div class="select-wrapper">\n                <i class="fa fa-search"></i>\n                <select id="report-search" placeholder="Select an event"></select>\n            </div>\n            ');
 
         _this.reportDetailContainer = new Element('\n            <div id="report">\n                <div class="detail">\n                    <h5 class="title"></h5>\n                    <date></date>\n                    <div class="description"></div>\n                </div>\n                <div class="map">\n                </div>\n            <div>\n            ');
 

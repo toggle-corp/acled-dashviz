@@ -13,7 +13,7 @@ class CountryMap extends Element {
         // this.mapLegend.setTitle('Event types');
 
         L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
-        this.map = L.map('country-map', { preferCanvas: true }).setView([0, 10], 3);
+        this.map = L.map('country-map', {preferCanvas: false}).setView([0, 10], 3);
         L.tileLayer('https://api.mapbox.com/styles/v1/frozenhelium/cj1lpbp1g000l2rmr9kwg12b3/tiles/256/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
             attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
@@ -56,7 +56,7 @@ class CountryMap extends Element {
         $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
             that.geoJsonLayer = L.geoJson(data, {
                 onEachFeature: function(feature, layer) {
-                    if (compareCountryNames(country, feature.properties.admin)) {
+                    if (compareCountryNames(country, feature.properties.geounit)) {
                         layer.setStyle({
                             fillOpacity: 0,
                             stroke: true,
@@ -75,42 +75,30 @@ class CountryMap extends Element {
             that.map.invalidateSize();
             that.map.fitBounds(currentLayer.getBounds());
         });
-
-        let locationGroupedData = [];
-        let currentLocation = {'latitude': '', 'longitude': ''};
-        let currentData = null;
-        let currentEvent = {'name': '', 'count': 0};
-
-        for (let i=0; i<countryData.length; i++) {
-            let cr = countryData[i];  // current row
-            if (currentLocation.latitude != cr.latitude || currentLocation.longitude != cr.longitude) {
-                currentLocation = {'latitude': cr.latitude, 'longitude': cr.longitude};
-                currentData = {'location': currentLocation, 'events': []};
-                locationGroupedData.push(currentData);
-
-                currentEvent = {'name': cr.event_type, 'count': 0};
-                currentData.events.push(currentEvent);
-            } else if(currentEvent.name != cr.event_type) {
-                currentEvent = {'name': cr.event_type, 'count': 0};
-                currentData.events.push(currentEvent);
-            }
-            ++currentEvent.count;
-        }
+         
+         
+        let locationGroupedData = d3.nest()
+            .key((d) => d.latitude + ' ' + d.longitude)
+            .key((d) => d.event_type )
+            .object(countryData);
 
         this.circles = [];
-
-        for (let i=0; i<locationGroupedData.length; i++) {
-            for (let j=0; j<locationGroupedData[i].events.length; j++) {
-                let cd = locationGroupedData[i].events[j];   // current data
-                let radius = getMapCircleRadius(cd.count);
-                let color = getEventColor(cd.name);
+         
+        for (let location in locationGroupedData) {
+            let cld = locationGroupedData[location]; // current location data 
+             
+            for (let event in cld) {
+                let cr = cld[event]; 
+                let cd = cr[0];
+                let radius = getMapCircleRadius(cr.length);
+                let color = getEventColor(cd.event_type);
                  
-                let circle = L.circle([locationGroupedData[i].location.latitude, locationGroupedData[i].location.longitude], radius, {
+                let circle = L.circle([cd.latitude, cd.longitude], radius, {
                     fillColor: color,
                     stroke: false,
-                    fillOpacity: 0.8,
-                    interactive: false,
-                });
+                    fillOpacity: 0.6,
+                    //interactive: false,
+                }).bindPopup(String(`No. of Events: ${cr.length}`));
                 circle.addTo(this.map);
                 this.circles.push(circle);
             }

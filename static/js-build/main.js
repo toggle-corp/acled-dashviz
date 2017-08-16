@@ -3,65 +3,38 @@
 var dashboard = null;
 
 $(document).ready(function () {
-    $('#main').empty();
-    var root = new Element();
-    root.element = $('#main');
+  $('#main').empty();
+  var root = new Element();
+  root.element = $('#main');
 
-    dashboard = new Dashboard();
-    dashboard.initDomAll(root);
-    dashboard.processAll();
+  dashboard = new Dashboard();
+  dashboard.initDomAll(root);
+  dashboard.processAll();
 
-    $.ajax({
-        method: 'GET',
-        url: 'https://api.acleddata.com/acled/read.csv',
-        data: { 'limit': '0', 'fields': 'country|event_type|latitude|longitude' },
-        success: function success(data) {
-            var rows = data.split('\n');
-            var keys = rows[0].split(',');
+  d3.csv("https://api.acleddata.com/acled/read.csv?limit=0&fields=country|event_type|latitude|longitude", function (data) {
 
-            // 1st row is list of keys, last is blank
-            for (var i = 1; i < rows.length - 1; i++) {
-                var currentRow = rows[i].split(',');
-                var currentData = {};
+    data.forEach(function (row) {
+      row.event_type = getAcledEventName(row.event_type.toLowerCase());
+      row.country = row.country.toLowerCase();
 
-                for (var j = 0; j < keys.length; j++) {
-                    if (keys[j] == 'event_type') {
-                        currentData[keys[j]] = getAcledEventName(currentRow[j].replace(/^"(.*)"$/, '$1').trim().toLowerCase());
-                    } else if (keys[j] == 'country') {
-                        currentData[keys[j]] = currentRow[j].replace(/^"(.*)"$/, '$1').trim().toLowerCase();
-                    } else {
-                        currentData[keys[j]] = currentRow[j];
-                    }
-                }
-
-                acledData.push(currentData);
-            }
-
-            acledData.sort(function (a, b) {
-                return a.latitude != b.latitude ? a.latitude - b.latitude : a.longitude != b.longitude ? a.longitude - b.longitude : a.event_type - b.event_type;
-            });
-
-            dashboard.loadMainMap();
-
-            dashboard.load();
-        }
+      addEvent(row.event_type);
+      addCountry(row.country);
+      addFatalities(row.fatalities);
     });
 
-    $(window).scroll(function () {
-        $('#country-profile')[0].scrollTop = $(window).scrollTop();
-    });
+    acledData = data;
+    dashboard.loadMainMap(data);
+    dashboard.load();
+  });
+
+  $(window).scroll(function () {
+    $('#country-profile')[0].scrollTop = $(window).scrollTop();
+  });
 });
 
-// Put this code after you've included Selectize
-// but before any selectize fields are initialized
 var prevSetup = Selectize.prototype.setup;
-
 Selectize.prototype.setup = function () {
-    prevSetup.call(this);
-
-    // This property is set in native setup
-    // Unless the source code changes, it should
-    // work with any version
-    this.$control_input.prop('readonly', true);
+  prevSetup.call(this);
+  this.$control_input.prop('readonly', true);
 };
 //# sourceMappingURL=main.js.map

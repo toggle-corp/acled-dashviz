@@ -22,6 +22,7 @@ var DashboardMap = function (_Element) {
         _this.childElements.push(_this.mapLegend);
 
         _this.mapScale = null;
+        _this.conditionalLayer = null;
         return _this;
     }
 
@@ -32,17 +33,11 @@ var DashboardMap = function (_Element) {
 
             var that = this;
 
-            //this.mapLegend.setTitle('Event types');
-
             L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
             this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
             L.tileLayer('https://api.mapbox.com/styles/v1/frozenhelium/cj1lpbp1g000l2rmr9kwg12b3/tiles/256/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
                 attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(this.map);
-
-            this.conditionalLayer = L.conditionalMarkers([], { maxMarkers: 4000, DisplaySort: function DisplaySort(a, b) {
-                    return b._mRadius - a._mRadius;
-                } });
 
             this.mapScale = new MapScale(this.map);
 
@@ -60,68 +55,20 @@ var DashboardMap = function (_Element) {
             });
         }
     }, {
-        key: 'loadDataToMap',
-        value: function loadDataToMap() {
-            var _this3 = this;
-
-            var locationGroupedData = [];
-            var currentLocation = { 'latitude': '', 'longitude': '' };
-            var currentData = null;
-            var currentEvent = { 'name': '', 'count': 0 };
-            for (var i = 0; i < acledData.length; i++) {
-                var cr = acledData[i]; // current row
-                if (currentLocation.latitude != cr.latitude || currentLocation.longitude != cr.longitude) {
-                    currentLocation = { 'latitude': cr.latitude, 'longitude': cr.longitude };
-                    currentData = { 'location': currentLocation, 'events': [] };
-                    locationGroupedData.push(currentData);
-
-                    currentEvent = { 'name': cr.event_type, 'count': 0 };
-                    currentData.events.push(currentEvent);
-                } else if (currentEvent.name != cr.event_type) {
-                    currentEvent = { 'name': cr.event_type, 'count': 0 };
-                    currentData.events.push(currentEvent);
-                }
-                ++currentEvent.count;
-                addEvent(cr.event_type);
-                addCountry(cr.country);
-                addFatalities(cr.fatalities);
-            }
+        key: 'processData',
+        value: function processData(data) {
+            this.locationGroupedData = d3.nest().key(function (d) {
+                return d.latitude + ' ' + d.longitude;
+            }).key(function (d) {
+                return d.event_type;
+            }).entries(data);
+        }
+    }, {
+        key: 'init',
+        value: function init() {
+            var that = this;
 
             this.mapLegend.fillAcledEvents();
-
-            setTimeout(function () {
-                _this3.refreshMap(locationGroupedData);
-            }, 0);
-        }
-    }, {
-        key: 'getScaledRadius',
-        value: function getScaledRadius(num) {
-            return Math.sqrt(num);
-        }
-    }, {
-        key: 'refreshMap',
-        value: function refreshMap(data) {
-            var that = this;
-            var maxEventCount = 0;
-
-            for (var i = 0; i < data.length; i++) {
-                for (var j = 0; j < data[i].events.length; j++) {
-                    var cd = data[i].events[j]; // current data
-                    var radius = getMapCircleRadius(cd.count);
-                    var color = getEventColor(cd.name);
-
-                    this.conditionalLayer.addLayer(L.circle([data[i].location.latitude, data[i].location.longitude], radius, {
-                        fillColor: color,
-                        stroke: false,
-                        fillOpacity: 0.8,
-                        interactive: false
-                    })
-                    //.bindPopup(String(`No. of Events: ${(cd.count)}`))
-                    );
-                }
-            }
-
-            this.conditionalLayer.addTo(this.map);
 
             var geoJsonLayer = null;
             var countries = Object.keys(acledCountries);
@@ -135,7 +82,7 @@ var DashboardMap = function (_Element) {
                         });
 
                         var data = countries.find(function (c) {
-                            return compareCountryNames(c, feature.properties.admin);
+                            return compareCountryNames(c, feature.properties.geounit);
                         });
                         if (data) {
                             layer.on('mouseover', function () {
@@ -152,6 +99,40 @@ var DashboardMap = function (_Element) {
                 });
                 geoJsonLayer.addTo(that.map);
             });
+        }
+    }, {
+        key: 'refreshMap',
+        value: function refreshMap(data) {
+            var that = this;
+            var maxEventCount = 0;
+
+            if (this.conditionalLayer) {
+                this.map.removeLayer(this.conditionalLayer);
+            }
+
+            this.conditionalLayer = L.conditionalMarkers([], { maxMarkers: 2000, DisplaySort: function DisplaySort(a, b) {
+                    return b._mRadius - a._mRadius;
+                } });
+
+            for (var location in data) {
+                var cld = data[location]; // current location data 
+
+                for (var event in cld) {
+                    var cr = cld[event];
+                    var cd = cr[0];
+                    var radius = getMapCircleRadius(cr.length);
+                    var color = getEventColor(cd.event_type);
+
+                    this.conditionalLayer.addLayer(L.circle([cd.latitude, cd.longitude], radius, {
+                        fillColor: color,
+                        stroke: false,
+                        fillOpacity: 0.6
+                        //interactive: false,
+                    }).bindPopup(String('Event type: ' + event + '<br>No. of Events: ' + cr.length)));
+                }
+            }
+
+            this.conditionalLayer.addTo(this.map);
         }
     }]);
 

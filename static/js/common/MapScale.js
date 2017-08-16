@@ -17,10 +17,10 @@ class MapScale {
     }
 
     updateControl() {
-        let circleRadii = [9, 16, 36, 64];
+        let circleRadii = [9, 16, 25, 36];
         let zoomLevel = this.map.getZoom();
-        let scaleLabels = circleRadii.map((d) => getMapScaleNumber(d, zoomLevel));
-
+        let scaleLabels = circleRadii.map((d) => getEventCountFromPixelRadius(d, getMeterPerPixel(this.map)));
+         
         this.control.container.innerHTML = '';
         for (let i = 0; i < circleRadii.length; i++) {
             this.control.container.innerHTML += `<div><label>${scaleLabels[i]}</label><span style="width: ${circleRadii[i]}px; height: ${circleRadii[i]}px;"></span></div>`; 

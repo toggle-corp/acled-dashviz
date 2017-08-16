@@ -19,11 +19,11 @@ class FilterWrapper extends Element {
                         <section class="filter-interaction">
                             <header><h5>Interaction</h5></header>
                             <div class="content">
-                                <label class="radio-input"><input type="radio" data-value="all" checked="true" name="${name}-filter-interaction-input">All</label>
-                                <label class="radio-input"><input type="radio" data-value="less than 100" name="${name}-filter-interaction-input">Less than 100</label>
-                                <label class="radio-input"><input type="radio" data-value="100 - 1000" name="${name}-filter-interaction-input">100 - 1,000</label>
-                                <label class="radio-input"><input type="radio" data-value="1000 - 10000" name="${name}-filter-interaction-input">1,000 - 10,000</label>
-                                <label class="radio-input"><input type="radio" data-value="more than 10000" name="${name}-filter-interaction-input">More than 10,000</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="Infinity" data-value="all" checked="true" name="${name}-filter-interaction-input">All</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="10" data-value="less than 10" name="${name}-filter-interaction-input">Less than 10</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="10" data-upperlimit="100" data-value="10 - 100" name="${name}-filter-interaction-input">10 - 100</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="100" data-upperlimit="1000" data-value="100 - 1000" name="${name}-filter-interaction-input">100 - 1,000</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="1000" data-upperlimit="Infinity" data-value="more than 1000" name="${name}-filter-interaction-input">More than 1,000</label>
                             </div>
                         </section>
                         <section class="filter-year">
@@ -42,12 +42,11 @@ class FilterWrapper extends Element {
                         <section class="filter-fatalities">
                             <header><h5>Fatalities</h5></header>
                             <div class="content">
-                                <label class="radio-input"><input type="radio" data-value="all" checked="true" name="${name}-filter-fatalities-input">All</label>
-                                <label class="radio-input"><input type="radio" data-value="less than 100" name="${name}-filter-fatalities-input">Less than 100</label>
-                                <label class="radio-input"><input type="radio" data-value="100 - 1000" name="${name}-filter-fatalities-input">100 - 1,000</label>
-                                <label class="radio-input"><input type="radio" data-value="1000 - 10000" name="${name}-filter-fatalities-input">1,000 - 10,000</label>
-                                <label class="radio-input"><input type="radio" data-value="10000 - 100000" name="${name}-filter-fatalities-input">10,000 - 100,000</label>
-                                <label class="radio-input"><input type="radio" data-value="more than 100000" name="${name}-filter-fatalities-input">More than 100,000</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="Infinity" data-value="all" checked="true" name="${name}-filter-fatalities-input">All</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="10" data-value="less than 10" name="${name}-filter-fatalities-input">Less than 10</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="10" data-upperlimit="100" data-value="10 - 100" name="${name}-filter-fatalities-input">10 - 100</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="100" data-upperlimit="1000" data-value="100 - 1000" name="${name}-filter-fatalities-input">100 - 1,000</label>
+                                <label class="radio-input"><input type="radio"  data-lowerlimit="1000" data-upperlimit="Infinity" data-value="more than 1000" name="${name}-filter-fatalities-input">More than 1,000</label>
                             </div> 
                         </section>
                         <section class="filter-admin1">
@@ -102,7 +101,7 @@ class FilterWrapper extends Element {
         container.empty();
 
         for (let eventName in acledEvents) {
-            $('<label class="checkbox-input"><input type="checkbox" data-target="'+eventName+'" checked="true"><span class="name">'+eventName+'</span></label>').appendTo(container);
+            $(`<label class="checkbox-input"><input type="checkbox" data-target="${eventName}" checked="true"><span class="name">${eventName}</span></label>`).appendTo(container);
         }
 
         this.element.find(`input[name="${name}-filter-interaction-input"]`).eq(0).prop('checked', true);

@@ -21,7 +21,7 @@ class CrisisProfile extends Element {
             `
             <div class="select-wrapper">
                 <i class="fa fa-search"></i>
-                <select id="report-search" placeholder="Search for an event"></select>
+                <select id="report-search" placeholder="Select an event"></select>
             </div>
             `
         );

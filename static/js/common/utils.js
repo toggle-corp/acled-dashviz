@@ -35,34 +35,15 @@ function addEvent(eventName) {
 
 let acledEventOrder = [ 'battles', 'violence against civilians', 'remote violence', 'riots/protests', 'other'];
 
-
 function getSortedAcledEvents() {
     return acledEventOrder;
 }
+ 
 function getSortedAcledEventKeys() {
-    /* 
-    let keys = Object.keys(acledEvents);
-
-    function getOrder(i) {
-        return i==-1? 9999 : i;
-    }
-
-    keys.sort(function(a, b) {
-        return getOrder(acledEventOrder.findIndex((el) => compareEvents(el, a))) - getOrder(acledEventOrder.findIndex((el) => compareEvents(el, b)));
-    });
-
-    return keys;
-    */
     return acledEventOrder;
-     
 }
 
 function compareEvents(e1, e2) {
-    /*
-    if(e1.toLowerCase().includes('battle') && e2.toLowerCase().includes('battle')) {
-        return true;
-    }
-    */
     return e1.toLowerCase() == e2.toLowerCase();
 }
 
@@ -90,13 +71,29 @@ function compareCountryNames(name1, name2) {
 }
 
  
-let mapScaleFactor = 24000;
+let mapScaleFactor = 8000;
  
 function getMapCircleRadius(noOfEvents) {
     let radius = Math.sqrt(noOfEvents)*mapScaleFactor;
     return radius;
 }
 
-function getMapScaleNumber(num, zoomLevel) {
-    return Math.round(num * num / (zoomLevel*zoomLevel*zoomLevel));
+function getEventCountFromMapCircleRadius(radius) {
+    let noOfEvents = radius/mapScaleFactor;
+    return noOfEvents*noOfEvents;
+}
+
+function getEventCountFromPixelRadius(radi, mpp) {
+    return Math.round(getEventCountFromMapCircleRadius(radi*mpp));
+}
+ 
+function getMeterPerPixel(map) {
+    let center = map.latLngToContainerPoint(map.getCenter()); 
+    let xOffset = [center.x + 1, center.y]; 
+    
+    // convert containerpoints to latlng's
+    center = map.containerPointToLatLng(center);
+    xOffset = map.containerPointToLatLng(xOffset);
+
+    return center.distanceTo(xOffset); 
 }

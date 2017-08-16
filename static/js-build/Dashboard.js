@@ -25,8 +25,8 @@ var Dashboard = function (_Element) {
 
     _createClass(Dashboard, [{
         key: 'loadMainMap',
-        value: function loadMainMap() {
-            this.childElements[0].loadMap();
+        value: function loadMainMap(data) {
+            this.childElements[0].loadMap(data);
         }
     }, {
         key: 'show',

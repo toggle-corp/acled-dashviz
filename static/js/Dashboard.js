@@ -7,8 +7,8 @@ class Dashboard extends Element {
         this.childElements.push(this.countryProfile);
     }
      
-    loadMainMap() {
-        this.childElements[0].loadMap();
+    loadMainMap(data) {
+        this.childElements[0].loadMap(data);
     }
      
     show(country) {

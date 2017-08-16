@@ -33,7 +33,7 @@ var CountryMap = function (_Element) {
             // this.mapLegend.setTitle('Event types');
 
             L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
-            this.map = L.map('country-map', { preferCanvas: true }).setView([0, 10], 3);
+            this.map = L.map('country-map', { preferCanvas: false }).setView([0, 10], 3);
             L.tileLayer('https://api.mapbox.com/styles/v1/frozenhelium/cj1lpbp1g000l2rmr9kwg12b3/tiles/256/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
                 attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(this.map);
@@ -85,7 +85,7 @@ var CountryMap = function (_Element) {
             $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function (data) {
                 that.geoJsonLayer = L.geoJson(data, {
                     onEachFeature: function onEachFeature(feature, layer) {
-                        if (compareCountryNames(country, feature.properties.admin)) {
+                        if (compareCountryNames(country, feature.properties.geounit)) {
                             layer.setStyle({
                                 fillOpacity: 0,
                                 stroke: true,
@@ -105,41 +105,29 @@ var CountryMap = function (_Element) {
                 that.map.fitBounds(currentLayer.getBounds());
             });
 
-            var locationGroupedData = [];
-            var currentLocation = { 'latitude': '', 'longitude': '' };
-            var currentData = null;
-            var currentEvent = { 'name': '', 'count': 0 };
-
-            for (var i = 0; i < countryData.length; i++) {
-                var cr = countryData[i]; // current row
-                if (currentLocation.latitude != cr.latitude || currentLocation.longitude != cr.longitude) {
-                    currentLocation = { 'latitude': cr.latitude, 'longitude': cr.longitude };
-                    currentData = { 'location': currentLocation, 'events': [] };
-                    locationGroupedData.push(currentData);
-
-                    currentEvent = { 'name': cr.event_type, 'count': 0 };
-                    currentData.events.push(currentEvent);
-                } else if (currentEvent.name != cr.event_type) {
-                    currentEvent = { 'name': cr.event_type, 'count': 0 };
-                    currentData.events.push(currentEvent);
-                }
-                ++currentEvent.count;
-            }
+            var locationGroupedData = d3.nest().key(function (d) {
+                return d.latitude + ' ' + d.longitude;
+            }).key(function (d) {
+                return d.event_type;
+            }).object(countryData);
 
             this.circles = [];
 
-            for (var _i = 0; _i < locationGroupedData.length; _i++) {
-                for (var j = 0; j < locationGroupedData[_i].events.length; j++) {
-                    var cd = locationGroupedData[_i].events[j]; // current data
-                    var radius = getMapCircleRadius(cd.count);
-                    var color = getEventColor(cd.name);
+            for (var location in locationGroupedData) {
+                var cld = locationGroupedData[location]; // current location data 
 
-                    var circle = L.circle([locationGroupedData[_i].location.latitude, locationGroupedData[_i].location.longitude], radius, {
+                for (var event in cld) {
+                    var cr = cld[event];
+                    var cd = cr[0];
+                    var radius = getMapCircleRadius(cr.length);
+                    var color = getEventColor(cd.event_type);
+
+                    var circle = L.circle([cd.latitude, cd.longitude], radius, {
                         fillColor: color,
                         stroke: false,
-                        fillOpacity: 0.8,
-                        interactive: false
-                    });
+                        fillOpacity: 0.6
+                        //interactive: false,
+                    }).bindPopup(String('No. of Events: ' + cr.length));
                     circle.addTo(this.map);
                     this.circles.push(circle);
                 }

@@ -130,7 +130,9 @@ var MainDashboard = function (_Element) {
     }, {
         key: 'applyFilters',
         value: function applyFilters() {
-            this.filteredData = $.extend(true, {}, this.data);
+            this.filteredData = $.extend(true, [], this.data);
+            this.filterByEvents();
+            this.render();
         }
     }, {
         key: 'filterByEvents',
@@ -150,31 +152,10 @@ var MainDashboard = function (_Element) {
         key: 'filterByInteraction',
         value: function filterByInteraction() {
             var container = this.filterWrapper.element.find('.filter-interaction .content');
-            var lowerLimit = 0;
-            var upperLimit = 0;
+            var input = container.find('input[type="radio"]:checked');
 
-            switch (container.find('input[type="radio"]:checked').data('value')) {
-                case 'less than 100':
-                    lowerLimit = 0;
-                    upperLimit = 100;
-                    break;
-                case '100 - 1000':
-                    lowerLimit = 100;
-                    upperLimit = 1000;
-                    break;
-                case '1000 - 10000':
-                    lowerLimit = 1000;
-                    upperLimit = 10000;
-                    break;
-                case 'more than 10000':
-                    lowerLimit = 1000;
-                    upperLimit = Infinity;
-                    break;
-                case 'all':
-                    lowerLimit = 0;
-                    upperLimit = Infinity;
-                    break;
-            }
+            var lowerLimit = input.data('lowerlimit');
+            var upperLimit = input.data('upperlimit');
 
             this.filteredData = this.filteredData.filter(function (x) {
                 return x.interaction >= lowerLimit && x.interaction < upperLimit;
@@ -184,35 +165,10 @@ var MainDashboard = function (_Element) {
         key: 'filterByFatalities',
         value: function filterByFatalities() {
             var container = this.filterWrapper.element.find('.filter-fatalities .content');
-            var lowerLimit = 0;
-            var upperLimit = 0;
+            var input = container.find('input[type="radio"]:checked');
 
-            switch (container.find('input[type="radio"]:checked').data('value')) {
-                case 'less than 100':
-                    lowerLimit = 0;
-                    upperLimit = 100;
-                    break;
-                case '100 - 1000':
-                    lowerLimit = 100;
-                    upperLimit = 1000;
-                    break;
-                case '1000 - 10000':
-                    lowerLimit = 1000;
-                    upperLimit = 10000;
-                    break;
-                case '10000 - 100000':
-                    lowerLimit = 10000;
-                    upperLimit = 100000;
-                    break;
-                case 'more than 10000':
-                    lowerLimit = 1000;
-                    upperLimit = Infinity;
-                    break;
-                case 'all':
-                    lowerLimit = 0;
-                    upperLimit = Infinity;
-                    break;
-            }
+            var lowerLimit = input.data('lowerlimit');
+            var upperLimit = input.data('upperlimit');
 
             this.filteredData = this.filteredData.filter(function (x) {
                 return x.fatalities >= lowerLimit && x.fatalities < upperLimit;
@@ -238,14 +194,32 @@ var MainDashboard = function (_Element) {
             });
         }
     }, {
+        key: 'render',
+        value: function render() {
+            this.filteredData = d3.nest().key(function (d) {
+                return d.latitude + ' ' + d.longitude;
+            }).key(function (d) {
+                return d.event_type;
+            }).object(this.filteredData);
+
+            this.dashboardMap.refreshMap(this.filteredData);
+        }
+    }, {
         key: 'loadMap',
-        value: function loadMap() {
-            this.dashboardMap.loadDataToMap();
+        value: function loadMap(data) {
+            this.data = data;
+            this.dashboardMap.init();
+            this.applyFilters();
         }
     }, {
         key: 'load',
         value: function load() {
             this.crisisProfile.load();
+        }
+    }, {
+        key: 'processRawData',
+        value: function processRawData(data) {
+            this.dashboardMap.processData(data);
         }
     }]);
 

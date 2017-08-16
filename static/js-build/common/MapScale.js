@@ -27,10 +27,12 @@ var MapScale = function () {
     _createClass(MapScale, [{
         key: 'updateControl',
         value: function updateControl() {
-            var circleRadii = [9, 16, 36, 64];
+            var _this = this;
+
+            var circleRadii = [9, 16, 25, 36];
             var zoomLevel = this.map.getZoom();
             var scaleLabels = circleRadii.map(function (d) {
-                return getMapScaleNumber(d, zoomLevel);
+                return getEventCountFromPixelRadius(d, getMeterPerPixel(_this.map));
             });
 
             this.control.container.innerHTML = '';
