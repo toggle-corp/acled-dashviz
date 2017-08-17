@@ -106,6 +106,7 @@ class MainDashboard extends Element {
         });
          
         this.filterWrapper.element.find('.btn-apply-filter').on('click', function(){
+            syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.dashboardMap.mapLegend.element, true);
             that.applyFilters();
             that.filterWrapper.hide();
         });
@@ -118,12 +119,17 @@ class MainDashboard extends Element {
             that.filterWrapper.init();
         });
 
+        this.dashboardMap.element.on('legend:filterclick', function() {
+            syncCheckboxes(that.dashboardMap.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+            that.applyFilters();
+        });
+
     }
-     
 
     applyFilters() {
         this.filteredData = $.extend(true, [], this.data);
         this.filterByEvents();
+        this.filterByInteraction();
         this.render();
     }
      
@@ -138,12 +144,11 @@ class MainDashboard extends Element {
 
     filterByInteraction() {
         let container = this.filterWrapper.element.find('.filter-interaction .content');
-        let input = container.find('input[type="radio"]:checked');
+        let requiredActors = container.find('input[type="checkbox"]:checked').map(function() {
+            return $(this).data('target');
+        }).get();
          
-        let lowerLimit = input.data('lowerlimit');
-        let upperLimit = input.data('upperlimit');
-
-        this.filteredData = this.filteredData.filter(x => x.interaction >= lowerLimit && x.interaction < upperLimit);
+        this.filteredData = this.filteredData.filter(x => requiredActors.find(y => x.interaction.includes(y)));
     }
 
     filterByFatalities() {
@@ -166,7 +171,8 @@ class MainDashboard extends Element {
         endYear = endYear? (new Date(endYear)) : (new Date());
 
         function isDateYearInRange(d, d1, d2) {
-            return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
+            //return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
+            return d >= d1 && d <= d2;
         }
 
         this.filteredData = this.filteredData.filter(x => {

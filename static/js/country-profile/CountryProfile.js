@@ -39,6 +39,8 @@ class CountryProfile extends Element {
         });
 
         this.filterWrapper.element.find('.btn-apply-filter').on('click', function(){
+            syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.countryMap.mapLegend.element, true);
+            syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.timeSeries.mapLegend.element, true);
             that.applyFilters();
             that.filterWrapper.hide();
         });
@@ -50,10 +52,21 @@ class CountryProfile extends Element {
         this.filterWrapper.element.find('.btn-reset').on('click', function(){
             that.filterWrapper.init(that.admin1s);
         });
+         
+        this.countryMap.element.on('countrymap:filterclick', function() {
+            syncCheckboxes(that.countryMap.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+            syncCheckboxes(that.countryMap.mapLegend.element, that.timeSeries.mapLegend.element, true);
+            that.applyFilters();
+        });
+         
+        this.timeSeries.element.on('timeseries:filterclick', function() {
+            syncCheckboxes(that.timeSeries.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+            syncCheckboxes(that.timeSeries.mapLegend.element, that.countryMap.mapLegend.element, true);
+            that.applyFilters();
+        });
     }
      
     applyFilters() {
-        //this.filteredData = this.data.slice();
         this.filteredData = $.extend(true, [], this.data);
          
         this.filterByEvents();
@@ -89,13 +102,11 @@ class CountryProfile extends Element {
 
     filterByInteraction() {
         let container = this.filterWrapper.element.find('.filter-interaction .content');
-        let input = container.find('input[type="radio"]:checked');
+        let requiredActors = container.find('input[type="checkbox"]:checked').map(function() {
+            return $(this).data('target');
+        }).get();
          
-        let lowerLimit = input.data('lowerlimit');
-        let upperLimit = input.data('upperlimit');
-        
-
-        this.filteredData = this.filteredData.filter(x => x.interaction >= lowerLimit && x.interaction < upperLimit);
+        this.filteredData = this.filteredData.filter(x => requiredActors.find(y => x.interaction.includes(y)));
     }
 
     filterByFatalities() {
@@ -110,21 +121,22 @@ class CountryProfile extends Element {
 
     filterByYear() {
         let container = this.filterWrapper.element.find('.filter-year');
-         
+
         let startYear = container.find('.start-year').val(); 
         startYear = startYear? (new Date(startYear)) : (new Date(0));
-         
+
         let endYear = container.find('.end-year').val();
         endYear = endYear? (new Date(endYear)) : (new Date());
 
         function isDateYearInRange(d, d1, d2) {
-            return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
+            //return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
+            return d >= d1 && d <= d2;
         }
 
         this.filteredData = this.filteredData.filter(x => {
             return isDateYearInRange((new Date(x.year)), startYear, endYear);
         });
-    }
+    }    
 
     loadData(country) {
         let that = this;
@@ -186,6 +198,8 @@ class CountryProfile extends Element {
          
         let that = this;
          
+         
+         
         this.element.fadeIn('fast', function() {
             that.header.element.find('#country-name').text(country);
             that.countryReport.load(country);
@@ -196,6 +210,9 @@ class CountryProfile extends Element {
             that.loadData(country).then(function() {
                 that.filterWrapper.init(that.admin1s);
                 that.render();
+                 
+                that.countryMap.mapLegend.fillAcledEvents('countrymap');
+                that.timeSeries.mapLegend.fillAcledEvents('timeseries');
             });
         });
          
@@ -205,6 +222,8 @@ class CountryProfile extends Element {
     hide() {
         $('html').css('overflow', 'auto');
         this.countryMap.reset(true);
+        this.countryMap.mapLegend.clearLegendElements();
+        this.timeSeries.mapLegend.clearLegendElements();
         this.element.fadeOut();
     }
 }

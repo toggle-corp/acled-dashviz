@@ -115,6 +115,7 @@ var MainDashboard = function (_Element) {
             });
 
             this.filterWrapper.element.find('.btn-apply-filter').on('click', function () {
+                syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.dashboardMap.mapLegend.element, true);
                 that.applyFilters();
                 that.filterWrapper.hide();
             });
@@ -126,12 +127,18 @@ var MainDashboard = function (_Element) {
             this.filterWrapper.element.find('.btn-reset').on('click', function () {
                 that.filterWrapper.init();
             });
+
+            this.dashboardMap.element.on('legend:filterclick', function () {
+                syncCheckboxes(that.dashboardMap.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+                that.applyFilters();
+            });
         }
     }, {
         key: 'applyFilters',
         value: function applyFilters() {
             this.filteredData = $.extend(true, [], this.data);
             this.filterByEvents();
+            this.filterByInteraction();
             this.render();
         }
     }, {
@@ -152,13 +159,14 @@ var MainDashboard = function (_Element) {
         key: 'filterByInteraction',
         value: function filterByInteraction() {
             var container = this.filterWrapper.element.find('.filter-interaction .content');
-            var input = container.find('input[type="radio"]:checked');
-
-            var lowerLimit = input.data('lowerlimit');
-            var upperLimit = input.data('upperlimit');
+            var requiredActors = container.find('input[type="checkbox"]:checked').map(function () {
+                return $(this).data('target');
+            }).get();
 
             this.filteredData = this.filteredData.filter(function (x) {
-                return x.interaction >= lowerLimit && x.interaction < upperLimit;
+                return requiredActors.find(function (y) {
+                    return x.interaction.includes(y);
+                });
             });
         }
     }, {
@@ -186,7 +194,8 @@ var MainDashboard = function (_Element) {
             endYear = endYear ? new Date(endYear) : new Date();
 
             function isDateYearInRange(d, d1, d2) {
-                return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
+                //return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
+                return d >= d1 && d <= d2;
             }
 
             this.filteredData = this.filteredData.filter(function (x) {

@@ -57,6 +57,8 @@ var CountryProfile = function (_Element) {
             });
 
             this.filterWrapper.element.find('.btn-apply-filter').on('click', function () {
+                syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.countryMap.mapLegend.element, true);
+                syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.timeSeries.mapLegend.element, true);
                 that.applyFilters();
                 that.filterWrapper.hide();
             });
@@ -68,11 +70,22 @@ var CountryProfile = function (_Element) {
             this.filterWrapper.element.find('.btn-reset').on('click', function () {
                 that.filterWrapper.init(that.admin1s);
             });
+
+            this.countryMap.element.on('countrymap:filterclick', function () {
+                syncCheckboxes(that.countryMap.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+                syncCheckboxes(that.countryMap.mapLegend.element, that.timeSeries.mapLegend.element, true);
+                that.applyFilters();
+            });
+
+            this.timeSeries.element.on('timeseries:filterclick', function () {
+                syncCheckboxes(that.timeSeries.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+                syncCheckboxes(that.timeSeries.mapLegend.element, that.countryMap.mapLegend.element, true);
+                that.applyFilters();
+            });
         }
     }, {
         key: 'applyFilters',
         value: function applyFilters() {
-            //this.filteredData = this.data.slice();
             this.filteredData = $.extend(true, [], this.data);
 
             this.filterByEvents();
@@ -118,13 +131,14 @@ var CountryProfile = function (_Element) {
         key: 'filterByInteraction',
         value: function filterByInteraction() {
             var container = this.filterWrapper.element.find('.filter-interaction .content');
-            var input = container.find('input[type="radio"]:checked');
-
-            var lowerLimit = input.data('lowerlimit');
-            var upperLimit = input.data('upperlimit');
+            var requiredActors = container.find('input[type="checkbox"]:checked').map(function () {
+                return $(this).data('target');
+            }).get();
 
             this.filteredData = this.filteredData.filter(function (x) {
-                return x.interaction >= lowerLimit && x.interaction < upperLimit;
+                return requiredActors.find(function (y) {
+                    return x.interaction.includes(y);
+                });
             });
         }
     }, {
@@ -152,7 +166,8 @@ var CountryProfile = function (_Element) {
             endYear = endYear ? new Date(endYear) : new Date();
 
             function isDateYearInRange(d, d1, d2) {
-                return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
+                //return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
+                return d >= d1 && d <= d2;
             }
 
             this.filteredData = this.filteredData.filter(function (x) {
@@ -243,6 +258,9 @@ var CountryProfile = function (_Element) {
                 that.loadData(country).then(function () {
                     that.filterWrapper.init(that.admin1s);
                     that.render();
+
+                    that.countryMap.mapLegend.fillAcledEvents('countrymap');
+                    that.timeSeries.mapLegend.fillAcledEvents('timeseries');
                 });
             });
 
@@ -255,6 +273,8 @@ var CountryProfile = function (_Element) {
         value: function hide() {
             $('html').css('overflow', 'auto');
             this.countryMap.reset(true);
+            this.countryMap.mapLegend.clearLegendElements();
+            this.timeSeries.mapLegend.clearLegendElements();
             this.element.fadeOut();
         }
     }]);

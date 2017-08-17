@@ -3,6 +3,10 @@
 @import 'country-profile/filter-modal';
 
 body {
+     .ui-datepicker-calendar {
+         display: none;
+    }
+     
     .header-post-title-container {
         display: none;
     }
@@ -52,7 +56,8 @@ body {
             padding: 0;
             text-transform: uppercase;
         }
-
+         
+        
         #main-dashboard {
             display: flex;
             justify-content: space-between;

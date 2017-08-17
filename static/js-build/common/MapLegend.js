@@ -17,8 +17,7 @@ var MapLegend = function (_Element) {
         var _this = _possibleConstructorReturn(this, (MapLegend.__proto__ || Object.getPrototypeOf(MapLegend)).call(this, '<div class="legend"></div>'));
 
         _this.element.append('<div class="legend-elements"></div>');
-        // this.element.append('<header><h4></h4></header><div class="legend-elements"></div>');
-        _this.legendElementTemplate = $('<div class="legend-element"><div class="color-box"></div><label></label></div>');
+        _this.legendElementTemplate = $('<label class="legend-element checked"><input type="checkbox" checked><span class="color-box"></span><span class="name"><span/></label>');
         return _this;
     }
 
@@ -33,9 +32,13 @@ var MapLegend = function (_Element) {
             var legendElementsContainer = this.element.find('.legend-elements');
             var legendElement = this.legendElementTemplate.clone();
             legendElement.find('.color-box').css('background-color', color);
-            legendElement.find('label').text(label);
+            legendElement.find('input').attr('data-target', label);
+            legendElement.find('.name').text(label);
             legendElement.appendTo(legendElementsContainer);
         }
+    }, {
+        key: 'process',
+        value: function process() {}
     }, {
         key: 'clearLegendElements',
         value: function clearLegendElements() {
@@ -44,12 +47,33 @@ var MapLegend = function (_Element) {
     }, {
         key: 'fillAcledEvents',
         value: function fillAcledEvents() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "legend";
+
             this.clearLegendElements();
 
             var orderedAcledEvents = getSortedAcledEvents();
             for (var i = 0; i < orderedAcledEvents.length; i++) {
                 this.addLegendElement(getEventColor(orderedAcledEvents[i]), orderedAcledEvents[i]);
             }
+
+            var that = this;
+            this.element.find('input').on('click', function () {
+                that.element.trigger(name + ':filterclick');
+
+                if ($(this).prop('checked')) {
+                    $(this).closest('.legend-element').addClass('checked');
+                } else {
+                    $(this).closest('.legend-element').removeClass('checked');
+                }
+            });
+
+            this.element.find('input').on('synccheck', function () {
+                if ($(this).prop('checked')) {
+                    $(this).closest('.legend-element').addClass('checked');
+                } else {
+                    $(this).closest('.legend-element').removeClass('checked');
+                }
+            });
         }
     }]);
 

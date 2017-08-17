@@ -39,43 +39,8 @@
         }
     }
      
-    .legend {
-        padding-bottom: 10px;
-        height: 84px;
-
-        .legend-elements{
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            align-content: center;
-            justify-content: center;
-            height: 100%;
-
-            .legend-element {
-                display: flex;
-                align-items: center;
-                padding: 0 10px;
-
-                .color-box {
-                    width: 12px;
-                    height: 12px;
-                    flex-grow: 0;
-                    flex-shrink: 0;
-                    background-color: green;
-                    border-radius: 50%;
-                }
-                label {
-                    display: inline-block;
-                    margin-left: 6px;
-
-                    &:first-letter{
-                        text-transform: uppercase;
-                    }
-                }
-            }
-
-        }
-    }
+    @import '../map-legend';
+     
     @media only screen and (max-width: 1080px) {
         #world-map {
             height: calc(56vh - 108px);

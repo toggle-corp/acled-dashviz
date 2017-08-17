@@ -53,6 +53,10 @@ var DashboardMap = function (_Element) {
             this.map.on('zoomend ', function () {
                 _this2.mapScale.updateControl();
             });
+
+            this.mapLegend.element.on('legend:filterclick', function () {
+                that.element.trigger('legend:filterclick');
+            });
         }
     }, {
         key: 'processData',

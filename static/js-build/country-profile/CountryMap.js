@@ -30,6 +30,7 @@ var CountryMap = function (_Element) {
         value: function process() {
             var _this2 = this;
 
+            var that = this;
             // this.mapLegend.setTitle('Event types');
 
             L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
@@ -52,6 +53,13 @@ var CountryMap = function (_Element) {
             this.map.on('zoomend ', function () {
                 _this2.mapScale.updateControl();
             });
+
+            // this.mapLegend.element.on('countrymap:filterclick', function() {
+            //     that.element.trigger('countrymap:filterclick');
+            // });
+
+
+            //this.mapLegend.fillAcledEvents('countrymap');
         }
     }, {
         key: 'reset',
@@ -132,8 +140,6 @@ var CountryMap = function (_Element) {
                     this.circles.push(circle);
                 }
             }
-
-            this.mapLegend.fillAcledEvents();
         }
     }]);
 

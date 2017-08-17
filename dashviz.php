@@ -60,6 +60,7 @@ class DashboardVisualization {
                 /* $opts = json_decode(stripslashes(get_option('dashboard-data', '{}')), true); */
 
                 wp_enqueue_script("jquery-script", 'https://code.jquery.com/jquery-3.2.1.min.js', null, null, true);
+                wp_enqueue_script("jquery-ui-script", "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js", null, null, true);
                 wp_enqueue_script("polyfill-script", 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js', null, null, true);
                 wp_enqueue_script("d3-script", 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.8.0/d3.min.js', null, null, true);
                 wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -108,6 +109,7 @@ class DashboardVisualization {
 
                 wp_enqueue_style("selectize-style", plugins_url().$plugin_dir.'/static/css/selectize.css');
                 wp_enqueue_style("dashviz-style", plugins_url().$plugin_dir.'/static/css/main.css');
+                wp_enqueue_style("jquery-ui-style", 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
             }
         }
 

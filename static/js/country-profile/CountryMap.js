@@ -10,6 +10,7 @@ class CountryMap extends Element {
     }
 
     process() {
+        let that = this;
         // this.mapLegend.setTitle('Event types');
 
         L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
@@ -26,6 +27,14 @@ class CountryMap extends Element {
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); });
          
         this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
+         
+         
+        // this.mapLegend.element.on('countrymap:filterclick', function() {
+        //     that.element.trigger('countrymap:filterclick');
+        // });
+        
+         
+        //this.mapLegend.fillAcledEvents('countrymap');
     }
 
     reset(resetView=false) {
@@ -104,6 +113,5 @@ class CountryMap extends Element {
             }
         }
 
-        this.mapLegend.fillAcledEvents();
     }
 }

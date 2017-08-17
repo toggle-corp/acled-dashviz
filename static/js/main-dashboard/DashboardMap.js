@@ -28,6 +28,10 @@ class DashboardMap extends Element {
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); }); 
          
         this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
+
+        this.mapLegend.element.on('legend:filterclick', function() {
+            that.element.trigger('legend:filterclick');
+        });
     }
      
     processData(data) {

@@ -2,8 +2,7 @@ class MapLegend extends Element {
     constructor() {
         super('<div class="legend"></div>');
         this.element.append('<div class="legend-elements"></div>');
-        // this.element.append('<header><h4></h4></header><div class="legend-elements"></div>');
-        this.legendElementTemplate = $('<div class="legend-element"><div class="color-box"></div><label></label></div>');
+        this.legendElementTemplate = $('<label class="legend-element checked"><input type="checkbox" checked><span class="color-box"></span><span class="name"><span/></label>');
     }
      
     setTitle(title){
@@ -14,21 +13,43 @@ class MapLegend extends Element {
         let legendElementsContainer = this.element.find('.legend-elements');
         let legendElement = this.legendElementTemplate.clone();
         legendElement.find('.color-box').css('background-color', color);
-        legendElement.find('label').text(label);
+        legendElement.find('input').attr('data-target', label);
+        legendElement.find('.name').text(label);
         legendElement.appendTo(legendElementsContainer);
     }
      
+    process() {
+    }
+
     clearLegendElements() {
         this.element.find('.legend-elements').empty();
     }
      
-     
-    fillAcledEvents() {
+    fillAcledEvents(name="legend") {
         this.clearLegendElements();
          
         let orderedAcledEvents = getSortedAcledEvents();
         for (let i=0; i<orderedAcledEvents.length; i++) {
             this.addLegendElement(getEventColor(orderedAcledEvents[i]), orderedAcledEvents[i]);
         }
+         
+        let that = this;
+        this.element.find('input').on('click', function() {
+            that.element.trigger(`${name}:filterclick`);
+
+            if ($(this).prop('checked')) {
+                $(this).closest('.legend-element').addClass('checked');
+            } else {
+                $(this).closest('.legend-element').removeClass('checked');
+            }
+        });
+         
+        this.element.find('input').on('synccheck', function() {
+            if ($(this).prop('checked')) {
+                $(this).closest('.legend-element').addClass('checked');
+            } else {
+                $(this).closest('.legend-element').removeClass('checked');
+            }
+        });
     }
 }

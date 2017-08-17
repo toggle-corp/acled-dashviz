@@ -11,7 +11,7 @@ $(document).ready(function () {
   dashboard.initDomAll(root);
   dashboard.processAll();
 
-  d3.csv("https://api.acleddata.com/acled/read.csv?limit=0&fields=country|event_type|latitude|longitude", function (data) {
+  d3.csv("https://api.acleddata.com/acled/read.csv?limit=0&fields=country|event_type|latitude|longitude|interaction", function (data) {
 
     data.forEach(function (row) {
       row.event_type = getAcledEventName(row.event_type.toLowerCase());

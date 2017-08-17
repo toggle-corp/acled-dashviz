@@ -10,6 +10,10 @@ class TimeSeries extends Element {
         this.childElements.push(this.timeSeries);
         this.childElements.push(this.mapLegend);
     }
+     
+    process() {
+        //this.mapLegend.fillAcledEvents('timeseries');
+    }
 
     init() {
         $("#time-series svg").remove();
@@ -157,7 +161,6 @@ class TimeSeries extends Element {
             .attr('fill', '#000')
             .attr('class', 'axis-name');
          
-        this.mapLegend.fillAcledEvents();
          
     }
      

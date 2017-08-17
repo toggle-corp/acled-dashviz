@@ -64,6 +64,18 @@ function getEventColor(eventName) {
     return eventColors[eventName];
 }
 
+let acledActors = {
+    'State Military and Policer': 1, 
+    'Rebels': 2, 
+    'Political Militias': 3, 
+    'Communal Militias': 4, 
+    'Rioters': 5, 
+    'Protesters': 6, 
+    'Civilians': 7,
+};
+ 
+ 
+ 
 function compareCountryNames(name1, name2) {
     name1 = name1.toLowerCase().replace(/\b((the)|(a)|(an)|(of))\b/g, '').replace(/\s\s+/g, ' ');
     name2 = name2.toLowerCase().replace(/\b((the)|(a)|(an)|(of))\b/g, '').replace(/\s\s+/g, ' ');
@@ -97,3 +109,16 @@ function getMeterPerPixel(map) {
 
     return center.distanceTo(xOffset); 
 }
+ 
+function syncCheckboxes(source, target, triggerSync=false) {
+    let sourceCheckboxes = source.find('input[type="checkbox"]');
+    sourceCheckboxes.each(function() {
+        let el = target.find('input[data-target="'+$(this).data('target')+'"]');
+        el.prop('checked', $(this).prop('checked'));
+         
+        if (triggerSync) {
+            el.trigger('synccheck');
+        }
+    });
+}
+ 

@@ -28,6 +28,11 @@ var TimeSeries = function (_Element) {
     }
 
     _createClass(TimeSeries, [{
+        key: 'process',
+        value: function process() {
+            //this.mapLegend.fillAcledEvents('timeseries');
+        }
+    }, {
         key: 'init',
         value: function init() {
             $("#time-series svg").remove();
@@ -182,8 +187,6 @@ var TimeSeries = function (_Element) {
 
             // Add the Y Axis
             this.canvas.append("g").attr('class', 'y-axis').call(d3.axisLeft(this.scaleY)).append('text').attr('transform', 'rotate(-90)').text('No. of events ').attr('x', 0).attr('y', 0).attr('dy', '1em').attr('fill', '#000').attr('class', 'axis-name');
-
-            this.mapLegend.fillAcledEvents();
         }
     }, {
         key: 'load',

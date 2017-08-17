@@ -1,0 +1,47 @@
+.legend {
+    padding-bottom: 10px;
+    height: 96px;
+
+    .legend-elements{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        height: 100%;
+
+        .legend-element {
+            display: flex;
+            align-items: center;
+            padding: 1px 10px;
+            cursor: pointer;
+            user-select: none;
+            opacity: 0.2;
+
+            input {
+                display: none;
+            }
+            .color-box {
+                width: 12px;
+                height: 12px;
+                flex-grow: 0;
+                flex-shrink: 0;
+                border-radius: 50%;
+            }
+            .name {
+                display: inline-block;
+                margin-left: 6px;
+                user-select: none;
+
+                &:first-letter{
+                    text-transform: uppercase;
+                }
+            }
+
+            &.checked {
+                opacity: 1;
+            }
+        }
+
+    }
+}
