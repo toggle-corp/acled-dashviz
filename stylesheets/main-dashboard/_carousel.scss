@@ -1,8 +1,7 @@
 #carousel-container {
-    height: calc(44vh - 16px);
+    height: 480px;
     background-color: #fff;
     position: relative;
-    box-shadow: 0 2px 15px -5px rgba(0, 0, 0, 0.5);
 
     &:hover {
         button {

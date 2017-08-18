@@ -1,55 +1,27 @@
 #country-map-container {
     flex-basis: calc(50% - 8px);
     margin-bottom: 16px;
-    height: 50vh;
+    height: 480px;
 
     #country-map {
         height: calc(100% - 96px);
          
-        .map-scale {
-            >div {
-                height: 14px;
-                overflow-y: hidden;
-                display: flex;
-                align-items: center;
-                margin: 10px 0;
-                 
-                span {
-                    display: inline-block;
-                    background-color: #717171;
-                    border-top-left-radius: 50%;
-                    border-top-right-radius: 50%;
-                    border-bottom-left-radius: 50%;
-                    border-bottom-right-radius: 50%;
-                }
-
-                label {
-                    margin-right: 10px;
-                    width: 32px;
-                    text-align: right;
-                }
-
-            }
-        }
+        @import '../map-scale';
+         
+        
     }
      
     @import '../map-legend';
+    .legend {
+        height: 96px;
+    }
+     
     
     @media screen and (max-width: 1080px) {
-        #country-map {
-            height: calc(100% - 108px);
-        }
-        .legend {
-            height: 108px;
-        }
-    }
-    @media screen and (max-width: 720px) {
         height: auto;
-
-
-
+         
         #country-map {
-            height: 360px;
+            height: 380px;
         }
         .legend {
             height: auto;

@@ -16,8 +16,8 @@ body {
         box-sizing: border-box;
     }
     #page{
-        background-color: #f8f8f8;
-        padding: 0 24px;
+        background-color: #eaeaea;
+        padding: 0 16px;
     }
     #main{
         padding: 0;
@@ -46,8 +46,6 @@ body {
         }
     }
     #dashboard-container {
-        padding-bottom: 16px;
-
         * {
             box-sizing: border-box;
         }
@@ -56,19 +54,20 @@ body {
             padding: 0;
             text-transform: uppercase;
         }
-         
         
         #main-dashboard {
             display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
+            justify-content: space-between;
 
             >header {
                 flex-basis: 100%;
-                height: 56px;
+                //min-height: 56px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                flex-wrap: wrap;
+                padding: 10px 0;
                  
                 button {
                     text-transform: uppercase;
@@ -98,15 +97,17 @@ body {
             }
 
             #left-section {
-                flex-basis: calc(64% - 16px);
+                flex-basis: calc(60% - 16px);
+                margin-bottom: 16px;
+
 
                 @import 'main-dashboard/world-map';
                 @import 'main-dashboard/carousel';
             }
             #right-section{
-                flex-basis: 36%;
-                height: 100vh;
-
+                flex-basis: 40%;
+                margin-bottom: 16px;
+                 
                 @import 'main-dashboard/crisis-profile';
             }
              
@@ -125,40 +126,6 @@ body {
             }
         }
     }
-     
-//     
-//     .marker-cluster {
-//         background-clip: padding-box;
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         border-radius: 50%;
-//         background-color: rgba(0, 0, 0, 0.3);
-// 
-//         div {
-//             border-radius: 50%;
-//         }
-//         span {
-//             font-size: 0.9em;
-//             font-weight: bold;
-//         }
-//     }
-// 
-//     .leaflet-popup-content{
-//         div {
-//             display: flex;
-// 
-//             label {
-//                 display: inline-block;
-//                 margin-right: 10px;
-//                 font-size: 0.9em;
-//                 font-weight: bold;
-//                 text-transform: uppercase;
-//                 color: rgba(0, 0, 0, 0.5);
-//             }
-//         }
-// 
-//     }
 }
 
 .tooltip {
