@@ -97,12 +97,13 @@ $(document).ready(function() {
         }
             
         
-        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'end-date': newCrisisEndDate.val(), 'country': newCrisisCountryInput.val(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage }); 
+        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'end-date': newCrisisEndDateInput.val(), 'country': newCrisisCountryInput.val(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage }); 
         // crisisProfiles.sort(function(a, b) { return a.country - b.country; });
         refreshCrisisList();
 
         newCrisis.find('input').val('');
-        newCrisisRecentEventImage.prop('src', '');
+        newCrisis.find('.preview').prop('src', '');
+
         hideModal();
     });
 

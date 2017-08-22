@@ -60,7 +60,7 @@ class DashboardVisualization {
                 /* $opts = json_decode(stripslashes(get_option('dashboard-data', '{}')), true); */
 
                 wp_enqueue_script("jquery-script", 'https://code.jquery.com/jquery-3.2.1.min.js', null, null, true);
-                wp_enqueue_script("jquery-ui-script", "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js", null, null, true);
+                // wp_enqueue_script("jquery-ui-script", "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js", null, null, true);
                 wp_enqueue_script("polyfill-script", 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js', null, null, true);
                 wp_enqueue_script("d3-script", 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.8.0/d3.min.js', null, null, true);
                 wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -69,6 +69,8 @@ class DashboardVisualization {
 
                 wp_enqueue_script("leaflet-conditionalLayer-script", plugins_url().$plugin_dir.'/static/js-build/leaflet.conditionalLayer.js', null, null, true);
 
+                wp_enqueue_script("air-datepicker-script", plugins_url().$plugin_dir.'/static/js-build/datepicker.min.js', null, null, true);
+                wp_enqueue_script("air-datepicker-language-script", plugins_url().$plugin_dir.'/static/js-build/datepicker.en.js', null, null, true);
                 wp_enqueue_script("selectize-script", plugins_url().$plugin_dir.'/static/js-build/selectize.js', null, null, true);
                 wp_enqueue_script("utils-script", plugins_url().$plugin_dir.'/static/js-build/common/utils.js', null, null, true);
                 wp_enqueue_script("element-script", plugins_url().$plugin_dir.'/static/js-build/common/Element.js', null, null, true);
@@ -76,6 +78,7 @@ class DashboardVisualization {
                 wp_enqueue_script("map-scale-script", plugins_url().$plugin_dir.'/static/js-build/common/MapScale.js', null, null, true);
 
                 wp_enqueue_script("dashboard-map-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/DashboardMap.js', null, null, true);
+                wp_enqueue_script("dashboard-graphs-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/MainPageGraphs.js', null, null, true);
                 wp_enqueue_script("crisis-profile-map-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/CrisisProfileMap.js', null, null, true);
                 wp_enqueue_script("crisis-profile-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/CrisisProfile.js', null, null, true);
                 wp_enqueue_script("key-figures-script", plugins_url().$plugin_dir.'/static/js-build/main-dashboard/KeyFigures.js', null, null, true);
@@ -93,12 +96,12 @@ class DashboardVisualization {
                 wp_enqueue_script("dashviz-main-script", plugins_url().$plugin_dir.'/static/js-build/main.js', null, null, true);
                 wp_add_inline_script('dashviz-main-script', 'let pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let homeUrl="'.get_home_url().'";', 'before');
-                wp_add_inline_script('dashviz-main-script', 'let carouselImage1="'.get_option('carousel_image1', '').'";', 'before');
-                wp_add_inline_script('dashviz-main-script', 'let carouselUrl1="'.get_option('carousel_url1', '').'";', 'before');
-                wp_add_inline_script('dashviz-main-script', 'let carouselImage2="'.get_option('carousel_image2', '').'";', 'before');
-                wp_add_inline_script('dashviz-main-script', 'let carouselUrl2="'.get_option('carousel_url2', '').'";', 'before');
-                wp_add_inline_script('dashviz-main-script', 'let carouselImage3="'.get_option('carousel_image3', '').'";', 'before');
-                wp_add_inline_script('dashviz-main-script', 'let carouselUrl3="'.get_option('carousel_url3', '').'";', 'before');
+                // wp_add_inline_script('dashviz-main-script', 'let carouselImage1="'.get_option('carousel_image1', '').'";', 'before');
+                // wp_add_inline_script('dashviz-main-script', 'let carouselUrl1="'.get_option('carousel_url1', '').'";', 'before');
+                // wp_add_inline_script('dashviz-main-script', 'let carouselImage2="'.get_option('carousel_image2', '').'";', 'before');
+                // wp_add_inline_script('dashviz-main-script', 'let carouselUrl2="'.get_option('carousel_url2', '').'";', 'before');
+                // wp_add_inline_script('dashviz-main-script', 'let carouselImage3="'.get_option('carousel_image3', '').'";', 'before');
+                // wp_add_inline_script('dashviz-main-script', 'let carouselUrl3="'.get_option('carousel_url3', '').'";', 'before');
                 wp_add_inline_script('dashviz-main-script', 'let crisisProfiles=JSON.parse("'.get_option('crisis_profiles', '[]').'");', 'before');
 
                 wp_add_inline_script('dashviz-main-script', 'let recentEvent=JSON.parse("'.get_option('recent_event', '{}').'");', 'before');
@@ -109,7 +112,8 @@ class DashboardVisualization {
 
                 wp_enqueue_style("selectize-style", plugins_url().$plugin_dir.'/static/css/selectize.css');
                 wp_enqueue_style("dashviz-style", plugins_url().$plugin_dir.'/static/css/main.css');
-                wp_enqueue_style("jquery-ui-style", 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+                wp_enqueue_style("air-datepicker-style", plugins_url().$plugin_dir.'/static/css/datepicker.min.css');
+                // wp_enqueue_style("jquery-ui-style", 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
             }
         }
 

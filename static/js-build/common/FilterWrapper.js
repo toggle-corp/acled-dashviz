@@ -14,7 +14,7 @@ var FilterWrapper = function (_Element) {
     function FilterWrapper(name) {
         _classCallCheck(this, FilterWrapper);
 
-        var _this = _possibleConstructorReturn(this, (FilterWrapper.__proto__ || Object.getPrototypeOf(FilterWrapper)).call(this, '\n            <div class="filter-wrapper" hidden>\n                <div class="container">\n                    <header>\n                        <h4>Add filter</h4>\n                        <div class="action-buttons">\n                            <button class="btn-cancel">Cancel</button>\n                            <button class="btn-reset">Reset</button>\n                            <button class="btn-apply-filter">Apply</button>\n                        </div>\n                    </header>\n                    <div class="content">\n                        <section class="filter-event-type">\n                            <header><h5>Event type</h5></header>\n                            <div class="content"></div>\n                        </section>\n                        <section class="filter-interaction">\n                            <header><h5>Actor types</h5></header>\n                            <div class="content"></div>\n                        </section>\n                        <section class="filter-year">\n                            <header><h5>Year</h5></header>\n                            <div class="content">\n                                <div class="input-container">\n                                    <label>Start date</label>\n                                    <input type="text" class="start-year">\n                                </div>\n                                <div class="input-container">\n                                    <label>End date</label>\n                                    <input type="text" class="end-year">\n                                </div>\n                            </div>\n                        </section>\n                        <section class="filter-fatalities">\n                            <header><h5>Fatalities</h5></header>\n                            <div class="content">\n                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="Infinity" data-value="all" checked="true" name="' + name + '-filter-fatalities-input">All</label>\n                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="10" data-value="less than 10" name="' + name + '-filter-fatalities-input">Less than 10</label>\n                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="50" data-value="less than 50" name="' + name + '-filter-fatalities-input">Less than 50</label>\n                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="100" data-value="less than 100" name="' + name + '-filter-fatalities-input">Less than 100</label>\n                                <label class="radio-input"><input type="radio"  data-lowerlimit="0" data-upperlimit="0" data-value="none" name="' + name + '-filter-fatalities-input">None</label>\n                            </div> \n                        </section>\n                        <section class="filter-admin1">\n                            <header><h5>Admin1</h5></header> \n                            <div class="content">\n                                <div class="select-wrapper">\n                                    <select class="admin1-select">\n                                        <option value="">Select admin1</option>\n                                    </select>\n                                </div>\n                                <div class="selected-admin1s">\n                                </div>\n                            </div>\n                        </section>\n                    </div>\n                </div>\n            </div>\n        '));
+        var _this = _possibleConstructorReturn(this, (FilterWrapper.__proto__ || Object.getPrototypeOf(FilterWrapper)).call(this, '\n            <div class="filter-wrapper" hidden>\n                <div class="container">\n                    <header>\n                        <h4>Add filter</h4>\n                        <div class="action-buttons">\n                            <button class="btn-cancel">Cancel</button>\n                            <button class="btn-reset">Reset</button>\n                            <button class="btn-apply-filter">Apply</button>\n                        </div>\n                    </header>\n                    <div class="content">\n                        <section class="filter-event-type">\n                            <header><h5>Event type</h5></header>\n                            <div class="content"></div>\n                        </section>\n                        <section class="filter-interaction">\n                            <header><h5>Actor types</h5></header>\n                            <div class="content"></div>\n                        </section>\n                        <section class="filter-year">\n                            <header><h5>Date range</h5></header>\n                            <div class="content">\n                                <div class="input-container">\n                                    <label>From</label>\n                                    <input type="text" class="start-year">\n                                </div>\n                                <div class="input-container">\n                                    <label>To</label>\n                                    <input type="text" class="end-year">\n                                </div>\n                            </div>\n                        </section>\n                        <section class="filter-fatalities">\n                            <header><h5>Fatalities</h5></header>\n                            <div class="content">\n                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="Infinity" data-value="all" checked="true" name="' + name + '-filter-fatalities-input">All</label>\n                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="10" data-value="less than 10" name="' + name + '-filter-fatalities-input">Less than 10</label>\n                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="50" data-value="less than 50" name="' + name + '-filter-fatalities-input">Less than 50</label>\n                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="100" data-value="less than 100" name="' + name + '-filter-fatalities-input">Less than 100</label>\n                                <label class="radio-input"><input type="radio"  data-lowerlimit="0" data-upperlimit="0" data-value="none" name="' + name + '-filter-fatalities-input">None</label>\n                            </div> \n                        </section>\n                        <section class="filter-admin1">\n                            <header><h5>Admin1</h5></header> \n                            <div class="content">\n                                <div class="select-wrapper">\n                                    <select class="admin1-select">\n                                        <option value="">Select admin1</option>\n                                    </select>\n                                </div>\n                                <div class="selected-admin1s">\n                                </div>\n                            </div>\n                        </section>\n                    </div>\n                </div>\n            </div>\n        '));
 
         _this.name = name;
 
@@ -50,38 +50,46 @@ var FilterWrapper = function (_Element) {
 
             var yearFilter = this.element.find('.filter-year');
             yearFilter.find('input').datepicker({
+                language: "en",
+                minView: "months",
+                view: "years",
+                dateFormat: "MM yyyy",
+                multipleDatesSeparator: ' - ',
+                minDate: new Date('January 1990'),
+                maxDate: new Date()
+            });
+            /*
+            yearFilter.find('input').datepicker({
                 dateFormat: "MM yy",
                 changeMonth: true,
                 changeYear: true,
                 showButtonPanel: true,
-
-                onClose: function onClose(dateText, inst) {
-                    function isDonePressed() {
-                        return $('#ui-datepicker-div').html().indexOf('ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all ui-state-hover') > -1;
+                 
+                onClose: function(dateText, inst) {
+                    function isDonePressed(){
+                        return ($('#ui-datepicker-div').html().indexOf('ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all ui-state-hover') > -1);
                     }
-
-                    if (isDonePressed()) {
+                     if (isDonePressed()){
                         var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
                         var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
                         $(this).datepicker('setDate', new Date(year, month, 1)).trigger('change');
-
-                        $('.date-picker').focusout();
+                         $('.date-picker').focusout();
                     }
                 },
-
-                beforeShow: function beforeShow(input, inst) {
+                 
+                beforeShow : function(input, inst) {
                     inst.dpDiv.addClass('month_year_datepicker');
-                    var datestr = null;
-
-                    if ((datestr = $(this).val()).length > 0) {
-                        year = datestr.substring(datestr.length - 4, datestr.length);
+                    let datestr = null;
+                     if ((datestr = $(this).val()).length > 0) {
+                        year = datestr.substring(datestr.length-4, datestr.length);
                         month = datestr.substring(0, 2);
-                        $(this).datepicker('option', 'defaultDate', new Date(year, month - 1, 1));
-                        $(this).datepicker('setDate', new Date(year, month - 1, 1));
+                        $(this).datepicker('option', 'defaultDate', new Date(year, month-1, 1));
+                        $(this).datepicker('setDate', new Date(year, month-1, 1));
                         $(".ui-datepicker-calendar").hide();
                     }
                 }
             });
+            */
         }
     }, {
         key: 'init',
@@ -145,4 +153,11 @@ var FilterWrapper = function (_Element) {
 
     return FilterWrapper;
 }(Element);
+
+/*
+<div class="input-container">
+                                    <label>End date</label>
+                                    <input type="text" class="end-year">
+                                </div>
+                                */
 //# sourceMappingURL=FilterWrapper.js.map

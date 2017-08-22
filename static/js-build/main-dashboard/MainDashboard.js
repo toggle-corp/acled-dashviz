@@ -27,73 +27,76 @@ var MainDashboard = function (_Element) {
 
         _this.dashboardMap = new DashboardMap();
         _this.leftSection.childElements.push(_this.dashboardMap);
-        _this.carousel = new Element('\n            <div id="carousel-container">\n                <button id="carousel-left"><i class="fa fa-chevron-left"></i></button>\n                <button id="carousel-right"><i class="fa fa-chevron-right"></i></button>\n                <div class="carousel">\n                </div>\n                <div class="loader"><i class="fa fa-circle-o-notch fa-spin"></i></div>\n            </div>\n            ');
 
-        _this.leftSection.childElements.push(_this.carousel);
-        var imgContainer = _this.carousel.element.find('.carousel');
+        _this.graphs = new MainPageGraphs();
+        _this.leftSection.childElements.push(_this.graphs);
 
+        /*
+        this.carousel = new Element(
+            `
+            <div id="carousel-container">
+                <button id="carousel-left"><i class="fa fa-chevron-left"></i></button>
+                <button id="carousel-right"><i class="fa fa-chevron-right"></i></button>
+                <div class="carousel">
+                </div>
+                <div class="loader"><i class="fa fa-circle-o-notch fa-spin"></i></div>
+            </div>
+            `
+        );
+         
+        this.leftSection.childElements.push(this.carousel);
+        let imgContainer = this.carousel.element.find('.carousel');
+         
         if (carouselImage1) {
-            $('<a href="' + carouselUrl1 + '" hidden><img src="' + carouselImage1 + '"></a>').appendTo(imgContainer);
+            $('<a href="'+carouselUrl1+'" hidden><img src="'+ carouselImage1 +'"></a>').appendTo(imgContainer);
         }
         if (carouselImage2) {
-            $('<a href="' + carouselUrl2 + '" hidden><img src="' + carouselImage2 + '"></a>').appendTo(imgContainer);
+            $('<a href="'+carouselUrl2+'" hidden><img src="'+ carouselImage2 +'"></a>').appendTo(imgContainer);
         }
         if (carouselImage3) {
-            $('<a href="' + carouselUrl3 + '" hidden><img src="' + carouselImage3 + '"></a>').appendTo(imgContainer);
+            $('<a href="'+carouselUrl3+'" hidden><img src="'+ carouselImage3 +'"></a>').appendTo(imgContainer);
         }
-
-        setTimeout(function () {
-            imgContainer.find('a').eq(0).addClass('active').show();
-        }, 0);
-        var leftButton = _this.carousel.element.find('#carousel-left');
-        var rightButton = _this.carousel.element.find('#carousel-right');
-
-        _this.carousel.element.find('.loader').hide();
-
-        var skipSlide = false;
-
-        rightButton.on('click', function (e) {
+        
+        setTimeout(() => { imgContainer.find('a').eq(0).addClass('active').show(); }, 0);
+        let leftButton = this.carousel.element.find('#carousel-left');
+        let rightButton = this.carousel.element.find('#carousel-right');
+         this.carousel.element.find('.loader').hide();
+         let skipSlide = false;
+         rightButton.on('click', function(e) {
             e.stopPropagation();
-
-            var parent = $(this).closest('#carousel-container');
-
-            parent.find('a.active').fadeOut(function () {
+             let parent = $(this).closest('#carousel-container');
+             parent.find('a.active').fadeOut(function(){
                 $(this).removeClass('active');
-                if ($(this).is(parent.find('a').last())) {
+                if( $(this).is(parent.find('a').last()) ){
                     parent.find('a').first().fadeIn().addClass('active');
                 } else {
                     $(this).next().fadeIn().addClass('active');
                 }
             });
-
-            skipSlide = true;
+             skipSlide = true;
         });
-
-        leftButton.on('click', function (e) {
+         leftButton.on('click', function(e) {
             e.stopPropagation();
-
-            var parent = $(this).closest('#carousel-container');
-
-            parent.find('a.active').fadeOut(function () {
+             let parent = $(this).closest('#carousel-container');
+             parent.find('a.active').fadeOut(function(){
                 $(this).removeClass('active');
-                if ($(this).is(parent.find('a').first())) {
+                if( $(this).is(parent.find('a').first()) ){
                     parent.find('a').last().fadeIn().addClass('active');
                 } else {
                     $(this).prev().fadeIn().addClass('active');
                 }
             });
-
-            skipSlide = true;
+             skipSlide = true;
         });
-
-        // set carousel to automatically change in 5sec
-        setInterval(function () {
-            if (skipSlide) {
+         // set carousel to automatically change in 5sec
+        setInterval(function() {
+            if(skipSlide) {
                 skipSlide = false;
             } else {
                 rightButton.click();
             }
         }, 5000);
+        */
 
         _this.crisisProfile = new CrisisProfile();
         _this.rightSection.childElements.push(_this.crisisProfile);
@@ -109,6 +112,7 @@ var MainDashboard = function (_Element) {
             var that = this;
 
             this.filterWrapper.init();
+            this.graphs.init();
 
             this.header.element.find('#apply-filter-main-btn').on('click', function () {
                 that.filterWrapper.show();
@@ -205,13 +209,14 @@ var MainDashboard = function (_Element) {
     }, {
         key: 'render',
         value: function render() {
-            this.filteredData = d3.nest().key(function (d) {
+            var mapData = d3.nest().key(function (d) {
                 return d.latitude + ' ' + d.longitude;
             }).key(function (d) {
                 return d.event_type;
             }).object(this.filteredData);
 
-            this.dashboardMap.refreshMap(this.filteredData);
+            this.dashboardMap.refreshMap(mapData);
+            this.graphs.render(this.filteredData);
         }
     }, {
         key: 'loadMap',

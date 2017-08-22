@@ -500,10 +500,11 @@
         display: flex;
         justify-content: space-between; }
         .filter-wrapper .container section.filter-year .content .input-container {
-          display: flex; }
+          flex-basis: 48%; }
           .filter-wrapper .container section.filter-year .content .input-container label {
             margin-right: 8px; }
           .filter-wrapper .container section.filter-year .content .input-container input {
+            width: 100%;
             margin: 0; }
       .filter-wrapper .container section.filter-admin1 .content .selected-admin1s {
         display: flex;
@@ -530,8 +531,8 @@
             .filter-wrapper .container section.filter-admin1 .content .selected-admin1s .selected-admin1 button:hover {
               background-color: rgba(0, 0, 0, 0.05); }
 
-body .ui-datepicker-calendar {
-  display: none; }
+body #datepickers-container {
+  z-index: 11111; }
 body .header-post-title-container {
   display: none; }
 body #page, body .inner-wrap {
@@ -688,62 +689,24 @@ body #dashboard-container #main-dashboard {
                 text-transform: uppercase; }
             body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element.checked {
               opacity: 1; }
-    body #dashboard-container #main-dashboard #left-section #carousel-container {
+    body #dashboard-container #main-dashboard #left-section #main-page-graphs-container {
       height: 480px;
-      background-color: #fff;
-      position: relative; }
-      body #dashboard-container #main-dashboard #left-section #carousel-container:hover button {
-        opacity: 0.3; }
-      body #dashboard-container #main-dashboard #left-section #carousel-container button {
-        position: absolute;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        padding: 0;
-        opacity: 0.3;
-        top: calc(50% - 24px);
-        background-color: rgba(0, 0, 0, 0.6);
-        color: #fff;
-        transition: 0.2s all ease-in-out;
-        outline: none;
-        z-index: 11; }
-        body #dashboard-container #main-dashboard #left-section #carousel-container button#carousel-left {
-          left: 10px; }
-        body #dashboard-container #main-dashboard #left-section #carousel-container button#carousel-right {
-          right: 10px; }
-        body #dashboard-container #main-dashboard #left-section #carousel-container button:hover {
-          opacity: 1; }
-      body #dashboard-container #main-dashboard #left-section #carousel-container .loader {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #fff;
-        z-index: 100;
+      position: relative;
+      background-color: #fff; }
+      body #dashboard-container #main-dashboard #left-section #main-page-graphs-container > header {
+        height: 56px;
+        padding: 0 24px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        font-size: 2em; }
-      body #dashboard-container #main-dashboard #left-section #carousel-container .carousel {
-        width: 100%;
-        height: 100%;
-        padding: 16px 24px;
-        z-index: 1; }
-        body #dashboard-container #main-dashboard #left-section #carousel-container .carousel a {
+        justify-content: space-between; }
+      body #dashboard-container #main-dashboard #left-section #main-page-graphs-container h4 {
+        font-size: 1em; }
+      body #dashboard-container #main-dashboard #left-section #main-page-graphs-container #graph {
+        background-color: #f5f5f5;
+        height: calc(100% - 56px - 96px); }
+        body #dashboard-container #main-dashboard #left-section #main-page-graphs-container #graph svg {
           width: 100%;
           height: 100%; }
-        body #dashboard-container #main-dashboard #left-section #carousel-container .carousel img {
-          width: 100%;
-          height: 100%;
-          padding: 0;
-          margin: 0;
-          object-fit: scale-down;
-          object-position: center center; }
-      @media screen and (max-width: 720px) {
-        body #dashboard-container #main-dashboard #left-section #carousel-container {
-          height: auto;
-          min-height: 196px; } }
   body #dashboard-container #main-dashboard #right-section {
     flex-basis: 40%;
     margin-bottom: 16px; }

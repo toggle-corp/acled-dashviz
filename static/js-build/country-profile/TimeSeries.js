@@ -91,13 +91,6 @@ var TimeSeries = function (_Element) {
             var currentYear = 0;
             var currentData = null;
 
-            var riotData = this.filteredData.filter(function (x) {
-                return x.event_type.toLowerCase().includes('riots');
-            });
-            var otherData = this.filteredData.filter(function (x) {
-                return !x.event_type.toLowerCase().includes('riots');
-            });
-
             var acledEventData = {};
 
             var _loop = function _loop(e) {

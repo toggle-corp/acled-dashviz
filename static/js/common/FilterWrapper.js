@@ -21,14 +21,14 @@ class FilterWrapper extends Element {
                             <div class="content"></div>
                         </section>
                         <section class="filter-year">
-                            <header><h5>Year</h5></header>
+                            <header><h5>Date range</h5></header>
                             <div class="content">
                                 <div class="input-container">
-                                    <label>Start date</label>
+                                    <label>From</label>
                                     <input type="text" class="start-year">
                                 </div>
                                 <div class="input-container">
-                                    <label>End date</label>
+                                    <label>To</label>
                                     <input type="text" class="end-year">
                                 </div>
                             </div>
@@ -90,6 +90,16 @@ class FilterWrapper extends Element {
 
         let yearFilter = this.element.find('.filter-year');
         yearFilter.find('input').datepicker({
+            language: "en",
+            minView: "months",
+            view: "years",
+            dateFormat: "MM yyyy",
+            multipleDatesSeparator: ' - ',
+            minDate: new Date('January 1990'),
+            maxDate: new Date(),
+        });
+        /*
+        yearFilter.find('input').datepicker({
             dateFormat: "MM yy",
             changeMonth: true,
             changeYear: true,
@@ -122,6 +132,7 @@ class FilterWrapper extends Element {
                 }
             }
         });
+        */
     }
 
     init (admin1s) {
@@ -181,3 +192,10 @@ class FilterWrapper extends Element {
     }
         
 }
+ 
+/*
+<div class="input-container">
+                                    <label>End date</label>
+                                    <input type="text" class="end-year">
+                                </div>
+                                */

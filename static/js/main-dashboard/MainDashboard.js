@@ -13,6 +13,11 @@ class MainDashboard extends Element {
 
         this.dashboardMap = new DashboardMap();
         this.leftSection.childElements.push(this.dashboardMap);
+
+        this.graphs = new MainPageGraphs();
+        this.leftSection.childElements.push(this.graphs);
+         
+        /*
         this.carousel = new Element(
             `
             <div id="carousel-container">
@@ -88,6 +93,7 @@ class MainDashboard extends Element {
                 rightButton.click();
             }
         }, 5000);
+    */
 
         this.crisisProfile = new CrisisProfile();
         this.rightSection.childElements.push(this.crisisProfile);
@@ -100,6 +106,7 @@ class MainDashboard extends Element {
         let that = this;
          
         this.filterWrapper.init();
+        this.graphs.init();
          
         this.header.element.find('#apply-filter-main-btn').on('click', function() {
             that.filterWrapper.show();
@@ -181,12 +188,13 @@ class MainDashboard extends Element {
     }    
      
     render() {
-        this.filteredData = d3.nest()
+        let mapData = d3.nest()
             .key((d) => d.latitude + ' ' + d.longitude)
             .key((d) => d.event_type )
             .object(this.filteredData);
          
-        this.dashboardMap.refreshMap(this.filteredData);
+        this.dashboardMap.refreshMap(mapData);
+        this.graphs.render(this.filteredData);
     }
 
     loadMap(data) {

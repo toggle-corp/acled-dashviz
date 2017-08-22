@@ -70,10 +70,6 @@ class TimeSeries extends Element {
         let currentYear = 0;
         let currentData = null;
 
-
-        let riotData = this.filteredData.filter(x => x.event_type.toLowerCase().includes('riots'));
-        let otherData = this.filteredData.filter(x => !x.event_type.toLowerCase().includes('riots'));
-
         let acledEventData = {};
 
         for (let e in acledEvents) {

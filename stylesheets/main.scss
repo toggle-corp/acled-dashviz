@@ -3,10 +3,10 @@
 @import 'country-profile/filter-modal';
 
 body {
-     .ui-datepicker-calendar {
-         display: none;
+    #datepickers-container {
+        z-index: 11111;
     }
-     
+    
     .header-post-title-container {
         display: none;
     }
@@ -102,7 +102,7 @@ body {
 
 
                 @import 'main-dashboard/world-map';
-                @import 'main-dashboard/carousel';
+                @import 'main-dashboard/graphs';
             }
             #right-section{
                 flex-basis: 40%;
