@@ -8,7 +8,7 @@ $(document).ready(function(){
     dashboard = new Dashboard();
     dashboard.initDomAll(root);
     dashboard.processAll();
-     
+
     d3.csv("https://api.acleddata.com/acled/read.csv?limit=0&fields=country|event_type|latitude|longitude|interaction|event_date|fatalities", function(data) {
         data.forEach((row) => {
             row.event_type = getAcledEventName(row.event_type.toLowerCase());
@@ -20,8 +20,7 @@ $(document).ready(function(){
         });
          
         acledData = data;
-        dashboard.loadMainMap(data);    
-        dashboard.load();
+        dashboard.loadData(data);    
     });
 
 
@@ -29,7 +28,6 @@ $(document).ready(function(){
         $('#country-profile')[0].scrollTop=$(window).scrollTop();
     });
 });
- 
  
 var prevSetup = Selectize.prototype.setup;
 Selectize.prototype.setup = function () {

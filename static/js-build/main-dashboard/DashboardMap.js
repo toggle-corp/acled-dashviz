@@ -53,10 +53,6 @@ var DashboardMap = function (_Element) {
             this.map.on('zoomend ', function () {
                 _this2.mapScale.updateControl();
             });
-
-            this.mapLegend.element.on('legend:filterclick', function () {
-                that.element.trigger('legend:filterclick');
-            });
         }
     }, {
         key: 'processData',
@@ -72,7 +68,7 @@ var DashboardMap = function (_Element) {
         value: function init() {
             var that = this;
 
-            this.mapLegend.fillAcledEvents();
+            this.mapLegend.fillAcledEvents('worldmap');
 
             var geoJsonLayer = null;
             var countries = Object.keys(acledCountries);
@@ -132,7 +128,7 @@ var DashboardMap = function (_Element) {
                         stroke: false,
                         fillOpacity: 0.6
                         //interactive: false,
-                    }).bindPopup(String('Event type: ' + event + '<br>No. of Events: ' + cr.length)));
+                    }).bindPopup(String(cr.length + ' <strong>' + event.capitalize() + '<strong>')));
                 }
             }
 

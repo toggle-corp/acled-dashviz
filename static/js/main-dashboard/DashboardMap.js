@@ -29,9 +29,6 @@ class DashboardMap extends Element {
          
         this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
 
-        this.mapLegend.element.on('legend:filterclick', function() {
-            that.element.trigger('legend:filterclick');
-        });
     }
      
     processData(data) {
@@ -44,7 +41,7 @@ class DashboardMap extends Element {
     init() {
         let that = this;
 
-        this.mapLegend.fillAcledEvents();
+        this.mapLegend.fillAcledEvents('worldmap');
          
         let geoJsonLayer = null;
         let countries = Object.keys(acledCountries);
@@ -72,7 +69,6 @@ class DashboardMap extends Element {
          
     }
      
-     
     refreshMap(data) {
         let that = this;
         let maxEventCount = 0;
@@ -98,7 +94,7 @@ class DashboardMap extends Element {
                     fillOpacity: 0.6,
                     //interactive: false,
                 })
-                    .bindPopup(String(`Event type: ${event}<br>No. of Events: ${cr.length}`))
+                    .bindPopup(String(`${cr.length} <strong>${event.capitalize()}<strong>`))
                 );
             }
         }

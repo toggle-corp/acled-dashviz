@@ -38,7 +38,7 @@ class TimeSeries extends Element {
             .x(function(d) { return that.scaleX(d.year); })
             .y(function(d) { return that.scaleY(d.count); });
 
-         this.tip = d3.select("body").append("div")
+        this.tip = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("display", 'none');
     }

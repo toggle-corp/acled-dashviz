@@ -1,3 +1,7 @@
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 let acledData = [];
 //let dashboard = null;
 
@@ -65,7 +69,7 @@ function getEventColor(eventName) {
 }
 
 let acledActors = {
-    'State Military and Policer': 1, 
+    'State Military and Police': 1, 
     'Rebels': 2, 
     'Political Militias': 3, 
     'Communal Militias': 4, 

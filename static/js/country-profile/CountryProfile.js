@@ -134,7 +134,7 @@ class CountryProfile extends Element {
         }
 
         this.filteredData = this.filteredData.filter(x => {
-            return isDateYearInRange((new Date(x.year)), startYear, endYear);
+            return isDateYearInRange((new Date(x.event_date)), startYear, endYear);
         });
     }    
 

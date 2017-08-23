@@ -16,7 +16,7 @@ var MainPageGraphs = function (_Element) {
 
         var _this = _possibleConstructorReturn(this, (MainPageGraphs.__proto__ || Object.getPrototypeOf(MainPageGraphs)).call(this, '<div id="main-page-graphs-container"></div>'));
 
-        _this.header = new Element('<header><h4>Events over year</h4></header>');
+        _this.header = new Element('\n            <header>\n                <div class="radio-group-container">\n                <label class="radio-group active"><input type="radio" name="graph-type-radio" value="event" checked>Events</label>\n                    <label class="radio-group"><input type="radio" name="graph-type-radio" value="fatalities">Fatalities</label>\n                </div>\n            </header>\n        ');
         _this.graph = new Element('<div id="graph"></div>');
 
         _this.mapLegend = new MapLegend();
@@ -28,17 +28,31 @@ var MainPageGraphs = function (_Element) {
     }
 
     _createClass(MainPageGraphs, [{
+        key: 'process',
+        value: function process() {
+            var that = this;
+            this.originalData = [];
+            this.graphType = this.header.element.find('input:checked').val();
+
+            this.header.element.find('input').on('click', function () {
+                $(this).closest('.radio-group-container').find('label.active').removeClass('active');
+                $(this).closest('label').addClass('active');
+                that.graphType = $(this).val();
+                that.render(that.originalData);
+            });
+        }
+    }, {
         key: 'init',
         value: function init() {
-            $("#time-series svg").remove();
+            $("#graph svg").remove();
 
             this.parseTime = d3.timeParse("%Y");
-            this.svg = d3.select("#time-series").append('svg');
+            this.svg = d3.select("#graph").append('svg');
 
-            this.width = $('#time-series svg').width();
-            this.height = $('#time-series svg').height();
+            this.width = $('#graph svg').width();
+            this.height = $('#graph svg').height();
 
-            this.margin = { top: 8, right: 16, bottom: 64, left: 56 };
+            this.margin = { top: 16, right: 16, bottom: 64, left: 64 };
 
             this.scaleX = d3.scaleTime().range([0, this.width - this.margin.left - this.margin.right]);
             this.scaleY = d3.scaleLinear().range([this.height - this.margin.top - this.margin.bottom, 0]);
@@ -48,12 +62,14 @@ var MainPageGraphs = function (_Element) {
             var that = this;
 
             this.lineFunction = d3.line().curve(d3.curveMonotoneX).x(function (d) {
-                return that.scaleX(d.year);
+                return that.scaleX(that.parseTime(d.key));
             }).y(function (d) {
-                return that.scaleY(d.count);
+                return that.scaleY(d.value);
             });
 
             this.tip = d3.select("body").append("div").attr("class", "tooltip").style("display", 'none');
+
+            this.mapLegend.fillAcledEvents('graphs');
         }
     }, {
         key: 'render',
@@ -61,29 +77,101 @@ var MainPageGraphs = function (_Element) {
             var _this2 = this;
 
             var that = this;
+            this.originalData = data;
 
-            this.data = d3.nest().key(function (d) {
-                return d.event_type;
-            }).key(function (d) {
-                return d.event_date.split("-")[0];
-            }).rollup(function (v) {
-                return v.length;
-            }).object(data);
+            if (this.graphType == 'event') {
+                this.data = d3.nest().key(function (d) {
+                    return d.event_type;
+                }).key(function (d) {
+                    return d.event_date.split("-")[0];
+                }).sortKeys(d3.ascending).rollup(function (v) {
+                    return v.length;
+                }).entries(data);
+            } else {
+                this.data = d3.nest().key(function (d) {
+                    return d.event_type;
+                }).key(function (d) {
+                    return d.event_date.split("-")[0];
+                }).sortKeys(d3.ascending).rollup(function (v) {
+                    return d3.sum(v, function (e) {
+                        return +e.fatalities;
+                    });
+                }).entries(data);
+            }
 
-            //console.log(this.data);
+            this.scaleX.domain([that.parseTime(d3.min(this.data, function (e) {
+                return d3.min(e.values, function (d) {
+                    return d.key;
+                });
+            })), that.parseTime(d3.max(this.data, function (e) {
+                return d3.max(e.values, function (d) {
+                    return d.key;
+                });
+            }))]);
+            this.scaleY.domain([0, d3.max(this.data, function (e) {
+                return d3.max(e.values, function (d) {
+                    return d.value;
+                });
+            })]);
+
+            this.canvas.selectAll('*').remove();
+
             var eventType = this.canvas.selectAll('.event').data(this.data).enter().append('g').attr('class', 'event');
 
-            eventType.append('path').attr('fill', 'none').attr('stroke', function (e) {
-                return getEventColor(e);
+            eventType.append('path').attr('class', function (e) {
+                return 'event-graph-path';
+            }).attr('fill', 'none').attr('stroke', function (e) {
+                return getEventColor(e.key);
             }).attr('stroke-width', 2).attr('d', function (e) {
-                return _this2.lineFunction(e.data);
+                return _this2.lineFunction(e.values);
             }).attr('stroke-dasharray', function () {
                 return this.getTotalLength();
             }).attr('stroke-dashoffset', function () {
                 return this.getTotalLength();
-            }).transition().delay(function (e, i) {
+            })
+            /*
+            .on('mouseenter', function(d){ 
+                d3.selectAll('.event-graph-path').attr('opacity', '0.2');
+                d3.select(this).attr('opacity', '1');
+            })
+            .on('mouseleave', function(d){ 
+                d3.selectAll('.event-graph-path').attr('opacity', '1');
+            })
+            */
+            .transition().delay(function (e, i) {
                 return i * 200 + 100;
             }).duration(500).attr('stroke-dashoffset', 0);
+
+            eventType.selectAll('circle').data(function (e, i) {
+                return e.values.map(function (d) {
+                    return { color: getEventColor(e.key), year: d.key, count: d.value, index: i };
+                });
+            }).enter().append('circle').attr('fill', function (d) {
+                return d.color;
+            }).attr('r', 0).attr('cx', function (d) {
+                return that.scaleX(that.parseTime(d.year));
+            }).attr('cy', function (d) {
+                return that.scaleY(d.count);
+            }).on('mouseenter', function (d) {
+                _this2.tip.style('display', 'block');
+                if (that.graphType == 'event') {
+                    _this2.tip.html('<div><label>Year</label><span>' + d.year + '</span></div><div><label>No. of events</label><span>' + d.count + '</span></div>').style("left", d3.event.pageX + 10 + "px").style("top", d3.event.pageY - 10 + "px");
+                } else {
+                    _this2.tip.html('<div><label>Year</label><span>' + d.year + '</span></div><div><label>No. of fatalities</label><span>' + d.count + '</span></div>').style("left", d3.event.pageX + 10 + "px").style("top", d3.event.pageY - 10 + "px");
+                }
+            }).on('mouseleave', function (d) {
+                return _this2.tip.style('display', 'none');
+            }).transition().duration(200).delay(function (d) {
+                return d.index * 200 + 500 * _this2.scaleX(d.year) / _this2.width;
+            }).attr('r', 4);
+
+            // Add the X Axis
+            this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX).ticks(d3.timeYear.every(1))).append('text').text('Years').attr('x', this.canvas.node().getBoundingClientRect().width / 2).attr('y', function () {
+                return (that.margin.bottom + this.getBBox().height) / 2;
+            }).attr('dy', '1em').attr('fill', '#000').attr('class', 'axis-name');
+
+            // Add the Y Axis
+            this.canvas.append("g").attr('class', 'y-axis').call(d3.axisLeft(this.scaleY)).append('text').attr('transform', 'rotate(-90)').text(that.graphType == 'event' ? 'No. of events ' : 'No. of fatalities').attr('x', 0).attr('y', 0).attr('dy', '1em').attr('fill', '#000').attr('class', 'axis-name');
         }
     }]);
 

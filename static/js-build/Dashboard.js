@@ -23,20 +23,21 @@ var Dashboard = function (_Element) {
         return _this;
     }
 
+    /*
+    loadMainMap(data) {
+        this.childElements[0].loadMap(data);
+    }
+    */
+
     _createClass(Dashboard, [{
-        key: 'loadMainMap',
-        value: function loadMainMap(data) {
-            this.childElements[0].loadMap(data);
-        }
-    }, {
         key: 'show',
         value: function show(country) {
             this.countryProfile.show(country);
         }
     }, {
-        key: 'load',
-        value: function load() {
-            this.mainDashboard.load();
+        key: 'loadData',
+        value: function loadData(data) {
+            this.mainDashboard.loadData(data);
         }
     }]);
 

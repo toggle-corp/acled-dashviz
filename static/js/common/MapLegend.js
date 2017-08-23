@@ -26,6 +26,7 @@ class MapLegend extends Element {
     }
      
     fillAcledEvents(name="legend") {
+        this.name = name;
         this.clearLegendElements();
          
         let orderedAcledEvents = getSortedAcledEvents();
@@ -35,7 +36,7 @@ class MapLegend extends Element {
          
         let that = this;
         this.element.find('input').on('click', function() {
-            that.element.trigger(`${name}:filterclick`);
+            that.element.trigger(`${that.name}:filterclick`);
 
             if ($(this).prop('checked')) {
                 $(this).closest('.legend-element').addClass('checked');

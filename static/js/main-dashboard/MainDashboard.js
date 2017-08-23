@@ -114,6 +114,7 @@ class MainDashboard extends Element {
          
         this.filterWrapper.element.find('.btn-apply-filter').on('click', function(){
             syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.dashboardMap.mapLegend.element, true);
+            syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.graphs.mapLegend.element, true);
             that.applyFilters();
             that.filterWrapper.hide();
         });
@@ -126,17 +127,27 @@ class MainDashboard extends Element {
             that.filterWrapper.init();
         });
 
-        this.dashboardMap.element.on('legend:filterclick', function() {
+        this.dashboardMap.element.on('worldmap:filterclick', function() {
             syncCheckboxes(that.dashboardMap.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+            syncCheckboxes(that.dashboardMap.mapLegend.element, that.graphs.mapLegend.element, true);
+            that.applyFilters();
+        });
+
+        this.graphs.element.on('graphs:filterclick', function() {
+            syncCheckboxes(that.graphs.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+            syncCheckboxes(that.graphs.mapLegend.element, that.dashboardMap.mapLegend.element, true);
             that.applyFilters();
         });
 
     }
 
     applyFilters() {
-        this.filteredData = $.extend(true, [], this.data);
+        // this.filteredData = $.extend(true, [], this.data);
+        this.filteredData = [];
         this.filterByEvents();
         this.filterByInteraction();
+        this.filterByYear();
+        // this.filterByFatalities();
         this.render();
     }
      
@@ -146,7 +157,9 @@ class MainDashboard extends Element {
             return $(this).data('target');
         }).get();
 
-        this.filteredData = this.filteredData.filter(x => requiredEvents.find(y => compareEvents(x.event_type, y)));
+        for (let i=0; i<requiredEvents.length; i++) {
+            this.filteredData = this.filteredData.concat(this.eventGroupedData[requiredEvents[i]]);
+        }
     }
 
     filterByInteraction() {
@@ -178,12 +191,11 @@ class MainDashboard extends Element {
         endYear = endYear? (new Date(endYear)) : (new Date());
 
         function isDateYearInRange(d, d1, d2) {
-            //return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
             return d >= d1 && d <= d2;
         }
 
         this.filteredData = this.filteredData.filter(x => {
-            return isDateYearInRange((new Date(x.year)), startYear, endYear);
+            return isDateYearInRange((new Date(x.event_date)), startYear, endYear);
         });
     }    
      
@@ -193,17 +205,27 @@ class MainDashboard extends Element {
             .key((d) => d.event_type )
             .object(this.filteredData);
          
-        this.dashboardMap.refreshMap(mapData);
-        this.graphs.render(this.filteredData);
+        setTimeout(() => this.dashboardMap.refreshMap(mapData), 0);
+        setTimeout(() => this.graphs.render(this.filteredData), 0);
+    }
+
+    loadData(data) {
+        this.data = data;
+
+        this.eventGroupedData = d3.nest()
+            .key((d) => d.event_type)
+            .object(data);
+
+        this.loadMap(data);
+        this.loadCrisisProfile();
     }
 
     loadMap(data) {
-        this.data = data;
         this.dashboardMap.init();
         this.applyFilters();
     }
 
-    load() {
+    loadCrisisProfile() {
         this.crisisProfile.load();
     }
      

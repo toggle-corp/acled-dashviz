@@ -49,6 +49,7 @@ var MapLegend = function (_Element) {
         value: function fillAcledEvents() {
             var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "legend";
 
+            this.name = name;
             this.clearLegendElements();
 
             var orderedAcledEvents = getSortedAcledEvents();
@@ -58,7 +59,7 @@ var MapLegend = function (_Element) {
 
             var that = this;
             this.element.find('input').on('click', function () {
-                that.element.trigger(name + ':filterclick');
+                that.element.trigger(that.name + ':filterclick');
 
                 if ($(this).prop('checked')) {
                     $(this).closest('.legend-element').addClass('checked');

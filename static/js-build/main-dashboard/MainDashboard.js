@@ -120,6 +120,7 @@ var MainDashboard = function (_Element) {
 
             this.filterWrapper.element.find('.btn-apply-filter').on('click', function () {
                 syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.dashboardMap.mapLegend.element, true);
+                syncCheckboxes(that.filterWrapper.element.find('.filter-event-type .content'), that.graphs.mapLegend.element, true);
                 that.applyFilters();
                 that.filterWrapper.hide();
             });
@@ -132,17 +133,27 @@ var MainDashboard = function (_Element) {
                 that.filterWrapper.init();
             });
 
-            this.dashboardMap.element.on('legend:filterclick', function () {
+            this.dashboardMap.element.on('worldmap:filterclick', function () {
                 syncCheckboxes(that.dashboardMap.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+                syncCheckboxes(that.dashboardMap.mapLegend.element, that.graphs.mapLegend.element, true);
+                that.applyFilters();
+            });
+
+            this.graphs.element.on('graphs:filterclick', function () {
+                syncCheckboxes(that.graphs.mapLegend.element, that.filterWrapper.element.find('.filter-event-type .content'));
+                syncCheckboxes(that.graphs.mapLegend.element, that.dashboardMap.mapLegend.element, true);
                 that.applyFilters();
             });
         }
     }, {
         key: 'applyFilters',
         value: function applyFilters() {
-            this.filteredData = $.extend(true, [], this.data);
+            // this.filteredData = $.extend(true, [], this.data);
+            this.filteredData = [];
             this.filterByEvents();
             this.filterByInteraction();
+            this.filterByYear();
+            // this.filterByFatalities();
             this.render();
         }
     }, {
@@ -153,11 +164,9 @@ var MainDashboard = function (_Element) {
                 return $(this).data('target');
             }).get();
 
-            this.filteredData = this.filteredData.filter(function (x) {
-                return requiredEvents.find(function (y) {
-                    return compareEvents(x.event_type, y);
-                });
-            });
+            for (var i = 0; i < requiredEvents.length; i++) {
+                this.filteredData = this.filteredData.concat(this.eventGroupedData[requiredEvents[i]]);
+            }
         }
     }, {
         key: 'filterByInteraction',
@@ -198,36 +207,52 @@ var MainDashboard = function (_Element) {
             endYear = endYear ? new Date(endYear) : new Date();
 
             function isDateYearInRange(d, d1, d2) {
-                //return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
                 return d >= d1 && d <= d2;
             }
 
             this.filteredData = this.filteredData.filter(function (x) {
-                return isDateYearInRange(new Date(x.year), startYear, endYear);
+                return isDateYearInRange(new Date(x.event_date), startYear, endYear);
             });
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var mapData = d3.nest().key(function (d) {
                 return d.latitude + ' ' + d.longitude;
             }).key(function (d) {
                 return d.event_type;
             }).object(this.filteredData);
 
-            this.dashboardMap.refreshMap(mapData);
-            this.graphs.render(this.filteredData);
+            setTimeout(function () {
+                return _this2.dashboardMap.refreshMap(mapData);
+            }, 0);
+            setTimeout(function () {
+                return _this2.graphs.render(_this2.filteredData);
+            }, 0);
+        }
+    }, {
+        key: 'loadData',
+        value: function loadData(data) {
+            this.data = data;
+
+            this.eventGroupedData = d3.nest().key(function (d) {
+                return d.event_type;
+            }).object(data);
+
+            this.loadMap(data);
+            this.loadCrisisProfile();
         }
     }, {
         key: 'loadMap',
         value: function loadMap(data) {
-            this.data = data;
             this.dashboardMap.init();
             this.applyFilters();
         }
     }, {
-        key: 'load',
-        value: function load() {
+        key: 'loadCrisisProfile',
+        value: function loadCrisisProfile() {
             this.crisisProfile.load();
         }
     }, {
