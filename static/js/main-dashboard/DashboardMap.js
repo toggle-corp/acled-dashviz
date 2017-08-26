@@ -19,7 +19,6 @@ class DashboardMap extends Element {
             attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
 
-
         this.mapScale = new MapScale(this.map);
 
         // Toggle scroll-zoom by clicking on and outside map
@@ -28,7 +27,6 @@ class DashboardMap extends Element {
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); }); 
          
         this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
-
     }
      
     processData(data) {
@@ -66,7 +64,6 @@ class DashboardMap extends Element {
             });
             geoJsonLayer.addTo(that.map);
         });
-         
     }
      
     refreshMap(data) {
@@ -91,11 +88,9 @@ class DashboardMap extends Element {
                 this.conditionalLayer.addLayer(L.circle([cd.latitude, cd.longitude], radius, {
                     fillColor: color,
                     stroke: false,
-                    fillOpacity: 0.6,
+                    fillOpacity: 0.7,
                     //interactive: false,
-                })
-                    .bindPopup(String(`${cr.length} <strong>${event.capitalize()}<strong>`))
-                );
+                }).bindPopup(String(`${cr.length} <strong>${event.capitalize()}<strong>`)));
             }
         }
 

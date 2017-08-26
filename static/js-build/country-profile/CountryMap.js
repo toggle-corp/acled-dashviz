@@ -53,13 +53,6 @@ var CountryMap = function (_Element) {
             this.map.on('zoomend ', function () {
                 _this2.mapScale.updateControl();
             });
-
-            // this.mapLegend.element.on('countrymap:filterclick', function() {
-            //     that.element.trigger('countrymap:filterclick');
-            // });
-
-
-            //this.mapLegend.fillAcledEvents('countrymap');
         }
     }, {
         key: 'reset',
@@ -109,6 +102,7 @@ var CountryMap = function (_Element) {
                     }
                 });
                 that.geoJsonLayer.addTo(that.map);
+                that.geoJsonLayer.bringToBack();
                 that.map.invalidateSize();
                 that.map.fitBounds(currentLayer.getBounds());
             });
@@ -133,10 +127,10 @@ var CountryMap = function (_Element) {
                     var circle = L.circle([cd.latitude, cd.longitude], radius, {
                         fillColor: color,
                         stroke: false,
-                        fillOpacity: 0.6
+                        fillOpacity: 0.7
                         //interactive: false,
-                    }).bindPopup(String('No. of Events: ' + cr.length));
-                    circle.addTo(this.map);
+                    });
+                    circle.addTo(this.map).bindPopup(String(cr.length + ' <strong>' + event.capitalize() + '</strong>'));
                     this.circles.push(circle);
                 }
             }

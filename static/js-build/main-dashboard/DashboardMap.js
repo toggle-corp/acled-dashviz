@@ -126,7 +126,7 @@ var DashboardMap = function (_Element) {
                     this.conditionalLayer.addLayer(L.circle([cd.latitude, cd.longitude], radius, {
                         fillColor: color,
                         stroke: false,
-                        fillOpacity: 0.6
+                        fillOpacity: 0.7
                         //interactive: false,
                     }).bindPopup(String(cr.length + ' <strong>' + event.capitalize() + '<strong>')));
                 }

@@ -27,14 +27,6 @@ class CountryMap extends Element {
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); });
          
         this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
-         
-         
-        // this.mapLegend.element.on('countrymap:filterclick', function() {
-        //     that.element.trigger('countrymap:filterclick');
-        // });
-        
-         
-        //this.mapLegend.fillAcledEvents('countrymap');
     }
 
     reset(resetView=false) {
@@ -54,7 +46,6 @@ class CountryMap extends Element {
                 this.map.removeLayer(this.circles[i]);
             }
         }
-
     }
 
     load(country, countryData) {
@@ -81,10 +72,10 @@ class CountryMap extends Element {
                 },
             });
             that.geoJsonLayer.addTo(that.map);
+            that.geoJsonLayer.bringToBack();
             that.map.invalidateSize();
             that.map.fitBounds(currentLayer.getBounds());
         });
-         
          
         let locationGroupedData = d3.nest()
             .key((d) => d.latitude + ' ' + d.longitude)
@@ -105,10 +96,10 @@ class CountryMap extends Element {
                 let circle = L.circle([cd.latitude, cd.longitude], radius, {
                     fillColor: color,
                     stroke: false,
-                    fillOpacity: 0.6,
+                    fillOpacity: 0.7,
                     //interactive: false,
-                }).bindPopup(String(`No. of Events: ${cr.length}`));
-                circle.addTo(this.map);
+                });
+                circle.addTo(this.map).bindPopup(String(`${cr.length} <strong>${event.capitalize()}</strong>`));
                 this.circles.push(circle);
             }
         }
