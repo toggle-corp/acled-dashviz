@@ -40,7 +40,7 @@ class FilterWrapper extends Element {
                                 <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="10" data-value="less than 10" name="${name}-filter-fatalities-input">Less than 10</label>
                                 <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="50" data-value="less than 50" name="${name}-filter-fatalities-input">Less than 50</label>
                                 <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="100" data-value="less than 100" name="${name}-filter-fatalities-input">Less than 100</label>
-                                <label class="radio-input"><input type="radio"  data-lowerlimit="0" data-upperlimit="0" data-value="none" name="${name}-filter-fatalities-input">None</label>
+                                <label class="radio-input"><input type="radio"  data-lowerlimit="0" data-upperlimit="1" data-value="none" name="${name}-filter-fatalities-input">None</label>
                             </div> 
                         </section>
                         <section class="filter-admin1">

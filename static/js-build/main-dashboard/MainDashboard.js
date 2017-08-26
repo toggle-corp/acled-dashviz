@@ -153,7 +153,7 @@ var MainDashboard = function (_Element) {
             this.filterByEvents();
             this.filterByInteraction();
             this.filterByYear();
-            // this.filterByFatalities();
+            this.filterByFatalities();
             this.render();
         }
     }, {

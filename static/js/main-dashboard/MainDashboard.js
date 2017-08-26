@@ -147,7 +147,7 @@ class MainDashboard extends Element {
         this.filterByEvents();
         this.filterByInteraction();
         this.filterByYear();
-        // this.filterByFatalities();
+        this.filterByFatalities();
         this.render();
     }
      
@@ -177,7 +177,7 @@ class MainDashboard extends Element {
          
         let lowerLimit = input.data('lowerlimit');
         let upperLimit = input.data('upperlimit');
-        
+
         this.filteredData = this.filteredData.filter(x => x.fatalities >= lowerLimit && x.fatalities < upperLimit);
     }
 

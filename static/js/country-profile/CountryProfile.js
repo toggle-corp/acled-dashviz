@@ -115,7 +115,7 @@ class CountryProfile extends Element {
          
         let lowerLimit = input.data('lowerlimit');
         let upperLimit = input.data('upperlimit');
-         
+
         this.filteredData = this.filteredData.filter(x => x.fatalities >= lowerLimit && x.fatalities < upperLimit);
     }
 
@@ -129,7 +129,6 @@ class CountryProfile extends Element {
         endYear = endYear? (new Date(endYear)) : (new Date());
 
         function isDateYearInRange(d, d1, d2) {
-            //return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
             return d >= d1 && d <= d2;
         }
 
@@ -139,10 +138,33 @@ class CountryProfile extends Element {
     }    
 
     loadData(country) {
+        let deferred = $.Deferred();
         let that = this;
         this.data = [];
         this.filteredData = [];
+
+
          
+        d3.csv(`https://api.acleddata.com/acled/read.csv?country=${country}&limit=0&fields=actor1|year|event_date|event_type|interaction|fatalities|latitude|longitude|admin1|country`, function(data) {
+            data.forEach((row) => {
+                row.event_type = getAcledEventName(row.event_type.toLowerCase());
+                row.country = row.country.toLowerCase();
+            });
+            that.data = data;
+            that.data = that.data.filter(x => compareCountryNames(x.country, country));
+            that.admin1s = that.data.map(x => x.admin1 || '').sort().filter((item, pos, array) => !pos || item != array[pos - 1]); 
+
+            // remove the empty ones 
+            that.admin1s = that.admin1s.filter(x => x);
+
+            that.filteredData = that.data.slice();
+
+            deferred.resolve();
+        });
+
+
+        return deferred.promise();
+        /*
         return $.ajax({
             method: 'GET',
             url: 'https://api.acleddata.com/acled/read.csv',
@@ -175,7 +197,6 @@ class CountryProfile extends Element {
                 }
 
                 that.data = that.data.filter(x => compareCountryNames(x.country, country));
-
                 that.admin1s = that.data.map(x => x.admin1 || '').sort().filter((item, pos, array) => !pos || item != array[pos - 1]); 
                  
                 // remove the empty ones 
@@ -184,6 +205,7 @@ class CountryProfile extends Element {
                 that.filteredData = that.data.slice();
             }, 
         }); 
+        */
     }
 
     render() {
@@ -197,8 +219,6 @@ class CountryProfile extends Element {
         $('html').css('overflow', 'hidden');
          
         let that = this;
-         
-         
          
         this.element.fadeIn('fast', function() {
             that.header.element.find('#country-name').text(country);
