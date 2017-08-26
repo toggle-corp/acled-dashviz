@@ -61,14 +61,19 @@ var Timeline = function (_Element) {
                     }
 
                     if (timelineData.staticImage) {
+                        that.element.show();
                         that.staticImage.element.prop('src', timelineData.img);
 
                         that.timelineElements.element[0].style.display = 'none';
                         that.emptyElement.element[0].style.display = 'none';
                         that.staticImage.element.show();
+                        that.header.element[0].style.display = 'none';
                     } else if (timelineData.timelineElements) {
+                        that.element.show();
+                        that.staticImage.element.prop('src', timelineData.img);
                         that.timelineElements.element.empty();
                         var timeElements = timelineData.timelineElements;
+                        that.header.element[0].style.display = 'flex';
 
                         for (var i = 0; i < timeElements.length; i++) {
                             var cd = timeElements[i];
@@ -76,15 +81,19 @@ var Timeline = function (_Element) {
                         }
 
                         if (timeElements.length === 0) {
+                            that.element.hide();
                             that.timelineElements.element[0].style.display = 'none';
                             that.staticImage.element.hide();
                             that.emptyElement.element[0].style.display = 'flex';
                         } else {
+                            that.element.show();
                             that.staticImage.element.hide();
                             that.emptyElement.element[0].style.display = 'none';
                             that.timelineElements.element[0].style.display = 'flex';
                         }
                     } else {
+                        that.element.hide();
+                        that.header.element[0].style.display = 'flex';
                         that.timelineElements.element[0].style.display = 'none';
                         that.staticImage.element.hide();
                         that.emptyElement.element[0].style.display = 'flex';

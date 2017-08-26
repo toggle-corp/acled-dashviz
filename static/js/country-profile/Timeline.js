@@ -44,15 +44,20 @@ class Timeline extends Element {
 
 
                 if (timelineData.staticImage) {
+                    that.element.show();
                     that.staticImage.element.prop('src', timelineData.img);
                      
                     that.timelineElements.element[0].style.display = 'none';
                     that.emptyElement.element[0].style.display = 'none';
                     that.staticImage.element.show();
+                    that.header.element[0].style.display = 'none';
 
                 } else if(timelineData.timelineElements) {
+                    that.element.show();
+                    that.staticImage.element.prop('src', timelineData.img);
                     that.timelineElements.element.empty();
                     let timeElements = timelineData.timelineElements;
+                    that.header.element[0].style.display = 'flex';
 
 
                     for(let i=0; i<timeElements.length; i++) {
@@ -61,15 +66,19 @@ class Timeline extends Element {
                     }
                      
                     if (timeElements.length === 0) {
+                        that.element.hide();
                         that.timelineElements.element[0].style.display = 'none';
                         that.staticImage.element.hide();
                         that.emptyElement.element[0].style.display = 'flex';
                     } else {
+                        that.element.show();
                         that.staticImage.element.hide();
                         that.emptyElement.element[0].style.display = 'none';
                         that.timelineElements.element[0].style.display = 'flex';
                     }
                 } else {
+                    that.element.hide();
+                    that.header.element[0].style.display = 'flex';
                     that.timelineElements.element[0].style.display = 'none';
                     that.staticImage.element.hide();
                     that.emptyElement.element[0].style.display = 'flex';

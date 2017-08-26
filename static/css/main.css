@@ -382,7 +382,7 @@
             display: none; }
       #country-profile .scroll-wrapper #timeline-container #timeline-static-image {
         width: 100%;
-        height: calc(100% - 64px);
+        height: 100%;
         object-fit: contain;
         object-position: center center;
         display: none; }
