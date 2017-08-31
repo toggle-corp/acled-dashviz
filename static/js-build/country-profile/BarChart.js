@@ -45,142 +45,6 @@ var BarChart = function (_Element) {
             this.canvas = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
         }
     }, {
-        key: 'loadData',
-        value: function loadData(country) {
-            var that = this;
-
-            return $.ajax({
-                method: 'GET',
-                url: 'https://api.acleddata.com/acled/read',
-                data: { 'limit': 0, 'country': country, 'fields': 'actor1|year|event_type|interaction|fatalities' },
-                dataType: 'json',
-                crossDomain: true,
-                success: function success(response) {
-                    that.data = response.data;
-                    that.data.sort(function (a, b) {
-                        return b.actor1.localeCompare(a.actor1);
-                    });
-                    that.filteredData = that.data.slice();
-                }
-            });
-        }
-    }, {
-        key: 'applyFilters',
-        value: function applyFilters() {
-            this.filteredData = this.data.slice();
-            this.filterByEvents();
-            this.filterByInteraction();
-            this.filterByFatalities();
-            this.filterByYear();
-            this.filterWrapper.element.hide();
-            this.render();
-        }
-    }, {
-        key: 'filterByEvents',
-        value: function filterByEvents() {
-            var container = this.filterWrapper.element.find('.filter-event-type .content');
-            var requiredEvents = container.find('input[type="checkbox"]:checked').map(function () {
-                return $(this).data('target');
-            }).get();
-
-            this.filteredData = this.filteredData.filter(function (x) {
-                return requiredEvents.find(function (y) {
-                    return compareEvents(x.event_type, y);
-                });
-            });
-        }
-    }, {
-        key: 'filterByInteraction',
-        value: function filterByInteraction() {
-            var container = this.filterWrapper.element.find('.filter-interaction .content');
-            var lowerLimit = 0;
-            var upperLimit = 0;
-
-            switch (container.find('input[type="radio"]:checked').data('value')) {
-                case 'less than 100':
-                    lowerLimit = 0;
-                    upperLimit = 100;
-                    break;
-                case '100 - 1000':
-                    lowerLimit = 100;
-                    upperLimit = 1000;
-                    break;
-                case '1000 - 10000':
-                    lowerLimit = 1000;
-                    upperLimit = 10000;
-                    break;
-                case 'more than 10000':
-                    lowerLimit = 1000;
-                    upperLimit = Infinity;
-                    break;
-                case 'all':
-                    lowerLimit = 0;
-                    upperLimit = Infinity;
-                    break;
-            }
-
-            this.filteredData = this.filteredData.filter(function (x) {
-                return x.interaction >= lowerLimit && x.interaction < upperLimit;
-            });
-        }
-    }, {
-        key: 'filterByFatalities',
-        value: function filterByFatalities() {
-            var container = this.filterWrapper.element.find('.filter-fatalities .content');
-            var lowerLimit = 0;
-            var upperLimit = 0;
-
-            switch (container.find('input[type="radio"]:checked').data('value')) {
-                case 'less than 100':
-                    lowerLimit = 0;
-                    upperLimit = 100;
-                    break;
-                case '100 - 1000':
-                    lowerLimit = 100;
-                    upperLimit = 1000;
-                    break;
-                case '1000 - 10000':
-                    lowerLimit = 1000;
-                    upperLimit = 10000;
-                    break;
-                case '10000 - 100000':
-                    lowerLimit = 10000;
-                    upperLimit = 100000;
-                    break;
-                case 'more than 10000':
-                    lowerLimit = 1000;
-                    upperLimit = Infinity;
-                    break;
-                case 'all':
-                    lowerLimit = 0;
-                    upperLimit = Infinity;
-                    break;
-            }
-
-            this.filteredData = this.filteredData.filter(function (x) {
-                return x.fatalities >= lowerLimit && x.fatalities < upperLimit;
-            });
-        }
-    }, {
-        key: 'filterByYear',
-        value: function filterByYear() {
-            var container = this.filterWrapper.element.find('.filter-year');
-
-            var startYear = container.find('.start-year').val();
-            startYear = startYear ? new Date(startYear) : new Date(0);
-
-            var endYear = container.find('.end-year').val();
-            endYear = endYear ? new Date(endYear) : new Date();
-
-            function isDateYearInRange(d, d1, d2) {
-                return d.getFullYear() >= d1.getFullYear() && d.getFullYear() <= d2.getFullYear();
-            }
-
-            this.filteredData = this.filteredData.filter(function (x) {
-                return isDateYearInRange(new Date(x.year), startYear, endYear);
-            });
-        }
-    }, {
         key: 'render',
         value: function render(data) {
             if (data) {
@@ -189,36 +53,78 @@ var BarChart = function (_Element) {
 
             var that = this;
 
-            var actors = [];
-            var currentActor = "";
-            var currentData = null;
+            var actors = {};
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
 
-            this.filteredData.sort(function (a, b) {
-                return (a.actor1 || '').localeCompare(b.actor1 || '');
-            });
+            try {
+                for (var _iterator = this.filteredData[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var datum = _step.value;
 
-            for (var i = 0; i < this.filteredData.length; i++) {
-                var cfd = this.filteredData[i].actor1;
+                    var set = new Set([datum.actor1, datum.actor2]);
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
 
-                if (currentActor != cfd) {
-                    currentActor = cfd;
-                    currentData = { 'name': cfd, 'count': 0 };
-                    actors.push(currentData);
+                    try {
+                        for (var _iterator2 = set[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var obj = _step2.value;
+
+                            if (!obj) {
+                                continue;
+                            }
+                            if (!actors[obj]) {
+                                actors[obj] = 0;
+                            }
+                            actors[obj] += 1;
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
                 }
-                ++currentData.count;
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
             }
 
-            actors.sort(function (a, b) {
+            var actorList = [];
+            for (var actor in actors) {
+                actorList.push({ name: actor, count: actors[actor] });
+            }
+
+            actorList.sort(function (a, b) {
                 return b.count - a.count;
             });
-            actors.splice(Math.min(10, actors.length));
+            actorList.splice(Math.min(10, actorList.length));
 
-            this.scaleX.domain([0, d3.max(actors, function (d) {
+            this.scaleX.domain([0, d3.max(actorList, function (d) {
                 return d.count;
             })]);
 
             this.canvas.selectAll("*").remove();
-            var bar = this.canvas.selectAll("g").data(actors).enter().append("g").attr("transform", function (d, i) {
+            var bar = this.canvas.selectAll("g").data(actorList).enter().append("g").attr("transform", function (d, i) {
                 return "translate(0," + i * (that.barHeight + 8) + ")";
             });
 

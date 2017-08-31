@@ -60,23 +60,33 @@ class KeyFigures extends Element {
             url: 'https://api.acleddata.com/acled/read',
             data: {
                 'limit': '0',
-                'INTER1': '7:OR:INTER2=7',
                 'country': country,
-                'fields': 'fatalities|actor1|actor2|country|event_date'
+                'fields': 'inter1|inter2|fatalities|actor1|actor2|country|event_date'
             },
             success: function(response) {
+                function isArmedActiveAgentCode(interCode) {
+                    const armedActiveAgents = [1, 2, 3, 4, 8];
+                    return (armedActiveAgents.indexOf(interCode) > -1);
+                }
+
                 if(response && response.data) {
-                    response.data = response.data.filter(x => compareCountryNames(x.country, country) && startDate <= (new Date(x.event_date)) && endDate >= (new Date(x.event_date)));
-                     
+                    const events = response.data.filter(x => compareCountryNames(x.country, country) && startDate <= (new Date(x.event_date)) && endDate >= (new Date(x.event_date)));
+                    const civilianEvents = events.filter(x => x.inter1 == 7 || x.inter2 == 7);
+                    const armedActiveAgentEvents = events.filter(x => {
+                        return isArmedActiveAgentCode(+x.inter1) || isArmedActiveAgentCode(+x.inter2);
+                    });
+
                     let totalCivilianDeaths = 0;
                     let armedActiveAgents = {};
 
-                    for (let i=0; i<response.data.length; i++) {
-                        let cd = response.data[i];
-                         
-                        totalCivilianDeaths += +cd.fatalities;
+                    for (let i=0; i<civilianEvents.length; i++) {
+                        totalCivilianDeaths += +civilianEvents[i].fatalities;
+                    }
 
-                        if(cd.actor1) {
+                    for (let i=0; i<armedActiveAgentEvents.length; i++) {
+                        let cd = armedActiveAgentEvents[i];
+                         
+                        if(isArmedActiveAgentCode(+cd.inter1) && cd.actor1) {
                             if(!armedActiveAgents[cd.actor1]) {
                                 armedActiveAgents[cd.actor1] = 0;
                             }
@@ -84,7 +94,7 @@ class KeyFigures extends Element {
                             ++armedActiveAgents[cd.actor1];
                         }
 
-                        if(cd.actor2) {
+                        if(isArmedActiveAgentCode(+cd.inter2) && cd.actor2) {
                             if(!armedActiveAgents[cd.actor2]) {
                                 armedActiveAgents[cd.actor2] = 0;
                             }

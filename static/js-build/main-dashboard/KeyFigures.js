@@ -78,25 +78,37 @@ var KeyFigures = function (_Element) {
                 url: 'https://api.acleddata.com/acled/read',
                 data: {
                     'limit': '0',
-                    'INTER1': '7:OR:INTER2=7',
                     'country': country,
-                    'fields': 'fatalities|actor1|actor2|country|event_date'
+                    'fields': 'inter1|inter2|fatalities|actor1|actor2|country|event_date'
                 },
                 success: function success(response) {
+                    function isArmedActiveAgentCode(interCode) {
+                        var armedActiveAgents = [1, 2, 3, 4, 8];
+                        return armedActiveAgents.indexOf(interCode) > -1;
+                    }
+
                     if (response && response.data) {
-                        response.data = response.data.filter(function (x) {
+                        var events = response.data.filter(function (x) {
                             return compareCountryNames(x.country, country) && startDate <= new Date(x.event_date) && endDate >= new Date(x.event_date);
+                        });
+                        var civilianEvents = events.filter(function (x) {
+                            return x.inter1 == 7 || x.inter2 == 7;
+                        });
+                        var armedActiveAgentEvents = events.filter(function (x) {
+                            return isArmedActiveAgentCode(+x.inter1) || isArmedActiveAgentCode(+x.inter2);
                         });
 
                         var totalCivilianDeaths = 0;
                         var armedActiveAgents = {};
 
-                        for (var i = 0; i < response.data.length; i++) {
-                            var cd = response.data[i];
+                        for (var i = 0; i < civilianEvents.length; i++) {
+                            totalCivilianDeaths += +civilianEvents[i].fatalities;
+                        }
 
-                            totalCivilianDeaths += +cd.fatalities;
+                        for (var _i = 0; _i < armedActiveAgentEvents.length; _i++) {
+                            var cd = armedActiveAgentEvents[_i];
 
-                            if (cd.actor1) {
+                            if (isArmedActiveAgentCode(+cd.inter1) && cd.actor1) {
                                 if (!armedActiveAgents[cd.actor1]) {
                                     armedActiveAgents[cd.actor1] = 0;
                                 }
@@ -104,7 +116,7 @@ var KeyFigures = function (_Element) {
                                 ++armedActiveAgents[cd.actor1];
                             }
 
-                            if (cd.actor2) {
+                            if (isArmedActiveAgentCode(+cd.inter2) && cd.actor2) {
                                 if (!armedActiveAgents[cd.actor2]) {
                                     armedActiveAgents[cd.actor2] = 0;
                                 }

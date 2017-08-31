@@ -145,7 +145,7 @@ class CountryProfile extends Element {
 
 
          
-        d3.csv(`https://api.acleddata.com/acled/read.csv?country=${country}&limit=0&fields=actor1|year|event_date|event_type|interaction|fatalities|latitude|longitude|admin1|country`, function(data) {
+        d3.csv(`https://api.acleddata.com/acled/read.csv?country=${country}&limit=0&fields=actor1|actor2|year|event_date|event_type|interaction|fatalities|latitude|longitude|admin1|country`, function(data) {
             data.forEach((row) => {
                 row.event_type = getAcledEventName(row.event_type.toLowerCase());
                 row.country = row.country.toLowerCase();
