@@ -32,9 +32,11 @@ class Timeline extends Element {
 
     load(country) {
         let that = this;
+
+
         $.ajax({
             type: 'GET',
-            url: homeUrl+'/?pagename=timeline_country__'+country,
+            url: homeUrl+'/?pagename=timeline_country__'+getCountryKey(country),
             success: function(response) {
                 let timelineData = JSON.parse(response);
 

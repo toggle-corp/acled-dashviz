@@ -50,9 +50,10 @@ var Timeline = function (_Element) {
         key: 'load',
         value: function load(country) {
             var that = this;
+
             $.ajax({
                 type: 'GET',
-                url: homeUrl + '/?pagename=timeline_country__' + country,
+                url: homeUrl + '/?pagename=timeline_country__' + getCountryKey(country),
                 success: function success(response) {
                     var timelineData = JSON.parse(response);
 

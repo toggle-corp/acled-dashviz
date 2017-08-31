@@ -141,3 +141,6 @@ function syncCheckboxes(source, target, triggerSync=false) {
     });
 }
  
+function getCountryKey(country) {
+    return country.toLowerCase().split(' ').join('_');
+}

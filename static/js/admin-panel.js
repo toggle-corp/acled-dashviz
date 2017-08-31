@@ -4,6 +4,17 @@ let reportData = {};
 let acledCountryList = ["algeria", "angola", "benin", "burkina faso", "burundi", "cameroon", "central african republic", "chad", "democratic republic of congo", "egypt", "equatorial guinea", "eritrea", "ethiopia", "gabon", "gambia", "ghana", "guinea", "guinea-bissau", "ivory coast", "kenya", "lesotho", "liberia", "libya", "madagascar", "malawi", "mali", "mauritania", "morocco", "mozambique", "namibia", "niger", "nigeria", "republic of congo", "rwanda", "senegal", "sierra leone", "somalia", "south africa", "south sudan", "sudan", "swaziland", "tanzania", "togo", "tunisia", "uganda", "zambia", "zimbabwe"]; 
 
 $(document).ready(function() {
+    /*
+    $.ajax({
+        url: 'https://api.acleddata.com/acled/read?limit=0&fields=country',
+        method: 'GET',
+        success: function(response) {
+            console.log(response.data);
+        },
+    });
+    */
+
+
     $('#carousel input').on('change', function() {
         if (this.files && this.files[0]) {
 
@@ -80,13 +91,12 @@ $(document).ready(function() {
         } 
     }); 
 
-
     $('#add-crisis-btn').on('click', function() {
         let newCrisis = $('#add-crisis-modal .content');
         let newCrisisTitleInput = newCrisis.find('.crisis-title');
         let newCrisisDateInput = newCrisis.find('.crisis-date');
         let newCrisisEndDateInput = newCrisis.find('.crisis-end-date');
-        let newCrisisCountryInput = newCrisis.find('.crisis-country');
+        let newCrisisCountryInput = newCrisis.find('.crisis-country option:selected');
         let newCrisisDescriptionInput = newCrisis.find('.crisis-description');
          
         let url = newCrisis.find('.crisis-recent-event-url').val();
@@ -97,7 +107,7 @@ $(document).ready(function() {
         }
             
         
-        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'end-date': newCrisisEndDateInput.val(), 'country': newCrisisCountryInput.val(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage }); 
+        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'end-date': newCrisisEndDateInput.val(), 'country': newCrisisCountryInput.text(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage }); 
         // crisisProfiles.sort(function(a, b) { return a.country - b.country; });
         refreshCrisisList();
 
@@ -114,7 +124,7 @@ $(document).ready(function() {
         let cp = crisisProfiles[index];
 
         cp.title = ecm.find('.crisis-title').val(); 
-        cp.country = ecm.find('.crisis-country').val();
+        cp.country = ecm.find('.crisis-country option:selected').text();
         cp.date = ecm.find('.crisis-date').val();
         cp['end-date'] = ecm.find('.crisis-end-date').val();
         cp.description = ecm.find('.crisis-description').val();
@@ -157,7 +167,6 @@ $(document).ready(function() {
     });
      
     function populateReportCountries() {
-
         for (let i=0; i<acledCountryList.length; i++) {
             let newCountryName = acledCountryList[i];
              
@@ -165,6 +174,24 @@ $(document).ready(function() {
                 //
             } else {
                 $('<option value="'+getCountryKey(newCountryName)+'">'+newCountryName.capitalize()+'</option>').appendTo($('#report-country-select'));
+            }
+        }
+    }
+
+    function populateAddAndEditCrisisCountries() {
+        for (let i=0; i<acledCountryList.length; i++) {
+            let newCountryName = acledCountryList[i];
+             
+            if($('#edit-crisis-country-select option[value="'+getCountryKey(newCountryName)+'"]').length > 0) {
+                //
+            } else {
+                $('<option value="'+getCountryKey(newCountryName)+'">'+newCountryName.capitalize()+'</option>').appendTo($('#edit-crisis-country-select'));
+            }
+
+            if($('#add-crisis-country-select option[value="'+getCountryKey(newCountryName)+'"]').length > 0) {
+                //
+            } else {
+                $('<option value="'+getCountryKey(newCountryName)+'">'+newCountryName.capitalize()+'</option>').appendTo($('#add-crisis-country-select'));
             }
         }
     }
@@ -248,6 +275,7 @@ $(document).ready(function() {
     }); 
 
     function loadData() {
+        /*
         if(carouselImage1) { 
             $('#carousel #image-1-container .preview')[0].src = carouselImage1;
             $('#image-1-input').val(carouselImage1);
@@ -269,6 +297,7 @@ $(document).ready(function() {
         if (carouselUrl3) {
             $('#carousel-url-3-input').val(carouselUrl3);
         }
+        */
 
         refreshCrisisList();
 
@@ -328,8 +357,10 @@ $(document).ready(function() {
     });
 
     $('.tab').eq(0).trigger('click');
+
     populateTimelineCountries();
     populateReportCountries();
+    populateAddAndEditCrisisCountries();
 
 });
 
@@ -540,7 +571,7 @@ function grabTimelineData() {
         timelineData.timelineElements = [];
 
         $('.timeline-element').each(function() {
-            el = $(this);
+            const el = $(this);
             timelineData.timelineElements.push({
                 'num': el.find('.number').find('span').text(),
                 'title': el.find('h5').text(),
@@ -576,7 +607,7 @@ function loadReportData() {
 
 function grabReportData() {
     reportData = {};
-    cr = $('#country-reports');
+    const cr = $('#country-reports');
     
     let title = cr.find('#report-title-input').val();
     let summary = cr.find('#report-summary-input').val();
@@ -635,7 +666,7 @@ function editCrisis(caller) {
     let ecm = $('#edit-crisis-modal');
 
     ecm.find('.crisis-title').val(cp.title);
-    ecm.find('.crisis-country').val(cp.country);
+    ecm.find('.crisis-country').val(getCountryKey(cp.country));
     ecm.find('.crisis-date').val(cp.date);
     ecm.find('.crisis-end-date').val(cp['end-date']);
     ecm.find('.crisis-description').val(cp.description);

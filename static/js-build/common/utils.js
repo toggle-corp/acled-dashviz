@@ -141,4 +141,8 @@ function syncCheckboxes(source, target) {
         }
     });
 }
+
+function getCountryKey(country) {
+    return country.toLowerCase().split(' ').join('_');
+}
 //# sourceMappingURL=utils.js.map

@@ -42,7 +42,7 @@ var CountryReport = function (_Element) {
 
             $.ajax({
                 type: 'GET',
-                url: homeUrl + '/?pagename=report_country__' + country,
+                url: homeUrl + '/?pagename=report_country__' + getCountryKey(country),
                 success: function success(response) {
                     var report = JSON.parse(response);
 

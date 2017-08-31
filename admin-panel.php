@@ -3,12 +3,15 @@
     <h1>ACLED dashboard</h1>
 
     <div class="tabs">
+        <!--
         <a class="tab" data-target="#carousel">Carousel</a>
+        -->
         <a class="tab" data-target="#crisis-profile-report">Crisis Profile</a>
         <a class="tab" data-target="#country-reports">Country Report</a>
         <a class="tab" data-target="#timeline">Timeline</a>
     </div>
 
+    <!--
     <section id="carousel">
         <h2>Carousel</h2>
         <div class="input-group" id="image-1-container">
@@ -48,6 +51,7 @@
              </div>
         </div>
     </section>
+    -->
 
     <section id="crisis-profile-report">
         <header>
@@ -99,7 +103,9 @@
     <section id="country-reports">
         <header>
             <h2>Country reports</h2>
+<!--
             <button onclick="showModal('#add-report-country-modal');">Add country</button>
+-->
         </header>
         <div class="content">
             <div class="input-group">
@@ -146,7 +152,9 @@
     <section id="timeline">
         <header>
             <h2>Timeline</h2>
+<!--
             <button onclick="showModal('#add-timeline-country-modal');">Add country</button>
+-->
         </header>
         <div class="content">
             <div class="input-group">
@@ -245,7 +253,11 @@
             </div>
             <div class="input-group">
                 <label>Country</label>
+<!--
                 <input type="text" name="crisis-country" class="crisis-country">
+-->
+                <select name="crisis-country" class="crisis-country" id="add-crisis-country-select">
+                </select>
             </div>
             <div class="input-group">
                 <label>Start Date</label>
@@ -285,7 +297,11 @@
             </div>
             <div class="input-group">
                 <label>Country</label>
+<!--
                 <input type="text" name="crisis-country" class="crisis-country">
+-->
+                <select name="crisis-country" class="crisis-country" id="edit-crisis-country-select">
+                </select>
             </div>
             <div class="input-group">
                 <label>Start Date</label>
@@ -345,6 +361,4 @@
             </div>
         </div>
     </div>
-
-
 </div>

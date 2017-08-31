@@ -37,7 +37,7 @@ class CountryReport extends Element {
 
         $.ajax({
             type: 'GET',
-            url: homeUrl+'/?pagename=report_country__'+country,
+            url: homeUrl+'/?pagename=report_country__'+getCountryKey(country),
             success: function(response) {
                 let report = JSON.parse(response);
 

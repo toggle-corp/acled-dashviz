@@ -1,5 +1,7 @@
 #timeline-container {
     flex-basis: 100%;
+    max-width: 80%;
+    margin: auto;
     height: 540px;
 
     >header {
@@ -147,5 +149,9 @@
         font-size: 3em;
         color: rgba(0, 0, 0, 0.1);
 
+    }
+
+    @media screen and (max-width: 1080px) {
+        max-width: 100%;
     }
 }
