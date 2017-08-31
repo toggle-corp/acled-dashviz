@@ -86,32 +86,47 @@ function compareCountryNames(name1, name2) {
     return name1 == name2;
 }
 
-var mapScaleFactor = 8000;
+var mapScaleFactor = 1.8;
+
+/*
+function getMapCircleRadius(noOfEvents) {
+    let radius = Math.sqrt(noOfEvents)*mapScaleFactor;
+    return radius;
+}
+*/
 
 function getMapCircleRadius(noOfEvents) {
-    var radius = Math.sqrt(noOfEvents) * mapScaleFactor;
-    return radius;
+    return Math.log(noOfEvents) * mapScaleFactor;
 }
 
 function getEventCountFromMapCircleRadius(radius) {
     var noOfEvents = radius / mapScaleFactor;
-    return noOfEvents * noOfEvents;
+    return Math.floor(Math.exp(noOfEvents));
+}
+
+/*
+
+function getEventCountFromMapCircleRadius(radius) {
+    let noOfEvents = radius/mapScaleFactor;
+    return noOfEvents*noOfEvents;
 }
 
 function getEventCountFromPixelRadius(radi, mpp) {
-    return Math.round(getEventCountFromMapCircleRadius(radi * mpp));
+    return Math.round(getEventCountFromMapCircleRadius(radi*mpp));
 }
-
+ 
 function getMeterPerPixel(map) {
-    var center = map.latLngToContainerPoint(map.getCenter());
-    var xOffset = [center.x + 1, center.y];
-
+    let center = map.latLngToContainerPoint(map.getCenter()); 
+    let xOffset = [center.x + 1, center.y]; 
+    
     // convert containerpoints to latlng's
     center = map.containerPointToLatLng(center);
     xOffset = map.containerPointToLatLng(xOffset);
 
-    return center.distanceTo(xOffset);
+    return center.distanceTo(xOffset); 
 }
+
+*/
 
 function syncCheckboxes(source, target) {
     var triggerSync = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;

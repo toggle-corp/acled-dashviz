@@ -26,6 +26,10 @@ class BarChart extends Element {
         this.barHeight = ((this.height - this.margin.top - this.margin.bottom) / 10) - 8;
 
         this.canvas = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
+
+        this.tip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("display", 'none');
     }
 
     render(data) {
@@ -64,7 +68,21 @@ class BarChart extends Element {
             .data(actorList)
             .enter()
             .append("g")
-            .attr("transform", function(d, i) { return "translate(0," + (i * (that.barHeight + 8)) + ")"; });
+            .attr("transform", function(d, i) { return "translate(0," + (i * (that.barHeight + 8)) + ")"; })
+            .on('mouseenter', d => {
+                this.tip.html(`
+                    <div>
+                        <p>${d.name}</p>
+                        <div>${d.count} occurence</div>
+                    </div>
+                `);
+                this.tip.style('left', (d3.event.pageX + 10)+'px');
+                this.tip.style('top', (d3.event.pageY + 10)+'px');
+                this.tip.style('display', 'block');
+            })
+            .on('mouseleave', d => {
+                this.tip.style('display', 'none');
+            });
 
         bar.append("rect")
             .attr("height", this.barHeight / 1.5)
@@ -72,7 +90,7 @@ class BarChart extends Element {
             .transition()
             .duration(500)
             .delay((d, i) => i*50)
-            .attr("width", function(d) { return that.scaleX(d.count); });
+            .attr("width", function(d) { return that.scaleX(d.count); })
 
         bar.append("text")
             .attr("x", 8)

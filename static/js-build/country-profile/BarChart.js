@@ -43,10 +43,14 @@ var BarChart = function (_Element) {
             this.barHeight = (this.height - this.margin.top - this.margin.bottom) / 10 - 8;
 
             this.canvas = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
+
+            this.tip = d3.select("body").append("div").attr("class", "tooltip").style("display", 'none');
         }
     }, {
         key: 'render',
         value: function render(data) {
+            var _this2 = this;
+
             if (data) {
                 this.filteredData = data;
             }
@@ -126,6 +130,13 @@ var BarChart = function (_Element) {
             this.canvas.selectAll("*").remove();
             var bar = this.canvas.selectAll("g").data(actorList).enter().append("g").attr("transform", function (d, i) {
                 return "translate(0," + i * (that.barHeight + 8) + ")";
+            }).on('mouseenter', function (d) {
+                _this2.tip.html('\n                    <div>\n                        <p>' + d.name + '</p>\n                        <div>' + d.count + ' occurence</div>\n                    </div>\n                ');
+                _this2.tip.style('left', d3.event.pageX + 10 + 'px');
+                _this2.tip.style('top', d3.event.pageY + 10 + 'px');
+                _this2.tip.style('display', 'block');
+            }).on('mouseleave', function (d) {
+                _this2.tip.style('display', 'none');
             });
 
             bar.append("rect").attr("height", this.barHeight / 1.5).attr("width", 0).transition().duration(500).delay(function (d, i) {

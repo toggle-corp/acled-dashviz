@@ -10,14 +10,11 @@
             z-index: 11;
         }
 
-        .leaflet-popup-pane {
-            //padding: 10px;
-            //font-size: 14px;
-
-            .leaflet-popup-close-button {
-                display: none;
-            }
-        }
+        // .leaflet-popup-pane {
+        //     .leaflet-popup-close-button {
+        //         display: none;
+        //     }
+        // }
 
         @import '../map-scale';
     }

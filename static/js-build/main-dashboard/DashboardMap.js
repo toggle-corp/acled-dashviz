@@ -29,8 +29,6 @@ var DashboardMap = function (_Element) {
     _createClass(DashboardMap, [{
         key: 'process',
         value: function process() {
-            var _this2 = this;
-
             var that = this;
 
             L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
@@ -50,9 +48,7 @@ var DashboardMap = function (_Element) {
                 this.scrollWheelZoom.disable();
             });
 
-            this.map.on('zoomend ', function () {
-                _this2.mapScale.updateControl();
-            });
+            // this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
         }
     }, {
         key: 'processData',
@@ -98,6 +94,7 @@ var DashboardMap = function (_Element) {
                     }
                 });
                 geoJsonLayer.addTo(that.map);
+                geoJsonLayer.bringToBack();
             });
         }
     }, {
@@ -110,7 +107,7 @@ var DashboardMap = function (_Element) {
                 this.map.removeLayer(this.conditionalLayer);
             }
 
-            this.conditionalLayer = L.conditionalMarkers([], { maxMarkers: 2000, DisplaySort: function DisplaySort(a, b) {
+            this.conditionalLayer = L.conditionalMarkers([], { maxMarkers: 4000, DisplaySort: function DisplaySort(a, b) {
                     return b._mRadius - a._mRadius;
                 } });
 
@@ -123,7 +120,8 @@ var DashboardMap = function (_Element) {
                     var radius = getMapCircleRadius(cr.length);
                     var color = getEventColor(cd.event_type);
 
-                    this.conditionalLayer.addLayer(L.circle([cd.latitude, cd.longitude], radius, {
+                    this.conditionalLayer.addLayer(L.circleMarker([cd.latitude, cd.longitude], {
+                        radius: radius,
                         fillColor: color,
                         stroke: false,
                         fillOpacity: 0.7

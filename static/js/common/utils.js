@@ -87,12 +87,25 @@ function compareCountryNames(name1, name2) {
 }
 
  
-let mapScaleFactor = 8000;
+let mapScaleFactor = 1.8;
  
+/*
 function getMapCircleRadius(noOfEvents) {
     let radius = Math.sqrt(noOfEvents)*mapScaleFactor;
     return radius;
 }
+*/
+
+function getMapCircleRadius(noOfEvents) {
+    return Math.log(noOfEvents)*mapScaleFactor;
+}
+
+function getEventCountFromMapCircleRadius(radius) {
+    let noOfEvents = radius/mapScaleFactor;
+    return Math.floor(Math.exp(noOfEvents));
+}
+
+/*
 
 function getEventCountFromMapCircleRadius(radius) {
     let noOfEvents = radius/mapScaleFactor;
@@ -113,6 +126,8 @@ function getMeterPerPixel(map) {
 
     return center.distanceTo(xOffset); 
 }
+
+*/
  
 function syncCheckboxes(source, target, triggerSync=false) {
     let sourceCheckboxes = source.find('input[type="checkbox"]');

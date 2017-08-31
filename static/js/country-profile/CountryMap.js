@@ -93,7 +93,8 @@ class CountryMap extends Element {
                 let radius = getMapCircleRadius(cr.length);
                 let color = getEventColor(cd.event_type);
                  
-                let circle = L.circle([cd.latitude, cd.longitude], radius, {
+                let circle = L.circleMarker([cd.latitude, cd.longitude], {
+                    radius: radius,
                     fillColor: color,
                     stroke: false,
                     fillOpacity: 0.7,

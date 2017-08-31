@@ -124,7 +124,8 @@ var CountryMap = function (_Element) {
                     var radius = getMapCircleRadius(cr.length);
                     var color = getEventColor(cd.event_type);
 
-                    var circle = L.circle([cd.latitude, cd.longitude], radius, {
+                    var circle = L.circleMarker([cd.latitude, cd.longitude], {
+                        radius: radius,
                         fillColor: color,
                         stroke: false,
                         fillOpacity: 0.7

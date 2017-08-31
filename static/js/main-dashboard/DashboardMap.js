@@ -26,7 +26,7 @@ class DashboardMap extends Element {
         this.map.on('focus', function() { this.scrollWheelZoom.enable(); });
         this.map.on('blur', function() { this.scrollWheelZoom.disable(); }); 
          
-        this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
+        // this.map.on('zoomend ', () => { this.mapScale.updateControl(); });
     }
      
     processData(data) {
@@ -63,6 +63,7 @@ class DashboardMap extends Element {
                 },
             });
             geoJsonLayer.addTo(that.map);
+            geoJsonLayer.bringToBack();
         });
     }
      
@@ -74,7 +75,7 @@ class DashboardMap extends Element {
             this.map.removeLayer(this.conditionalLayer);
         }
         
-        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 2000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
+        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 4000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
          
         for (let location in data) {
             let cld = data[location]; // current location data 
@@ -85,7 +86,8 @@ class DashboardMap extends Element {
                 let radius = getMapCircleRadius(cr.length);
                 let color = getEventColor(cd.event_type);
                  
-                this.conditionalLayer.addLayer(L.circle([cd.latitude, cd.longitude], radius, {
+                this.conditionalLayer.addLayer(L.circleMarker([cd.latitude, cd.longitude], {
+                    radius: radius,
                     fillColor: color,
                     stroke: false,
                     fillOpacity: 0.7,
