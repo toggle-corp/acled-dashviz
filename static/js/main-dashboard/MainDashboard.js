@@ -2,7 +2,7 @@ class MainDashboard extends Element {
     constructor() {
         super('<div id="main-dashboard"></div>');
          
-        this.header = new Element('<header><h2>Acled Dashboard</h2><button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Apply filters</button></header>');
+        this.header = new Element('<header><span></span><button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Apply filters</button></header>');
          
         this.leftSection = new Element('<div id="left-section"></div>');
         this.rightSection = new Element('<div id="right-section"></div>');

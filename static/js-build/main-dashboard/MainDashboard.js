@@ -16,7 +16,7 @@ var MainDashboard = function (_Element) {
 
         var _this = _possibleConstructorReturn(this, (MainDashboard.__proto__ || Object.getPrototypeOf(MainDashboard)).call(this, '<div id="main-dashboard"></div>'));
 
-        _this.header = new Element('<header><h2>Acled Dashboard</h2><button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Apply filters</button></header>');
+        _this.header = new Element('<header><span></span><button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Apply filters</button></header>');
 
         _this.leftSection = new Element('<div id="left-section"></div>');
         _this.rightSection = new Element('<div id="right-section"></div>');

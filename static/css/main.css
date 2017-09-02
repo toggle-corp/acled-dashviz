@@ -924,7 +924,8 @@ body #dashboard-container #main-dashboard {
   padding: 8px 16px;
   background-color: rgba(0, 0, 0, 0.75);
   border-radius: 3px;
-  position: absolute; }
+  position: absolute;
+  pointer-events: none; }
   .tooltip label {
     text-transform: uppercase;
     font-size: 0.8em;
@@ -934,5 +935,19 @@ body #dashboard-container #main-dashboard {
       content: ":"; }
   .tooltip span {
     font-weight: bold; }
+  .tooltip .number {
+    margin-right: 6px; }
+  .tooltip .event {
+    font-weight: normal; }
+  .tooltip.tooltip-large:before {
+    position: absolute;
+    left: -24px;
+    top: 12px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 24px solid rgba(0, 0, 0, 0.75); }
 
 /*# sourceMappingURL=main.css.map */

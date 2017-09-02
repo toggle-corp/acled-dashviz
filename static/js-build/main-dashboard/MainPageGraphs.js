@@ -46,7 +46,7 @@ var MainPageGraphs = function (_Element) {
         value: function init() {
             $("#graph svg").remove();
 
-            this.parseTime = d3.timeParse("%Y");
+            this.parseTime = d3.timeParse("%Y-%m");
             this.svg = d3.select("#graph").append('svg');
 
             this.width = $('#graph svg').width();
@@ -67,9 +67,46 @@ var MainPageGraphs = function (_Element) {
                 return that.scaleY(d.value);
             });
 
-            this.tip = d3.select("body").append("div").attr("class", "tooltip").style("display", 'none');
+            this.tip = d3.select("body").append("div").attr("class", "tooltip tooltip-large").style("display", 'none');
 
             this.mapLegend.fillAcledEvents('graphs');
+        }
+    }, {
+        key: 'showTooltip',
+        value: function showTooltip() {
+            this.tip.style("display", null);
+            this.tipLine.attr("stroke", "black");
+        }
+    }, {
+        key: 'updateTooltip',
+        value: function updateTooltip() {
+            var date = this.scaleX.invert(d3.mouse(this.tipBox.node())[0]);
+            var ym = d3.timeFormat('%Y-%m')(date);
+
+            var tipData = this.data.map(function (e) {
+                return {
+                    key: e.key,
+                    value: e.values.filter(function (d) {
+                        return d.key === ym;
+                    })[0].value
+                };
+            });
+            var eventHtml = '';
+
+            tipData.forEach(function (e) {
+                eventHtml += '<div><span class="number">' + e.value + '</span><span class="event">' + e.key.capitalize() + '</span></div>';
+            });
+
+            this.tip.html('\n            <div>\n                <div>' + d3.timeFormat('%B, %Y')(date) + '</div>\n                <hr>\n                <div>' + eventHtml + '</div>\n            </div>\n        ');
+            this.tip.style("left", d3.event.pageX + 24 + "px").style("top", d3.event.pageY - 24 + "px");
+
+            this.tipLine.attr("x1", this.scaleX(date)).attr("x2", this.scaleX(date));
+        }
+    }, {
+        key: 'hideTooltip',
+        value: function hideTooltip() {
+            this.tip.style("display", "none");
+            this.tipLine.attr('stroke', 'none');
         }
     }, {
         key: 'render',
@@ -83,7 +120,7 @@ var MainPageGraphs = function (_Element) {
                 this.data = d3.nest().key(function (d) {
                     return d.event_type;
                 }).key(function (d) {
-                    return d.event_date.split("-")[0];
+                    return d.event_date.substring(0, d.event_date.length - 3);
                 }).sortKeys(d3.ascending).rollup(function (v) {
                     return v.length;
                 }).entries(data);
@@ -91,7 +128,7 @@ var MainPageGraphs = function (_Element) {
                 this.data = d3.nest().key(function (d) {
                     return d.event_type;
                 }).key(function (d) {
-                    return d.event_date.split("-")[0];
+                    return d.event_date.substring(0, d.event_date.length - 3);
                 }).sortKeys(d3.ascending).rollup(function (v) {
                     return d3.sum(v, function (e) {
                         return +e.fatalities;
@@ -115,6 +152,9 @@ var MainPageGraphs = function (_Element) {
             })]);
 
             this.canvas.selectAll('*').remove();
+
+            this.tipLine = this.canvas.append('line');
+            this.tipLine.attr('stroke', 'none').style("stroke-dasharray", "3, 3").attr('y1', 0).attr('y2', this.height - this.margin.bottom - this.margin.top);
 
             var eventType = this.canvas.selectAll('.event').data(this.data).enter().append('g').attr('class', 'event');
 
@@ -142,31 +182,53 @@ var MainPageGraphs = function (_Element) {
                 return i * 200 + 100;
             }).duration(500).attr('stroke-dashoffset', 0);
 
-            eventType.selectAll('circle').data(function (e, i) {
-                return e.values.map(function (d) {
-                    return { color: getEventColor(e.key), year: d.key, count: d.value, index: i };
-                });
-            }).enter().append('circle').attr('fill', function (d) {
-                return d.color;
-            }).attr('r', 0).attr('cx', function (d) {
-                return that.scaleX(that.parseTime(d.year));
-            }).attr('cy', function (d) {
-                return that.scaleY(d.count);
-            }).on('mouseenter', function (d) {
-                _this2.tip.style('display', 'block');
-                if (that.graphType == 'event') {
-                    _this2.tip.html('<div><label>Year</label><span>' + d.year + '</span></div><div><label>No. of events</label><span>' + d.count + '</span></div>').style("left", d3.event.pageX + 10 + "px").style("top", d3.event.pageY - 10 + "px");
-                } else {
-                    _this2.tip.html('<div><label>Year</label><span>' + d.year + '</span></div><div><label>No. of fatalities</label><span>' + d.count + '</span></div>').style("left", d3.event.pageX + 10 + "px").style("top", d3.event.pageY - 10 + "px");
-                }
-            }).on('mouseleave', function (d) {
-                return _this2.tip.style('display', 'none');
-            }).transition().duration(200).delay(function (d) {
-                return d.index * 200 + 500 * _this2.scaleX(d.year) / _this2.width;
-            }).attr('r', 4);
+            this.tipBox = this.canvas.append('rect').attr('width', this.width - this.margin.right - this.margin.left).attr('height', this.height - this.margin.top - this.margin.bottom).attr('opacity', 0).on('mouseenter', function () {
+                _this2.showTooltip();
+            }).on('mousemove', function () {
+                _this2.updateTooltip();
+            }).on('mouseleave', function () {
+                _this2.hideTooltip();
+            });
+
+            /*
+            eventType.selectAll('circle')
+                .data((e, i) => e.values.map(d => ({ color: getEventColor(e.key), year: d.key, count: d.value, index: i })))
+                .enter()
+                .append('circle')
+                .attr('fill', d => d.color)
+                .attr('r', 0)
+                .attr('cx', d => that.scaleX(that.parseTime(d.year)) )
+                .attr('cy', d => that.scaleY(d.count))
+                .on('mouseenter', d => {
+                    this.tip.style('display', 'block');
+                    if (that.graphType == 'event') {
+                        this.tip.html('<div><label>Year</label><span>'+d.year+'</span></div><div><label>No. of events</label><span>'+d.count+'</span></div>')
+                            .style("left", (d3.event.pageX + 10) + "px")		
+                            .style("top", (d3.event.pageY - 10) + "px"); 
+                    } else {
+                        this.tip.html('<div><label>Year</label><span>'+d.year+'</span></div><div><label>No. of fatalities</label><span>'+d.count+'</span></div>')
+                            .style("left", (d3.event.pageX + 10) + "px")		
+                            .style("top", (d3.event.pageY - 10) + "px"); 
+                    }
+                })
+                .on('mouseleave', d => this.tip.style('display', 'none'))
+                .transition().duration(200).delay(d =>
+                    (d.index*200) + 500 * this.scaleX(d.year) / this.width
+                ).attr('r', 4);
+            */
 
             // Add the X Axis
-            this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX).ticks(d3.timeYear.every(1))).append('text').text('Years').attr('x', this.canvas.node().getBoundingClientRect().width / 2).attr('y', function () {
+            this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX).tickFormat(function (date) {
+                if (d3.timeYear(date) < date) {
+                    if (d3.timeMonth(date) < date) {
+                        return d3.timeFormat('%b-%d')(date);
+                    } else {
+                        return d3.timeFormat('%b')(date);
+                    }
+                } else {
+                    return d3.timeFormat('%Y')(date);
+                }
+            })).append('text').text('Years').attr('x', this.canvas.node().getBoundingClientRect().width / 2).attr('y', function () {
                 return (that.margin.bottom + this.getBBox().height) / 2;
             }).attr('dy', '1em').attr('fill', '#000').attr('class', 'axis-name');
 
