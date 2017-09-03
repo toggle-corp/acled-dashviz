@@ -54,8 +54,8 @@ class MainPageGraphs extends Element {
         let that = this;
         this.lineFunction = d3.line()
             .curve(d3.curveMonotoneX)
-            .x(d => return that.scaleX(that.parseTime(d.key)))
-            .y(d => return that.scaleY(d.value) );
+            .x(d => that.scaleX(that.parseTime(d.key)))
+            .y(d => that.scaleY(d.value) );
 
         this.tip = d3.select("body").append("div")
             .attr("class", "tooltip tooltip-large")

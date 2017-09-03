@@ -209,11 +209,7 @@ var MainPageGraphs = function (_Element) {
             // Add the X Axis
             this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX).tickFormat(function (date) {
                 if (d3.timeYear(date) < date) {
-                    if (d3.timeMonth(date) < date) {
-                        return d3.timeFormat('%b-%d')(date);
-                    } else {
-                        return d3.timeFormat('%b')(date);
-                    }
+                    return d3.timeFormat('%b')(date);
                 } else {
                     return d3.timeFormat('%Y')(date);
                 }
