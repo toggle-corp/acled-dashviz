@@ -18,7 +18,7 @@ class TimeSeries extends Element {
     init() {
         $("#time-series svg").remove();
 
-        this.parseTime = d3.timeParse("%Y");
+        this.parseTime = d3.timeParse("%Y-%m");
         this.svg = d3.select("#time-series").append('svg');
 
         this.width = $('#time-series svg').width();
@@ -35,83 +35,105 @@ class TimeSeries extends Element {
 
         this.lineFunction = d3.line()
             .curve(d3.curveMonotoneX)
-            .x(function(d) { return that.scaleX(d.year); })
-            .y(function(d) { return that.scaleY(d.count); });
+            .x(d => this.scaleX(this.parseTime(d.key)))
+            .y(d => that.scaleY(d.value));
 
         this.tip = d3.select("body").append("div")
-            .attr("class", "tooltip")
+            .attr("class", "tooltip tooltip-large")
             .style("display", 'none');
+    }
+     
+     
+    showTooltip() {
+        this.tip.style("display", null);
+        this.tipLine.attr("stroke", "black");
+    }
+
+    updateTooltip() {
+        const date = this.scaleX.invert(d3.mouse(this.tipBox.node())[0]);
+        const ym = d3.timeFormat('%Y-%m')(date);
+
+        const tipData = this.filteredData.map((e) => (
+            {
+                key: e.key,
+                value: ((e.values.filter(d => d.key === ym))[0] || {value: 0}).value,
+            }
+        ));
+        let eventHtml = '';
+
+        tipData.forEach((e) => {
+            eventHtml += `<div><span class="number">${e.value}</span><span class="event">${e.key.capitalize()}</span></div>`;
+        });
+
+        this.tip.html(`
+            <div>
+                <div>${d3.timeFormat('%B, %Y')(date)}</div>
+                <hr>
+                <div>${eventHtml}</div>
+            </div>
+        `);
+        this.tip.style("left", (d3.event.pageX + 24) + "px")		
+            .style("top", (d3.event.pageY - 24) + "px"); 
+
+        this.tipLine
+            .attr("x1", this.scaleX(date))
+            .attr("x2", this.scaleX(date));
+        
+    }
+
+    hideTooltip() {
+        this.tip.style("display", "none");
+        this.tipLine.attr('stroke', 'none')
     }
      
     render (data) {
         let that = this;
 
-        if(data) {
-            this.filteredData = data.map((d) => {
-                return Object.assign({}, d, {
-                    year: that.parseTime(d.year),
-                    event_type: d.event_type || '',
-                    interaction: +d.interaction,
-                    fatalities: +d.fatalities,
-                });
-            });
-
-            this.filteredData = this.filteredData.filter(x => x.year);
-            
-            this.filteredData.sort(function(a, b) { 
-                return (new Date(a.year)).getFullYear() - (new Date(b.year)).getFullYear(); 
-            });
-             
-        }
-         
-        let yearGroupedData = [];
-         
-         
-        let currentYear = 0;
-        let currentData = null;
-
-        let acledEventData = {};
-
-        for (let e in acledEvents) {
-            acledEventData[e] = this.filteredData.filter(x => x.event_type == e);
-        }
-         
-        let acledYearlyEventCount = [];
-        for (let e in acledEventData) {
-            let counts = [];
-            acledEventData[e].reduce((a, b) => {
-                if (!a[b.year]) {
-                    a[b.year] = { count: 0, year: b.year };
-                    counts.push(a[b.year]);
-                }
-
-                a[b.year].count++;
-                return a;
-            }, {});
-            acledYearlyEventCount.push({ event_type: e, data: counts, color: getEventColor(e), });
-        }
+        this.filteredData = d3.nest()
+            .key(d => d.event_type)
+            .key(d => d.event_date.substring(0, d.event_date.length-3))
+            .sortKeys(d3.ascending)
+            .rollup(v => d3.sum(v, e => (+e.fatalities)))
+            .entries(data);
 
         this.scaleX.domain([
-            d3.min(acledYearlyEventCount, e => d3.min(e.data, d => d.year)),
-            d3.max(acledYearlyEventCount, e => d3.max(e.data, d => d.year)),
+            that.parseTime(d3.min(this.filteredData, e => d3.min(e.values, d => d.key))),
+            that.parseTime(d3.max(this.filteredData, e => d3.max(e.values, d => d.key))),
         ]);
-        this.scaleY.domain([0, d3.max(acledYearlyEventCount, e => d3.max(e.data, d => d.count))]);
+        this.scaleY.domain([0, d3.max(this.filteredData, e => d3.max(e.values, d => d.value))]);
+
 
         this.canvas.selectAll('*').remove();
 
+        this.tipLine = this.canvas.append('line');
+        this.tipLine.attr('stroke', 'none')
+            .style("stroke-dasharray", ("3, 3"))
+            .attr('y1', 0)
+            .attr('y2', this.height - this.margin.bottom - this.margin.top)
+
         const eventType = this.canvas.selectAll('.event')
-            .data(acledYearlyEventCount)
+            .data(this.filteredData)
             .enter().append('g').attr('class', 'event');
 
         eventType.append('path')
             .attr('fill', 'none')
-            .attr('stroke', e => e.color)
+            .attr('stroke', e => getEventColor(e.key))
             .attr('stroke-width', 2)
-            .attr('d', e => this.lineFunction(e.data))
+            .attr('d', e => this.lineFunction(e.values))
             .attr('stroke-dasharray', function() { return this.getTotalLength(); })
             .attr('stroke-dashoffset', function() { return this.getTotalLength(); })
             .transition().delay((e, i) => (i*200 + 100)).duration(500).attr('stroke-dashoffset', 0);
 
+        this.tipBox = this.canvas.append('rect')
+            .attr('width', this.width - this.margin.right - this.margin.left)
+            .attr('height', this.height - this.margin.top - this.margin.bottom)
+            .attr('opacity', 0)
+            .style('cursor', 'crosshair')
+            .on('mouseenter', () => { this.showTooltip(); })
+            .on('mousemove', () => { this.updateTooltip(); })
+            .on('mouseleave', () => { this.hideTooltip(); })
+
+        /*
         eventType.selectAll('circle')
             .data((e, i) => e.data.map(d => ({ color: e.color, year: d.year, count: d.count, index: i })))
             .enter()
@@ -130,12 +152,21 @@ class TimeSeries extends Element {
             .transition().duration(200).delay(d =>
                 (d.index*200) + 500 * this.scaleX(d.year) / this.width
             ).attr('r', 4);
+        */
 
         // Add the X Axis
         this.canvas.append('g')
             .attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')')
             .attr('class', 'x-axis')
-            .call(d3.axisBottom(this.scaleX))
+            .call(
+                d3.axisBottom(this.scaleX).tickFormat(function(date){
+                    if (d3.timeYear(date) < date) {
+                        return d3.timeFormat('%b')(date);
+                    } else {
+                        return d3.timeFormat('%Y')(date);
+                    }
+                })
+            )
             .append('text')
             .text('Years')
             .attr('x', (this.canvas.node().getBoundingClientRect().width)/2)
@@ -156,8 +187,6 @@ class TimeSeries extends Element {
             .attr('dy', '1em')
             .attr('fill', '#000')
             .attr('class', 'axis-name');
-         
-         
     }
      
     load (country){

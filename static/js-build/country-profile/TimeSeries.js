@@ -35,9 +35,11 @@ var TimeSeries = function (_Element) {
     }, {
         key: 'init',
         value: function init() {
+            var _this2 = this;
+
             $("#time-series svg").remove();
 
-            this.parseTime = d3.timeParse("%Y");
+            this.parseTime = d3.timeParse("%Y-%m");
             this.svg = d3.select("#time-series").append('svg');
 
             this.width = $('#time-series svg').width();
@@ -53,99 +55,93 @@ var TimeSeries = function (_Element) {
             var that = this;
 
             this.lineFunction = d3.line().curve(d3.curveMonotoneX).x(function (d) {
-                return that.scaleX(d.year);
+                return _this2.scaleX(_this2.parseTime(d.key));
             }).y(function (d) {
-                return that.scaleY(d.count);
+                return that.scaleY(d.value);
             });
 
-            this.tip = d3.select("body").append("div").attr("class", "tooltip").style("display", 'none');
+            this.tip = d3.select("body").append("div").attr("class", "tooltip tooltip-large").style("display", 'none');
+        }
+    }, {
+        key: 'showTooltip',
+        value: function showTooltip() {
+            this.tip.style("display", null);
+            this.tipLine.attr("stroke", "black");
+        }
+    }, {
+        key: 'updateTooltip',
+        value: function updateTooltip() {
+            var date = this.scaleX.invert(d3.mouse(this.tipBox.node())[0]);
+            var ym = d3.timeFormat('%Y-%m')(date);
+
+            var tipData = this.filteredData.map(function (e) {
+                return {
+                    key: e.key,
+                    value: (e.values.filter(function (d) {
+                        return d.key === ym;
+                    })[0] || { value: 0 }).value
+                };
+            });
+            var eventHtml = '';
+
+            tipData.forEach(function (e) {
+                eventHtml += '<div><span class="number">' + e.value + '</span><span class="event">' + e.key.capitalize() + '</span></div>';
+            });
+
+            this.tip.html('\n            <div>\n                <div>' + d3.timeFormat('%B, %Y')(date) + '</div>\n                <hr>\n                <div>' + eventHtml + '</div>\n            </div>\n        ');
+            this.tip.style("left", d3.event.pageX + 24 + "px").style("top", d3.event.pageY - 24 + "px");
+
+            this.tipLine.attr("x1", this.scaleX(date)).attr("x2", this.scaleX(date));
+        }
+    }, {
+        key: 'hideTooltip',
+        value: function hideTooltip() {
+            this.tip.style("display", "none");
+            this.tipLine.attr('stroke', 'none');
         }
     }, {
         key: 'render',
         value: function render(data) {
-            var _this2 = this;
+            var _this3 = this;
 
             var that = this;
 
-            if (data) {
-                this.filteredData = data.map(function (d) {
-                    return Object.assign({}, d, {
-                        year: that.parseTime(d.year),
-                        event_type: d.event_type || '',
-                        interaction: +d.interaction,
-                        fatalities: +d.fatalities
-                    });
+            this.filteredData = d3.nest().key(function (d) {
+                return d.event_type;
+            }).key(function (d) {
+                return d.event_date.substring(0, d.event_date.length - 3);
+            }).sortKeys(d3.ascending).rollup(function (v) {
+                return d3.sum(v, function (e) {
+                    return +e.fatalities;
                 });
+            }).entries(data);
 
-                this.filteredData = this.filteredData.filter(function (x) {
-                    return x.year;
+            this.scaleX.domain([that.parseTime(d3.min(this.filteredData, function (e) {
+                return d3.min(e.values, function (d) {
+                    return d.key;
                 });
-
-                this.filteredData.sort(function (a, b) {
-                    return new Date(a.year).getFullYear() - new Date(b.year).getFullYear();
+            })), that.parseTime(d3.max(this.filteredData, function (e) {
+                return d3.max(e.values, function (d) {
+                    return d.key;
                 });
-            }
-
-            var yearGroupedData = [];
-
-            var currentYear = 0;
-            var currentData = null;
-
-            var acledEventData = {};
-
-            var _loop = function _loop(e) {
-                acledEventData[e] = _this2.filteredData.filter(function (x) {
-                    return x.event_type == e;
-                });
-            };
-
-            for (var e in acledEvents) {
-                _loop(e);
-            }
-
-            var acledYearlyEventCount = [];
-
-            var _loop2 = function _loop2(e) {
-                var counts = [];
-                acledEventData[e].reduce(function (a, b) {
-                    if (!a[b.year]) {
-                        a[b.year] = { count: 0, year: b.year };
-                        counts.push(a[b.year]);
-                    }
-
-                    a[b.year].count++;
-                    return a;
-                }, {});
-                acledYearlyEventCount.push({ event_type: e, data: counts, color: getEventColor(e) });
-            };
-
-            for (var e in acledEventData) {
-                _loop2(e);
-            }
-
-            this.scaleX.domain([d3.min(acledYearlyEventCount, function (e) {
-                return d3.min(e.data, function (d) {
-                    return d.year;
-                });
-            }), d3.max(acledYearlyEventCount, function (e) {
-                return d3.max(e.data, function (d) {
-                    return d.year;
-                });
-            })]);
-            this.scaleY.domain([0, d3.max(acledYearlyEventCount, function (e) {
-                return d3.max(e.data, function (d) {
-                    return d.count;
+            }))]);
+            this.scaleY.domain([0, d3.max(this.filteredData, function (e) {
+                return d3.max(e.values, function (d) {
+                    return d.value;
                 });
             })]);
 
             this.canvas.selectAll('*').remove();
 
-            var eventType = this.canvas.selectAll('.event').data(acledYearlyEventCount).enter().append('g').attr('class', 'event');
+            this.tipLine = this.canvas.append('line');
+            this.tipLine.attr('stroke', 'none').style("stroke-dasharray", "3, 3").attr('y1', 0).attr('y2', this.height - this.margin.bottom - this.margin.top);
+
+            var eventType = this.canvas.selectAll('.event').data(this.filteredData).enter().append('g').attr('class', 'event');
 
             eventType.append('path').attr('fill', 'none').attr('stroke', function (e) {
-                return e.color;
+                return getEventColor(e.key);
             }).attr('stroke-width', 2).attr('d', function (e) {
-                return _this2.lineFunction(e.data);
+                return _this3.lineFunction(e.values);
             }).attr('stroke-dasharray', function () {
                 return this.getTotalLength();
             }).attr('stroke-dashoffset', function () {
@@ -154,27 +150,43 @@ var TimeSeries = function (_Element) {
                 return i * 200 + 100;
             }).duration(500).attr('stroke-dashoffset', 0);
 
-            eventType.selectAll('circle').data(function (e, i) {
-                return e.data.map(function (d) {
-                    return { color: e.color, year: d.year, count: d.count, index: i };
-                });
-            }).enter().append('circle').attr('fill', function (d) {
-                return d.color;
-            }).attr('r', 0).attr('cx', function (d) {
-                return _this2.scaleX(d.year);
-            }).attr('cy', function (d) {
-                return _this2.scaleY(d.count);
-            }).on('mouseenter', function (d) {
-                _this2.tip.style('display', 'block');
-                _this2.tip.html('<div><label>Year</label><span>' + new Date(d.year).getFullYear() + '</span></div><div><label>No. of events</label><span>' + d.count + '</span></div>').style("left", d3.event.pageX + 10 + "px").style("top", d3.event.pageY - 10 + "px");
-            }).on('mouseleave', function (d) {
-                return _this2.tip.style('display', 'none');
-            }).transition().duration(200).delay(function (d) {
-                return d.index * 200 + 500 * _this2.scaleX(d.year) / _this2.width;
-            }).attr('r', 4);
+            this.tipBox = this.canvas.append('rect').attr('width', this.width - this.margin.right - this.margin.left).attr('height', this.height - this.margin.top - this.margin.bottom).attr('opacity', 0).style('cursor', 'crosshair').on('mouseenter', function () {
+                _this3.showTooltip();
+            }).on('mousemove', function () {
+                _this3.updateTooltip();
+            }).on('mouseleave', function () {
+                _this3.hideTooltip();
+            });
+
+            /*
+            eventType.selectAll('circle')
+                .data((e, i) => e.data.map(d => ({ color: e.color, year: d.year, count: d.count, index: i })))
+                .enter()
+                .append('circle')
+                .attr('fill', d => d.color)
+                .attr('r', 0)
+                .attr('cx', d => this.scaleX(d.year))
+                .attr('cy', d => this.scaleY(d.count))
+                .on('mouseenter', d => {
+                    this.tip.style('display', 'block');
+                    this.tip.html('<div><label>Year</label><span>'+new Date(d.year).getFullYear()+'</span></div><div><label>No. of events</label><span>'+d.count+'</span></div>')
+                        .style("left", (d3.event.pageX + 10) + "px")		
+                        .style("top", (d3.event.pageY - 10) + "px"); 
+                })
+                .on('mouseleave', d => this.tip.style('display', 'none'))
+                .transition().duration(200).delay(d =>
+                    (d.index*200) + 500 * this.scaleX(d.year) / this.width
+                ).attr('r', 4);
+            */
 
             // Add the X Axis
-            this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX)).append('text').text('Years').attr('x', this.canvas.node().getBoundingClientRect().width / 2).attr('y', function () {
+            this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX).tickFormat(function (date) {
+                if (d3.timeYear(date) < date) {
+                    return d3.timeFormat('%b')(date);
+                } else {
+                    return d3.timeFormat('%Y')(date);
+                }
+            })).append('text').text('Years').attr('x', this.canvas.node().getBoundingClientRect().width / 2).attr('y', function () {
                 return (that.margin.bottom + this.getBBox().height) / 2;
             }).attr('dy', '1em').attr('fill', '#000').attr('class', 'axis-name');
 

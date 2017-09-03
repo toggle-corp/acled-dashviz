@@ -60,7 +60,6 @@ var MainPageGraphs = function (_Element) {
             this.canvas = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
 
             var that = this;
-
             this.lineFunction = d3.line().curve(d3.curveMonotoneX).x(function (d) {
                 return that.scaleX(that.parseTime(d.key));
             }).y(function (d) {
@@ -168,21 +167,11 @@ var MainPageGraphs = function (_Element) {
                 return this.getTotalLength();
             }).attr('stroke-dashoffset', function () {
                 return this.getTotalLength();
-            })
-            /*
-            .on('mouseenter', function(d){ 
-                d3.selectAll('.event-graph-path').attr('opacity', '0.2');
-                d3.select(this).attr('opacity', '1');
-            })
-            .on('mouseleave', function(d){ 
-                d3.selectAll('.event-graph-path').attr('opacity', '1');
-            })
-            */
-            .transition().delay(function (e, i) {
+            }).transition().delay(function (e, i) {
                 return i * 200 + 100;
             }).duration(500).attr('stroke-dashoffset', 0);
 
-            this.tipBox = this.canvas.append('rect').attr('width', this.width - this.margin.right - this.margin.left).attr('height', this.height - this.margin.top - this.margin.bottom).attr('opacity', 0).on('mouseenter', function () {
+            this.tipBox = this.canvas.append('rect').attr('width', this.width - this.margin.right - this.margin.left).attr('height', this.height - this.margin.top - this.margin.bottom).attr('opacity', 0).style('cursor', 'crosshair').on('mouseenter', function () {
                 _this2.showTooltip();
             }).on('mousemove', function () {
                 _this2.updateTooltip();

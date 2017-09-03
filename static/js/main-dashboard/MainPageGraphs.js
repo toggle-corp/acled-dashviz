@@ -51,19 +51,16 @@ class MainPageGraphs extends Element {
             .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')')
 
 
-
         let that = this;
-
         this.lineFunction = d3.line()
             .curve(d3.curveMonotoneX)
-            .x(function(d) { return that.scaleX(that.parseTime(d.key)); })
-            .y(function(d) { return that.scaleY(d.value); });
+            .x(d => return that.scaleX(that.parseTime(d.key)))
+            .y(d => return that.scaleY(d.value) );
 
         this.tip = d3.select("body").append("div")
             .attr("class", "tooltip tooltip-large")
             .style("display", 'none');
          
-
 
         this.mapLegend.fillAcledEvents('graphs');
     }
@@ -144,8 +141,6 @@ class MainPageGraphs extends Element {
             .style("stroke-dasharray", ("3, 3"))
             .attr('y1', 0)
             .attr('y2', this.height - this.margin.bottom - this.margin.top)
-
-
          
         const eventType = this.canvas.selectAll('.event')
             .data(this.data)
@@ -159,15 +154,6 @@ class MainPageGraphs extends Element {
             .attr('d', e => this.lineFunction(e.values))
             .attr('stroke-dasharray', function() { return this.getTotalLength(); })
             .attr('stroke-dashoffset', function() { return this.getTotalLength(); })
-            /*
-            .on('mouseenter', function(d){ 
-                d3.selectAll('.event-graph-path').attr('opacity', '0.2');
-                d3.select(this).attr('opacity', '1');
-            })
-            .on('mouseleave', function(d){ 
-                d3.selectAll('.event-graph-path').attr('opacity', '1');
-            })
-            */
             .transition().delay((e, i) => (i*200 + 100)).duration(500).attr('stroke-dashoffset', 0);
 
 
@@ -175,6 +161,7 @@ class MainPageGraphs extends Element {
             .attr('width', this.width - this.margin.right - this.margin.left)
             .attr('height', this.height - this.margin.top - this.margin.bottom)
             .attr('opacity', 0)
+            .style('cursor', 'crosshair')
             .on('mouseenter', () => { this.showTooltip(); })
             .on('mousemove', () => { this.updateTooltip(); })
             .on('mouseleave', () => { this.hideTooltip(); })
@@ -213,11 +200,7 @@ class MainPageGraphs extends Element {
             .call(
                 d3.axisBottom(this.scaleX).tickFormat(function(date){
                     if (d3.timeYear(date) < date) {
-                        if (d3.timeMonth(date) < date) {
-                            return d3.timeFormat('%b-%d')(date);
-                        } else {
-                            return d3.timeFormat('%b')(date);
-                        }
+                        return d3.timeFormat('%b')(date);
                     } else {
                         return d3.timeFormat('%Y')(date);
                     }
