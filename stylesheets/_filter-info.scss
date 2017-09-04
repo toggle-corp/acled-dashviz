@@ -1,0 +1,57 @@
+.filter-info-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    .filter-label {
+        display: none;
+        //text-transform: uppercase;
+        color: #414141;
+        line-height: 1;
+        font-size: 0.8em;
+
+        small {
+            font-size: 0.9em;
+            text-transform: none;
+        }
+    }
+
+    .applied-filter ~ .filter-label {
+        order: 1;
+        display: block;
+        padding: 6px 10px;
+    }
+
+    .applied-filter {
+        order: 2;
+        padding: 6px 10px;
+        position: relative;
+
+        .filter-list-container {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            width: 240px;
+            top: 48px;
+            right: 0;
+            box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.5);
+
+            >div {
+                padding: 8px 16px;
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+                }
+            }
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+
+            .filter-list-container {
+                display: block;
+            }
+        }
+    }
+
+}

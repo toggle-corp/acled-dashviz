@@ -41,6 +41,49 @@
         color: inherit;
         font-size: 1em;
         padding: 0 16px; }
+      #country-profile .scroll-wrapper > header .filter-btn-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-items: center; }
+      #country-profile .scroll-wrapper > header .filter-info-wrapper {
+        flex-basis: 100%; }
+      #country-profile .scroll-wrapper > header .filter-info-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end; }
+        #country-profile .scroll-wrapper > header .filter-info-wrapper .filter-label {
+          display: none;
+          color: #414141;
+          line-height: 1;
+          font-size: 0.8em; }
+          #country-profile .scroll-wrapper > header .filter-info-wrapper .filter-label small {
+            font-size: 0.9em;
+            text-transform: none; }
+        #country-profile .scroll-wrapper > header .filter-info-wrapper .applied-filter ~ .filter-label {
+          order: 1;
+          display: block;
+          padding: 6px 10px; }
+        #country-profile .scroll-wrapper > header .filter-info-wrapper .applied-filter {
+          order: 2;
+          padding: 6px 10px;
+          position: relative; }
+          #country-profile .scroll-wrapper > header .filter-info-wrapper .applied-filter .filter-list-container {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            width: 240px;
+            top: 48px;
+            right: 0;
+            box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.5); }
+            #country-profile .scroll-wrapper > header .filter-info-wrapper .applied-filter .filter-list-container > div {
+              padding: 8px 16px; }
+              #country-profile .scroll-wrapper > header .filter-info-wrapper .applied-filter .filter-list-container > div:not(:last-child) {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.03); }
+          #country-profile .scroll-wrapper > header .filter-info-wrapper .applied-filter:hover {
+            background-color: rgba(0, 0, 0, 0.05); }
+            #country-profile .scroll-wrapper > header .filter-info-wrapper .applied-filter:hover .filter-list-container {
+              display: block; }
       #country-profile .scroll-wrapper > header #filter-btn {
         margin: 0;
         border: none;
@@ -88,6 +131,11 @@
             margin-right: 10px;
             width: 32px;
             text-align: right; }
+        #country-profile .scroll-wrapper #country-map-container #country-map .leaflet-popup-content-wrapper {
+          background-color: rgba(0, 0, 0, 0.75);
+          color: #fff; }
+        #country-profile .scroll-wrapper #country-map-container #country-map .leaflet-popup-tip {
+          border-top-color: rgba(0, 0, 0, 0.75); }
       #country-profile .scroll-wrapper #country-map-container .legend {
         padding: 16px 24px; }
         #country-profile .scroll-wrapper #country-map-container .legend .legend-elements {
@@ -437,7 +485,8 @@
   .filter-wrapper .container {
     padding: 16px;
     display: none;
-    width: 600px;
+    width: calc(100% - 32px);
+    max-width: 720px;
     background-color: #fff;
     margin-left: 50%;
     margin-top: 64px;
@@ -445,16 +494,19 @@
     @media only screen and (max-width: 720px) {
       .filter-wrapper .container {
         width: calc(100% - 20px);
-        height: calc(100% - 20px);
+        height: calc(100% - 32px);
         overflow-y: auto;
         margin: 10px;
         transform: none; } }
     .filter-wrapper .container > header {
+      margin: -16px -16px 0 -16px;
+      width: calc(100% + 32px);
       padding: 0 24px;
-      height: 48px;
+      height: 72px;
       display: flex;
       align-items: center;
-      justify-content: space-between; }
+      justify-content: space-between;
+      background-color: #f5f5f5; }
       .filter-wrapper .container > header h4 {
         font-size: 1.33em; }
       .filter-wrapper .container > header button {
@@ -478,15 +530,15 @@
           .filter-wrapper .container > header button {
             margin-left: 10px; } }
     .filter-wrapper .container .content {
-      height: calc(100% - 48px);
+      height: calc(100% - 72px);
       overflow-y: auto; }
     .filter-wrapper .container section {
       padding: 0 24px 10px 24px; }
       @media only screen and (max-width: 720px) {
         .filter-wrapper .container section {
           padding: 0 16px 10px 16px; } }
-      .filter-wrapper .container section:not(:last-child) {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+      .filter-wrapper .container section:not(:first-child) {
+        border-top: 1px solid rgba(0, 0, 0, 0.1); }
       .filter-wrapper .container section > header {
         height: 48px;
         display: flex;
@@ -647,6 +699,11 @@ body #dashboard-container #main-dashboard {
         background-color: rgba(0, 0, 0, 0.1); }
         body #dashboard-container #main-dashboard #left-section .map-container #world-map path.leaflet-map-pane {
           z-index: 11; }
+        body #dashboard-container #main-dashboard #left-section .map-container #world-map .leaflet-popup-content-wrapper {
+          background-color: rgba(0, 0, 0, 0.75);
+          color: #fff; }
+        body #dashboard-container #main-dashboard #left-section .map-container #world-map .leaflet-popup-tip {
+          border-top-color: rgba(0, 0, 0, 0.75); }
         body #dashboard-container #main-dashboard #left-section .map-container #world-map .map-scale > div {
           height: 14px;
           overflow-y: hidden;
@@ -941,13 +998,13 @@ body #dashboard-container #main-dashboard {
     font-weight: normal; }
   .tooltip.tooltip-large:before {
     position: absolute;
-    left: -24px;
+    left: -12px;
     top: 12px;
     content: '';
     width: 0;
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right: 24px solid rgba(0, 0, 0, 0.75); }
+    border-right: 12px solid rgba(0, 0, 0, 0.75); }
 
 /*# sourceMappingURL=main.css.map */

@@ -4,7 +4,20 @@ class CountryProfile extends Element {
         this.scrollWrapper = new Element('<div class="scroll-wrapper"></div>');
         this.childElements.push(this.scrollWrapper);
 
-        this.header = new Element('<header><h3><a id="back-btn" class="fa fa-arrow-left"></a><span id="country-name">country_name</span></h3><button id="filter-btn"><i class="fa fa-filter"></i><span>Apply filters</span></button></header>');
+        this.header = new Element(`
+            <header>
+                <h3>
+                    <a id="back-btn" class="fa fa-arrow-left"></a>
+                    <span id="country-name">country_name</span>
+                </h3>
+                <div class="filter-btn-container">
+                    <button id="filter-btn">
+                        <i class="fa fa-filter"></i><span>Add filters</span>
+                    </button>
+                    <div class="filter-info-wrapper"></div>
+                </div>
+            </header>
+        `);
         this.scrollWrapper.childElements.push(this.header);
 
         this.countryMap = new CountryMap();
@@ -77,6 +90,10 @@ class CountryProfile extends Element {
         this.filterWrapper.element.hide();
          
         this.render();
+
+        let filterInfoWrapper = this.header.element.find('.filter-info-wrapper');
+        filterInfoWrapper.empty();
+        $((new FilterInfo(this.filterWrapper.getAppliedFilters())).html).appendTo(filterInfoWrapper);
     }
 
     filterByEvents() {
@@ -127,6 +144,7 @@ class CountryProfile extends Element {
 
         let endYear = container.find('.end-year').val();
         endYear = endYear? (new Date(endYear)) : (new Date());
+        endYear = new Date(endYear.getFullYear(), endYear.getMonth()+1, 0);
 
         function isDateYearInRange(d, d1, d2) {
             return d >= d1 && d <= d2;

@@ -131,7 +131,11 @@ var CountryMap = function (_Element) {
                         fillOpacity: 0.7
                         //interactive: false,
                     });
-                    circle.addTo(this.map).bindPopup(String(cr.length + ' <strong>' + event.capitalize() + '</strong>'));
+                    circle.addTo(this.map).on('mouseover', function () {
+                        this.openPopup();
+                    }).on('mouseout', function () {
+                        this.closePopup();
+                    }).bindPopup(String(cr.length + ' <strong>' + event.capitalize() + '</strong>'));
                     this.circles.push(circle);
                 }
             }

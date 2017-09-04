@@ -19,7 +19,7 @@ var CountryProfile = function (_Element) {
         _this.scrollWrapper = new Element('<div class="scroll-wrapper"></div>');
         _this.childElements.push(_this.scrollWrapper);
 
-        _this.header = new Element('<header><h3><a id="back-btn" class="fa fa-arrow-left"></a><span id="country-name">country_name</span></h3><button id="filter-btn"><i class="fa fa-filter"></i><span>Apply filters</span></button></header>');
+        _this.header = new Element('\n            <header>\n                <h3>\n                    <a id="back-btn" class="fa fa-arrow-left"></a>\n                    <span id="country-name">country_name</span>\n                </h3>\n                <div class="filter-btn-container">\n                    <button id="filter-btn">\n                        <i class="fa fa-filter"></i><span>Add filters</span>\n                    </button>\n                    <div class="filter-info-wrapper"></div>\n                </div>\n            </header>\n        ');
         _this.scrollWrapper.childElements.push(_this.header);
 
         _this.countryMap = new CountryMap();
@@ -96,6 +96,10 @@ var CountryProfile = function (_Element) {
             this.filterWrapper.element.hide();
 
             this.render();
+
+            var filterInfoWrapper = this.header.element.find('.filter-info-wrapper');
+            filterInfoWrapper.empty();
+            $(new FilterInfo(this.filterWrapper.getAppliedFilters()).html).appendTo(filterInfoWrapper);
         }
     }, {
         key: 'filterByEvents',
@@ -164,6 +168,7 @@ var CountryProfile = function (_Element) {
 
             var endYear = container.find('.end-year').val();
             endYear = endYear ? new Date(endYear) : new Date();
+            endYear = new Date(endYear.getFullYear(), endYear.getMonth() + 1, 0);
 
             function isDateYearInRange(d, d1, d2) {
                 return d >= d1 && d <= d2;

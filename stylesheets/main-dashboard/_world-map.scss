@@ -10,9 +10,18 @@
             z-index: 11;
         }
 
+        .leaflet-popup-content-wrapper {
+            background-color: rgba(0, 0, 0, 0.75);
+            color: #fff;
+        }
+
+        .leaflet-popup-tip {
+            border-top-color: rgba(0, 0, 0, 0.75);
+        }
+
         // .leaflet-popup-pane {
         //     .leaflet-popup-close-button {
-        //         display: none;
+        //         color: #fff;
         //     }
         // }
 

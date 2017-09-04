@@ -93,7 +93,7 @@ class TimeSeries extends Element {
             .key(d => d.event_type)
             .key(d => d.event_date.substring(0, d.event_date.length-3))
             .sortKeys(d3.ascending)
-            .rollup(v => d3.sum(v, e => (+e.fatalities)))
+            .rollup(v => v.length)
             .entries(data);
 
         this.scaleX.domain([
@@ -101,7 +101,6 @@ class TimeSeries extends Element {
             that.parseTime(d3.max(this.filteredData, e => d3.max(e.values, d => d.key))),
         ]);
         this.scaleY.domain([0, d3.max(this.filteredData, e => d3.max(e.values, d => d.value))]);
-
 
         this.canvas.selectAll('*').remove();
 

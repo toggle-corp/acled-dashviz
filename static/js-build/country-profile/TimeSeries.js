@@ -111,9 +111,7 @@ var TimeSeries = function (_Element) {
             }).key(function (d) {
                 return d.event_date.substring(0, d.event_date.length - 3);
             }).sortKeys(d3.ascending).rollup(function (v) {
-                return d3.sum(v, function (e) {
-                    return +e.fatalities;
-                });
+                return v.length;
             }).entries(data);
 
             this.scaleX.domain([that.parseTime(d3.min(this.filteredData, function (e) {

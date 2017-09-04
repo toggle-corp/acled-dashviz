@@ -126,6 +126,10 @@ var DashboardMap = function (_Element) {
                         stroke: false,
                         fillOpacity: 0.7
                         //interactive: false,
+                    }).on('mouseover', function () {
+                        this.openPopup();
+                    }).on('mouseout', function () {
+                        this.closePopup();
                     }).bindPopup(String(cr.length + ' <strong>' + event.capitalize() + '<strong>')));
                 }
             }

@@ -17,6 +17,7 @@ class MapScale {
     }
 
     updateControl() {
+        // TODO: set to 10, 100, 500, 1500
         let circleRadii = [9, 16, 22, 26];
         // let zoomLevel = this.map.getZoom();
         let scaleLabels = circleRadii.map(d => getEventCountFromMapCircleRadius(d/2));

@@ -163,14 +163,14 @@ body {
     &.tooltip-large {
         &:before {
             position: absolute;
-            left: -24px;
+            left: -12px;
             top: 12px;
             content: '';
             width: 0;
             height: 0;
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
-            border-right: 24px solid rgba(0, 0, 0, 0.75);
+            border-right: 12px solid rgba(0, 0, 0, 0.75);
         }
     }
 }

@@ -88,6 +88,7 @@ class DashboardVisualization {
                 wp_enqueue_script("country-report-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/CountryReport.js', null, null, true);
                 wp_enqueue_script("timeline-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/Timeline.js', null, null, true);
                 wp_enqueue_script("filter-wrapper-script", plugins_url().$plugin_dir.'/static/js-build/common/FilterWrapper.js', null, null, true);
+                wp_enqueue_script("filter-info-script", plugins_url().$plugin_dir.'/static/js-build/common/FilterInfo.js', null, null, true);
                 wp_enqueue_script("time-series-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/TimeSeries.js', null, null, true);
                 wp_enqueue_script("bar-chart-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/BarChart.js', null, null, true);
                 wp_enqueue_script("country-profile-script", plugins_url().$plugin_dir.'/static/js-build/country-profile/CountryProfile.js', null, null, true);

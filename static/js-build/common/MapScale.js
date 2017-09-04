@@ -27,6 +27,7 @@ var MapScale = function () {
     _createClass(MapScale, [{
         key: 'updateControl',
         value: function updateControl() {
+            // TODO: set to 10, 100, 500, 1500
             var circleRadii = [9, 16, 22, 26];
             // let zoomLevel = this.map.getZoom();
             var scaleLabels = circleRadii.map(function (d) {

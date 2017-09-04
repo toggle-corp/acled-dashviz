@@ -4,16 +4,15 @@ class FilterWrapper extends Element {
             <div class="filter-wrapper" hidden>
                 <div class="container">
                     <header>
-                        <h4>Add filter</h4>
+                        <h4>Filters</h4>
                         <div class="action-buttons">
-                            <button class="btn-cancel">Cancel</button>
-                            <button class="btn-reset">Reset</button>
+                            <button class="btn-cancel">Cancel</button> <button class="btn-reset">Reset</button>
                             <button class="btn-apply-filter">Apply</button>
                         </div>
                     </header>
                     <div class="content">
                         <section class="filter-event-type">
-                            <header><h5>Event type</h5></header>
+                            <header><h5>Event types</h5></header>
                             <div class="content"></div>
                         </section>
                         <section class="filter-interaction">
@@ -36,11 +35,11 @@ class FilterWrapper extends Element {
                         <section class="filter-fatalities">
                             <header><h5>Fatalities</h5></header>
                             <div class="content">
-                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="Infinity" data-value="all" checked="true" name="${name}-filter-fatalities-input">All</label>
-                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="10" data-value="less than 10" name="${name}-filter-fatalities-input">Less than 10</label>
-                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="50" data-value="less than 50" name="${name}-filter-fatalities-input">Less than 50</label>
-                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="100" data-value="less than 100" name="${name}-filter-fatalities-input">Less than 100</label>
-                                <label class="radio-input"><input type="radio"  data-lowerlimit="0" data-upperlimit="1" data-value="none" name="${name}-filter-fatalities-input">None</label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="Infinity" data-value="all" checked="true" name="${name}-filter-fatalities-input"><span class="name">All</span></label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="10" data-value="less than 10" name="${name}-filter-fatalities-input"><span class="name">Less than 10</span></label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="50" data-value="less than 50" name="${name}-filter-fatalities-input"><span class="name">Less than 50</span></label>
+                                <label class="radio-input"><input type="radio" data-lowerlimit="0" data-upperlimit="100" data-value="less than 100" name="${name}-filter-fatalities-input"><span class="name">Less than 100</span></label>
+                                <label class="radio-input"><input type="radio"  data-lowerlimit="0" data-upperlimit="1" data-value="none" name="${name}-filter-fatalities-input"><span class="name">None</span></label>
                             </div> 
                         </section>
                         <section class="filter-admin1">
@@ -98,41 +97,6 @@ class FilterWrapper extends Element {
             minDate: new Date('January 1990'),
             maxDate: new Date(),
         });
-        /*
-        yearFilter.find('input').datepicker({
-            dateFormat: "MM yy",
-            changeMonth: true,
-            changeYear: true,
-            showButtonPanel: true,
-             
-            onClose: function(dateText, inst) {
-                function isDonePressed(){
-                    return ($('#ui-datepicker-div').html().indexOf('ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all ui-state-hover') > -1);
-                }
-
-                if (isDonePressed()){
-                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                    $(this).datepicker('setDate', new Date(year, month, 1)).trigger('change');
-
-                    $('.date-picker').focusout();
-                }
-            },
-             
-            beforeShow : function(input, inst) {
-                inst.dpDiv.addClass('month_year_datepicker');
-                let datestr = null;
-
-                if ((datestr = $(this).val()).length > 0) {
-                    year = datestr.substring(datestr.length-4, datestr.length);
-                    month = datestr.substring(0, 2);
-                    $(this).datepicker('option', 'defaultDate', new Date(year, month-1, 1));
-                    $(this).datepicker('setDate', new Date(year, month-1, 1));
-                    $(".ui-datepicker-calendar").hide();
-                }
-            }
-        });
-        */
     }
 
     init (admin1s) {
@@ -190,12 +154,75 @@ class FilterWrapper extends Element {
             that.element.fadeOut(200);
         });
     }
-        
+
+    getAppliedFilters() {
+        let appliedFilters = {};
+
+        let container = this.element.find('.filter-event-type .content');
+        let requiredEvents = container.find('input[type="checkbox"]:checked').map(function() {
+            return $(this).data('target');
+        }).get();
+
+        if (requiredEvents.length < 5) {
+            appliedFilters['event-types'] = {
+                name: "Event types",
+                filters: requiredEvents,
+            };
+        }
+         
+        container = this.element.find('.filter-interaction .content');
+        let requiredActors = container.find('input[type="checkbox"]:checked').map(function() {
+            return $(this).siblings('.name').text();
+        }).get();
+
+        if (requiredActors.length < 7) {
+            appliedFilters['actor-types'] = {
+                name: "Actor types",
+                filters: requiredActors,
+            };
+        }
+
+        container = this.element.find('.filter-fatalities .content');
+        let input = container.find('input[type="radio"]:checked');
+         
+        let lowerLimit = input.data('lowerlimit');
+        let upperLimit = input.data('upperlimit');
+
+        if (lowerLimit > 0 || upperLimit < Infinity) {
+            appliedFilters['fatalities'] = {
+                name: "Fatalities",
+                filters: input.siblings('.name').text(),
+            };
+        }
+
+        container = this.element.find('.filter-admin1 .selected-admin1s');
+        let requiredAdmin1s = container.find('.selected-admin1').map(function() {
+            return $(this).find('.name').text();
+        }).get();
+
+        if (requiredAdmin1s.length > 0) {
+            appliedFilters['admin-levels'] = {
+                name: "Admin levels",
+                filters: requiredAdmin1s,
+            };
+        }
+         
+         
+        container = this.element.find('.filter-year');
+
+        let startYear = container.find('.start-year').val(); 
+        let endYear = container.find('.end-year').val();
+
+        if (startYear || endYear) {
+            startYear = startYear? (new Date(startYear)) : (new Date(0));
+            endYear = endYear? (new Date(endYear)) : (new Date());
+
+            appliedFilters['date'] = {
+                name: "Date",
+                filters: {start: startYear, end: endYear},
+            };
+        }
+
+        return appliedFilters;
+    }
 }
- 
-/*
-<div class="input-container">
-                                    <label>End date</label>
-                                    <input type="text" class="end-year">
-                                </div>
-                                */

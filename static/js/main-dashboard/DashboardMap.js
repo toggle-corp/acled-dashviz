@@ -92,7 +92,10 @@ class DashboardMap extends Element {
                     stroke: false,
                     fillOpacity: 0.7,
                     //interactive: false,
-                }).bindPopup(String(`${cr.length} <strong>${event.capitalize()}<strong>`)));
+                })
+                     .on('mouseover', function() { this.openPopup(); })
+                     .on('mouseout', function() { this.closePopup(); })
+                    .bindPopup(String(`${cr.length} <strong>${event.capitalize()}<strong>`)));
             }
         }
 
