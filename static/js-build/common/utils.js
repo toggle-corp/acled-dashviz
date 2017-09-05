@@ -101,7 +101,7 @@ function getMapCircleRadius(noOfEvents) {
 
 function getEventCountFromMapCircleRadius(radius) {
     var noOfEvents = radius / mapScaleFactor;
-    return Math.floor(Math.exp(noOfEvents));
+    return Math.round(Math.exp(noOfEvents));
 }
 
 /*

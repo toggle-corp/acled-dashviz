@@ -68,6 +68,37 @@ body {
                 justify-content: space-between;
                 flex-wrap: wrap;
                 padding: 10px 0;
+
+                .info-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-self: flex-end;
+                }
+
+                .info {
+                    background-color: #fff;
+                    padding: 4px 6px;
+                    margin: 0;
+                    color: rgba(0, 0, 0, 0.5);
+                    font-size: 0.8em;
+                    border: 1px solid rgba(0, 0, 0, 0.05);
+
+                    .fa {
+                        margin-right: 6px;
+                    }
+                }
+
+                .filter-btn-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: flex-end;
+                }
+
+                .filter-info-wrapper {
+                    flex-basis: 100%;
+                }
+
+                @import 'filter-info';
                  
                 button {
                     text-transform: uppercase;
@@ -148,6 +179,10 @@ body {
         }
     }
 
+    p {
+        margin: 0;
+    }
+
     span {
         font-weight: bold;
     }
@@ -161,6 +196,10 @@ body {
     }
 
     &.tooltip-large {
+        hr {
+            margin: 10px 0;
+        }
+
         &:before {
             position: absolute;
             left: -12px;

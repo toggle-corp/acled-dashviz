@@ -28,7 +28,7 @@ var MapScale = function () {
         key: 'updateControl',
         value: function updateControl() {
             // TODO: set to 10, 100, 500, 1500
-            var circleRadii = [9, 16, 22, 26];
+            var circleRadii = [8.289306334778566, 16.57861266955713, 22.37258915431989, 26.327593393525085];
             // let zoomLevel = this.map.getZoom();
             var scaleLabels = circleRadii.map(function (d) {
                 return getEventCountFromMapCircleRadius(d / 2);
