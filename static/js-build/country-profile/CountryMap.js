@@ -135,7 +135,7 @@ var CountryMap = function (_Element) {
                         this.openPopup();
                     }).on('mouseout', function () {
                         this.closePopup();
-                    }).bindPopup(String(cr.length + ' <strong>' + event.capitalize() + '</strong>'));
+                    }).bindPopup(String('<strong class="number">' + cr.length + '</strong> <span>' + event.capitalize() + '<span>'));
                     this.circles.push(circle);
                 }
             }

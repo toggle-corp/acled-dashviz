@@ -62,69 +62,81 @@ body {
 
             >header {
                 flex-basis: 100%;
-                //min-height: 56px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                flex-wrap: wrap;
-                padding: 10px 0;
+                padding: 10px 16px;
+                background-color: #fff;
+                margin-bottom: 10px;
 
                 .info-container {
                     display: flex;
                     flex-wrap: wrap;
                     align-self: flex-end;
-                }
+                    flex-basis: 50%;
 
-                .info {
-                    background-color: #fff;
-                    padding: 4px 6px;
-                    margin: 0;
-                    color: rgba(0, 0, 0, 0.5);
-                    font-size: 0.8em;
-                    border: 1px solid rgba(0, 0, 0, 0.05);
+                    .info {
+                        background-color: #fff;
+                        padding: 4px 6px;
+                        color: rgba(0, 0, 0, 0.5);
+                        font-size: 0.9em;
+                        display: flex;
+                        align-items: flex-start;
 
-                    .fa {
-                        margin-right: 6px;
+                        .fa {
+                            margin-right: 8px;
+                            margin-top: 6px;
+                        }
+
+                        p {
+                            margin: 0;
+                        }
                     }
                 }
+
 
                 .filter-btn-container {
                     display: flex;
                     flex-wrap: wrap;
                     justify-content: flex-end;
+                    flex-basis: 50%;
+
+                    .filter-info-wrapper {
+                    }
+
+                    @import 'filter-info';
+
+                    button {
+                        text-transform: uppercase;
+                        background-color: rgba(0, 0, 0, 0.1);
+                        padding: 6px 16px;
+                        color: rgba(0, 0, 0, 0.7);
+                        margin: 0;
+                        border-radius: 3px;
+                        outline: none;
+                        border: 1px solid rgba(0, 0, 0, 0.05);
+                        margin-left: 10px;
+                        // box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
+
+                        i {
+                            margin-right: 8px;
+                        }
+
+                        &:hover {
+                            box-shadow: none;
+                            //box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
+                            background-color: rgba(0, 0, 0, 0.05);
+                        }
+
+                        &:active {
+                            box-shadow: 0 3px 9px -5px rgba(0, 0, 0, 0.3);
+                            transform: translateY(1px);
+                        }
+                    }
                 }
 
-                .filter-info-wrapper {
-                    flex-basis: 100%;
-                }
 
-                @import 'filter-info';
                  
-                button {
-                    text-transform: uppercase;
-                    background-color: #fff;
-                    padding: 6px 16px;
-                    color: rgba(0, 0, 0, 0.7);
-                    margin: 0;
-                    border-radius: 3px;
-                    outline: none;
-                    border: 1px solid rgba(0, 0, 0, 0.05);
-                    box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
-                     
-                    i {
-                        margin-right: 8px;
-                    }
-
-                    &:hover {
-                        box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
-                        background-color: #f0f0f0;
-                    }
-
-                    &:active {
-                        box-shadow: 0 3px 9px -5px rgba(0, 0, 0, 0.3);
-                        transform: translateY(1px);
-                    }
-                }
             }
 
             #left-section {
@@ -140,6 +152,23 @@ body {
                 margin-bottom: 16px;
                  
                 @import 'main-dashboard/crisis-profile';
+            }
+
+            @media only screen and (max-width: 1080px) {
+                header {
+                    flex-wrap: wrap;
+                    .filter-btn-container {
+                        flex-basis: 100%;
+                    }
+
+                    .info-container {
+                        flex-basis: 100%;
+
+                        .info {
+                            flex-basis: 100%;
+                        }
+                    }
+                }
             }
              
             @media only screen and (max-width: 768px) {
@@ -184,11 +213,11 @@ body {
     }
 
     span {
-        font-weight: bold;
     }
 
     .number {
         margin-right: 6px;
+        font-weight: bold;
     }
 
     .event {

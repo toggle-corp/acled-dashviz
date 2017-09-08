@@ -61,8 +61,8 @@ class FilterInfo {
                 <div class="applied-filter">
                     <label class="filter-name">${date.name}</label>
                     <div class="filter-list-container">
-                        <div><span>from: </span>${d3.timeFormat('%B, %Y')(date.filters.start)}</div>
-                        <div><span>to: </span>${d3.timeFormat('%B, %Y')(date.filters.end)}</div>
+                        <div><span>From: </span>${d3.timeFormat('%B, %Y')(date.filters.start)}</div>
+                        <div><span>To: </span>${d3.timeFormat('%B, %Y')(date.filters.end)}</div>
                     </div>
                 </div>
             `;

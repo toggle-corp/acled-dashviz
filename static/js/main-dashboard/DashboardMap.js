@@ -53,6 +53,7 @@ class DashboardMap extends Element {
                     });
 
                     let data = countries.find(c => compareCountryNames(c, feature.properties.geounit));
+
                     if (data) {
                         layer.on('mouseover', function() { layer.setStyle({ fillOpacity: 0.5, }); });
                         layer.on('mouseout', function() { layer.setStyle({ fillOpacity: 0, }); });
@@ -95,7 +96,7 @@ class DashboardMap extends Element {
                 })
                      .on('mouseover', function() { this.openPopup(); })
                      .on('mouseout', function() { this.closePopup(); })
-                    .bindPopup(String(`${cr.length} <strong>${event.capitalize()}<strong>`)));
+                    .bindPopup(String(`<strong class="number">${cr.length}</strong> <span>${event.capitalize()}<span>`)));
             }
         }
 

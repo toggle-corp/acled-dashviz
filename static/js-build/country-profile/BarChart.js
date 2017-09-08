@@ -131,7 +131,7 @@ var BarChart = function (_Element) {
             var bar = this.canvas.selectAll("g").data(actorList).enter().append("g").attr("transform", function (d, i) {
                 return "translate(0," + i * (that.barHeight + 8) + ")";
             }).on('mouseenter', function (d) {
-                _this2.tip.html('\n                    <div>\n                        <p>' + d.name + '</p>\n                        <div>' + d.count + ' events</div>\n                    </div>\n                ');
+                _this2.tip.html('\n                    <div>\n                        <p>' + d.name + '</p>\n                        <div><span class="number">' + d.count + '</span>Events</div>\n                    </div>\n                ');
                 _this2.tip.style('left', d3.event.pageX + 10 + 'px');
                 _this2.tip.style('top', d3.event.pageY + 10 + 'px');
                 _this2.tip.style('display', 'block');

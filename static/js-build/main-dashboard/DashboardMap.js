@@ -80,6 +80,7 @@ var DashboardMap = function (_Element) {
                         var data = countries.find(function (c) {
                             return compareCountryNames(c, feature.properties.geounit);
                         });
+
                         if (data) {
                             layer.on('mouseover', function () {
                                 layer.setStyle({ fillOpacity: 0.5 });
@@ -130,7 +131,7 @@ var DashboardMap = function (_Element) {
                         this.openPopup();
                     }).on('mouseout', function () {
                         this.closePopup();
-                    }).bindPopup(String(cr.length + ' <strong>' + event.capitalize() + '<strong>')));
+                    }).bindPopup(String('<strong class="number">' + cr.length + '</strong> <span>' + event.capitalize() + '<span>')));
                 }
             }
 

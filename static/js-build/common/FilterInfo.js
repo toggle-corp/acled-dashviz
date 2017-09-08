@@ -48,7 +48,7 @@ var FilterInfo = function () {
             var html = '';
 
             if (date) {
-                html += '\n                <div class="applied-filter">\n                    <label class="filter-name">' + date.name + '</label>\n                    <div class="filter-list-container">\n                        <div><span>from: </span>' + d3.timeFormat('%B, %Y')(date.filters.start) + '</div>\n                        <div><span>to: </span>' + d3.timeFormat('%B, %Y')(date.filters.end) + '</div>\n                    </div>\n                </div>\n            ';
+                html += '\n                <div class="applied-filter">\n                    <label class="filter-name">' + date.name + '</label>\n                    <div class="filter-list-container">\n                        <div><span>From: </span>' + d3.timeFormat('%B, %Y')(date.filters.start) + '</div>\n                        <div><span>To: </span>' + d3.timeFormat('%B, %Y')(date.filters.end) + '</div>\n                    </div>\n                </div>\n            ';
             }
             return html;
         }

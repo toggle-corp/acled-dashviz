@@ -73,7 +73,7 @@ class BarChart extends Element {
                 this.tip.html(`
                     <div>
                         <p>${d.name}</p>
-                        <div>${d.count} events</div>
+                        <div><span class="number">${d.count}</span>Events</div>
                     </div>
                 `);
                 this.tip.style('left', (d3.event.pageX + 10)+'px');
