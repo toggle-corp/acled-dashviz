@@ -27,7 +27,7 @@ class MapScale {
         // let zoomLevel = this.map.getZoom();
         let scaleLabels = circleRadii.map(d => getEventCountFromMapCircleRadius(d/2));
          
-        this.control.container.innerHTML = '';
+        this.control.container.innerHTML = '<h5>No. of events</h5>';
         for (let i = 0; i < circleRadii.length; i++) {
             this.control.container.innerHTML += `<div><label>${scaleLabels[i]}</label><span style="width: ${circleRadii[i]}px; height: ${circleRadii[i]}px;"></span></div>`; 
         }

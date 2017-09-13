@@ -3,8 +3,19 @@ class DashboardMap extends Element {
         super('<div class="map-container"></div>');
         this.mapElement = new Element('<div id="world-map"></div>');
         this.mapLegend = new MapLegend();
+        this.mapInfo = new Element(`
+            <div class="info-container">
+                <div class="info">
+                    <i class="fa fa-info-circle"></i><p>The map below groups conflict events by location and is limited to the largest 4,000 events in view.</p>
+                </div>
+                <div class="info">
+                    <i class="fa fa-info-circle"></i><p>Click on a country to view detailed information</p>
+                </div>
+            </div>
+        `);
         this.childElements.push(this.mapElement);
         this.childElements.push(this.mapLegend);
+        this.childElements.push(this.mapInfo);
          
         this.mapScale = null; 
         this.conditionalLayer = null;
@@ -13,11 +24,8 @@ class DashboardMap extends Element {
     process() {
         let that = this;
 
-        L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
         this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
-        L.tileLayer('https://api.mapbox.com/styles/v1/frozenhelium/cj1lpbp1g000l2rmr9kwg12b3/tiles/256/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
-            attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(this.map);
+        this.map.addLayer(new L.TileLayer('http://{s}.api.cartocdn.com/base-light/{z}/{x}/{y}.png'));
 
         this.mapScale = new MapScale(this.map);
 

@@ -4,11 +4,8 @@ class CrisisProfileMap extends Element {
     }
      
     process() {
-        L.mapbox.accessToken = 'pk.eyJ1IjoiZnJvemVuaGVsaXVtIiwiYSI6ImNqMWxvNDIzNDAwMGgzM2xwczZldWx1MmgifQ.s3yNCS5b1f6DgcTH9di3zw';
         this.map = L.map('crisis-profile-map', { preferCanvas: true, zoomControl: false}).setView([0, 10], 5);
-        L.tileLayer('https://api.mapbox.com/styles/v1/frozenhelium/cj1lpbp1g000l2rmr9kwg12b3/tiles/256/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
-            attribution: ''
-        }).addTo(this.map);
+        this.map.addLayer(new L.TileLayer('http://{s}.api.cartocdn.com/base-light/{z}/{x}/{y}.png'));
 
         this.map.scrollWheelZoom.disable();
     }

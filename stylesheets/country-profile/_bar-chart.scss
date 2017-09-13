@@ -50,10 +50,14 @@
             }
 
             .x-axis{
-                text{
+                text:not(.axis-name) {
                     transform: translate(5px, 5px) rotate(45deg);
                     font-size: 14px;
                 }
+            }
+
+            .axis-name {
+                font-size: 1em;
             }
         }
     }

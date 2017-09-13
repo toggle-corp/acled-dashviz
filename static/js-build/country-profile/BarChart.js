@@ -34,7 +34,7 @@ var BarChart = function (_Element) {
             this.width = $('#bar-chart svg').width();
             this.height = $('#bar-chart svg').height();
 
-            this.margin = { top: 10, right: 24, bottom: 56, left: 24 };
+            this.margin = { top: 10, right: 24, bottom: 64, left: 24 };
 
             this.scaleX = d3.scaleLinear().range([0, this.width - this.margin.left - this.margin.right]);
             this.scaleY = d3.scaleLinear().range([this.height - this.margin.top - this.margin.bottom, 0]);
@@ -150,7 +150,9 @@ var BarChart = function (_Element) {
             });
 
             // Add the X Axis
-            this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX));
+            this.canvas.append('g').attr('transform', 'translate(0,' + (this.height - this.margin.top - this.margin.bottom) + ')').attr('class', 'x-axis').call(d3.axisBottom(this.scaleX)).append('text').text('No. of distinct events').attr('x', this.canvas.node().getBoundingClientRect().width / 2).attr('y', function () {
+                return (that.margin.bottom + this.getBBox().height) / 2;
+            }).attr('dy', '1em').attr('fill', '#000').attr('class', 'axis-name');
         }
     }, {
         key: 'load',

@@ -16,7 +16,7 @@ var MainDashboard = function (_Element) {
 
         var _this = _possibleConstructorReturn(this, (MainDashboard.__proto__ || Object.getPrototypeOf(MainDashboard)).call(this, '<div id="main-dashboard"></div>'));
 
-        _this.header = new Element('\n            <header>\n                <div class="info-container">\n                    <div class="info">\n                        <i class="fa fa-info-circle"></i><p>The map below groups conflict events by location and is limited to the largest 4,000 events in view.</p>\n                    </div>\n                    <div class="info">\n                        <i class="fa fa-info-circle"></i><p>Click on a country to view detailed information</p>\n                    </div>\n                </div>\n                <div class="filter-btn-container">\n                    <div class="filter-info-wrapper"></div>\n                    <button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Add filters</button>\n                </div>\n            </header>');
+        _this.header = new Element('\n            <header>\n                <div class="filter-btn-container">\n                    <button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Click to add filters</button>\n                    <div class="filter-info-wrapper"></div>\n                </div>\n            </header>');
 
         _this.leftSection = new Element('<div id="left-section"></div>');
         _this.rightSection = new Element('<div id="right-section"></div>');

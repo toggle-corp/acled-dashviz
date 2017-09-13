@@ -65,40 +65,12 @@ body {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 10px 16px;
-                background-color: #fff;
                 margin-bottom: 10px;
-
-                .info-container {
-                    display: flex;
-                    flex-wrap: wrap;
-                    align-self: flex-end;
-                    flex-basis: 50%;
-
-                    .info {
-                        background-color: #fff;
-                        padding: 4px 6px;
-                        color: rgba(0, 0, 0, 0.5);
-                        font-size: 0.9em;
-                        display: flex;
-                        align-items: flex-start;
-
-                        .fa {
-                            margin-right: 8px;
-                            margin-top: 6px;
-                        }
-
-                        p {
-                            margin: 0;
-                        }
-                    }
-                }
-
 
                 .filter-btn-container {
                     display: flex;
                     flex-wrap: wrap;
-                    justify-content: flex-end;
+                    justify-content: flex-start;
                     flex-basis: 50%;
 
                     .filter-info-wrapper {
@@ -108,23 +80,21 @@ body {
 
                     button {
                         text-transform: uppercase;
-                        background-color: rgba(0, 0, 0, 0.1);
+                        background-color: rgba(255, 255, 255, 1);
                         padding: 6px 16px;
                         color: rgba(0, 0, 0, 0.7);
                         margin: 0;
                         border-radius: 3px;
                         outline: none;
                         border: 1px solid rgba(0, 0, 0, 0.05);
-                        margin-left: 10px;
-                        // box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
+                        box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
 
                         i {
                             margin-right: 8px;
                         }
 
                         &:hover {
-                            box-shadow: none;
-                            //box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
+                            box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
                             background-color: rgba(0, 0, 0, 0.05);
                         }
 

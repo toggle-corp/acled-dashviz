@@ -26,9 +26,41 @@
         // }
 
         @import '../map-scale';
+
     }
      
     @import '../map-legend';
+
+    .legend  {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    
+    .info-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-self: flex-end;
+        flex-basis: 50%;
+
+        .info {
+            background-color: #fff;
+            padding: 4px 10px;
+            color: rgba(0, 0, 0, 0.5);
+            font-size: 0.9em;
+            display: flex;
+            align-items: flex-start;
+
+            .fa {
+                margin-right: 8px;
+                margin-top: 6px;
+            }
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+
      
     /* 
     @media only screen and (max-width: 1080px) {

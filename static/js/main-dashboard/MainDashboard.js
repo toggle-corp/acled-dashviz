@@ -4,17 +4,9 @@ class MainDashboard extends Element {
          
         this.header = new Element(`
             <header>
-                <div class="info-container">
-                    <div class="info">
-                        <i class="fa fa-info-circle"></i><p>The map below groups conflict events by location and is limited to the largest 4,000 events in view.</p>
-                    </div>
-                    <div class="info">
-                        <i class="fa fa-info-circle"></i><p>Click on a country to view detailed information</p>
-                    </div>
-                </div>
                 <div class="filter-btn-container">
+                    <button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Click to add filters</button>
                     <div class="filter-info-wrapper"></div>
-                    <button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Add filters</button>
                 </div>
             </header>`
         );

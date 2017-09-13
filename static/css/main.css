@@ -143,7 +143,7 @@
             border-bottom-right-radius: 50%; }
           #country-profile .scroll-wrapper #country-map-container #country-map .map-scale > div label {
             margin-right: 10px;
-            width: 32px;
+            width: 48px;
             text-align: right; }
         #country-profile .scroll-wrapper #country-map-container #country-map .leaflet-popup-content-wrapper {
           background-color: rgba(0, 0, 0, 0.75);
@@ -345,9 +345,11 @@
           #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg rect {
             fill: #A2C8EC;
             stroke: #A2C8EC; }
-          #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg .x-axis text {
+          #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg .x-axis text:not(.axis-name) {
             transform: translate(5px, 5px) rotate(45deg);
             font-size: 14px; }
+          #country-profile .scroll-wrapper #bar-chart-container #bar-chart svg .axis-name {
+            font-size: 1em; }
     #country-profile .scroll-wrapper #timeline-container {
       flex-basis: 100%;
       max-width: 80%;
@@ -644,30 +646,11 @@ body #dashboard-container #main-dashboard {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 16px;
-    background-color: #fff;
     margin-bottom: 10px; }
-    body #dashboard-container #main-dashboard > header .info-container {
-      display: flex;
-      flex-wrap: wrap;
-      align-self: flex-end;
-      flex-basis: 50%; }
-      body #dashboard-container #main-dashboard > header .info-container .info {
-        background-color: #fff;
-        padding: 4px 6px;
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 0.9em;
-        display: flex;
-        align-items: flex-start; }
-        body #dashboard-container #main-dashboard > header .info-container .info .fa {
-          margin-right: 8px;
-          margin-top: 6px; }
-        body #dashboard-container #main-dashboard > header .info-container .info p {
-          margin: 0; }
     body #dashboard-container #main-dashboard > header .filter-btn-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      justify-content: flex-start;
       flex-basis: 50%; }
       body #dashboard-container #main-dashboard > header .filter-btn-container .filter-info-wrapper {
         display: flex;
@@ -721,18 +704,18 @@ body #dashboard-container #main-dashboard {
             display: none; } }
       body #dashboard-container #main-dashboard > header .filter-btn-container button {
         text-transform: uppercase;
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: white;
         padding: 6px 16px;
         color: rgba(0, 0, 0, 0.7);
         margin: 0;
         border-radius: 3px;
         outline: none;
         border: 1px solid rgba(0, 0, 0, 0.05);
-        margin-left: 10px; }
+        box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3); }
         body #dashboard-container #main-dashboard > header .filter-btn-container button i {
           margin-right: 8px; }
         body #dashboard-container #main-dashboard > header .filter-btn-container button:hover {
-          box-shadow: none;
+          box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.3);
           background-color: rgba(0, 0, 0, 0.05); }
         body #dashboard-container #main-dashboard > header .filter-btn-container button:active {
           box-shadow: 0 3px 9px -5px rgba(0, 0, 0, 0.3);
@@ -803,7 +786,7 @@ body #dashboard-container #main-dashboard {
             border-bottom-right-radius: 50%; }
           body #dashboard-container #main-dashboard #left-section .map-container #world-map .map-scale > div label {
             margin-right: 10px;
-            width: 32px;
+            width: 48px;
             text-align: right; }
       body #dashboard-container #main-dashboard #left-section .map-container .legend {
         padding: 16px 24px; }
@@ -837,6 +820,25 @@ body #dashboard-container #main-dashboard {
                 text-transform: uppercase; }
             body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element.checked {
               opacity: 1; }
+      body #dashboard-container #main-dashboard #left-section .map-container .legend {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06); }
+      body #dashboard-container #main-dashboard #left-section .map-container .info-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-self: flex-end;
+        flex-basis: 50%; }
+        body #dashboard-container #main-dashboard #left-section .map-container .info-container .info {
+          background-color: #fff;
+          padding: 4px 10px;
+          color: rgba(0, 0, 0, 0.5);
+          font-size: 0.9em;
+          display: flex;
+          align-items: flex-start; }
+          body #dashboard-container #main-dashboard #left-section .map-container .info-container .info .fa {
+            margin-right: 8px;
+            margin-top: 6px; }
+          body #dashboard-container #main-dashboard #left-section .map-container .info-container .info p {
+            margin: 0; }
     body #dashboard-container #main-dashboard #left-section #main-page-graphs-container {
       position: relative;
       background-color: #fff; }

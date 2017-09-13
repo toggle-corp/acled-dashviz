@@ -64,8 +64,8 @@ class DashboardVisualization {
                 wp_enqueue_script("polyfill-script", 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js', null, null, true);
                 wp_enqueue_script("d3-script", 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.8.0/d3.min.js', null, null, true);
                 wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-                wp_enqueue_script("mapbox-script", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js', null, null, true);
-                wp_enqueue_style("mapbox-style", 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css');
+                wp_enqueue_style("leaflet-style", 'https://unpkg.com/leaflet@1.2.0/dist/leaflet.css');
+                wp_enqueue_script("leaflet-script", 'https://unpkg.com/leaflet@1.2.0/dist/leaflet.js', null, null, true);
 
                 wp_enqueue_script("leaflet-conditionalLayer-script", plugins_url().$plugin_dir.'/static/js-build/leaflet.conditionalLayer.js', null, null, true);
 
