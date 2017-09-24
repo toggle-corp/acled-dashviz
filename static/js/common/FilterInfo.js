@@ -6,7 +6,7 @@ class FilterInfo {
             ${this.getDateFilter(appliedFilters)}
             ${this.getFatalitiesFilter(appliedFilters)}
             ${this.getAdmin1Filters(appliedFilters)}
-            <label class="filter-label">Applied Filters:<br><small>(hover for details)</small></label>
+            <label class="filter-label">Applied Filters <small>(hover for details)</small>:</label>
         `;
     }
 

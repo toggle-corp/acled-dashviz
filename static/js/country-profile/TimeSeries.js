@@ -34,7 +34,7 @@ class TimeSeries extends Element {
         let that = this;
 
         this.lineFunction = d3.line()
-            .curve(d3.curveMonotoneX)
+            .curve(d3.curveLinear)
             .x(d => this.scaleX(this.parseTime(d.key)))
             .y(d => that.scaleY(d.value));
 
@@ -100,7 +100,10 @@ class TimeSeries extends Element {
             that.parseTime(d3.min(this.filteredData, e => d3.min(e.values, d => d.key))),
             that.parseTime(d3.max(this.filteredData, e => d3.max(e.values, d => d.key))),
         ]);
-        this.scaleY.domain([0, d3.max(this.filteredData, e => d3.max(e.values, d => d.value))]);
+        this.scaleY.domain([
+            d3.min(this.filteredData, e => d3.min(e.values, d => d.value)),
+            d3.max(this.filteredData, e => d3.max(e.values, d => d.value))
+        ]);
 
         this.canvas.selectAll('*').remove();
 

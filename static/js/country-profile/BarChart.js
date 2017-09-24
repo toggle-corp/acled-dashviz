@@ -17,7 +17,7 @@ class BarChart extends Element {
         this.width = $('#bar-chart svg').width();
         this.height = $('#bar-chart svg').height();
 
-        this.margin = {top: 10, right: 24, bottom: 64, left: 24};
+        this.margin = {top: 10, right: 24, bottom: 72, left: 24};
 
         this.scaleX = d3.scaleLinear().range([0, (this.width - this.margin.left - this.margin.right)]);
         this.scaleY = d3.scaleLinear().range([(this.height - this.margin.top - this.margin.bottom), 0]);

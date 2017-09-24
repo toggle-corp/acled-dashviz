@@ -4,10 +4,9 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: 100vh;
     z-index: 1111;
 
-    $header-height: 84px;
+    $header-height: 96px;
 
     .scroll-wrapper {
         display: flex;
@@ -17,8 +16,8 @@
         padding: 10px 16px;
         padding-top: 0;
         background-color: #eaeaea;
-        overflow-y: scroll;
         height: 100vh;
+        overflow-y: scroll;
         padding-top: $header-height + 16px;
 
         >div {
@@ -31,6 +30,7 @@
             flex-basis: 100%;
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
             justify-content: space-between;
             position: fixed;
             top: 0;
@@ -55,14 +55,14 @@
             }
 
             .filter-btn-container {
+                flex-basis: 100%;
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: flex-end;
                 align-items: center;
             }
 
             .filter-info-wrapper {
-                flex-basis: 100%;
+                //flex-basis: 100%;
             }
 
             @import 'filter-info';
@@ -70,7 +70,7 @@
             #filter-btn {
                 margin: 0;
                 border: none;
-                background-color: transparent;
+                background-color: rgba(0, 0, 0, 0.05);
                 color: rgba(0, 0, 0, 0.5);
                 padding: 6px 16px;
                 
@@ -86,6 +86,7 @@
                     background-color: rgba(0, 0, 0, 0.1);
                 }
 
+                /*
                 @media screen and (max-width: 768px) {
                     width: 48px;
                     height: 48px;
@@ -99,6 +100,7 @@
                         display: none;
                     }
                 }
+                */
             }
         }
 
@@ -112,6 +114,7 @@
             padding: 10px;
              
             #country-map-container {
+                margin-top: $header-height;
                 flex-basis: 100%;
                 
                 .legend {
@@ -120,8 +123,6 @@
             }
             #country-report-container {
                 flex-basis: 100%;
-                min-height: 360px;
-                height: auto;
                  
                 #country-report-empty{
                     font-size: 2em;
@@ -129,20 +130,18 @@
             }
             #timeline-container {
                 flex-basis: 100%;
-                height: 420px;
                 overflow-x: auto;
                  
                 #timeline-empty {
                     font-size: 2em;
                 }
             }
+
             #time-series-container {
                 flex-basis: 100%;
-                min-height: 420px;
             }
             #bar-chart-container {
                 flex-basis: 100%;
-                height: 420px;
             }
         }
     }

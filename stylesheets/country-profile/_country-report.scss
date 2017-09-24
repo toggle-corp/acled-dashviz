@@ -1,7 +1,6 @@
 #country-report-container {
     flex-basis: calc(50% - 8px);
     margin-bottom: 16px;
-    height: 480px;
 
     header {
         height: 56px;
@@ -15,17 +14,17 @@
     }
 
     #country-report-empty {
+        height: 412px;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: calc(50vh - 56px);
         font-size: 3em;
         color: rgba(0, 0, 0, 0.1);
     }
 
     .content {
-        height: calc(100% - 56px);
+        height: 412px;
         //display: flex;
 
         .preview {

@@ -1,5 +1,4 @@
 #bar-chart-container {
-    height: 480px;
     flex-basis: calc(50% - 8px);
     margin-bottom: 16px;
     position: relative;
@@ -34,7 +33,7 @@
     }
 
     #bar-chart {
-        height: calc(100% - 48px);
+        height: 420px;
 
         svg {
             width: 100%;
@@ -57,7 +56,7 @@
             }
 
             .axis-name {
-                font-size: 1em;
+                font-size: 14px;
             }
         }
     }

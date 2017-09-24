@@ -1,10 +1,14 @@
 .map-scale {
+    h5 {
+        font-size: 1.1em;
+    }
     >div {
         height: 14px;
         overflow-y: hidden;
         display: flex;
         align-items: center;
         margin: 10px 0;
+
 
         span {
             display: inline-block;

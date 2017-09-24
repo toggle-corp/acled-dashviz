@@ -1,18 +1,23 @@
 class DashboardMap extends Element {
     constructor() {
         super('<div class="map-container"></div>');
+        this.header = new Element(`
+            <div class="info-container">
+                <div class="info">
+                    <i class="fa fa-info-circle"></i><p>Click on a country to view detailed information.</p>
+                </div>
+            </div>
+        `);
         this.mapElement = new Element('<div id="world-map"></div>');
         this.mapLegend = new MapLegend();
         this.mapInfo = new Element(`
             <div class="info-container">
                 <div class="info">
-                    <i class="fa fa-info-circle"></i><p>The map below groups conflict events by location and is limited to the largest 4,000 events in view.</p>
-                </div>
-                <div class="info">
-                    <i class="fa fa-info-circle"></i><p>Click on a country to view detailed information</p>
+                    <i class="fa fa-info-circle"></i><p>The map above groups conflict events by location and is limited to the largest 4,000 events in view.</p>
                 </div>
             </div>
         `);
+        this.childElements.push(this.header);
         this.childElements.push(this.mapElement);
         this.childElements.push(this.mapLegend);
         this.childElements.push(this.mapInfo);
@@ -25,7 +30,9 @@ class DashboardMap extends Element {
         let that = this;
 
         this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
-        this.map.addLayer(new L.TileLayer('http://{s}.api.cartocdn.com/base-light/{z}/{x}/{y}.png'));
+        this.map.addLayer(new L.TileLayer('http://{s}.api.cartocdn.com/base-light/{z}/{x}/{y}.png', {
+            attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
+        }));
 
         this.mapScale = new MapScale(this.map);
 
@@ -102,8 +109,8 @@ class DashboardMap extends Element {
                     fillOpacity: 0.7,
                     //interactive: false,
                 })
-                     .on('mouseover', function() { this.openPopup(); })
-                     .on('mouseout', function() { this.closePopup(); })
+                    .on('mouseover', function() { this.openPopup(); })
+                    .on('mouseout', function() { this.closePopup(); })
                     .bindPopup(String(`<strong class="number">${cr.length}</strong> <span>${event.capitalize()}<span>`)));
             }
         }

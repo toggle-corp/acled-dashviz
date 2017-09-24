@@ -4,16 +4,24 @@ let reportData = {};
 let acledCountryList = ["algeria", "angola", "benin", "burkina faso", "burundi", "cameroon", "central african republic", "chad", "democratic republic of congo", "egypt", "equatorial guinea", "eritrea", "ethiopia", "gabon", "gambia", "ghana", "guinea", "guinea-bissau", "ivory coast", "kenya", "lesotho", "liberia", "libya", "madagascar", "malawi", "mali", "mauritania", "morocco", "mozambique", "namibia", "niger", "nigeria", "republic of congo", "rwanda", "senegal", "sierra leone", "somalia", "south africa", "south sudan", "sudan", "swaziland", "tanzania", "togo", "tunisia", "uganda", "zambia", "zimbabwe"]; 
 
 $(document).ready(function() {
-    /*
     $.ajax({
         url: 'https://api.acleddata.com/acled/read?limit=0&fields=country',
         method: 'GET',
         success: function(response) {
-            console.log(response.data);
+            for (let i=0; i<response.data.length; i++) {
+                let country = response.data[i].country.toLowerCase();
+                if (acledCountryList.indexOf(country) == -1) {
+                    acledCountryList.push(country);
+                }
+            }
+
+            acledCountryList.sort((a, b) => a.localeCompare(b));
+
+            populateTimelineCountries();
+            populateReportCountries();
+            populateAddAndEditCrisisCountries();
         },
     });
-    */
-
 
     $('#carousel input').on('change', function() {
         if (this.files && this.files[0]) {
@@ -153,19 +161,6 @@ $(document).ready(function() {
         }
     }
 
-    $('#add-timeline-country-btn').on('click', function() {
-        hideModal('#add-timeline-country-modal');
-         
-        newCountryName = $('#timeline-country-input').val();
-        $('#timeline-country-input').val('');
-         
-        if($('#timeline-country-select option[value="'+getCountryKey(newCountryName)+'"]').length > 0) {
-            alert('Country already exists');
-        } else {
-            $('<option value="'+getCountryKey(newCountryName)+'">'+newCountryName+'</option>').appendTo($('#timeline-country-select'));
-        }
-    });
-     
     function populateReportCountries() {
         for (let i=0; i<acledCountryList.length; i++) {
             let newCountryName = acledCountryList[i];
@@ -195,6 +190,20 @@ $(document).ready(function() {
             }
         }
     }
+
+    $('#add-timeline-country-btn').on('click', function() {
+        hideModal('#add-timeline-country-modal');
+         
+        newCountryName = $('#timeline-country-input').val();
+        $('#timeline-country-input').val('');
+         
+        if($('#timeline-country-select option[value="'+getCountryKey(newCountryName)+'"]').length > 0) {
+            alert('Country already exists');
+        } else {
+            $('<option value="'+getCountryKey(newCountryName)+'">'+newCountryName+'</option>').appendTo($('#timeline-country-select'));
+        }
+    });
+     
      
     $('#add-report-country-btn').on('click', function() {
         hideModal('#add-report-country-modal');
@@ -358,9 +367,6 @@ $(document).ready(function() {
 
     $('.tab').eq(0).trigger('click');
 
-    populateTimelineCountries();
-    populateReportCountries();
-    populateAddAndEditCrisisCountries();
 
 });
 

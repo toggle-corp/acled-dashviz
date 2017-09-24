@@ -18,20 +18,27 @@
 
     .applied-filter ~ .filter-label {
         order: 1;
-        display: block;
+        display: flex;
+        align-items: center;
         padding: 6px 10px;
+
+        small {
+            margin-left: 8px;
+        }
     }
 
     .applied-filter {
         order: 2;
         padding: 6px 10px;
         position: relative;
+        font-weight: bold;
 
         .filter-list-container {
-            z-index: 11;
+            z-index: 11111;
             display: none;
             position: absolute;
             background-color: #fff;
+            font-weight: normal;
             width: 240px;
             top: 44px;
             right: 0;

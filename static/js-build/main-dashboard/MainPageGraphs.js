@@ -60,7 +60,7 @@ var MainPageGraphs = function (_Element) {
             this.canvas = this.svg.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
 
             var that = this;
-            this.lineFunction = d3.line().curve(d3.curveMonotoneX).x(function (d) {
+            this.lineFunction = d3.line().curve(d3.curveLinear).x(function (d) {
                 return that.scaleX(that.parseTime(d.key));
             }).y(function (d) {
                 return that.scaleY(d.value);

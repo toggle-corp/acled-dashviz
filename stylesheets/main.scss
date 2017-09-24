@@ -63,15 +63,17 @@ body {
             >header {
                 flex-basis: 100%;
                 display: flex;
+                flex-wrap: wrap;
                 align-items: center;
                 justify-content: space-between;
                 margin-bottom: 10px;
+
 
                 .filter-btn-container {
                     display: flex;
                     flex-wrap: wrap;
                     justify-content: flex-start;
-                    flex-basis: 50%;
+                    flex-basis: 100%;
 
                     .filter-info-wrapper {
                     }

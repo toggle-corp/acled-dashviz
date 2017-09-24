@@ -54,7 +54,7 @@ var TimeSeries = function (_Element) {
 
             var that = this;
 
-            this.lineFunction = d3.line().curve(d3.curveMonotoneX).x(function (d) {
+            this.lineFunction = d3.line().curve(d3.curveLinear).x(function (d) {
                 return _this2.scaleX(_this2.parseTime(d.key));
             }).y(function (d) {
                 return that.scaleY(d.value);
@@ -123,7 +123,11 @@ var TimeSeries = function (_Element) {
                     return d.key;
                 });
             }))]);
-            this.scaleY.domain([0, d3.max(this.filteredData, function (e) {
+            this.scaleY.domain([d3.min(this.filteredData, function (e) {
+                return d3.min(e.values, function (d) {
+                    return d.value;
+                });
+            }), d3.max(this.filteredData, function (e) {
                 return d3.max(e.values, function (d) {
                     return d.value;
                 });

@@ -53,7 +53,7 @@ class MainPageGraphs extends Element {
 
         let that = this;
         this.lineFunction = d3.line()
-            .curve(d3.curveMonotoneX)
+            .curve(d3.curveLinear)
             .x(d => that.scaleX(that.parseTime(d.key)))
             .y(d => that.scaleY(d.value) );
 

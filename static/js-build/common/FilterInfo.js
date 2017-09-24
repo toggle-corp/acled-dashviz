@@ -8,7 +8,7 @@ var FilterInfo = function () {
     function FilterInfo(appliedFilters) {
         _classCallCheck(this, FilterInfo);
 
-        this.html = '\n            ' + this.getEventFilterHtml(appliedFilters) + '\n            ' + this.getInteractionFilterHtml(appliedFilters) + '\n            ' + this.getDateFilter(appliedFilters) + '\n            ' + this.getFatalitiesFilter(appliedFilters) + '\n            ' + this.getAdmin1Filters(appliedFilters) + '\n            <label class="filter-label">Applied Filters:<br><small>(hover for details)</small></label>\n        ';
+        this.html = '\n            ' + this.getEventFilterHtml(appliedFilters) + '\n            ' + this.getInteractionFilterHtml(appliedFilters) + '\n            ' + this.getDateFilter(appliedFilters) + '\n            ' + this.getFatalitiesFilter(appliedFilters) + '\n            ' + this.getAdmin1Filters(appliedFilters) + '\n            <label class="filter-label">Applied Filters <small>(hover for details)</small>:</label>\n        ';
     }
 
     _createClass(FilterInfo, [{

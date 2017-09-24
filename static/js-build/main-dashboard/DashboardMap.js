@@ -16,9 +16,11 @@ var DashboardMap = function (_Element) {
 
         var _this = _possibleConstructorReturn(this, (DashboardMap.__proto__ || Object.getPrototypeOf(DashboardMap)).call(this, '<div class="map-container"></div>'));
 
+        _this.header = new Element('\n            <div class="info-container">\n                <div class="info">\n                    <i class="fa fa-info-circle"></i><p>Click on a country to view detailed information.</p>\n                </div>\n            </div>\n        ');
         _this.mapElement = new Element('<div id="world-map"></div>');
         _this.mapLegend = new MapLegend();
-        _this.mapInfo = new Element('\n            <div class="info-container">\n                <div class="info">\n                    <i class="fa fa-info-circle"></i><p>The map below groups conflict events by location and is limited to the largest 4,000 events in view.</p>\n                </div>\n                <div class="info">\n                    <i class="fa fa-info-circle"></i><p>Click on a country to view detailed information</p>\n                </div>\n            </div>\n        ');
+        _this.mapInfo = new Element('\n            <div class="info-container">\n                <div class="info">\n                    <i class="fa fa-info-circle"></i><p>The map above groups conflict events by location and is limited to the largest 4,000 events in view.</p>\n                </div>\n            </div>\n        ');
+        _this.childElements.push(_this.header);
         _this.childElements.push(_this.mapElement);
         _this.childElements.push(_this.mapLegend);
         _this.childElements.push(_this.mapInfo);
@@ -34,7 +36,9 @@ var DashboardMap = function (_Element) {
             var that = this;
 
             this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
-            this.map.addLayer(new L.TileLayer('http://{s}.api.cartocdn.com/base-light/{z}/{x}/{y}.png'));
+            this.map.addLayer(new L.TileLayer('http://{s}.api.cartocdn.com/base-light/{z}/{x}/{y}.png', {
+                attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.'
+            }));
 
             this.mapScale = new MapScale(this.map);
 

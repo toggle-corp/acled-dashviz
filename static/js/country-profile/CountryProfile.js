@@ -12,7 +12,7 @@ class CountryProfile extends Element {
                 </h3>
                 <div class="filter-btn-container">
                     <button id="filter-btn">
-                        <i class="fa fa-filter"></i><span>Add filters</span>
+                        <i class="fa fa-filter"></i><span>Click to add filters</span>
                     </button>
                     <div class="filter-info-wrapper"></div>
                 </div>

@@ -1,11 +1,11 @@
 #timeline-container {
-    flex-basis: 100%;
-    max-width: 80%;
+    // flex-basis: 100%;
+    overflow-x: auto;
     margin: auto;
-    height: 540px;
+    min-width: 50%;
 
     >header {
-        height: 64px;
+        height: 56px;
         display: flex;
         align-items: center;
         padding: 0 24px;
@@ -17,9 +17,10 @@
 
     #timeline-elements {
         display: none;
-        height: calc(100% - 64px);
+        height: 420px;
         position: relative;
         justify-content: center;
+        width: 100%;
 
         &:after {
             content: '';
@@ -28,7 +29,6 @@
             top: calc(50% - 4px);
             width: calc(100% - 32px);
             height: 8px;
-            // border-radius: 4px;
             background-color: #34495e;
         }
 
@@ -38,7 +38,11 @@
             flex-direction: column;
             align-items: center;
             padding: 24px;
-            max-width: 320px;
+            flex-basis: 320px;
+
+            &:nth-child(even) {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
 
 
             .number {
@@ -52,6 +56,7 @@
                 z-index: 1;
 
                 span {
+                    padding: 0 12px;
                     min-width: 56px;
                     min-height: 56px;
                     display: flex;

@@ -1,25 +1,32 @@
 #country-map-container {
     flex-basis: calc(50% - 8px);
     margin-bottom: 16px;
-    height: 480px;
+    //height: 480px;
 
     #country-map {
-        height: calc(100% - 96px);
+        // height: calc(100% - 56px);
+        height: 420px;
          
         @import '../map-scale';
          
         .leaflet-popup-content-wrapper {
             background-color: rgba(0, 0, 0, 0.75);
             color: #fff;
+            border-radius: 3px;
+
+            .leaflet-popup-content {
+                font-size: 1em;
+            }
         }
+
         .leaflet-popup-tip {
-            border-top-color: rgba(0, 0, 0, 0.75);
+            background-color: rgba(0, 0, 0, 0.75);
         }
     }
      
     @import '../map-legend';
     .legend {
-        height: 96px;
+        //height: 96px;
     }
      
     

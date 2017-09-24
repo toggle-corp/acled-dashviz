@@ -19,7 +19,7 @@ var CountryProfile = function (_Element) {
         _this.scrollWrapper = new Element('<div class="scroll-wrapper"></div>');
         _this.childElements.push(_this.scrollWrapper);
 
-        _this.header = new Element('\n            <header>\n                <h3>\n                    <a id="back-btn" class="fa fa-arrow-left"></a>\n                    <span id="country-name">country_name</span>\n                </h3>\n                <div class="filter-btn-container">\n                    <button id="filter-btn">\n                        <i class="fa fa-filter"></i><span>Add filters</span>\n                    </button>\n                    <div class="filter-info-wrapper"></div>\n                </div>\n            </header>\n        ');
+        _this.header = new Element('\n            <header>\n                <h3>\n                    <a id="back-btn" class="fa fa-arrow-left"></a>\n                    <span id="country-name">country_name</span>\n                </h3>\n                <div class="filter-btn-container">\n                    <button id="filter-btn">\n                        <i class="fa fa-filter"></i><span>Click to add filters</span>\n                    </button>\n                    <div class="filter-info-wrapper"></div>\n                </div>\n            </header>\n        ');
         _this.scrollWrapper.childElements.push(_this.header);
 
         _this.countryMap = new CountryMap();
