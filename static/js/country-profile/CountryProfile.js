@@ -160,8 +160,6 @@ class CountryProfile extends Element {
         let that = this;
         this.data = [];
         this.filteredData = [];
-
-
          
         d3.csv(`https://api.acleddata.com/acled/read.csv?country=${country}&limit=0&fields=actor1|actor2|year|event_date|event_type|interaction|fatalities|latitude|longitude|admin1|country`, function(data) {
             data.forEach((row) => {
@@ -178,52 +176,11 @@ class CountryProfile extends Element {
             that.filteredData = that.data.slice();
 
             deferred.resolve();
+
         });
 
 
         return deferred.promise();
-        /*
-        return $.ajax({
-            method: 'GET',
-            url: 'https://api.acleddata.com/acled/read.csv',
-            data: {'limit': 0, 'country': country, 'fields': 'actor1|year|event_type|interaction|fatalities|latitude|longitude|admin1|country' },
-            crossDomain: true,
-            success: function(data) {
-                let rows = data.split('\n');
-                let keys = rows[0].split(',');
-
-                // 1st row is list of keys, last is blank
-                for (let i=1; i<rows.length-1; i++) {
-                    let currentRow = rows[i].split(',');
-                    let currentData = {};
-                     
-                    for (let j=0; j<keys.length; j++) {
-                         
-                        // such "formatted data", much proccessing, -_- 
-                        if(keys[j] == 'event_type') {
-                            currentData[keys[j]] = getAcledEventName((currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim().toLowerCase());
-                        } else if(keys[j] == 'country') {
-                            currentData[keys[j]] = (currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim().toLowerCase();
-                        } else if(keys[j] == 'actor1' || keys[j] == 'admin1') {
-                            currentData[keys[j]] = (currentRow[j] || '').replace(/^"(.*)"$/, '$1').trim();
-                        } else {
-                            currentData[keys[j]] = currentRow[j];
-                        }
-                    } 
-                     
-                    that.data.push(currentData);
-                }
-
-                that.data = that.data.filter(x => compareCountryNames(x.country, country));
-                that.admin1s = that.data.map(x => x.admin1 || '').sort().filter((item, pos, array) => !pos || item != array[pos - 1]); 
-                 
-                // remove the empty ones 
-                that.admin1s = that.admin1s.filter(x => x);
-                 
-                that.filteredData = that.data.slice();
-            }, 
-        }); 
-        */
     }
 
     render() {
@@ -247,7 +204,11 @@ class CountryProfile extends Element {
              
             that.loadData(country).then(function() {
                 that.filterWrapper.init(that.admin1s);
-                that.render();
+
+                if (country == 'sudan') {
+                    that.filterWrapper.setDefaultStartDate('2013-01-01');
+                }
+                that.applyFilters();
                  
                 that.countryMap.mapLegend.fillAcledEvents('countrymap');
                 that.timeSeries.mapLegend.fillAcledEvents('timeseries');

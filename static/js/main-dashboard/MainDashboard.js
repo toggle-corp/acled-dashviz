@@ -4,6 +4,10 @@ class MainDashboard extends Element {
          
         this.header = new Element(`
             <header>
+                <div class="browser-warning">
+                    <p>We've noticed that you're using unsupported browser. The site is best viewed latest version of Chrome, Safari or IE/Edge</p>
+                    <a class="fa fa-times" id="close-browser-warning"></a>
+                </div>
                 <div class="filter-btn-container">
                     <button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Click to add filters</button>
                     <div class="filter-info-wrapper"></div>

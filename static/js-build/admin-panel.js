@@ -553,8 +553,19 @@ function addTimelineElement() {
     var newElement = $('.timeline-element-template').clone().removeClass('timeline-element-template').addClass('timeline-element');
     newElement.appendTo($('#timeline-elements'));
     newElement.find('.number').find('span').text(num);
-    newElement.find('h5').text(title);
-    newElement.find('p').text(description);
+
+    var heading = newElement.find('h5');
+    heading.text(title);
+    heading.on('click', function () {
+        document.execCommand('selectAll', false, null);
+    });
+
+    var desc = newElement.find('p');
+    desc.text(description);
+    desc.on('click', function () {
+        document.execCommand('selectAll', false, null);
+    });
+
     if (img) {
         newElement.find('img').prop('src', img);
     }

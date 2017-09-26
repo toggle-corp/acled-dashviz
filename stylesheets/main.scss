@@ -69,6 +69,27 @@ body {
                 margin-bottom: 10px;
 
 
+                .browser-warning {
+                    flex-basis: 100%;
+                    margin-bottom: 10px;
+                    display: none;
+                    // display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: #fff;
+                    padding: 6px 16px;
+
+                    p {
+                        text-align: center;
+                        margin: 0;
+                    }
+
+                    a {
+                        cursor: pointer;
+                    }
+
+                }
+
                 .filter-btn-container {
                     display: flex;
                     flex-wrap: wrap;

@@ -6,8 +6,9 @@ class FilterWrapper extends Element {
                     <header>
                         <h4>Filters</h4>
                         <div class="action-buttons">
-                            <button class="btn-cancel">Cancel</button> <button class="btn-reset">Reset</button>
+                            <button class="btn-reset">Reset</button>
                             <button class="btn-apply-filter">Apply</button>
+                            <button class="btn-cancel"><i class="fa fa-times"></i></button>
                         </div>
                     </header>
                     <div class="content">
@@ -154,6 +155,12 @@ class FilterWrapper extends Element {
             that.element.fadeOut(200);
         });
     }
+
+    setDefaultStartDate(val) {
+        let input = this.element.find('.filter-year .start-year');
+        input.val(val);
+    }
+
 
     getAppliedFilters() {
         let appliedFilters = {};
