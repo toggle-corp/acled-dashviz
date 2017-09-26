@@ -5,7 +5,7 @@ class MainDashboard extends Element {
         this.header = new Element(`
             <header>
                 <div class="browser-warning">
-                    <p>We've noticed that you're using unsupported browser. The site is best viewed latest version of Chrome, Safari or IE/Edge</p>
+                    <p>We've noticed that you're using an unsupported browser. The dashboard is best viewed with the latest version of Chrome, Safari or Internet Explorer/Edge.</p>
                     <a class="fa fa-times" id="close-browser-warning"></a>
                 </div>
                 <div class="filter-btn-container">

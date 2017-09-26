@@ -650,12 +650,13 @@ body #dashboard-container #main-dashboard {
       display: none;
       align-items: center;
       justify-content: space-between;
-      background-color: #fff;
+      background-color: rgba(255, 100, 100, 0.4);
       padding: 6px 16px; }
       body #dashboard-container #main-dashboard > header .browser-warning p {
         text-align: center;
         margin: 0; }
       body #dashboard-container #main-dashboard > header .browser-warning a {
+        color: inherit;
         cursor: pointer; }
     body #dashboard-container #main-dashboard > header .filter-btn-container {
       display: flex;

@@ -16,7 +16,7 @@ var MainDashboard = function (_Element) {
 
         var _this = _possibleConstructorReturn(this, (MainDashboard.__proto__ || Object.getPrototypeOf(MainDashboard)).call(this, '<div id="main-dashboard"></div>'));
 
-        _this.header = new Element('\n            <header>\n                <div class="browser-warning">\n                    <p>We\'ve noticed that you\'re using unsupported browser. The site is best viewed latest version of Chrome, Safari or IE/Edge</p>\n                    <a class="fa fa-times" id="close-browser-warning"></a>\n                </div>\n                <div class="filter-btn-container">\n                    <button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Click to add filters</button>\n                    <div class="filter-info-wrapper"></div>\n                </div>\n            </header>');
+        _this.header = new Element('\n            <header>\n                <div class="browser-warning">\n                    <p>We\'ve noticed that you\'re using an unsupported browser. The dashboard is best viewed with the latest version of Chrome, Safari or Internet Explorer/Edge.</p>\n                    <a class="fa fa-times" id="close-browser-warning"></a>\n                </div>\n                <div class="filter-btn-container">\n                    <button id="apply-filter-main-btn"><i class="fa fa-filter"></i>Click to add filters</button>\n                    <div class="filter-info-wrapper"></div>\n                </div>\n            </header>');
 
         _this.leftSection = new Element('<div id="left-section"></div>');
         _this.rightSection = new Element('<div id="right-section"></div>');
