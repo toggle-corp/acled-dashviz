@@ -30,7 +30,7 @@ class DashboardMap extends Element {
         let that = this;
 
         this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
-        this.map.addLayer(new L.TileLayer('http://{s}.api.cartocdn.com/base-light/{z}/{x}/{y}.png', {
+        this.map.addLayer(new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
         }));
 

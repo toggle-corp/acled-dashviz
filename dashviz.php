@@ -21,12 +21,12 @@ class DashboardVisualization {
             return null;
         }
 
-        if((is_page('Dashboard') || is_home())) {
-            $page_check = get_page_by_title("Dashboard");
+        if((is_page('Home') || is_home())) {
+            $page_check = get_page_by_title("Home");
             $post_id = 0;
             $plugin_dir = '/acled-dashviz';
             $post_content = file_get_contents(plugins_url().$plugin_dir.'/static/main.html');
-            $post_title = 'Dashboard';
+            $post_title = 'Home';
 
             if(!isset($page_check->ID)) {
                 $page_dashboard = array(
@@ -59,8 +59,6 @@ class DashboardVisualization {
                 $wp_query->the_post();
                 $template = get_page_template();
                 rewind_posts();
-
-                /* $opts = json_decode(stripslashes(get_option('dashboard-data', '{}')), true); */
 
                 wp_enqueue_script("jquery-script", 'https://code.jquery.com/jquery-3.2.1.min.js', null, null, true);
                 wp_enqueue_script("polyfill-script", 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js', null, null, true);
@@ -248,7 +246,6 @@ class AdminPanel {
 $admin_panel = new AdminPanel();
 $dashviz = new DashboardVisualization();
 
-//add_action('init', array($api, 'init'), 10, 0);
 add_action('admin_enqueue_scripts', array($admin_panel, 'load_style'));
 add_action('admin_menu', array($admin_panel, 'init'));
 add_filter('template_include', array( $dashviz, 'init'));

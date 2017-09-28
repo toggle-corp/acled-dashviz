@@ -89,14 +89,33 @@ class FilterWrapper extends Element {
         });
 
         let yearFilter = this.element.find('.filter-year');
-        yearFilter.find('input').datepicker({
+        yearFilter.find('.start-year').datepicker({
             language: "en",
             minView: "months",
             view: "years",
-            dateFormat: "MM yyyy",
+            dateFormat: "yyyy-mm-dd",
             multipleDatesSeparator: ' - ',
-            minDate: new Date('January 1990'),
+            minDate: new Date('1990-01-01'),
             maxDate: new Date(),
+            onSelect: (fd, date, picker) => {
+                yearFilter.find('.start-year').val(date.toLocaleDateString());
+                picker.hide();
+            },
+        });
+
+        yearFilter.find('.end-year').datepicker({
+            language: "en",
+            minView: "months",
+            view: "years",
+            dateFormat: "yyyy-mm-dd",
+            multipleDatesSeparator: ' - ',
+            minDate: new Date('1990-01-01'),
+            maxDate: new Date(),
+            onSelect: (fd, date, picker) => {
+                let newDate = new Date(date.getFullYear(), date.getMonth()+1, 0);
+                yearFilter.find('.end-year').val(newDate.toLocaleDateString());
+                picker.hide();
+            },
         });
     }
 

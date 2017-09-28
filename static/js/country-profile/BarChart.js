@@ -2,7 +2,7 @@ class BarChart extends Element {
     constructor() {
         super('<div id="bar-chart-container"></div>');
 
-        this.header = new Element('<header><h4>Events Involving Main Actors</h4></header>');
+        this.header = new Element('<header><h4>Actors by event frequency</h4></header>');
         this.barChart = new Element('<div id="bar-chart"></div>');
 
         this.childElements.push(this.header);

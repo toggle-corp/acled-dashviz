@@ -16,7 +16,7 @@ var BarChart = function (_Element) {
 
         var _this = _possibleConstructorReturn(this, (BarChart.__proto__ || Object.getPrototypeOf(BarChart)).call(this, '<div id="bar-chart-container"></div>'));
 
-        _this.header = new Element('<header><h4>Events Involving Main Actors</h4></header>');
+        _this.header = new Element('<header><h4>Actors by event frequency</h4></header>');
         _this.barChart = new Element('<div id="bar-chart"></div>');
 
         _this.childElements.push(_this.header);
