@@ -145,8 +145,22 @@ var BarChart = function (_Element) {
                 return that.scaleX(d.count);
             });
 
-            bar.append("text").attr("x", 8).attr("y", this.barHeight / 3).attr("dy", ".35em").attr("class", "label").text(function (d) {
+            var getTextPos = function getTextPos(el, eventCount) {
+                var tw = el.getComputedTextLength(); // text width
+                var bw = that.scaleX(eventCount); // bar width
+                var x = bw + 8;
+
+                if (tw + bw > that.width - that.margin.left - that.margin.right) {
+                    x -= bw;
+                }
+
+                return x;
+            };
+
+            bar.append("text").attr("y", this.barHeight / 3).attr("dy", ".35em").attr("class", "label").text(function (d) {
                 return d.name;
+            }).attr("x", function (d) {
+                return getTextPos(this, d.count);
             });
 
             // Add the X Axis

@@ -92,12 +92,24 @@ class BarChart extends Element {
             .delay((d, i) => i*50)
             .attr("width", function(d) { return that.scaleX(d.count); })
 
+        const getTextPos = (el, eventCount) => {
+            const tw = el.getComputedTextLength(); // text width
+            const bw = that.scaleX(eventCount); // bar width
+            let x = bw + 8;
+
+            if ((tw + bw) > (that.width - that.margin.left - that.margin.right)) {
+                x -= bw;
+            }
+
+            return x;
+        }
+
         bar.append("text")
-            .attr("x", 8)
             .attr("y", this.barHeight / 3)
             .attr("dy", ".35em")
             .attr("class", "label")
-            .text(function(d) { return d.name; });
+            .text(function(d) { return d.name; })
+            .attr("x", function(d){ return getTextPos(this, d.count); });
 
         // Add the X Axis
         this.canvas.append('g')
