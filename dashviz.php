@@ -9,8 +9,8 @@ Version: 1.0
 
 define( 'DASHVIZ__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-$adminModifiedTimestamp='350334012';
-$clientModifiedTimestamp='350434012';
+$adminModifiedTimestamp='350344012';
+$clientModifiedTimestamp='350444012';
 
 
 class DashboardVisualization {
@@ -98,11 +98,11 @@ class DashboardVisualization {
 
                 wp_enqueue_script("dashboard-script", plugins_url().$plugin_dir.'/static/js-build/Dashboard.js?modified_date_time='.$clientModifiedTimestamp, null, null, true);
                 wp_enqueue_script("dashviz-main-script", plugins_url().$plugin_dir.'/static/js-build/main.js?modified_date_time='.$clientModifiedTimestamp, null, null, true);
-                wp_add_inline_script('dashviz-main-script', 'let pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
-                wp_add_inline_script('dashviz-main-script', 'let homeUrl="'.get_home_url().'";', 'before');
-                wp_add_inline_script('dashviz-main-script', 'let crisisProfiles=JSON.parse("'.get_option('crisis_profiles', '[]').'");', 'before');
+                wp_add_inline_script('dashviz-main-script', 'var pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
+                wp_add_inline_script('dashviz-main-script', 'var homeUrl="'.get_home_url().'";', 'before');
+                wp_add_inline_script('dashviz-main-script', 'var crisisProfiles=JSON.parse("'.get_option('crisis_profiles', '[]').'");', 'before');
 
-                wp_add_inline_script('dashviz-main-script', 'let recentEvent=JSON.parse("'.get_option('recent_event', '{}').'");', 'before');
+                wp_add_inline_script('dashviz-main-script', 'var recentEvent=JSON.parse("'.get_option('recent_event', '{}').'");', 'before');
 
 
                 wp_enqueue_style("selectize-style", plugins_url().$plugin_dir.'/static/css/selectize.css?modified_date_time='.$clientModifiedTimestamp);
@@ -233,9 +233,9 @@ class AdminPanel {
         wp_enqueue_script("jquery-script", 'https://code.jquery.com/jquery-3.2.1.min.js', null, null, true);
         wp_enqueue_style( 'admin-panel-style', plugins_url('/static/css/admin-panel.css?modified_date_time='.$adminModifiedTimestamp, __FILE__) );
         wp_enqueue_script("admin-panel-script", plugins_url('/static/js-build/admin-panel.js?modified_date_time='.$adminModifiedTimestamp, __FILE__), null, null, true);
-        wp_add_inline_script('admin-panel-script', 'let pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
-        wp_add_inline_script('admin-panel-script', 'let crisisProfiles=JSON.parse("'.get_option('crisis_profiles', '[]').'");', 'before');
-        wp_add_inline_script('admin-panel-script', 'let recentEvent=JSON.parse("'.get_option('recent_event', '{}').'");', 'before');
+        wp_add_inline_script('admin-panel-script', 'var pluginDir="'.plugins_url().$plugin_dir.'";', 'before');
+        wp_add_inline_script('admin-panel-script', 'var crisisProfiles=JSON.parse("'.get_option('crisis_profiles', '[]').'");', 'before');
+        wp_add_inline_script('admin-panel-script', 'var recentEvent=JSON.parse("'.get_option('recent_event', '{}').'");', 'before');
 
         wp_enqueue_style("fa-style", 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
