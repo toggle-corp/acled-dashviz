@@ -34,7 +34,7 @@ class TimeSeries extends Element {
         let that = this;
 
         this.lineFunction = d3.line()
-            .curve(d3.curveLinear)
+            .curve(d3.curveMonotoneX)
             .x(d => this.scaleX(this.parseTime(d.key)))
             .y(d => that.scaleY(d.value));
 

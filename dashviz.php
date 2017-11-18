@@ -9,8 +9,8 @@ Version: 1.0
 
 define( 'DASHVIZ__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-$adminModifiedTimestamp='350344012';
-$clientModifiedTimestamp='350444012';
+$adminModifiedTimestamp='360344012';
+$clientModifiedTimestamp='360444012';
 
 
 class DashboardVisualization {
@@ -21,12 +21,12 @@ class DashboardVisualization {
             return null;
         }
 
-        if((is_page('Home') || is_home())) {
-            $page_check = get_page_by_title("Home");
+        if(is_page('Dashboard')) {
+            $post_title = 'Dashboard';
+            $page_check = get_page_by_title($post_title);
             $post_id = 0;
             $plugin_dir = '/acled-dashviz';
             $post_content = file_get_contents(plugins_url().$plugin_dir.'/static/main.html');
-            $post_title = 'Home';
 
             if(!isset($page_check->ID)) {
                 $page_dashboard = array(
