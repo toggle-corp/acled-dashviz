@@ -2,7 +2,7 @@ class CountryReport extends Element {
     constructor() {
         super('<div id="country-report-container"></div>');
 
-        this.header = new Element('<header><h4>Summary of Political Voilence and Protest</h4></header>');
+        this.header = new Element('<header><h4>Summary of Political Violence and Protest</h4></header>');
         this.emptyElement = new Element('<div id="country-report-empty">Not available</div>');
         this.content = new Element(`
             <div class="content" hidden>
