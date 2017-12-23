@@ -53,27 +53,26 @@ class DashboardMap extends Element {
 
     init() {
         let that = this;
-
         this.mapLegend.fillAcledEvents('worldmap');
+        const defaultLayerStyle = {
+            fillColor: '#ccc',
+            fillOpacity: 0,
+            stroke: false,
+        };
          
         let geoJsonLayer = null;
-        let countries = Object.keys(acledCountries);
         $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
             geoJsonLayer = L.geoJson(data, {
                 onEachFeature: function(feature, layer) {
-                    layer.setStyle({
-                        fillColor: '#ccc',
-                        fillOpacity: 0,
-                        stroke: false,
-                    });
+                    layer.setStyle(defaultLayerStyle);
 
-                    let data = countries.find(c => compareCountryNames(c, feature.properties.geounit));
+                    const isAcledCountry = !!acledCountriesISO[feature.properties.iso_n3];
 
-                    if (data) {
+                    if (isAcledCountry) {
                         layer.on('mouseover', function() { layer.setStyle({ fillOpacity: 0.5, }); });
                         layer.on('mouseout', function() { layer.setStyle({ fillOpacity: 0, }); });
                         layer.on('click', function(){
-                            dashboard.show(data);
+                            dashboard.show(feature.properties.iso_n3);
                         });
                     }
                 },

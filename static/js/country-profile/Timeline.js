@@ -30,20 +30,18 @@ class Timeline extends Element {
         return elem;
     }
 
-    load(country) {
-        let that = this;
-
+    load(iso) {
+        const that = this;
 
         $.ajax({
             type: 'GET',
-            url: homeUrl+'/?pagename=timeline_country__'+getCountryKey(country),
+            url: `${homeUrl}/?pagename=timeline_country__${iso}`,
             success: function(response) {
                 let timelineData = JSON.parse(response);
 
                 if ($.isArray(timelineData) ) {
                     timelineData = {'staticImage': false, 'timelineElements': timelineData};
                 }
-
 
                 if (timelineData.staticImage) {
                     that.element.show();

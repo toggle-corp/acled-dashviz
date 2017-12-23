@@ -31,8 +31,8 @@ var Dashboard = function (_Element) {
 
     _createClass(Dashboard, [{
         key: 'show',
-        value: function show(country) {
-            this.countryProfile.show(country);
+        value: function show(iso) {
+            this.countryProfile.show(iso);
         }
     }, {
         key: 'loadData',

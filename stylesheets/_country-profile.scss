@@ -73,7 +73,6 @@
                 background-color: rgba(0, 0, 0, 0.05);
                 color: rgba(0, 0, 0, 0.5);
                 padding: 6px 16px;
-                
                 box-shadow: none;
                 outline: none;
 
@@ -85,22 +84,6 @@
                 &:hover {
                     background-color: rgba(0, 0, 0, 0.1);
                 }
-
-                /*
-                @media screen and (max-width: 768px) {
-                    width: 48px;
-                    height: 48px;
-                    border-radius: 50%;
-                    padding: 0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-
-                    >span {
-                        display: none;
-                    }
-                }
-                */
             }
         }
 

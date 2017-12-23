@@ -66,25 +66,22 @@ var DashboardMap = function (_Element) {
         key: 'init',
         value: function init() {
             var that = this;
-
             this.mapLegend.fillAcledEvents('worldmap');
+            var defaultLayerStyle = {
+                fillColor: '#ccc',
+                fillOpacity: 0,
+                stroke: false
+            };
 
             var geoJsonLayer = null;
-            var countries = Object.keys(acledCountries);
             $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function (data) {
                 geoJsonLayer = L.geoJson(data, {
                     onEachFeature: function onEachFeature(feature, layer) {
-                        layer.setStyle({
-                            fillColor: '#ccc',
-                            fillOpacity: 0,
-                            stroke: false
-                        });
+                        layer.setStyle(defaultLayerStyle);
 
-                        var data = countries.find(function (c) {
-                            return compareCountryNames(c, feature.properties.geounit);
-                        });
+                        var isAcledCountry = !!acledCountriesISO[feature.properties.iso_n3];
 
-                        if (data) {
+                        if (isAcledCountry) {
                             layer.on('mouseover', function () {
                                 layer.setStyle({ fillOpacity: 0.5 });
                             });
@@ -92,7 +89,7 @@ var DashboardMap = function (_Element) {
                                 layer.setStyle({ fillOpacity: 0 });
                             });
                             layer.on('click', function () {
-                                dashboard.show(data);
+                                dashboard.show(feature.properties.iso_n3);
                             });
                         }
                     }

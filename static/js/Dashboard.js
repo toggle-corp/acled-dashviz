@@ -13,8 +13,8 @@ class Dashboard extends Element {
     }
     */
      
-    show(country) {
-        this.countryProfile.show(country);
+    show(iso) {
+        this.countryProfile.show(iso);
     }
 
     loadData(data) {

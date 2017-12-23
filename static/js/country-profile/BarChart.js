@@ -126,10 +126,7 @@ class BarChart extends Element {
 
     }
 
-    load(country) {
-        let that = this;
-
+    load() {
         this.init();
-
     }
 }

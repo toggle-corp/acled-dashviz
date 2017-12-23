@@ -191,8 +191,7 @@ class TimeSeries extends Element {
             .attr('class', 'axis-name');
     }
      
-    load (country){
-        let that = this;
+    load (){
         this.init();
     }
 }

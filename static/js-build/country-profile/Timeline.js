@@ -48,12 +48,12 @@ var Timeline = function (_Element) {
         }
     }, {
         key: 'load',
-        value: function load(country) {
+        value: function load(iso) {
             var that = this;
 
             $.ajax({
                 type: 'GET',
-                url: homeUrl + '/?pagename=timeline_country__' + getCountryKey(country),
+                url: homeUrl + '/?pagename=timeline_country__' + iso,
                 success: function success(response) {
                     var timelineData = JSON.parse(response);
 

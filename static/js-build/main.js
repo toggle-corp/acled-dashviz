@@ -11,13 +11,20 @@ $(document).ready(function () {
     dashboard.initDomAll(root);
     dashboard.processAll();
 
-    d3.csv("https://api.acleddata.com/acled/read.csv?limit=0&fields=country|event_type|latitude|longitude|interaction|event_date|fatalities", function (data) {
+    var dashboardFields = ['iso', 'country', 'event_type', 'event_date', 'latitude', 'longitude', 'fatalities', 'interaction'];
+
+    var urlForDashboardData = createUrlForAPI({
+        limit: '0',
+        fields: dashboardFields.join('|')
+    });
+
+    d3.csv(urlForDashboardData, function (data) {
         data.forEach(function (row) {
             row.event_type = getAcledEventName(row.event_type.toLowerCase());
-            row.country = row.country.toLowerCase();
+            row.iso = row.iso.padStart(3, '0');
 
             addEvent(row.event_type);
-            addCountry(row.country);
+            addCountryISO(row.iso, row.country);
             addFatalities(row.fatalities);
         });
 

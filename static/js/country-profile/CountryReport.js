@@ -21,10 +21,9 @@ class CountryReport extends Element {
         this.childElements.push(this.header);
         this.childElements.push(this.emptyElement);
         this.childElements.push(this.content);
-
     }
 
-    load(country) {
+    load(iso) {
         let re = this.content.element;
 
         re.find('h5').text('');
@@ -37,7 +36,7 @@ class CountryReport extends Element {
 
         $.ajax({
             type: 'GET',
-            url: homeUrl+'/?pagename=report_country__'+getCountryKey(country),
+            url: `${homeUrl}/?pagename=report_country__${iso}`,
             success: function(response) {
                 let report = JSON.parse(response);
 

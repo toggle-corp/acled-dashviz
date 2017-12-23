@@ -3,104 +3,112 @@
 var timelineData = [];
 var reportData = {};
 
-var acledCountryList = ["algeria", "angola", "benin", "burkina faso", "burundi", "cameroon", "central african republic", "chad", "democratic republic of congo", "egypt", "equatorial guinea", "eritrea", "ethiopia", "gabon", "gambia", "ghana", "guinea", "guinea-bissau", "ivory coast", "kenya", "lesotho", "liberia", "libya", "madagascar", "malawi", "mali", "mauritania", "morocco", "mozambique", "namibia", "niger", "nigeria", "republic of congo", "rwanda", "senegal", "sierra leone", "somalia", "south africa", "south sudan", "sudan", "swaziland", "tanzania", "togo", "tunisia", "uganda", "zambia", "zimbabwe"];
+var acledCountriesByCode = {
+    "012": "Algeria",
+    "024": "Angola",
+    "072": "Botswana",
+    "108": "Burundi",
+    "120": "Cameroon",
+    "140": "Central African Republic",
+    "148": "Chad",
+    "178": "Republic of Congo",
+    "180": "Democratic Republic of Congo",
+    "204": "Benin",
+    "226": "Equatorial Guinea",
+    "231": "Ethiopia",
+    "232": "Eritrea",
+    "262": "Djibouti",
+    "266": "Gabon",
+    "270": "Gambia",
+    "288": "Ghana",
+    "324": "Guinea",
+    "384": "Ivory Coast",
+    "404": "Kenya",
+    "426": "Lesotho",
+    "430": "Liberia",
+    "434": "Libya",
+    "450": "Madagascar",
+    "454": "Malawi",
+    "466": "Mali",
+    "478": "Mauritania",
+    "504": "Morocco",
+    "508": "Mozambique",
+    "516": "Namibia",
+    "562": "Niger",
+    "566": "Nigeria",
+    "624": "Guinea-Bissau",
+    "646": "Rwanda",
+    "686": "Senegal",
+    "694": "Sierra Leone",
+    "706": "Somalia",
+    "710": "South Africa",
+    "716": "Zimbabwe",
+    "728": "South Sudan",
+    "729": "Sudan",
+    "748": "Swaziland",
+    "768": "Togo",
+    "788": "Tunisia",
+    "800": "Uganda",
+    "818": "Egypt",
+    "834": "Tanzania",
+    "854": "Burkina Faso",
+    "894": "Zambia"
+};
+
+var addAcledCountry = function addAcledCountry(iso, name) {
+    if (!acledCountriesByCode[iso]) {
+        acledCountriesByCode[iso] = name;
+    }
+};
 
 $(document).ready(function () {
     $.ajax({
-        url: 'https://api.acleddata.com/acled/read?limit=0&fields=country',
+        url: 'https://api.acleddata.com/acled/read?limit=0&fields=iso|country',
         method: 'GET',
         success: function success(response) {
             for (var i = 0; i < response.data.length; i++) {
-                var country = response.data[i].country.toLowerCase();
-                if (acledCountryList.indexOf(country) == -1) {
-                    acledCountryList.push(country);
-                }
+                var cd = response.data[i];
+                var iso = cd.iso.padStart(3, '0');
+                addAcledCountry(iso, cd.country);
             }
 
-            acledCountryList.sort(function (a, b) {
-                return a.localeCompare(b);
-            });
-
-            populateTimelineCountries();
-            populateReportCountries();
-            populateAddAndEditCrisisCountries();
+            populateCountries('#timeline-country-select');
+            populateCountries('#report-country-select');
+            populateCountries('#edit-crisis-country-select');
+            populateCountries('#add-crisis-country-select');
         }
     });
 
-    $('#carousel input').on('change', function () {
-        if (this.files && this.files[0]) {
-
+    var loadImage = function loadImage(input, targetSelector) {
+        if (input.files && input.files[0]) {
             var fr = new FileReader();
 
-            var that = this;
-
             fr.addEventListener("load", function (e) {
-                $(that).closest('.input-group').find('.preview')[0].src = e.target.result;
-                $($(that).data('target-input')).val(e.target.result);
+                $(targetSelector)[0].src = e.target.result;
             });
 
-            fr.readAsDataURL(this.files[0]);
+            fr.readAsDataURL(input.files[0]);
         }
-    });
+    };
 
     $('#report-image-input').on('change', function () {
-        if (this.files && this.files[0]) {
-            var fr = new FileReader();
-
-            fr.addEventListener("load", function (e) {
-                $('#report-img-preview')[0].src = e.target.result;
-            });
-
-            fr.readAsDataURL(this.files[0]);
-        }
+        loadImage(this, '#report-img-preview');
     });
 
     $('#recent-event-image-input').on('change', function () {
-        if (this.files && this.files[0]) {
-            var fr = new FileReader();
-
-            fr.addEventListener("load", function (e) {
-                $('#recent-event-image-preview')[0].src = e.target.result;
-            });
-
-            fr.readAsDataURL(this.files[0]);
-        }
+        loadImage(this, '#recent-event-image-preview');
     });
 
     $('#timeline-static-image-input').on('change', function () {
-        if (this.files && this.files[0]) {
-            var fr = new FileReader();
-
-            fr.addEventListener("load", function (e) {
-                $('#timeline-static-image-preview')[0].src = e.target.result;
-            });
-
-            fr.readAsDataURL(this.files[0]);
-        }
+        loadImage(this, '#timeline-static-image-preview');
     });
 
     $('#add-crisis-recent-event-image-input').on('change', function () {
-        if (this.files && this.files[0]) {
-            var fr = new FileReader();
-
-            fr.addEventListener("load", function (e) {
-                $('#add-crisis-recent-event-image-preview')[0].src = e.target.result;
-            });
-
-            fr.readAsDataURL(this.files[0]);
-        }
+        loadImage(this, '#add-crisis-recent-event-image-preview');
     });
 
     $('#edit-crisis-recent-event-image-input').on('change', function () {
-        if (this.files && this.files[0]) {
-            var fr = new FileReader();
-
-            fr.addEventListener("load", function (e) {
-                $('#edit-crisis-recent-event-image-preview')[0].src = e.target.result;
-            });
-
-            fr.readAsDataURL(this.files[0]);
-        }
+        loadImage(this, '#edit-crisis-recent-event-image-preview');
     });
 
     $('#add-crisis-btn').on('click', function () {
@@ -119,7 +127,6 @@ $(document).ready(function () {
         }
 
         crisisProfiles.push({ 'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'end-date': newCrisisEndDateInput.val(), 'country': newCrisisCountryInput.text(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage });
-        // crisisProfiles.sort(function(a, b) { return a.country - b.country; });
         refreshCrisisList();
 
         newCrisis.find('input').val('');
@@ -152,73 +159,18 @@ $(document).ready(function () {
         hideModal();
     });
 
-    function populateTimelineCountries() {
-        for (var i = 0; i < acledCountryList.length; i++) {
-            var _newCountryName = acledCountryList[i];
+    function populateCountries(target) {
+        var keys = Object.keys(acledCountriesByCode);
+        keys.sort(function (a, b) {
+            return acledCountriesByCode[a].localeCompare(acledCountriesByCode[b]);
+        });
 
-            if ($('#timeline-country-select option[value="' + getCountryKey(_newCountryName) + '"]').length > 0) {
-                // 
-            } else {
-                $('<option value="' + getCountryKey(_newCountryName) + '">' + _newCountryName.capitalize() + '</option>').appendTo($('#timeline-country-select'));
+        keys.forEach(function (key) {
+            if ($(target + " option[value=\"" + key + "\"]").length === 0) {
+                $("<option value=\"" + key + "\">" + acledCountriesByCode[key] + "</option>").appendTo($(target));
             }
-        }
+        });
     }
-
-    function populateReportCountries() {
-        for (var i = 0; i < acledCountryList.length; i++) {
-            var _newCountryName2 = acledCountryList[i];
-
-            if ($('#report-country-select option[value="' + getCountryKey(_newCountryName2) + '"]').length > 0) {
-                //
-            } else {
-                $('<option value="' + getCountryKey(_newCountryName2) + '">' + _newCountryName2.capitalize() + '</option>').appendTo($('#report-country-select'));
-            }
-        }
-    }
-
-    function populateAddAndEditCrisisCountries() {
-        for (var i = 0; i < acledCountryList.length; i++) {
-            var _newCountryName3 = acledCountryList[i];
-
-            if ($('#edit-crisis-country-select option[value="' + getCountryKey(_newCountryName3) + '"]').length > 0) {
-                //
-            } else {
-                $('<option value="' + getCountryKey(_newCountryName3) + '">' + _newCountryName3.capitalize() + '</option>').appendTo($('#edit-crisis-country-select'));
-            }
-
-            if ($('#add-crisis-country-select option[value="' + getCountryKey(_newCountryName3) + '"]').length > 0) {
-                //
-            } else {
-                $('<option value="' + getCountryKey(_newCountryName3) + '">' + _newCountryName3.capitalize() + '</option>').appendTo($('#add-crisis-country-select'));
-            }
-        }
-    }
-
-    $('#add-timeline-country-btn').on('click', function () {
-        hideModal('#add-timeline-country-modal');
-
-        newCountryName = $('#timeline-country-input').val();
-        $('#timeline-country-input').val('');
-
-        if ($('#timeline-country-select option[value="' + getCountryKey(newCountryName) + '"]').length > 0) {
-            alert('Country already exists');
-        } else {
-            $('<option value="' + getCountryKey(newCountryName) + '">' + newCountryName + '</option>').appendTo($('#timeline-country-select'));
-        }
-    });
-
-    $('#add-report-country-btn').on('click', function () {
-        hideModal('#add-report-country-modal');
-
-        newCountryName = $('#report-country-input').val();
-        $('#report-country-input').val('');
-
-        if ($('#report-country-select option[value="' + getCountryKey(newCountryName) + '"]').length > 0) {
-            alert('Country already exists');
-        } else {
-            $('<option value="' + getCountryKey(newCountryName) + '">' + newCountryName + '</option>').appendTo($('#report-country-select'));
-        }
-    });
 
     $('#timeline-country-select').on('change', function () {
         if ($(this).val()) {
@@ -282,40 +234,11 @@ $(document).ready(function () {
         }
     });
 
-    function loadData() {
-        /*
-        if(carouselImage1) { 
-            $('#carousel #image-1-container .preview')[0].src = carouselImage1;
-            $('#image-1-input').val(carouselImage1);
-        }
-        if (carouselUrl1) {
-            $('#carousel-url-1-input').val(carouselUrl1);
-        }
-        if(carouselImage2) {
-            $('#carousel #image-2-container .preview')[0].src = carouselImage2;
-            $('#image-2-input').val(carouselImage2);
-        }
-        if (carouselUrl2) {
-            $('#carousel-url-2-input').val(carouselUrl2);
-        }
-        if(carouselImage3) {
-            $('#carousel #image-3-container .preview')[0].src = carouselImage3;
-            $('#image-3-input').val(carouselImage3);
-        }
-        if (carouselUrl3) {
-            $('#carousel-url-3-input').val(carouselUrl3);
-        }
-        */
-
-        refreshCrisisList();
-
-        loadRecentEvent();
-    }
-
     $('#add-timeline-element-btn').prop('disabled', true);
     $('#country-reports input').prop('disabled', true);
 
-    loadData();
+    refreshCrisisList();
+    loadRecentEvent();
 
     function addCrisisElement(index, title, date, endDate, country, description, recentEventImage, recentEventUrl) {
         var crisisElement = $('.crisis-profile-template').clone().removeClass('crisis-profile-template').addClass('crisis-profile').appendTo($('#crisis-profile-list .content'));

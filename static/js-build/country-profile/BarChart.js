@@ -170,9 +170,7 @@ var BarChart = function (_Element) {
         }
     }, {
         key: 'load',
-        value: function load(country) {
-            var that = this;
-
+        value: function load() {
             this.init();
         }
     }]);

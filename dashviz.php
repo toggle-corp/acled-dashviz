@@ -9,8 +9,8 @@ Version: 1.0
 
 define( 'DASHVIZ__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-$adminModifiedTimestamp='360344012';
-$clientModifiedTimestamp='360444012';
+$adminModifiedTimestamp='360344032';
+$clientModifiedTimestamp='360444032';
 
 
 class DashboardVisualization {
@@ -167,27 +167,17 @@ class DashboardVisualization {
                 }
             } else {
                 if(substr($post_var, 0, 19) === 'timeline_country___') {
-                    $country = substr($post_var, 19, strlen($post_var)-19);
+                    $iso = substr($post_var, 19, strlen($post_var)-19);
                     if(isset($_POST['timeline-country-data'])) {
-                        update_option('timeline_country__'.$country, $_POST['timeline-country-data']);
-                        $timeline_countries = get_option('timeline_countries', array());
-                        $timeline_countries[$country] = $_POST['timeline-country-name'];
-
-                        update_option('timeline_countries', $timeline_countries);
-
+                        update_option('timeline_country__'.$iso, $_POST['timeline-country-data']);
                         echo 'success';
                     } else {
                         echo 'failed';
                     }
                 } elseif(substr($post_var, 0, 17) === 'report_country___') {
-                    $country = substr($post_var, 17, strlen($post_var)-17);
+                    $iso = substr($post_var, 17, strlen($post_var)-17);
                     if(isset($_POST['report-country-data'])) {
-                        update_option('report_country__'.$country, $_POST['report-country-data']);
-                        $timeline_countries = get_option('report_countries', array());
-                        $timeline_countries[$country] = $_POST['report-country-name'];
-
-                        update_option('report_countries', $timeline_countries);
-
+                        update_option('report_country__'.$iso, $_POST['report-country-data']);
                         echo 'success';
                     } else {
                         echo 'failed';

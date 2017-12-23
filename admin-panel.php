@@ -3,55 +3,10 @@
     <h1>ACLED dashboard</h1>
 
     <div class="tabs">
-        <!--
-        <a class="tab" data-target="#carousel">Carousel</a>
-        -->
         <a class="tab" data-target="#crisis-profile-report">Crisis Profile</a>
         <a class="tab" data-target="#country-reports">Country Report</a>
         <a class="tab" data-target="#timeline">Timeline</a>
     </div>
-
-    <!--
-    <section id="carousel">
-        <h2>Carousel</h2>
-        <div class="input-group" id="image-1-container">
-            <label>Image #1</label>
-            <input type="file" name="image-1" accept="image/*" data-target-input="#image-1-input">
-            <img class="preview" alt="no preview available">
-            <input type="text"  id="carousel-url-1-input" placeholder="Url">
-             
-            <div class="save-button-container">
-                <i class="fa fa-save"></i>
-                <i class="fa fa-spin fa-circle-o-notch" hidden></i>
-                <button onclick="submitCarouselData(this, '#carousel-image1-form', '#carousel-url-1-input')">Save</button>
-            </div>
-        </div>
-        <div class="input-group" id="image-2-container">
-            <label>Image #2</label>
-            <input type="file" name="image-2" accept="image/*" data-target-input="#image-2-input">
-            <img class="preview" alt="no preview available">
-            <input type="text" name="url-2" id="carousel-url-2-input" placeholder="Url">
-             
-            <div class="save-button-container">
-                <i class="fa fa-save"></i>
-                <i class="fa fa-spin fa-circle-o-notch" hidden></i>
-                <button onclick="submitCarouselData(this, '#carousel-image2-form', '#carousel-url-2-input')">Save</button>
-            </div>
-        </div>
-        <div class="input-group" id="image-3-container">
-            <label>Image #3</label>
-            <input type="file" name="image-3" accept="image/*" data-target-input="#image-3-input">
-            <img class="preview" alt="no preview available">
-            <input type="text" name="url-3" id="carousel-url-3-input" placeholder="Url">
-             
-             <div class="save-button-container">
-                 <i class="fa fa-save"></i>
-                 <i class="fa fa-spin fa-circle-o-notch" hidden></i>
-                 <button onclick="submitCarouselData(this, '#carousel-image3-form', '#carousel-url-3-input')">Save</button>
-             </div>
-        </div>
-    </section>
-    -->
 
     <section id="crisis-profile-report">
         <header>
@@ -76,48 +31,16 @@
             <button onclick="submitCrisisProfiles(this);">Save</button>
         </div>
     </section>
-<!--
-    <section id="recent-event">
-        <header>
-            <h2>Recent event</h2>
-        </header>
-        <div class="content">
-            <div class="input-group">
-                <label>Url</label>
-                <input type="text" id="recent-event-url-input">
-            </div>
-            <div class="input-group"
-                <label>Image</label>
-                <input type="file"  accept="image/*" id="recent-event-image-input">
-            </div>
-            <img id="recent-event-image-preview" class="preview" alt="no preview available">
-            <div class="save-button-container">
-                <i class="fa fa-save"></i>
-                <i class="fa fa-spin fa-circle-o-notch" hidden></i>
-                <button onclick="submitRecentEvent(this)">Save</button>
-            </div>
-        </div>
-    </section>
--->
      
     <section id="country-reports">
         <header>
             <h2>Country reports</h2>
-<!--
-            <button onclick="showModal('#add-report-country-modal');">Add country</button>
--->
         </header>
         <div class="content">
             <div class="input-group">
                 <label>Country</label>
                 <select id="report-country-select" data-target="<?php echo get_home_url().'/?pagename=report_country__'; ?>">
                     <option value="">Select country</option>
-                    <?php
-                        $report_countries = get_option('report_countries', array());
-                        foreach($report_countries as $rk => $rn) {
-                            echo '<option value="'.$rk.'">'.$rn.'</option>';
-                        }
-                    ?>
                 </select>
             </div>
             <div class="input-group">
@@ -152,21 +75,12 @@
     <section id="timeline">
         <header>
             <h2>Timeline</h2>
-<!--
-            <button onclick="showModal('#add-timeline-country-modal');">Add country</button>
--->
         </header>
         <div class="content">
             <div class="input-group">
             <label>Select country:</label>
                 <select id="timeline-country-select" data-target="<?php echo get_home_url().'/?pagename=timeline_country__'; ?>">
                     <option value="">Select country</option>
-                    <?php
-                        $timeline_countries = get_option('timeline_countries', array());
-                        foreach($timeline_countries as $ck => $cn) {
-                            echo '<option value="'.$ck.'">'.$cn.'</option>';
-                        }
-                    ?>
                 </select>
             </div>
             <label id="timeline-use-static-check-container"><input type="checkbox" id="timeline-use-static-check">Use static image</label>
@@ -253,10 +167,8 @@
             </div>
             <div class="input-group">
                 <label>Country</label>
-<!--
-                <input type="text" name="crisis-country" class="crisis-country">
--->
                 <select name="crisis-country" class="crisis-country" id="add-crisis-country-select">
+                    <option value="">Select country</option>
                 </select>
             </div>
             <div class="input-group">
@@ -297,10 +209,8 @@
             </div>
             <div class="input-group">
                 <label>Country</label>
-<!--
-                <input type="text" name="crisis-country" class="crisis-country">
--->
                 <select name="crisis-country" class="crisis-country" id="edit-crisis-country-select">
+                    <option value="">Select country</option>
                 </select>
             </div>
             <div class="input-group">

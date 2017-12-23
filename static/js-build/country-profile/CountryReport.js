@@ -23,13 +23,12 @@ var CountryReport = function (_Element) {
         _this.childElements.push(_this.header);
         _this.childElements.push(_this.emptyElement);
         _this.childElements.push(_this.content);
-
         return _this;
     }
 
     _createClass(CountryReport, [{
         key: 'load',
-        value: function load(country) {
+        value: function load(iso) {
             var re = this.content.element;
 
             re.find('h5').text('');
@@ -42,7 +41,7 @@ var CountryReport = function (_Element) {
 
             $.ajax({
                 type: 'GET',
-                url: homeUrl + '/?pagename=report_country__' + getCountryKey(country),
+                url: homeUrl + '/?pagename=report_country__' + iso,
                 success: function success(response) {
                     var report = JSON.parse(response);
 

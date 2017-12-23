@@ -180,20 +180,31 @@ var CountryProfile = function (_Element) {
         }
     }, {
         key: 'loadData',
-        value: function loadData(country) {
+        value: function loadData(iso) {
             var deferred = $.Deferred();
             var that = this;
             this.data = [];
             this.filteredData = [];
 
-            d3.csv('https://api.acleddata.com/acled/read.csv?country=' + country + '&limit=0&fields=actor1|actor2|year|event_date|event_type|interaction|fatalities|latitude|longitude|admin1|country', function (data) {
+            var countryFields = ['iso', 'actor1', 'actor2', 'event_date', 'event_type', 'interaction', 'fatalities', 'latitude', 'longitude', 'admin1'];
+
+            var urlForCountryData = createUrlForAPI({
+                limit: '0',
+                // iso,
+                country: this.country,
+                fields: countryFields.join('|')
+            });
+
+            d3.csv(urlForCountryData, function (data) {
                 data.forEach(function (row) {
                     row.event_type = getAcledEventName(row.event_type.toLowerCase());
-                    row.country = row.country.toLowerCase();
+                    row.year = row.event_date.slice(0, 4);
+                    row.iso = row.iso.padLeft(3, '0');
+                    // row.country = row.country.toLowerCase();
                 });
                 that.data = data;
                 that.data = that.data.filter(function (x) {
-                    return compareCountryNames(x.country, country);
+                    return x.iso === iso;
                 });
                 that.admin1s = that.data.map(function (x) {
                     return x.admin1 || '';
@@ -222,9 +233,11 @@ var CountryProfile = function (_Element) {
         }
     }, {
         key: 'show',
-        value: function show(country, geoJSON) {
+        value: function show(iso) {
             var _this2 = this;
 
+            this.iso = iso;
+            var country = countriesByCode[iso];
             this.country = country;
             $('html').css('overflow', 'hidden');
 
@@ -232,15 +245,15 @@ var CountryProfile = function (_Element) {
 
             this.element.fadeIn('fast', function () {
                 that.header.element.find('#country-name').text(country);
-                that.countryReport.load(country);
-                that.timeSeries.load(country);
-                that.barChart.load(country);
-                that.timeline.load(country);
+                that.countryReport.load(iso);
+                that.timeSeries.load();
+                that.barChart.load();
+                that.timeline.load(iso);
 
-                that.loadData(country).then(function () {
+                that.loadData(iso).then(function () {
                     that.filterWrapper.init(that.admin1s);
 
-                    if (country == 'sudan') {
+                    if (iso === '729') {
                         that.filterWrapper.setDefaultStartDate('2013-01-01');
                     }
                     that.applyFilters();
