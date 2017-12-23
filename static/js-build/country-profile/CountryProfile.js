@@ -229,7 +229,7 @@ var CountryProfile = function (_Element) {
         value: function render() {
             this.timeSeries.render(this.filteredData);
             this.barChart.render(this.filteredData);
-            this.countryMap.load(this.country, this.filteredData);
+            this.countryMap.load(this.iso, this.filteredData);
         }
     }, {
         key: 'show',
@@ -237,7 +237,7 @@ var CountryProfile = function (_Element) {
             var _this2 = this;
 
             this.iso = iso;
-            var country = countriesByCode[iso];
+            var country = acledCountriesISO[iso];
             this.country = country;
             $('html').css('overflow', 'hidden');
 

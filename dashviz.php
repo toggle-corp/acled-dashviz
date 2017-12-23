@@ -9,8 +9,8 @@ Version: 1.0
 
 define( 'DASHVIZ__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-$adminModifiedTimestamp='360344032';
-$clientModifiedTimestamp='360444032';
+$adminModifiedTimestamp='360344035';
+$clientModifiedTimestamp='360444035';
 
 
 class DashboardVisualization {

@@ -82,31 +82,16 @@ class CrisisProfile extends Element {
             //openOnFocus: false,
             render: {
                 option: function(item, escape) {
-                    return '<div class="crisis-profile-select-item"><div class="title">'+escape(item.title)+'</div><div class="country">'+escape(item.country)+'</div></div>';
+                    return `
+                        <div class="crisis-profile-select-item">
+                            <div class="title">${escape(item.title)}</div>
+                            <div class="country">${escape(acledCountriesISO[item.country])}</div>
+                        </div>
+                    `;
                 }
             },
             onChange: function(val) {
                 if(val) {
-                    /*
-                    that.loadCrisisProfile(crisisProfiles[val]);
-                    that.keyFiguresSection.load(crisisProfiles[val].country);
-
-                    if(crisisProfiles[val]['recent-event-url']) {
-                        that.recentEventsSection.element.find('a').prop('href', crisisProfiles[val]['recent-event-url']).css('display', 'block');
-                    } else {
-                        that.recentEventsSection.element.find('a').prop('href', '#').css('display', 'none');
-                    }
-
-                    if(crisisProfiles[val]['recent-event-img']) {
-                        that.recentEventsSection.element.find('img').prop('src', crisisProfiles[val]['recent-event-img']).removeClass('no-img');
-                        that.recentEventsSection.element.find('#report-image-empty').css('display', 'none');
-                        that.recentEventsSection.element.find('a').css('display', 'block');
-                    } else {
-                        that.recentEventsSection.element.find('img').prop('src', '').addClass('no-img');
-                        that.recentEventsSection.element.find('a').css('display', 'none');
-                        that.recentEventsSection.element.find('#report-image-empty').css('display', 'flex');
-                    }
-                    */
                     that.renderData(val);
                 }
             }
@@ -140,27 +125,6 @@ class CrisisProfile extends Element {
     load() {
         if(crisisProfiles.length > 0) {
             this.renderData(0);
-            /*
-            this.loadCrisisProfile(crisisProfiles[0]);
-            this.keyFiguresSection.load(crisisProfiles[0].country);
-
-            if(crisisProfiles[0]['recent-event-url']) {
-                this.recentEventsSection.element.find('a').prop('href', crisisProfiles[0]['recent-event-url']).css('display', 'block');
-            } else {
-                this.recentEventsSection.element.find('a').prop('href', '#').css('display', 'none');
-            }
-
-            if(crisisProfiles[0]['recent-event-img']) {
-                this.recentEventsSection.element.find('img').prop('src', crisisProfiles[0]['recent-event-img']).removeClass('no-img');
-                this.recentEventsSection.element.find('#report-image-empty').css('display', 'none');
-                this.recentEventsSection.element.find('a').css('display', 'block');
-            } else {
-                this.recentEventsSection.element.find('img').prop('src', '').addClass('no-img');
-                this.recentEventsSection.element.find('a').css('display', 'none');
-                this.recentEventsSection.element.find('#report-image-empty').css('display', 'flex');
-            }
-            */
-
         }
     }
 }

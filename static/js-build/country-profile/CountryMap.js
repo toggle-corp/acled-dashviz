@@ -77,7 +77,7 @@ var CountryMap = function (_Element) {
         }
     }, {
         key: 'load',
-        value: function load(country, countryData) {
+        value: function load(iso, countryData) {
             this.reset();
             var that = this;
             var currentLayer = null;
@@ -85,7 +85,7 @@ var CountryMap = function (_Element) {
             $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function (data) {
                 that.geoJsonLayer = L.geoJson(data, {
                     onEachFeature: function onEachFeature(feature, layer) {
-                        if (compareCountryNames(country, feature.properties.geounit)) {
+                        if (feature.properties.iso_n3 === iso) {
                             layer.setStyle({
                                 fillOpacity: 0,
                                 stroke: true,

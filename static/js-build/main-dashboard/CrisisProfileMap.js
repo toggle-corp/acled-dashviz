@@ -38,7 +38,7 @@ var CrisisProfileMap = function (_Element) {
             $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function (data) {
                 that.geoJsonLayer = L.geoJson(data, {
                     onEachFeature: function onEachFeature(feature, layer) {
-                        if (compareCountryNames(country, feature.properties.admin)) {
+                        if (feature.properties.iso_n3 === country) {
                             layer.setStyle({
                                 fillColor: '#2c3e50',
                                 fillOpacity: 0,

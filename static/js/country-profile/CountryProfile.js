@@ -206,12 +206,12 @@ class CountryProfile extends Element {
     render() {
         this.timeSeries.render(this.filteredData);
         this.barChart.render(this.filteredData);
-        this.countryMap.load(this.country, this.filteredData);
+        this.countryMap.load(this.iso, this.filteredData);
     }
      
     show (iso) {
         this.iso = iso;
-        const country = countriesByCode[iso];
+        const country = acledCountriesISO[iso];
         this.country = country;
         $('html').css('overflow', 'hidden');
          

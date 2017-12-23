@@ -124,9 +124,8 @@ $(document).ready(function() {
         if (url) {
             url = (url.indexOf('://') === -1) ? 'http://' + url: url;
         }
-            
         
-        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'end-date': newCrisisEndDateInput.val(), 'country': newCrisisCountryInput.text(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage }); 
+        crisisProfiles.push({'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'end-date': newCrisisEndDateInput.val(), 'country': newCrisisCountryInput.val(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage }); 
         refreshCrisisList();
 
         newCrisis.find('input').val('');
@@ -142,7 +141,7 @@ $(document).ready(function() {
         let cp = crisisProfiles[index];
 
         cp.title = ecm.find('.crisis-title').val(); 
-        cp.country = ecm.find('.crisis-country option:selected').text();
+        cp.country = ecm.find('.crisis-country option:selected').val();
         cp.date = ecm.find('.crisis-date').val();
         cp['end-date'] = ecm.find('.crisis-end-date').val();
         cp.description = ecm.find('.crisis-description').val();
@@ -247,7 +246,7 @@ $(document).ready(function() {
          
         crisisElement.find('.crisis-title').text(title);
         crisisElement.find('.crisis-date').text(date + ' to ' + (endDate? endDate : '-'));
-        crisisElement.find('.crisis-country').text(country);
+        crisisElement.find('.crisis-country').text(acledCountriesByCode[country]);
         crisisElement.find('.crisis-description').text(description);
          
         crisisElement.css('display', 'flex');
@@ -600,7 +599,7 @@ function editCrisis(caller) {
     let ecm = $('#edit-crisis-modal');
 
     ecm.find('.crisis-title').val(cp.title);
-    ecm.find('.crisis-country').val(getCountryKey(cp.country));
+    ecm.find('.crisis-country').val(cp.country);
     ecm.find('.crisis-date').val(cp.date);
     ecm.find('.crisis-end-date').val(cp['end-date']);
     ecm.find('.crisis-description').val(cp.description);

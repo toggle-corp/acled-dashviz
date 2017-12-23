@@ -47,7 +47,7 @@ class CountryMap extends Element {
         }
     }
 
-    load(country, countryData) {
+    load(iso, countryData) {
         this.reset();
         let that = this;
         let currentLayer = null;
@@ -55,7 +55,7 @@ class CountryMap extends Element {
         $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
             that.geoJsonLayer = L.geoJson(data, {
                 onEachFeature: function(feature, layer) {
-                    if (compareCountryNames(country, feature.properties.geounit)) {
+                    if (feature.properties.iso_n3 === iso) {
                         layer.setStyle({
                             fillOpacity: 0,
                             stroke: true,
