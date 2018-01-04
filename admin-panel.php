@@ -57,14 +57,15 @@
             </div>
             <div class="input-group">
                 <label>Url</label>
-                <input type="text" id="report-url-input">
+                <input type="text" id="report-url-input" placeholder="eg: https://www.example.com/report">
             </div>
             <div class="input-group">
                 <label>Image</label>
-                <input type="file"  accept="image/*" id="report-image-input">
+                <input type="file" accept="image/*" id="report-image-input">
             </div>
+            <button id="clear-report-img-preview-button" disabled>Clear preview</button>
             <img id="report-img-preview" class="preview" alt="no preview available">
-            <div class="save-button-container">
+            <div class="save-button-container" style="margin-top: 16px">
                 <i class="fa fa-save"></i>
                 <i class="fa fa-spin fa-circle-o-notch" hidden></i>
                 <button onclick="submitReportCountry(this)">Save</button>

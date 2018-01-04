@@ -1,7 +1,6 @@
 let timelineData = [];
 let reportData = {};
 
-
 const acledCountriesByCode = {
     "012":"Algeria",
     "024":"Angola",
@@ -90,6 +89,11 @@ $(document).ready(function() {
         } 
     }
 
+    $('#clear-report-img-preview-button').on('click', function() {
+        $('#report-img-preview').attr('src', '');
+    });
+
+
     $('#report-image-input').on('change', function() {
         loadImage(this, '#report-img-preview');
     });
@@ -119,7 +123,7 @@ $(document).ready(function() {
         let newCrisisDescriptionInput = newCrisis.find('.crisis-description');
          
         let url = newCrisis.find('.crisis-recent-event-url').val();
-        let newCrisisRecentEventImage = newCrisis.find('.preview').prop('src');
+        let newCrisisRecentEventImage = newCrisis.find('.preview').attr('src');
         
         if (url) {
             url = (url.indexOf('://') === -1) ? 'http://' + url: url;
@@ -129,7 +133,7 @@ $(document).ready(function() {
         refreshCrisisList();
 
         newCrisis.find('input').val('');
-        newCrisis.find('.preview').prop('src', '');
+        newCrisis.find('.preview').attr('src', '');
 
         hideModal();
     });
@@ -152,7 +156,7 @@ $(document).ready(function() {
         }
 
         cp['recent-event-url'] = url;
-        cp['recent-event-img'] = ecm.find('.preview').prop('src');
+        cp['recent-event-img'] = ecm.find('.preview').attr('src');
 
         refreshCrisisList();
         hideModal();
@@ -168,7 +172,6 @@ $(document).ready(function() {
             }  
         });
     }
-
 
     $('#timeline-country-select').on('change', function() {
         if($(this).val()) {
@@ -193,6 +196,7 @@ $(document).ready(function() {
      $('#report-country-select').on('change', function() {
         if($(this).val()) {
             $('#country-reports input').prop('disabled', false);
+            $('#country-reports button').prop('disabled', false);
             $.ajax({
                 type: "GET",
                 url: $(this).data('target')+$(this).val(), 
@@ -204,6 +208,7 @@ $(document).ready(function() {
 
         } else {
             $('#country-reports input').prop('disabled', true);
+            $('#country-reports button').prop('disabled', true);
         } 
     });
 
@@ -264,7 +269,7 @@ $(document).ready(function() {
 
         if(recentEventImage) {
             let re = crisisElement.find('.crisis-recent-event');
-            re.find('img').prop('src', recentEventImage);
+            re.find('img').attr('src', recentEventImage);
             re.find('a').prop('href', recentEventUrl);
         }
     }
@@ -333,7 +338,7 @@ function submitCarouselData(caller, formSelector, urlInputSelector) {
         success: function(response) {
             if(response && response=='success') {
                 let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('.input-group'));
-                setTimeout(()=>{successMsg.hide();}, 1000);
+                setTimeout(()=>{successMsg.remove();}, 1000);
                 hideProgress(caller);
             }
         },
@@ -358,7 +363,7 @@ function submitCrisisProfiles(caller) {
             console.log(response);
             if(response && response=='success') {
                 let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#crisis-profile-report'));
-                setTimeout(()=>{successMsg.hide();}, 1000);
+                setTimeout(()=>{successMsg.remove();}, 1000);
                 hideProgress(caller);
             }
         },
@@ -388,7 +393,7 @@ function submitTimelineCountry(caller) {
             console.log(response);
             if(response && response=='success') {
                 let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#timeline'));
-                setTimeout(()=>{successMsg.hide();}, 1000);
+                setTimeout(()=>{successMsg.remove();}, 1000);
                 hideProgress(caller);
             }
         }
@@ -414,9 +419,10 @@ function submitReportCountry(caller) {
                 console.log(response);
                 if(response && response=='success') {
                     let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#country-reports'));
-                    setTimeout(()=>{successMsg.hide();}, 1000);
+                    setTimeout(()=>{successMsg.remove();}, 1000);
                 }
                 hideProgress(caller);
+                loadReportData();
             },
             error: function(error) {
                 console.log(error);
@@ -441,7 +447,7 @@ function submitRecentEvent(caller) {
             console.log(response);
             if(response && response=='success') {
                 let successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#recent-event'));
-                setTimeout(()=>{successMsg.hide();}, 1000);
+                setTimeout(()=>{successMsg.remove();}, 1000);
             }
             hideProgress(caller);
         },
@@ -469,7 +475,7 @@ function addTimelineElement(num='00', title='Title', description='Description', 
     desc.on('click', () => { document.execCommand('selectAll', false, null); });
 
     if(img) {
-        newElement.find('img').prop('src', img);
+        newElement.find('img').attr('src', img);
     }
     newElement.find('button').on('click', function() {
         $(this).closest('.timeline-element').remove();
@@ -478,7 +484,7 @@ function addTimelineElement(num='00', title='Title', description='Description', 
 
 function loadTimelineData() {
     if (timelineData.staticImage) {
-        $('#timeline-static-image-preview').prop('src', timelineData.img);
+        $('#timeline-static-image-preview').attr('src', timelineData.img);
         $('#timeline-use-static-check').prop('checked', true);
     } else {
         $('#timeline-use-static-check').prop('checked', false);
@@ -498,7 +504,7 @@ function grabTimelineData() {
     timelineData = {};
     if ($('#timeline-use-static-check').prop('checked')) {
         timelineData.staticImage = true;
-        timelineData.img = $('#timeline-static-image-preview').prop('src');
+        timelineData.img = $('#timeline-static-image-preview').attr('src');
     } else {
         timelineData.staticImage = false;
         timelineData.timelineElements = [];
@@ -509,7 +515,7 @@ function grabTimelineData() {
                 'num': el.find('.number').find('span').text(),
                 'title': el.find('h5').text(),
                 'description': el.find('p').text(),
-                'img': el.find('img').prop('src')
+                'img': el.find('img').attr('src')
             });
         });
     }
@@ -517,8 +523,8 @@ function grabTimelineData() {
 
 function loadReportData() {
     let cr = $('#country-reports');
-    $('#country-reports input').val('');
-    $('#country-reports .preview').prop('src', '');
+    cr.find('input').val('');
+    cr.find('#report-img-preview').attr('src', '');
 
     if (reportData.title) {
         cr.find('#report-title-input').val(reportData.title);
@@ -529,12 +535,13 @@ function loadReportData() {
     if (reportData.date) {
         cr.find('#report-date-input').val(reportData.date);
     }
+
     if (reportData.url) {
         cr.find('#report-url-input').val(reportData.url);
     }
      
     if (reportData.img && reportData.img.length > 0) {
-        cr.find('#report-img-preview').prop('src', reportData.img);
+        cr.find('#report-img-preview').attr('src', reportData.img);
     }
 }
 
@@ -546,15 +553,16 @@ function grabReportData() {
     let summary = cr.find('#report-summary-input').val();
     let date = cr.find('#report-date-input').val();
     let url = cr.find('#report-url-input').val();
-    let img = cr.find('#report-img-preview').prop('src');
+    url = (url.indexOf('://') === -1) ? 'http://' + url: url;
 
-    if(title && summary && date && url && img) {
+    let img = cr.find('#report-img-preview').attr('src');
+
+    if(title && summary && date && url) {
         reportData.title = title;
         reportData.summary = summary;
         reportData.date = date;
         reportData.url = url;
         reportData.img = img;
-         
         return true;
     } else {
         alert('please fill all the report data first');
@@ -569,7 +577,7 @@ function grabRecentEventData() {
     url = (url.indexOf('://') === -1) ? 'http://' + url : url;
     $('#recent-event-url-input').val(url);
 
-    let img = $('#recent-event-image-preview').prop('src');
+    let img = $('#recent-event-image-preview').attr('src');
 
     if(url && img) {
         recentEvent.url = url;
@@ -588,7 +596,7 @@ function loadRecentEvent() {
         $('#recent-event-url-input').val(recentEvent.url);
     }
     if (recentEvent.img && recentEvent.img.length > 0) {
-        $('#recent-event-image-preview').prop('src', recentEvent.img);
+        $('#recent-event-image-preview').attr('src', recentEvent.img);
     }
 }
 
@@ -605,7 +613,7 @@ function editCrisis(caller) {
     ecm.find('.crisis-description').val(cp.description);
 
     ecm.find('.crisis-recent-event-url').val(cp['recent-event-url']);
-    ecm.find('.preview').prop('src', cp['recent-event-img'] || '');
+    ecm.find('.preview').attr('src', cp['recent-event-img'] || '');
 
     ecm.data('crisis-index', index);
 

@@ -71,5 +71,12 @@
                 padding: 10px 0;
             }
         }
+
+        &.no-preview {
+            .details {
+                flex-basis: 100%;
+                padding: 0 24px 10px;
+            }
+        }
     }
 }

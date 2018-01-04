@@ -237,6 +237,9 @@
           #country-profile .scroll-wrapper #country-report-container .content .details a {
             flex-shrink: 0;
             padding: 10px 0; }
+        #country-profile .scroll-wrapper #country-report-container .content.no-preview .details {
+          flex-basis: 100%;
+          padding: 0 24px 10px; }
     #country-profile .scroll-wrapper #time-series-container {
       flex-basis: calc(50% - 8px);
       position: relative;

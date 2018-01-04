@@ -44,9 +44,15 @@ class CountryReport extends Element {
                     re.find('h5').text(report.title);
                     re.find('p').text(report.summary);
                     re.find('date').text(report.date);
-                    re.find('img').prop('src', report.img);
                     re.find('a').prop('href', report.url);
-
+                    if (report.img) {
+                        re.find('.preview').show();
+                        re.find('img').prop('src', report.img);
+                        re.removeClass('no-preview');
+                    } else {
+                        re.addClass('no-preview');
+                        re.find('.preview').hide();
+                    }
                     that.emptyElement.element[0].style.display = 'none';
                     that.content.element[0].style.display = 'flex';
                 } else {
