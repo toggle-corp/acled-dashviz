@@ -18,7 +18,7 @@ var CountryReport = function (_Element) {
 
         _this.header = new Element('<header><h4>Summary of Political Violence and Protest</h4></header>');
         _this.emptyElement = new Element('<div id="country-report-empty">Not available</div>');
-        _this.content = new Element('\n            <div class="content" hidden>\n                <div class="preview">\n                    <img>\n                </div>\n                <div class="details">\n                    <h5></h5>\n                    <date></date>\n                    <p></p>\n                    <a>Go to report</a>\n                </div>\n            </div>\n            ');
+        _this.content = new Element('\n            <div class="content" hidden>\n                <div class="preview">\n                    <img>\n                </div>\n                <div class="details">\n                    <h5></h5>\n                    <date></date>\n                    <p></p>\n                    <a target="_blank">Go to analysis</a>\n                </div>\n            </div>\n            ');
 
         _this.childElements.push(_this.header);
         _this.childElements.push(_this.emptyElement);
