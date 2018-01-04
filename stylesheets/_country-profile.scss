@@ -10,7 +10,7 @@
 
     .scroll-wrapper {
         display: flex;
-        align-items: center;
+        align-items: stretch;
         justify-content: space-between;
         flex-wrap: wrap;
         padding: 10px 16px;
@@ -123,6 +123,7 @@
             #time-series-container {
                 flex-basis: 100%;
             }
+
             #bar-chart-container {
                 flex-basis: 100%;
             }

@@ -7,7 +7,7 @@
   z-index: 1111; }
   #country-profile .scroll-wrapper {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 10px 16px;
@@ -158,21 +158,21 @@
           #country-profile .scroll-wrapper #country-map-container .legend .legend-elements .legend-element {
             display: flex;
             align-items: center;
-            padding: 4px 10px;
+            padding: 4px 6px;
             cursor: pointer;
             user-select: none;
             opacity: 0.2; }
             #country-profile .scroll-wrapper #country-map-container .legend .legend-elements .legend-element input {
               display: none; }
             #country-profile .scroll-wrapper #country-map-container .legend .legend-elements .legend-element .color-box {
-              width: 12px;
-              height: 12px;
+              width: 10px;
+              height: 10px;
               flex-grow: 0;
               flex-shrink: 0;
               border-radius: 50%; }
             #country-profile .scroll-wrapper #country-map-container .legend .legend-elements .legend-element .name {
               display: inline-block;
-              margin-left: 6px;
+              margin-left: 4px;
               user-select: none; }
               #country-profile .scroll-wrapper #country-map-container .legend .legend-elements .legend-element .name:first-letter {
                 text-transform: uppercase; }
@@ -292,21 +292,21 @@
           #country-profile .scroll-wrapper #time-series-container .legend .legend-elements .legend-element {
             display: flex;
             align-items: center;
-            padding: 4px 10px;
+            padding: 4px 6px;
             cursor: pointer;
             user-select: none;
             opacity: 0.2; }
             #country-profile .scroll-wrapper #time-series-container .legend .legend-elements .legend-element input {
               display: none; }
             #country-profile .scroll-wrapper #time-series-container .legend .legend-elements .legend-element .color-box {
-              width: 12px;
-              height: 12px;
+              width: 10px;
+              height: 10px;
               flex-grow: 0;
               flex-shrink: 0;
               border-radius: 50%; }
             #country-profile .scroll-wrapper #time-series-container .legend .legend-elements .legend-element .name {
               display: inline-block;
-              margin-left: 6px;
+              margin-left: 4px;
               user-select: none; }
               #country-profile .scroll-wrapper #time-series-container .legend .legend-elements .legend-element .name:first-letter {
                 text-transform: uppercase; }
@@ -830,21 +830,21 @@ body #dashboard-container #main-dashboard {
           body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element {
             display: flex;
             align-items: center;
-            padding: 4px 10px;
+            padding: 4px 6px;
             cursor: pointer;
             user-select: none;
             opacity: 0.2; }
             body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element input {
               display: none; }
             body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element .color-box {
-              width: 12px;
-              height: 12px;
+              width: 10px;
+              height: 10px;
               flex-grow: 0;
               flex-shrink: 0;
               border-radius: 50%; }
             body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element .name {
               display: inline-block;
-              margin-left: 6px;
+              margin-left: 4px;
               user-select: none; }
               body #dashboard-container #main-dashboard #left-section .map-container .legend .legend-elements .legend-element .name:first-letter {
                 text-transform: uppercase; }
@@ -915,21 +915,21 @@ body #dashboard-container #main-dashboard {
           body #dashboard-container #main-dashboard #left-section #main-page-graphs-container .legend .legend-elements .legend-element {
             display: flex;
             align-items: center;
-            padding: 4px 10px;
+            padding: 4px 6px;
             cursor: pointer;
             user-select: none;
             opacity: 0.2; }
             body #dashboard-container #main-dashboard #left-section #main-page-graphs-container .legend .legend-elements .legend-element input {
               display: none; }
             body #dashboard-container #main-dashboard #left-section #main-page-graphs-container .legend .legend-elements .legend-element .color-box {
-              width: 12px;
-              height: 12px;
+              width: 10px;
+              height: 10px;
               flex-grow: 0;
               flex-shrink: 0;
               border-radius: 50%; }
             body #dashboard-container #main-dashboard #left-section #main-page-graphs-container .legend .legend-elements .legend-element .name {
               display: inline-block;
-              margin-left: 6px;
+              margin-left: 4px;
               user-select: none; }
               body #dashboard-container #main-dashboard #left-section #main-page-graphs-container .legend .legend-elements .legend-element .name:first-letter {
                 text-transform: uppercase; }

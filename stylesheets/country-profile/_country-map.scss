@@ -25,10 +25,6 @@
     }
      
     @import '../map-legend';
-    .legend {
-        //height: 96px;
-    }
-     
     
     @media screen and (max-width: 1080px) {
         height: auto;
@@ -36,6 +32,7 @@
         #country-map {
             height: 380px;
         }
+
         .legend {
             height: auto;
         }
