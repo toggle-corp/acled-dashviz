@@ -233,6 +233,7 @@
             flex-grow: 1;
             margin: 0;
             padding: 10px 0;
+            text-align: justify;
             overflow-y: auto; }
           #country-profile .scroll-wrapper #country-report-container .content .details a {
             flex-shrink: 0;
