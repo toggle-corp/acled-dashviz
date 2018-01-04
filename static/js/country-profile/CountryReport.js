@@ -13,7 +13,7 @@ class CountryReport extends Element {
                     <h5></h5>
                     <date></date>
                     <p></p>
-                    <a>Go to report</a>
+                    <a target="_blank">Go to analysis</a>
                 </div>
             </div>
             `);

@@ -237,7 +237,8 @@
             overflow-y: auto; }
           #country-profile .scroll-wrapper #country-report-container .content .details a {
             flex-shrink: 0;
-            padding: 10px 0; }
+            padding: 10px 0;
+            text-trasform: uppercase; }
         #country-profile .scroll-wrapper #country-report-container .content.no-preview .details {
           flex-basis: 100%;
           padding: 0 24px 10px; }
