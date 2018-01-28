@@ -188,8 +188,7 @@ class CountryProfile extends Element {
                 row.iso = row.iso.padLeft(3, '0');
                 // row.country = row.country.toLowerCase();
             });
-            that.data = data;
-            that.data = that.data.filter(x => x.iso === iso);
+            that.data = data.filter(x => x.iso === iso);
             that.admin1s = that.data.map(x => x.admin1 || '').sort().filter((item, pos, array) => !pos || item != array[pos - 1]); 
 
             // remove the empty ones 

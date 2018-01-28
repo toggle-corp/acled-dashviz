@@ -22,13 +22,13 @@ var KeyFigures = function (_Element) {
         _this.childElements.push(_this.keyFigureList);
 
         _this.keyFigureTemplate = $('<div class="key-figure"><label></label><span class="number"><i class="fa fa-spinner fa-spin fa-fw"></i></span></div>');
-
         return _this;
     }
 
     _createClass(KeyFigures, [{
         key: 'load',
-        value: function load(country, startDate, endDate) {
+        value: function load(iso, startDate, endDate) {
+            var country = acledCountriesISO[iso];
             //let countryData = acledData.filter(x => compareCountryNames(x.country, country));
 
             var numberOfEvents = this.keyFigureTemplate.clone();
@@ -50,101 +50,86 @@ var KeyFigures = function (_Element) {
             startDate = new Date(startDate ? startDate : 0);
             endDate = endDate ? new Date(endDate) : new Date();
 
-            $.ajax({
-                method: 'GET',
-                url: 'https://api.acleddata.com/acled/read',
-                data: {
-                    'limit': '0',
-                    'country': country,
-                    'fields': 'fatalities|country|event_date'
-                },
-                success: function success(response) {
-                    if (response && response.data) {
-                        response.data = response.data.filter(function (x) {
-                            return compareCountryNames(x.country, country) && startDate <= new Date(x.event_date) && endDate >= new Date(x.event_date);
-                        });
+            var crisisProfileFields = ['iso', 'actor1', 'actor2', 'event_date', 'fatalities', 'inter1', 'inter2'];
 
-                        numberOfEvents.find('.number').text(response.data.length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-
-                        fatalities.find('.number').text(response.data.length === 0 ? '0' : response.data.reduce(function (a, b) {
-                            return { 'fatalities': +a.fatalities + +b.fatalities };
-                        }).fatalities.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                    }
-                }
+            var urlForCrisisProfileData = createUrlForAPI({
+                limit: '0',
+                // iso,
+                country: country,
+                fields: crisisProfileFields.join('|')
             });
 
-            $.ajax({
-                method: 'GET',
-                url: 'https://api.acleddata.com/acled/read',
-                data: {
-                    'limit': '0',
-                    'country': country,
-                    'fields': 'inter1|inter2|fatalities|actor1|actor2|country|event_date'
-                },
-                success: function success(response) {
-                    function isArmedActiveAgentCode(interCode) {
-                        var armedActiveAgents = [1, 2, 3, 4, 8];
-                        return armedActiveAgents.indexOf(interCode) > -1;
+            var isDateInRange = function isDateInRange(d, d1, d2) {
+                return d1 <= new Date(d) && d2 >= new Date(d);
+            };
+            var formatNumber = function formatNumber(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            };
+            var isArmedActiveAgentCode = function isArmedActiveAgentCode(interCode) {
+                var armedActiveAgents = [1, 2, 3, 4, 8];
+                return armedActiveAgents.indexOf(interCode) > -1;
+            };
+
+            d3.csv(urlForCrisisProfileData, function (data) {
+                if (data) {
+                    var requiredData = data.filter(function (x) {
+                        return x.iso === iso && isDateInRange(x.event_date, startDate, endDate);
+                    });
+
+                    var numEvents = formatNumber(requiredData.length);
+                    numberOfEvents.find('.number').text(numEvents);
+
+                    var totalFatalities = 0;
+                    if (requiredData.length > 0) {
+                        totalFatalities = requiredData.reduce(function (a, b) {
+                            return { 'fatalities': +a.fatalities + +b.fatalities };
+                        }).fatalities;
                     }
+                    fatalities.find('.number').text(formatNumber(totalFatalities));
 
-                    if (response && response.data) {
-                        var events = response.data.filter(function (x) {
-                            return compareCountryNames(x.country, country) && startDate <= new Date(x.event_date) && endDate >= new Date(x.event_date);
-                        });
-                        var civilianEvents = events.filter(function (x) {
-                            return x.inter1 == 7 || x.inter2 == 7;
-                        });
-                        var armedActiveAgentEvents = events.filter(function (x) {
-                            return isArmedActiveAgentCode(+x.inter1) || isArmedActiveAgentCode(+x.inter2);
-                        });
+                    var civilianEvents = requiredData.filter(function (x) {
+                        return x.inter1 == 7 || x.inter2 == 7;
+                    });
+                    var totalCivilianDeaths = 0;
+                    for (var i = 0; i < civilianEvents.length; i++) {
+                        totalCivilianDeaths += +civilianEvents[i].fatalities;
+                    }
+                    numberOfCivilianDeaths.find('.number').text(formatNumber(totalCivilianDeaths));
 
-                        var totalCivilianDeaths = 0;
-                        var armedActiveAgents = {};
+                    var armedActiveAgentEvents = requiredData.filter(function (x) {
+                        return isArmedActiveAgentCode(+x.inter1) || isArmedActiveAgentCode(+x.inter2);
+                    });
 
-                        for (var i = 0; i < civilianEvents.length; i++) {
-                            totalCivilianDeaths += +civilianEvents[i].fatalities;
-                        }
+                    var armedActiveAgents = {};
+                    for (var _i = 0; _i < armedActiveAgentEvents.length; _i++) {
+                        var cd = armedActiveAgentEvents[_i];
 
-                        for (var _i = 0; _i < armedActiveAgentEvents.length; _i++) {
-                            var cd = armedActiveAgentEvents[_i];
-
-                            if (isArmedActiveAgentCode(+cd.inter1) && cd.actor1) {
-                                if (!armedActiveAgents[cd.actor1]) {
-                                    armedActiveAgents[cd.actor1] = 0;
-                                }
-
-                                ++armedActiveAgents[cd.actor1];
+                        if (isArmedActiveAgentCode(+cd.inter1) && cd.actor1) {
+                            if (!armedActiveAgents[cd.actor1]) {
+                                armedActiveAgents[cd.actor1] = 0;
                             }
 
-                            if (isArmedActiveAgentCode(+cd.inter2) && cd.actor2) {
-                                if (!armedActiveAgents[cd.actor2]) {
-                                    armedActiveAgents[cd.actor2] = 0;
-                                }
-                                ++armedActiveAgents[cd.actor2];
-                            }
+                            ++armedActiveAgents[cd.actor1];
                         }
 
-                        numberOfCivilianDeaths.find('.number').text(totalCivilianDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                        numberOfArmedActiveAgents.find('.number').text(Object.keys(armedActiveAgents).length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                    } else {
-                        numberOfCivilianDeaths.find('.number').text('N/A');
-                        numberOfArmedActiveAgents.find('.number').text('N/A');
+                        if (isArmedActiveAgentCode(+cd.inter2) && cd.actor2) {
+                            if (!armedActiveAgents[cd.actor2]) {
+                                armedActiveAgents[cd.actor2] = 0;
+                            }
+                            ++armedActiveAgents[cd.actor2];
+                        }
                     }
-                },
-                error: function error(_error) {
-                    console.log(_error);
-                    numberOfCivilianDeaths.find('.number').text('N/A');
-                    numberOfArmedActiveAgents.find('.number').text('N/A');
+
+                    var totalArmedActiveAgents = Object.keys(armedActiveAgents).length;
+                    numberOfArmedActiveAgents.find('.number').text(formatNumber(totalArmedActiveAgents));
                 }
             });
 
             this.keyFigureList.element.empty();
-
             numberOfEvents.appendTo(this.keyFigureList.element);
             fatalities.appendTo(this.keyFigureList.element);
             numberOfCivilianDeaths.appendTo(this.keyFigureList.element);
             numberOfArmedActiveAgents.appendTo(this.keyFigureList.element);
-            //this.keyFigureList.element
         }
     }]);
 

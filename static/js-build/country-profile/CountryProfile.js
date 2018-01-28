@@ -202,8 +202,7 @@ var CountryProfile = function (_Element) {
                     row.iso = row.iso.padLeft(3, '0');
                     // row.country = row.country.toLowerCase();
                 });
-                that.data = data;
-                that.data = that.data.filter(function (x) {
+                that.data = data.filter(function (x) {
                     return x.iso === iso;
                 });
                 that.admin1s = that.data.map(function (x) {
