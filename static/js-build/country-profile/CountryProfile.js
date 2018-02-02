@@ -90,7 +90,7 @@ var CountryProfile = function (_Element) {
     }, {
         key: 'applyFilters',
         value: function applyFilters() {
-            this.filteredData = $.extend(true, [], this.data);
+            this.filteredData = jQ3.extend(true, [], this.data);
 
             this.filterByEvents();
             this.filterByInteraction();
@@ -103,14 +103,14 @@ var CountryProfile = function (_Element) {
 
             var filterInfoWrapper = this.header.element.find('.filter-info-wrapper');
             filterInfoWrapper.empty();
-            $(new FilterInfo(this.filterWrapper.getAppliedFilters()).html).appendTo(filterInfoWrapper);
+            jQ3(new FilterInfo(this.filterWrapper.getAppliedFilters()).html).appendTo(filterInfoWrapper);
         }
     }, {
         key: 'filterByEvents',
         value: function filterByEvents() {
             var container = this.filterWrapper.element.find('.filter-event-type .content');
             var requiredEvents = container.find('input[type="checkbox"]:checked').map(function () {
-                return $(this).data('target');
+                return jQ3(this).data('target');
             }).get();
 
             this.filteredData = this.filteredData.filter(function (x) {
@@ -124,7 +124,7 @@ var CountryProfile = function (_Element) {
         value: function filterByAdmin1s() {
             var container = this.filterWrapper.element.find('.filter-admin1 .selected-admin1s');
             var requiredAdmin1s = container.find('.selected-admin1').map(function () {
-                return $(this).find('.name').text();
+                return jQ3(this).find('.name').text();
             }).get();
 
             if (requiredAdmin1s.length > 0) {
@@ -140,7 +140,7 @@ var CountryProfile = function (_Element) {
         value: function filterByInteraction() {
             var container = this.filterWrapper.element.find('.filter-interaction .content');
             var requiredActors = container.find('input[type="checkbox"]:checked').map(function () {
-                return $(this).data('target');
+                return jQ3(this).data('target');
             }).get();
 
             this.filteredData = this.filteredData.filter(function (x) {
@@ -187,7 +187,7 @@ var CountryProfile = function (_Element) {
         value: function loadData(iso) {
             this.loadingAnimation.show();
 
-            var deferred = $.Deferred();
+            var deferred = jQ3.Deferred();
             var that = this;
             this.data = [];
             this.filteredData = [];
@@ -245,7 +245,7 @@ var CountryProfile = function (_Element) {
             this.iso = iso;
             var country = acledCountriesISO[iso];
             this.country = country;
-            $('html').css('overflow', 'hidden');
+            jQ3('html').css('overflow', 'hidden');
 
             var that = this;
 
@@ -276,7 +276,7 @@ var CountryProfile = function (_Element) {
     }, {
         key: 'hide',
         value: function hide() {
-            $('html').css('overflow', 'auto');
+            jQ3('html').css('overflow', 'auto');
             this.countryMap.reset(true);
             this.countryMap.mapLegend.clearLegendElements();
             this.timeSeries.mapLegend.clearLegendElements();

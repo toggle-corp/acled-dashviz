@@ -37,9 +37,9 @@ var MainPageGraphs = function (_Element) {
             this.graphType = this.header.element.find('input:checked').val();
 
             this.header.element.find('input').on('click', function () {
-                $(this).closest('.radio-group-container').find('label.active').removeClass('active');
-                $(this).closest('label').addClass('active');
-                that.graphType = $(this).val();
+                jQ3(this).closest('.radio-group-container').find('label.active').removeClass('active');
+                jQ3(this).closest('label').addClass('active');
+                that.graphType = jQ3(this).val();
                 that.render(that.originalData);
             });
         }
@@ -48,13 +48,13 @@ var MainPageGraphs = function (_Element) {
         value: function init() {
             this.loadingAnimation.show();
 
-            $("#graph svg").remove();
+            jQ3("#graph svg").remove();
 
             this.parseTime = d3.timeParse("%Y-%m");
             this.svg = d3.select("#graph").append('svg');
 
-            this.width = $('#graph svg').width();
-            this.height = $('#graph svg').height();
+            this.width = jQ3('#graph svg').width();
+            this.height = jQ3('#graph svg').height();
 
             this.margin = { top: 16, right: 16, bottom: 64, left: 64 };
 

@@ -34,8 +34,7 @@ class CountryReport extends Element {
 
         let that = this;
 
-        $.ajax({
-            type: 'GET',
+        jQ3.get({
             url: `${homeUrl}/?pagename=report_country__${iso}`,
             success: function(response) {
                 let report = JSON.parse(response);

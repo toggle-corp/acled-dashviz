@@ -14,7 +14,7 @@ var LoadingAnimation = function (_Element) {
     function LoadingAnimation() {
         _classCallCheck(this, LoadingAnimation);
 
-        return _possibleConstructorReturn(this, (LoadingAnimation.__proto__ || Object.getPrototypeOf(LoadingAnimation)).call(this, "\n            <div class=\"loading-animation\" hidden>\n                <span class=\"fa fa-circle-o-notch fa-spin\"></span>\n            </div>\n        "));
+        return _possibleConstructorReturn(this, (LoadingAnimation.__proto__ || Object.getPrototypeOf(LoadingAnimation)).call(this, "\n            <div class=\"loading-animation\" hidden>\n                <span class=\"fa fa-spinner fa-spin\"></span>\n            </div>\n        "));
     }
 
     _createClass(LoadingAnimation, [{

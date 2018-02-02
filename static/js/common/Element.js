@@ -1,7 +1,7 @@
 class Element {
     constructor(element=null) {
         this.childElements = [];
-        this.element = $(element);
+        this.element = jQ3(element);
     }
     initDom(parent) {
         if(this.element && parent && parent.element ){

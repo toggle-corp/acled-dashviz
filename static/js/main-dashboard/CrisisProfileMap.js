@@ -18,7 +18,7 @@ class CrisisProfileMap extends Element {
         let that = this;
         let currentLayer = null;
 
-        $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
+        jQ3.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
             that.geoJsonLayer = L.geoJson(data, {
                 onEachFeature: function(feature, layer) {
                     if (feature.properties.iso_n3 === country) {

@@ -2,7 +2,7 @@ class MapLegend extends Element {
     constructor() {
         super('<div class="legend"></div>');
         this.element.append('<div class="legend-elements"></div>');
-        this.legendElementTemplate = $('<label class="legend-element checked"><input type="checkbox" checked><span class="color-box"></span><span class="name"><span/></label>');
+        this.legendElementTemplate = jQ3('<label class="legend-element checked"><input type="checkbox" checked><span class="color-box"></span><span class="name"><span/></label>');
     }
      
     setTitle(title){
@@ -36,20 +36,20 @@ class MapLegend extends Element {
          
         let that = this;
         this.element.find('input').on('click', function() {
-            that.element.trigger(`${that.name}:filterclick`);
+            that.element.trigger(`jQ3{that.name}:filterclick`);
 
-            if ($(this).prop('checked')) {
-                $(this).closest('.legend-element').addClass('checked');
+            if (jQ3(this).prop('checked')) {
+                jQ3(this).closest('.legend-element').addClass('checked');
             } else {
-                $(this).closest('.legend-element').removeClass('checked');
+                jQ3(this).closest('.legend-element').removeClass('checked');
             }
         });
          
         this.element.find('input').on('synccheck', function() {
-            if ($(this).prop('checked')) {
-                $(this).closest('.legend-element').addClass('checked');
+            if (jQ3(this).prop('checked')) {
+                jQ3(this).closest('.legend-element').addClass('checked');
             } else {
-                $(this).closest('.legend-element').removeClass('checked');
+                jQ3(this).closest('.legend-element').removeClass('checked');
             }
         });
     }

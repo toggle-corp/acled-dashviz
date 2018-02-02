@@ -147,8 +147,8 @@ function syncCheckboxes(source, target) {
 
     var sourceCheckboxes = source.find('input[type="checkbox"]');
     sourceCheckboxes.each(function () {
-        var el = target.find('input[data-target="' + $(this).data('target') + '"]');
-        el.prop('checked', $(this).prop('checked'));
+        var el = target.find('input[data-target="' + jQ3(this).data('target') + '"]');
+        el.prop('checked', jQ3(this).prop('checked'));
 
         if (triggerSync) {
             el.trigger('synccheck');

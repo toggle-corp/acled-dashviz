@@ -10,12 +10,12 @@ class BarChart extends Element {
     }
 
     init() {
-        $("#bar-chart svg").remove();
+        jQ3("#bar-chart svg").remove();
 
         this.svg = d3.select("#bar-chart").append('svg');
 
-        this.width = $('#bar-chart svg').width();
-        this.height = $('#bar-chart svg').height();
+        this.width = jQ3('#bar-chart svg').width();
+        this.height = jQ3('#bar-chart svg').height();
 
         this.margin = {top: 10, right: 24, bottom: 72, left: 24};
 

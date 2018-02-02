@@ -38,15 +38,13 @@ class Dashboard extends Element {
         this.mainDashboard.loadData(data);
 
         const hash = window.location.hash;
-        if () {
-            if (hash) {
-                const iso = hash.substr(1);
-                
-                if (acledCountriesISO[iso]) {
-                    this.countryProfile.show(iso);
-                } else {
-                    window.location.hash = '';
-                }
+        if (hash) {
+            const iso = hash.substr(1);
+
+            if (acledCountriesISO[iso]) {
+                this.countryProfile.show(iso);
+            } else {
+                window.location.hash = '';
             }
         }
     }

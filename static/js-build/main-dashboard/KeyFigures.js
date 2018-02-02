@@ -21,7 +21,7 @@ var KeyFigures = function (_Element) {
         _this.childElements.push(_this.header);
         _this.childElements.push(_this.keyFigureList);
 
-        _this.keyFigureTemplate = $('<div class="key-figure"><label></label><span class="number"><i class="fa fa-spinner fa-spin fa-fw"></i></span></div>');
+        _this.keyFigureTemplate = jQ3('<div class="key-figure"><label></label><span class="number"><i class="fa fa-spinner fa-spin fa-fw"></i></span></div>');
         return _this;
     }
 

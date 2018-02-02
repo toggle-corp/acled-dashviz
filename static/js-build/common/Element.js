@@ -11,7 +11,7 @@ var Element = function () {
         _classCallCheck(this, Element);
 
         this.childElements = [];
-        this.element = $(element);
+        this.element = jQ3(element);
     }
 
     _createClass(Element, [{

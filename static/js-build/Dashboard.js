@@ -56,19 +56,14 @@ var Dashboard = function (_Element) {
         value: function loadData(data) {
             this.mainDashboard.loadData(data);
 
-            if (window.location.hash) {
-                var hash = window.location.hash;
+            var hash = window.location.hash;
+            if (hash) {
+                var iso = hash.substr(1);
 
-                if (hash) {
-                    var iso = hash.substr(1);
-
-                    if (acledCountriesISO[iso]) {
-                        this.countryProfile.show(iso);
-                    } else {
-                        window.location.hash = '';
-                    }
+                if (acledCountriesISO[iso]) {
+                    this.countryProfile.show(iso);
                 } else {
-                    this.countryProfile.hide();
+                    window.location.hash = '';
                 }
             }
         }

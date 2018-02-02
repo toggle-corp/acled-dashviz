@@ -659,7 +659,7 @@
 	} else if (typeof exports === 'object') {
 		module.exports = factory(require('jquery'), require('sifter'), require('microplugin'));
 	} else {
-		root.Selectize = factory(root.jQuery, root.Sifter, root.MicroPlugin);
+		root.Selectize = factory(root.jQ3, root.Sifter, root.MicroPlugin);
 	}
 }(this, function($, Sifter, MicroPlugin) {
 	'use strict';

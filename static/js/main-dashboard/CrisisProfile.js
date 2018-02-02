@@ -1,7 +1,7 @@
 class CrisisProfile extends Element {
     constructor() {
         super('<div id="crisis-profile-container"></div>');
-        $('<header><h4>Crisis profile</h4></header>').appendTo(this.element);
+        jQ3('<header><h4>Crisis profile</h4></header>').appendTo(this.element);
         this.reportSection = new Element('<div id="report-section"></div>');
         this.keyFiguresSection = new KeyFigures();
         this.recentEventsSection = new Element(
@@ -70,7 +70,7 @@ class CrisisProfile extends Element {
             crisisProfiles[i].id = i;
         }
 
-        $('#report-search').selectize({
+        jQ3('#report-search').selectize({
             valueField: 'id',
             labelField: 'title',
             searchField: ['title', 'country'],
@@ -84,7 +84,7 @@ class CrisisProfile extends Element {
                     return `
                         <div class="crisis-profile-select-item">
                             <div class="title">${escape(item.title)}</div>
-                            <div class="country">${escape(acledCountriesISO[item.country])}</div>
+                            <div class="country">${escape(acledCountriesISO[item.country] || '-')}</div>
                         </div>
                     `;
                 }

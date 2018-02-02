@@ -67,7 +67,7 @@ class DashboardMap extends Element {
         this.loadingAnimation.show();
          
         let geoJsonLayer = null;
-        $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
+        jQ3.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
             geoJsonLayer = L.geoJson(data, {
                 onEachFeature: function(feature, layer) {
                     layer.setStyle(defaultLayerStyle);

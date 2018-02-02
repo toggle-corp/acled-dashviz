@@ -92,14 +92,14 @@ var MainDashboard = function (_Element) {
 
             var filterInfoWrapper = this.header.element.find('.filter-info-wrapper');
             filterInfoWrapper.empty();
-            $(new FilterInfo(this.filterWrapper.getAppliedFilters()).html).appendTo(filterInfoWrapper);
+            jQ3(new FilterInfo(this.filterWrapper.getAppliedFilters()).html).appendTo(filterInfoWrapper);
         }
     }, {
         key: 'filterByEvents',
         value: function filterByEvents() {
             var container = this.filterWrapper.element.find('.filter-event-type .content');
             var requiredEvents = container.find('input[type="checkbox"]:checked').map(function () {
-                return $(this).data('target');
+                return jQ3(this).data('target');
             }).get();
 
             for (var i = 0; i < requiredEvents.length; i++) {
@@ -111,7 +111,7 @@ var MainDashboard = function (_Element) {
         value: function filterByInteraction() {
             var container = this.filterWrapper.element.find('.filter-interaction .content');
             var requiredActors = container.find('input[type="checkbox"]:checked').map(function () {
-                return $(this).data('target');
+                return jQ3(this).data('target');
             }).get();
 
             this.filteredData = this.filteredData.filter(function (x) {

@@ -2,7 +2,7 @@ class LoadingAnimation extends Element {
     constructor() {
         super(`
             <div class="loading-animation" hidden>
-                <span class="fa fa-circle-o-notch fa-spin"></span>
+                <span class="fa fa-spinner fa-spin"></span>
             </div>
         `);
     }

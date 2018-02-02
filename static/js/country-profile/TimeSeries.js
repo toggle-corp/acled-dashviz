@@ -16,13 +16,13 @@ class TimeSeries extends Element {
     }
 
     init() {
-        $("#time-series svg").remove();
+        jQ3("#time-series svg").remove();
 
         this.parseTime = d3.timeParse("%Y-%m");
         this.svg = d3.select("#time-series").append('svg');
 
-        this.width = $('#time-series svg').width();
-        this.height = $('#time-series svg').height();
+        this.width = jQ3('#time-series svg').width();
+        this.height = jQ3('#time-series svg').height();
 
         this.margin = {top: 8, right: 16, bottom: 64, left: 56};
 

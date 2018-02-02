@@ -84,7 +84,7 @@ class CountryProfile extends Element {
     }
      
     applyFilters() {
-        this.filteredData = $.extend(true, [], this.data);
+        this.filteredData = jQ3.extend(true, [], this.data);
          
         this.filterByEvents();
         this.filterByInteraction();
@@ -97,13 +97,13 @@ class CountryProfile extends Element {
 
         let filterInfoWrapper = this.header.element.find('.filter-info-wrapper');
         filterInfoWrapper.empty();
-        $((new FilterInfo(this.filterWrapper.getAppliedFilters())).html).appendTo(filterInfoWrapper);
+        jQ3((new FilterInfo(this.filterWrapper.getAppliedFilters())).html).appendTo(filterInfoWrapper);
     }
 
     filterByEvents() {
         let container = this.filterWrapper.element.find('.filter-event-type .content');
         let requiredEvents = container.find('input[type="checkbox"]:checked').map(function() {
-            return $(this).data('target');
+            return jQ3(this).data('target');
         }).get();
 
         this.filteredData = this.filteredData.filter(x => requiredEvents.find(y => compareEvents(x.event_type, y)));
@@ -112,7 +112,7 @@ class CountryProfile extends Element {
     filterByAdmin1s() {
         let container = this.filterWrapper.element.find('.filter-admin1 .selected-admin1s');
         let requiredAdmin1s = container.find('.selected-admin1').map(function() {
-            return $(this).find('.name').text();
+            return jQ3(this).find('.name').text();
         }).get();
 
         if (requiredAdmin1s.length > 0) {
@@ -124,7 +124,7 @@ class CountryProfile extends Element {
     filterByInteraction() {
         let container = this.filterWrapper.element.find('.filter-interaction .content');
         let requiredActors = container.find('input[type="checkbox"]:checked').map(function() {
-            return $(this).data('target');
+            return jQ3(this).data('target');
         }).get();
          
         this.filteredData = this.filteredData.filter(x => requiredActors.find(y => x.interaction.includes(y)));
@@ -162,7 +162,7 @@ class CountryProfile extends Element {
     loadData(iso) {
         this.loadingAnimation.show();
 
-        let deferred = $.Deferred();
+        let deferred = jQ3.Deferred();
         let that = this;
         this.data = [];
         this.filteredData = [];
@@ -219,7 +219,7 @@ class CountryProfile extends Element {
         this.iso = iso;
         const country = acledCountriesISO[iso];
         this.country = country;
-        $('html').css('overflow', 'hidden');
+        jQ3('html').css('overflow', 'hidden');
          
         let that = this;
          
@@ -247,7 +247,7 @@ class CountryProfile extends Element {
     }
      
     hide() {
-        $('html').css('overflow', 'auto');
+        jQ3('html').css('overflow', 'auto');
         this.countryMap.reset(true);
         this.countryMap.mapLegend.clearLegendElements();
         this.timeSeries.mapLegend.clearLegendElements();

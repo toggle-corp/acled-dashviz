@@ -39,8 +39,7 @@ var CountryReport = function (_Element) {
 
             var that = this;
 
-            $.ajax({
-                type: 'GET',
+            jQ3.get({
                 url: homeUrl + '/?pagename=report_country__' + iso,
                 success: function success(response) {
                     var report = JSON.parse(response);

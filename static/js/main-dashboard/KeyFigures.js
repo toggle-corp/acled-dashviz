@@ -6,7 +6,7 @@ class KeyFigures extends Element {
         this.childElements.push(this.header);
         this.childElements.push(this.keyFigureList);
 
-        this.keyFigureTemplate = $('<div class="key-figure"><label></label><span class="number"><i class="fa fa-spinner fa-spin fa-fw"></i></span></div>');
+        this.keyFigureTemplate = jQ3('<div class="key-figure"><label></label><span class="number"><i class="fa fa-spinner fa-spin fa-fw"></i></span></div>');
     }
 
     /*

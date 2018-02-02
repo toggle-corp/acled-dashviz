@@ -8,7 +8,7 @@ class Timeline extends Element {
         this.timelineElements = new Element('<div id="timeline-elements" hidden></div>');
         this.emptyElement = new Element('<div id="timeline-empty">Not available</div>');
 
-        this.timelineElementTemplate = $('<div class="timeline-element"><div class="number"><span></span></div><div class="description"><h5></h5><p></p></div><img></div>');
+        this.timelineElementTemplate = jQ3('<div class="timeline-element"><div class="number"><span></span></div><div class="description"><h5></h5><p></p></div><img></div>');
 
         this.childElements.push(this.header);
         this.childElements.push(this.staticImage);
@@ -33,13 +33,12 @@ class Timeline extends Element {
     load(iso) {
         const that = this;
 
-        $.ajax({
-            type: 'GET',
+        jQ3.get({
             url: `${homeUrl}/?pagename=timeline_country__${iso}`,
             success: function(response) {
                 let timelineData = JSON.parse(response);
 
-                if ($.isArray(timelineData) ) {
+                if (jQ3.isArray(timelineData) ) {
                     timelineData = {'staticImage': false, 'timelineElements': timelineData};
                 }
 

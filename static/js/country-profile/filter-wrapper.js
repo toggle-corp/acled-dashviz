@@ -77,18 +77,18 @@ class FilterWrapper extends Element {
     process() {
         let container = this.element.find('.selected-admin1s');
         this.element.find('.admin1-select').on('click', function() {
-            let val = $(this).val();
-            let text = $(this).find(`option[value="${val}"]`).text();
+            let val = jQ3(this).val();
+            let text = jQ3(this).find(`option[value="${val}"]`).text();
 
             if (val && container.find(`.selected-admin1[data-val="${val}"]`).length === 0) {
-                let elem = $('<div data-val="'+val+'" class="selected-admin1"><span class="name">'+text+'</span><button><i class="fa fa-times"></i></button></div>');
+                let elem = jQ3('<div data-val="'+val+'" class="selected-admin1"><span class="name">'+text+'</span><button><i class="fa fa-times"></i></button></div>');
                 elem.appendTo(container);
                 elem.find('button').on('click', function() {
-                    $(this).closest('.selected-admin1').remove();         
+                    jQ3(this).closest('.selected-admin1').remove();         
                 });
             }
              
-            $(this).val('');
+            jQ3(this).val('');
         });
     }
 
@@ -98,7 +98,7 @@ class FilterWrapper extends Element {
         container.empty();
 
         for (let eventName in acledEvents) {
-            $('<label class="checkbox-input"><input type="checkbox" data-target="'+eventName+'" checked="true"><span class="name">'+eventName+'</span></label>').appendTo(container);
+            jQ3('<label class="checkbox-input"><input type="checkbox" data-target="'+eventName+'" checked="true"><span class="name">'+eventName+'</span></label>').appendTo(container);
         }
 
         this.element.find(`input[name="${name}-filter-interaction-input"]`).eq(0).prop('checked', true);

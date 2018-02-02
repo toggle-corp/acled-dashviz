@@ -146,8 +146,8 @@ function getMeterPerPixel(map) {
 function syncCheckboxes(source, target, triggerSync=false) {
     let sourceCheckboxes = source.find('input[type="checkbox"]');
     sourceCheckboxes.each(function() {
-        let el = target.find('input[data-target="'+$(this).data('target')+'"]');
-        el.prop('checked', $(this).prop('checked'));
+        let el = target.find('input[data-target="'+jQ3(this).data('target')+'"]');
+        el.prop('checked', jQ3(this).prop('checked'));
          
         if (triggerSync) {
             el.trigger('synccheck');

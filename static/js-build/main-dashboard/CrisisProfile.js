@@ -16,7 +16,7 @@ var CrisisProfile = function (_Element) {
 
         var _this = _possibleConstructorReturn(this, (CrisisProfile.__proto__ || Object.getPrototypeOf(CrisisProfile)).call(this, '<div id="crisis-profile-container"></div>'));
 
-        $('<header><h4>Crisis profile</h4></header>').appendTo(_this.element);
+        jQ3('<header><h4>Crisis profile</h4></header>').appendTo(_this.element);
         _this.reportSection = new Element('<div id="report-section"></div>');
         _this.keyFiguresSection = new KeyFigures();
         _this.recentEventsSection = new Element('\n            <div id="recent-events-section">\n                <header></header>\n                <a hidden><img alt="Report image"></a>\n                <div id="report-image-empty">Not available</div>\n            </div>\n            ');
@@ -62,7 +62,7 @@ var CrisisProfile = function (_Element) {
                 crisisProfiles[i].id = i;
             }
 
-            $('#report-search').selectize({
+            jQ3('#report-search').selectize({
                 valueField: 'id',
                 labelField: 'title',
                 searchField: ['title', 'country'],
@@ -73,7 +73,7 @@ var CrisisProfile = function (_Element) {
                 //openOnFocus: false,
                 render: {
                     option: function option(item, escape) {
-                        return '\n                        <div class="crisis-profile-select-item">\n                            <div class="title">' + escape(item.title) + '</div>\n                            <div class="country">' + escape(acledCountriesISO[item.country]) + '</div>\n                        </div>\n                    ';
+                        return '\n                        <div class="crisis-profile-select-item">\n                            <div class="title">' + escape(item.title) + '</div>\n                            <div class="country">' + escape(acledCountriesISO[item.country] || '-') + '</div>\n                        </div>\n                    ';
                     }
                 },
                 onChange: function onChange(val) {

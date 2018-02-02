@@ -74,18 +74,18 @@ class FilterWrapper extends Element {
     process() {
         let container = this.element.find('.selected-admin1s');
         this.element.find('.admin1-select').on('click', function() {
-            let val = $(this).val();
-            let text = $(this).find(`option[value="${val}"]`).text();
+            let val = jQ3(this).val();
+            let text = jQ3(this).find(`option[value="${val}"]`).text();
 
             if (val && container.find(`.selected-admin1[data-val="${val}"]`).length === 0) {
-                let elem = $('<div data-val="'+val+'" class="selected-admin1"><span class="name">'+text+'</span><button><i class="fa fa-times"></i></button></div>');
+                let elem = jQ3('<div data-val="'+val+'" class="selected-admin1"><span class="name">'+text+'</span><button><i class="fa fa-times"></i></button></div>');
                 elem.appendTo(container);
                 elem.find('button').on('click', function() {
-                    $(this).closest('.selected-admin1').remove();         
+                    jQ3(this).closest('.selected-admin1').remove();         
                 });
             }
              
-            $(this).val('');
+            jQ3(this).val('');
         });
 
         let yearFilter = this.element.find('.filter-year');
@@ -125,14 +125,14 @@ class FilterWrapper extends Element {
         container.empty();
 
         for (let eventName in acledEvents) {
-            $(`<label class="checkbox-input"><input type="checkbox" data-target="${eventName}" checked="true"><span class="name">${eventName}</span></label>`).appendTo(container);
+            jQ3(`<label class="checkbox-input"><input type="checkbox" data-target="${eventName}" checked="true"><span class="name">${eventName}</span></label>`).appendTo(container);
         }
          
         container = this.element.find('.filter-interaction .content');
         container.empty();
 
         for (let actor in acledActors) {
-            $(`<label class="checkbox-input"><input type="checkbox" data-target="${acledActors[actor]}" checked="true"><span class="name">${actor}</span></label>`).appendTo(container);
+            jQ3(`<label class="checkbox-input"><input type="checkbox" data-target="${acledActors[actor]}" checked="true"><span class="name">${actor}</span></label>`).appendTo(container);
         }
 
 
@@ -186,7 +186,7 @@ class FilterWrapper extends Element {
 
         let container = this.element.find('.filter-event-type .content');
         let requiredEvents = container.find('input[type="checkbox"]:checked').map(function() {
-            return $(this).data('target');
+            return jQ3(this).data('target');
         }).get();
 
         if (requiredEvents.length < 5) {
@@ -198,7 +198,7 @@ class FilterWrapper extends Element {
          
         container = this.element.find('.filter-interaction .content');
         let requiredActors = container.find('input[type="checkbox"]:checked').map(function() {
-            return $(this).siblings('.name').text();
+            return jQ3(this).siblings('.name').text();
         }).get();
 
         if (requiredActors.length < 7) {
@@ -223,7 +223,7 @@ class FilterWrapper extends Element {
 
         container = this.element.find('.filter-admin1 .selected-admin1s');
         let requiredAdmin1s = container.find('.selected-admin1').map(function() {
-            return $(this).find('.name').text();
+            return jQ3(this).find('.name').text();
         }).get();
 
         if (requiredAdmin1s.length > 0) {

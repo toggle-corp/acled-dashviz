@@ -1,9 +1,9 @@
 var dashboard = null;
 
-$(document).ready(function(){
-    $('#main').empty();
+jQ3(document).ready(function(){
+    jQ3('#main').empty();
     let root = new Element();
-    root.element = $('#main');
+    root.element = jQ3('#main');
      
     dashboard = new Dashboard();
     dashboard.initDomAll(root);
@@ -41,12 +41,12 @@ $(document).ready(function(){
     });
 
 
-    $(window).scroll(function(){
-        $('#country-profile')[0].scrollTop=$(window).scrollTop();
+    jQ3(window).scroll(function(){
+        jQ3('#country-profile')[0].scrollTop=jQ3(window).scrollTop();
     });
 
-    $('#close-browser-warning').on('click', function() {
-        $(this).closest('.browser-warning').hide();
+    jQ3('#close-browser-warning').on('click', function() {
+        jQ3(this).closest('.browser-warning').hide();
         window.localStorage.setItem('browser-warning-dismissed', true);
     });
 
@@ -70,7 +70,7 @@ $(document).ready(function(){
         var isChrome = !!window.chrome && !!window.chrome.webstore;
 
         if (!isChrome && !isEdge && !isIE && !isSafari) {
-            $('.browser-warning')[0].style.display = 'flex';
+            jQ3('.browser-warning')[0].style.display = 'flex';
         }
     }
 });

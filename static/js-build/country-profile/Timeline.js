@@ -22,7 +22,7 @@ var Timeline = function (_Element) {
         _this.timelineElements = new Element('<div id="timeline-elements" hidden></div>');
         _this.emptyElement = new Element('<div id="timeline-empty">Not available</div>');
 
-        _this.timelineElementTemplate = $('<div class="timeline-element"><div class="number"><span></span></div><div class="description"><h5></h5><p></p></div><img></div>');
+        _this.timelineElementTemplate = jQ3('<div class="timeline-element"><div class="number"><span></span></div><div class="description"><h5></h5><p></p></div><img></div>');
 
         _this.childElements.push(_this.header);
         _this.childElements.push(_this.staticImage);
@@ -51,13 +51,12 @@ var Timeline = function (_Element) {
         value: function load(iso) {
             var that = this;
 
-            $.ajax({
-                type: 'GET',
+            jQ3.get({
                 url: homeUrl + '/?pagename=timeline_country__' + iso,
                 success: function success(response) {
                     var timelineData = JSON.parse(response);
 
-                    if ($.isArray(timelineData)) {
+                    if (jQ3.isArray(timelineData)) {
                         timelineData = { 'staticImage': false, 'timelineElements': timelineData };
                     }
 
