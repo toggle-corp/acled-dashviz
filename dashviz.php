@@ -77,6 +77,7 @@ class DashboardVisualization {
                 global $clientModifiedTimestamp;
                 wp_enqueue_script("utils-script", plugins_url().$plugin_dir.'/static/js-build/common/utils.js?modified_date_time='.$clientModifiedTimestamp, null, null, true);
                 wp_enqueue_script("element-script", plugins_url().$plugin_dir.'/static/js-build/common/Element.js?modified_date_time='.$clientModifiedTimestamp, null, null, true);
+                wp_enqueue_script("loading-animation-script", plugins_url().$plugin_dir.'/static/js-build/common/LoadingAnimation.js?modified_date_time='.$clientModifiedTimestamp, null, null, true);
                 wp_enqueue_script("map-legend-script", plugins_url().$plugin_dir.'/static/js-build/common/MapLegend.js?modified_date_time='.$clientModifiedTimestamp, null, null, true);
                 wp_enqueue_script("map-scale-script", plugins_url().$plugin_dir.'/static/js-build/common/MapScale.js?modified_date_time='.$clientModifiedTimestamp, null, null, true);
 

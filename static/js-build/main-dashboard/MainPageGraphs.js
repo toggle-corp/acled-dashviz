@@ -20,10 +20,12 @@ var MainPageGraphs = function (_Element) {
         _this.graph = new Element('<div id="graph"></div>');
 
         _this.mapLegend = new MapLegend();
+        _this.loadingAnimation = new LoadingAnimation();
 
         _this.childElements.push(_this.header);
         _this.childElements.push(_this.graph);
         _this.childElements.push(_this.mapLegend);
+        _this.childElements.push(_this.loadingAnimation);
         return _this;
     }
 
@@ -44,6 +46,8 @@ var MainPageGraphs = function (_Element) {
     }, {
         key: 'init',
         value: function init() {
+            this.loadingAnimation.show();
+
             $("#graph svg").remove();
 
             this.parseTime = d3.timeParse("%Y-%m");
@@ -111,6 +115,8 @@ var MainPageGraphs = function (_Element) {
         key: 'render',
         value: function render(data) {
             var _this2 = this;
+
+            this.loadingAnimation.show();
 
             var that = this;
             this.originalData = data;
@@ -219,6 +225,8 @@ var MainPageGraphs = function (_Element) {
 
             // Add the Y Axis
             this.canvas.append("g").attr('class', 'y-axis').call(d3.axisLeft(this.scaleY)).append('text').attr('transform', 'rotate(-90)').text(that.graphType == 'event' ? 'No. of events ' : 'No. of fatalities').attr('x', 0).attr('y', 0).attr('dy', '1em').attr('fill', '#000').attr('class', 'axis-name');
+
+            this.loadingAnimation.hide();
         }
     }]);
 

@@ -9,6 +9,7 @@
     $header-height: 96px;
 
     .scroll-wrapper {
+        position: relative;
         display: flex;
         align-items: stretch;
         justify-content: space-between;

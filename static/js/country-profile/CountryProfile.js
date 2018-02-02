@@ -37,11 +37,15 @@ class CountryProfile extends Element {
 
         let that = this;
         this.header.element.find('a').on('click', function() {
-            that.hide();
+            window.location.hash = '';
+            // that.hide();
         });
 
         this.filterWrapper = new FilterWrapper('country');
         this.childElements.push(this.filterWrapper);
+
+        this.loadingAnimation = new LoadingAnimation();
+        this.scrollWrapper.childElements.push(this.loadingAnimation);
     }
 
     process() {
@@ -156,6 +160,8 @@ class CountryProfile extends Element {
     }    
 
     loadData(iso) {
+        this.loadingAnimation.show();
+
         let deferred = $.Deferred();
         let that = this;
         this.data = [];
@@ -196,6 +202,7 @@ class CountryProfile extends Element {
 
             that.filteredData = that.data.slice();
 
+            that.loadingAnimation.hide();
             deferred.resolve();
         });
 
@@ -236,7 +243,7 @@ class CountryProfile extends Element {
             });
         });
          
-        setTimeout( () => { this.scrollWrapper.element.scrollTop(0); }, 0);
+        setTimeout(() => { this.scrollWrapper.element.scrollTop(0); }, 0);
     }
      
     hide() {

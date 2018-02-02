@@ -13,9 +13,6 @@ class CrisisProfile extends Element {
             </div>
             `
         );
-        if(recentEvent) {
-
-        }
 
         this.reportSelectContainer = new Element(
             `
@@ -41,6 +38,7 @@ class CrisisProfile extends Element {
         );
 
         this.crisisProfileMap = new CrisisProfileMap();
+        this.loadingAnimation = new LoadingAnimation();
 
         this.childElements.push(this.reportSelectContainer);
         this.reportSection.childElements.push(this.reportDetailContainer);
@@ -50,6 +48,7 @@ class CrisisProfile extends Element {
         this.childElements.push(this.recentEventsSection);
 
         this.crisisProfileMap.element.appendTo(this.reportDetailContainer.element.find('.map'));
+        this.childElements.push(this.loadingAnimation);
     }
 
     loadCrisisProfile(cp) {
@@ -97,6 +96,7 @@ class CrisisProfile extends Element {
             }
         });
 
+        this.loadingAnimation.show();
     }
 
     renderData(index) {
@@ -124,6 +124,8 @@ class CrisisProfile extends Element {
     }
 
     load() {
+        this.loadingAnimation.hide();
+
         if(crisisProfiles.length > 0) {
             this.renderData(0);
         }

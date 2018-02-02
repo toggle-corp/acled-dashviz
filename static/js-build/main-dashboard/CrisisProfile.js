@@ -20,13 +20,13 @@ var CrisisProfile = function (_Element) {
         _this.reportSection = new Element('<div id="report-section"></div>');
         _this.keyFiguresSection = new KeyFigures();
         _this.recentEventsSection = new Element('\n            <div id="recent-events-section">\n                <header></header>\n                <a hidden><img alt="Report image"></a>\n                <div id="report-image-empty">Not available</div>\n            </div>\n            ');
-        if (recentEvent) {}
 
         _this.reportSelectContainer = new Element('\n            <div class="select-wrapper">\n                <i class="fa fa-search"></i>\n                <select id="report-search" placeholder="Select an event"></select>\n            </div>\n            ');
 
         _this.reportDetailContainer = new Element('\n            <div id="report">\n                <div class="detail">\n                    <h5 class="title"></h5>\n                    <date></date>\n                    <div class="description"></div>\n                </div>\n                <div class="map">\n                </div>\n            <div>\n            ');
 
         _this.crisisProfileMap = new CrisisProfileMap();
+        _this.loadingAnimation = new LoadingAnimation();
 
         _this.childElements.push(_this.reportSelectContainer);
         _this.reportSection.childElements.push(_this.reportDetailContainer);
@@ -36,6 +36,7 @@ var CrisisProfile = function (_Element) {
         _this.childElements.push(_this.recentEventsSection);
 
         _this.crisisProfileMap.element.appendTo(_this.reportDetailContainer.element.find('.map'));
+        _this.childElements.push(_this.loadingAnimation);
         return _this;
     }
 
@@ -81,6 +82,8 @@ var CrisisProfile = function (_Element) {
                     }
                 }
             });
+
+            this.loadingAnimation.show();
         }
     }, {
         key: 'renderData',
@@ -110,6 +113,8 @@ var CrisisProfile = function (_Element) {
     }, {
         key: 'load',
         value: function load() {
+            this.loadingAnimation.hide();
+
             if (crisisProfiles.length > 0) {
                 this.renderData(0);
             }

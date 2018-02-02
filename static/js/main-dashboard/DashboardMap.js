@@ -17,10 +17,14 @@ class DashboardMap extends Element {
                 </div>
             </div>
         `);
+        this.loadingAnimation = new LoadingAnimation();
+
         this.childElements.push(this.header);
         this.childElements.push(this.mapElement);
         this.childElements.push(this.mapLegend);
         this.childElements.push(this.mapInfo);
+        this.childElements.push(this.loadingAnimation);
+
          
         this.mapScale = null; 
         this.conditionalLayer = null;
@@ -59,6 +63,8 @@ class DashboardMap extends Element {
             fillOpacity: 0,
             stroke: false,
         };
+
+        this.loadingAnimation.show();
          
         let geoJsonLayer = null;
         $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function(data) {
@@ -79,6 +85,7 @@ class DashboardMap extends Element {
             });
             geoJsonLayer.addTo(that.map);
             geoJsonLayer.bringToBack();
+            that.loadingAnimation.hide();
         });
     }
      

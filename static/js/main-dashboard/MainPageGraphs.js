@@ -12,10 +12,12 @@ class MainPageGraphs extends Element {
         this.graph = new Element('<div id="graph"></div>');
 
         this.mapLegend = new MapLegend();
+        this.loadingAnimation = new LoadingAnimation();
 
         this.childElements.push(this.header);
         this.childElements.push(this.graph);
         this.childElements.push(this.mapLegend);
+        this.childElements.push(this.loadingAnimation);
     }
 
     process() {
@@ -33,6 +35,8 @@ class MainPageGraphs extends Element {
     }
 
     init() {
+        this.loadingAnimation.show();
+
         $("#graph svg").remove();
 
         this.parseTime = d3.timeParse("%Y-%m");
@@ -108,6 +112,8 @@ class MainPageGraphs extends Element {
     }
      
     render (data) {
+        this.loadingAnimation.show();
+
         let that = this;
         this.originalData = data;
 
@@ -226,6 +232,7 @@ class MainPageGraphs extends Element {
             .attr('dy', '1em')
             .attr('fill', '#000')
             .attr('class', 'axis-name');
-         
+
+        this.loadingAnimation.hide();
     }
 }

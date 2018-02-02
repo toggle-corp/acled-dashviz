@@ -21,7 +21,7 @@ $(document).ready(function(){
     ];
 
     const urlForDashboardData = createUrlForAPI({
-        limit: '1000',
+        limit: '0',
         fields: dashboardFields.join('|'),
     });
 

@@ -20,6 +20,22 @@ var Dashboard = function (_Element) {
         _this.childElements.push(_this.mainDashboard);
         _this.countryProfile = new CountryProfile();
         _this.childElements.push(_this.countryProfile);
+
+        window.addEventListener('hashchange', function () {
+            var hash = window.location.hash;
+
+            if (hash) {
+                var iso = hash.substr(1);
+
+                if (acledCountriesISO[iso]) {
+                    _this.countryProfile.show(iso);
+                } else {
+                    window.location.hash = '';
+                }
+            } else {
+                _this.countryProfile.hide();
+            }
+        });
         return _this;
     }
 
@@ -32,12 +48,29 @@ var Dashboard = function (_Element) {
     _createClass(Dashboard, [{
         key: 'show',
         value: function show(iso) {
-            this.countryProfile.show(iso);
+            window.location.hash = iso;
+            // this.countryProfile.show(iso);
         }
     }, {
         key: 'loadData',
         value: function loadData(data) {
             this.mainDashboard.loadData(data);
+
+            if (window.location.hash) {
+                var hash = window.location.hash;
+
+                if (hash) {
+                    var iso = hash.substr(1);
+
+                    if (acledCountriesISO[iso]) {
+                        this.countryProfile.show(iso);
+                    } else {
+                        window.location.hash = '';
+                    }
+                } else {
+                    this.countryProfile.hide();
+                }
+            }
         }
     }]);
 

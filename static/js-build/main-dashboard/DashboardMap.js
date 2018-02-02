@@ -20,10 +20,13 @@ var DashboardMap = function (_Element) {
         _this.mapElement = new Element('<div id="world-map"></div>');
         _this.mapLegend = new MapLegend();
         _this.mapInfo = new Element('\n            <div class="info-container">\n                <div class="info">\n                    <i class="fa fa-info-circle"></i><p>The map above groups conflict events by location and is limited to the largest 4,000 events in view.</p>\n                </div>\n            </div>\n        ');
+        _this.loadingAnimation = new LoadingAnimation();
+
         _this.childElements.push(_this.header);
         _this.childElements.push(_this.mapElement);
         _this.childElements.push(_this.mapLegend);
         _this.childElements.push(_this.mapInfo);
+        _this.childElements.push(_this.loadingAnimation);
 
         _this.mapScale = null;
         _this.conditionalLayer = null;
@@ -73,6 +76,8 @@ var DashboardMap = function (_Element) {
                 stroke: false
             };
 
+            this.loadingAnimation.show();
+
             var geoJsonLayer = null;
             $.getJSON('https://raw.githubusercontent.com/toggle-corp/world-map/master/countries.geo.json', function (data) {
                 geoJsonLayer = L.geoJson(data, {
@@ -96,6 +101,7 @@ var DashboardMap = function (_Element) {
                 });
                 geoJsonLayer.addTo(that.map);
                 geoJsonLayer.bringToBack();
+                that.loadingAnimation.hide();
             });
         }
     }, {
