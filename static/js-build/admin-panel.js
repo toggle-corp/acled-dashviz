@@ -121,6 +121,10 @@ $(document).ready(function () {
         var newCrisisDateInput = newCrisis.find('.crisis-date');
         var newCrisisEndDateInput = newCrisis.find('.crisis-end-date');
         var newCrisisCountryInput = newCrisis.find('.crisis-country option:selected');
+        var newCrisisNumberOfEvents = newCrisis.find('.crisis-number-of-events');
+        var newCrisisFatalities = newCrisis.find('.crisis-fatalities');
+        var newCrisisNumberOfCivilianDeaths = newCrisis.find('.crisis-number-of-civilian-deaths');
+        var newCrisisNumberOfArmedActiveAgents = newCrisis.find('.crisis-number-of-armed-active-agents');
         var newCrisisDescriptionInput = newCrisis.find('.crisis-description');
 
         var url = newCrisis.find('.crisis-recent-event-url').val();
@@ -130,7 +134,20 @@ $(document).ready(function () {
             url = url.indexOf('://') === -1 ? 'http://' + url : url;
         }
 
-        crisisProfiles.push({ 'title': newCrisisTitleInput.val(), 'date': newCrisisDateInput.val(), 'end-date': newCrisisEndDateInput.val(), 'country': newCrisisCountryInput.val(), 'description': newCrisisDescriptionInput.val(), 'recent-event-url': url, 'recent-event-img': newCrisisRecentEventImage });
+        crisisProfiles.push({
+            'title': newCrisisTitleInput.val(),
+            'date': newCrisisDateInput.val(),
+            'end-date': newCrisisEndDateInput.val(),
+            'country': newCrisisCountryInput.val(),
+            'number-of-events': newCrisisNumberOfEvents.val(),
+            'fatalities': newCrisisFatalities.val(),
+            'number-of-civilian-deaths': newCrisisNumberOfCivilianDeaths.val(),
+            'number-of-armed-active-agents': newCrisisNumberOfArmedActiveAgents.val(),
+            'description': newCrisisDescriptionInput.val(),
+            'recent-event-url': url,
+            'recent-event-img': newCrisisRecentEventImage
+        });
+
         refreshCrisisList();
 
         newCrisis.find('input').val('');
@@ -149,6 +166,10 @@ $(document).ready(function () {
         cp.country = ecm.find('.crisis-country option:selected').val();
         cp.date = ecm.find('.crisis-date').val();
         cp['end-date'] = ecm.find('.crisis-end-date').val();
+        cp['number-of-events'] = ecm.find('.crisis-number-of-events').val();
+        cp['fatalities'] = ecm.find('.crisis-fatalities').val();
+        cp['number-of-civilian-deaths'] = ecm.find('.crisis-number-of-civilian-deaths').val();
+        cp['number-of-armed-active-agents'] = ecm.find('.crisis-number-of-armed-active-agents').val();
         cp.description = ecm.find('.crisis-description').val();
 
         var url = ecm.find('.crisis-recent-event-url').val();
@@ -216,9 +237,7 @@ $(document).ready(function () {
     $('#timeline-elements').on('click', '.timeline-element img', function () {
         $(this).closest('.timeline-element').find('input').click().on('change', function () {
             if (this.files && this.files[0]) {
-
                 var fr = new FileReader();
-
                 var that = this;
 
                 fr.addEventListener("load", function (e) {
@@ -363,7 +382,7 @@ function submitCrisisProfiles(caller) {
         url: $('#crisis-profiles-form').data('target'),
         data: $('#crisis-profiles-form').serialize(),
         success: function success(response) {
-            console.log(response);
+            console.info(response);
             if (response && response == 'success') {
                 var successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#crisis-profile-report'));
                 setTimeout(function () {
@@ -373,9 +392,10 @@ function submitCrisisProfiles(caller) {
             }
         },
         error: function error(_error2) {
+            console.error(_error2);
             var errorMsg = $('<p class="error-msg">Failed to save!</p>').appendTo($(caller).closest('#crisis-profile-report'));
             setTimeout(function () {
-                errorMsg.hide();
+                errorMsg.remove();
             }, 1000);
             hideProgress(caller);
         }
@@ -397,7 +417,7 @@ function submitTimelineCountry(caller) {
         url: $('#timeline-country-form').data('target') + $('#timeline-country-select').val(),
         data: $('#timeline-country-form').serialize(),
         success: function success(response) {
-            console.log(response);
+            console.info(response);
             if (response && response == 'success') {
                 var successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#timeline'));
                 setTimeout(function () {
@@ -425,7 +445,7 @@ function submitReportCountry(caller) {
             url: $('#report-country-form').data('target') + $('#report-country-select').val(),
             data: $('#report-country-form').serialize(),
             success: function success(response) {
-                console.log(response);
+                console.info(response);
                 if (response && response == 'success') {
                     var successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#country-reports'));
                     setTimeout(function () {
@@ -436,7 +456,7 @@ function submitReportCountry(caller) {
                 loadReportData();
             },
             error: function error(_error3) {
-                console.log(_error3);
+                console.error(_error3);
                 hideProgress(caller);
             }
         });
@@ -455,7 +475,7 @@ function submitRecentEvent(caller) {
         url: $('#recent-event-form').data('target'),
         data: $('#recent-event-form').serialize(),
         success: function success(response) {
-            console.log(response);
+            console.info(response);
             if (response && response == 'success') {
                 var successMsg = $('<p class="success-msg">Saved successfully!</p>').appendTo($(caller).closest('#recent-event'));
                 setTimeout(function () {
@@ -465,7 +485,7 @@ function submitRecentEvent(caller) {
             hideProgress(caller);
         },
         error: function error(_error4) {
-            console.log(_error4);
+            console.error(_error4);
             hideProgress(caller);
         }
     });
@@ -632,6 +652,10 @@ function editCrisis(caller) {
     ecm.find('.crisis-country').val(cp.country);
     ecm.find('.crisis-date').val(cp.date);
     ecm.find('.crisis-end-date').val(cp['end-date']);
+    ecm.find('.crisis-number-of-events').val(cp['number-of-events']);
+    ecm.find('.crisis-fatalities').val(cp.fatalities);
+    ecm.find('.crisis-number-of-civilian-deaths').val(cp['number-of-civilian-deaths']);
+    ecm.find('.crisis-number-of-armed-active-agents').val(cp['number-of-armed-active-agents']);
     ecm.find('.crisis-description').val(cp.description);
 
     ecm.find('.crisis-recent-event-url').val(cp['recent-event-url']);

@@ -34,14 +34,14 @@
     display: none;
     padding: 16px 0;
     clear: both; }
-    #dashboard-form section .input-group {
+    #dashboard-form section .input {
       padding: 6px 0;
       max-width: 320px; }
-      #dashboard-form section .input-group label {
+      #dashboard-form section .input label {
         color: rgba(0, 0, 0, 0.5);
         text-transform: uppercase;
         font-size: 0.9em; }
-      #dashboard-form section .input-group input:not([type="submit"]), #dashboard-form section .input-group select {
+      #dashboard-form section .input input:not([type="submit"]), #dashboard-form section .input select {
         width: 100%; }
     #dashboard-form section img.preview {
       float: none;
@@ -49,19 +49,6 @@
       height: 200px;
       object-fit: contain;
       object-position: center center; }
-    #dashboard-form section#carousel .input-group {
-      width: 300px;
-      padding: 16px;
-      float: left; }
-      #dashboard-form section#carousel .input-group .preview {
-        width: 100%;
-        height: 200px;
-        object-position: center center;
-        object-fit: scale-down; }
-      #dashboard-form section#carousel .input-group input {
-        display: block; }
-    #dashboard-form section#carousel .save-button-container {
-      margin-top: 10px; }
     #dashboard-form section .save-button-container {
       clear: both;
       width: 84px;
@@ -312,21 +299,21 @@
         margin: 0; }
     #modal-container .modal .content {
       padding: 24px; }
-      #modal-container .modal .content .input-group {
+      #modal-container .modal .content .input {
         min-height: 32px;
         display: flex;
         align-items: center; }
-        #modal-container .modal .content .input-group label {
+        #modal-container .modal .content .input label {
           flex-basis: 20%; }
-        #modal-container .modal .content .input-group input {
+        #modal-container .modal .content .input input {
           flex-basis: 80%; }
-        #modal-container .modal .content .input-group.recent-event-input-group {
+        #modal-container .modal .content .input.recent-event-input {
           flex-wrap: wrap; }
-          #modal-container .modal .content .input-group.recent-event-input-group > div {
+          #modal-container .modal .content .input.recent-event-input > div {
             flex-basis: 40%; }
-            #modal-container .modal .content .input-group.recent-event-input-group > div input {
+            #modal-container .modal .content .input.recent-event-input > div input {
               width: 100%; }
-          #modal-container .modal .content .input-group.recent-event-input-group img {
+          #modal-container .modal .content .input.recent-event-input img {
             padding: 8px;
             flex-basis: calc(40% - 16px);
             width: calc(40% - 16px);

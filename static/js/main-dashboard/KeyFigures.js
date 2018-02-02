@@ -9,6 +9,7 @@ class KeyFigures extends Element {
         this.keyFigureTemplate = $('<div class="key-figure"><label></label><span class="number"><i class="fa fa-spinner fa-spin fa-fw"></i></span></div>');
     }
 
+    /*
     load (iso, startDate, endDate) {
         const country = acledCountriesISO[iso];
         //let countryData = acledData.filter(x => compareCountryNames(x.country, country));
@@ -108,6 +109,35 @@ class KeyFigures extends Element {
                 numberOfArmedActiveAgents.find('.number').text(formatNumber(totalArmedActiveAgents));
             }
         });
+                
+        this.keyFigureList.element.empty();
+        numberOfEvents.appendTo(this.keyFigureList.element);
+        fatalities.appendTo(this.keyFigureList.element);
+        numberOfCivilianDeaths.appendTo(this.keyFigureList.element);
+        numberOfArmedActiveAgents.appendTo(this.keyFigureList.element);
+    }
+    */
+    load (cp) {
+        let numberOfEvents = this.keyFigureTemplate.clone();
+        numberOfEvents.prop('id', 'number-of-events');
+        numberOfEvents.find('label').text('Number of events:');
+        numberOfEvents.find('.number').text(cp['number-of-events'] || '');
+
+        let fatalities = this.keyFigureTemplate.clone();
+        fatalities.prop('id', 'total-fatalities');
+        fatalities.find('label').text('fatalities:');
+        fatalities.find('.number').text(cp.fatalities || '');
+
+        let numberOfCivilianDeaths = this.keyFigureTemplate.clone();
+        numberOfCivilianDeaths.prop('id', 'number-of-civilian-deaths');
+        numberOfCivilianDeaths.find('label').text('Number of civilian deaths:');
+        numberOfCivilianDeaths.find('.number').text(cp['number-of-civilian-deaths'] || '');
+         
+        let numberOfArmedActiveAgents = this.keyFigureTemplate.clone();
+        numberOfArmedActiveAgents.prop('id', 'number-of-armed-active-agents');
+        numberOfArmedActiveAgents.find('label').text('Number of armed active agents:');
+        numberOfArmedActiveAgents.find('.number').text(cp['number-of-armed-active-agents'] || '');
+
                 
         this.keyFigureList.element.empty();
         numberOfEvents.appendTo(this.keyFigureList.element);

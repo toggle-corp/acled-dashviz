@@ -37,29 +37,29 @@
             <h2>Country reports</h2>
         </header>
         <div class="content">
-            <div class="input-group">
+            <div class="input">
                 <label>Country</label>
                 <select id="report-country-select" data-target="<?php echo get_home_url().'/?pagename=report_country__'; ?>">
                     <option value="">Select country</option>
                 </select>
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>Title</label>
                 <input type="text" id="report-title-input">
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>Summary</label>
                 <input type="text" id="report-summary-input">
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>Date</label>
                 <input type="date" id="report-date-input">
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>Url</label>
                 <input type="text" id="report-url-input" placeholder="eg: https://www.example.com/report">
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>Image</label>
                 <input type="file" accept="image/*" id="report-image-input">
             </div>
@@ -78,7 +78,7 @@
             <h2>Timeline</h2>
         </header>
         <div class="content">
-            <div class="input-group">
+            <div class="input">
             <label>Select country:</label>
                 <select id="timeline-country-select" data-target="<?php echo get_home_url().'/?pagename=timeline_country__'; ?>">
                     <option value="">Select country</option>
@@ -110,21 +110,6 @@
         </div>
     </section>
 
-    <form id="carousel-image1-form" method="POST" data-target="<?php echo get_home_url().'/?pagename=post__carousel_image1'; ?>"/>
-        <input class="url-input" type="text" value="" name="carousel-url1" id="url-1-input" hidden>
-        <input type="text" value="" name="carousel-image1" id="image-1-input" hidden> 
-    </form>
-     
-    <form id="carousel-image2-form" method="POST" data-target="<?php echo get_home_url().'/?pagename=post__carousel_image2'; ?>">
-        <input class="url-input" type="text" value="" name="carousel-url2" id="url-2-input" hidden>
-        <input type="text" value="" name="carousel-image2" id="image-2-input" hidden> 
-    </form>
-     
-    <form id="carousel-image3-form" method="POST" data-target="<?php echo get_home_url().'/?pagename=post__carousel_image3'; ?>">
-        <input class="url-input" type="text" value="" name="carousel-url3" id="url-3-input" hidden>
-        <input type="text" value="" name="carousel-image3" id="image-3-input" hidden> 
-    </form>
-     
     <form id="crisis-profiles-form" method="POST" data-target="<?php echo get_home_url().'/?pagename=post__crisis_profiles'; ?>">
         <input type="text" value="" name="crisis-profiles" id="crisis-profiles-input" hidden>
     </form>
@@ -162,29 +147,45 @@
             <h3>Add new crisis</h3>
         </header>
         <div class="content">
-            <div class="input-group">
+            <div class="input">
                 <label>Title</label>
                 <input type="text" name="crisis-title" class="crisis-title">
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>Country</label>
                 <select name="crisis-country" class="crisis-country" id="add-crisis-country-select">
                     <option value="">Select country</option>
                 </select>
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>Start Date</label>
                 <input type="date" name="crisis-date" class="crisis-date">
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>End Date</label>
                 <input type="date" name="crisis-end-date" class="crisis-end-date">
             </div>
-            <div class="input-group"> 
+            <div class="input"> 
                 <label>Description</label>
                 <input type="text" name="crisis-description" class="crisis-description">
             </div>
-            <div class="input-group recent-event-input-group">
+            <div class="input">
+                <label>Number of events</label>
+                <input type="text" name="crisis-number-of-events" class="crisis-number-of-events">
+            </div>
+            <div class="input">
+                <label>Fatalities</label>
+                <input type="text" name="crisis-fatalities" class="crisis-fatalities">
+            </div>
+            <div class="input">
+                <label>Civilian deaths</label>
+                <input type="text" name="crisis-number-of-civilian-deaths" class="crisis-number-of-civilian-deaths">
+            </div>
+            <div class="input">
+                <label>Armed active agents</label>
+                <input type="text" name="crisis-number-of-armed-active-agents" class="crisis-number-of-armed-active-agents">
+            </div>
+            <div class="input recent-event-input">
                 <label>Recent event</label>
                 <div>
                     <input type="text" class="crisis-recent-event-url" placeholder="Url (eg: http://www.example.com)">
@@ -204,29 +205,45 @@
             <h3>Edit crisis</h3>
         </header>
         <div class="content">
-            <div class="input-group">
+            <div class="input">
                 <label>Title</label>
                 <input type="text" name="crisis-title" class="crisis-title">
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>Country</label>
                 <select name="crisis-country" class="crisis-country" id="edit-crisis-country-select">
                     <option value="">Select country</option>
                 </select>
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>Start Date</label>
                 <input type="date" name="crisis-date" class="crisis-date">
             </div>
-            <div class="input-group">
+            <div class="input">
                 <label>End Date</label>
                 <input type="date" name="crisis-end-date" class="crisis-end-date">
             </div>
-            <div class="input-group"> 
+            <div class="input"> 
                 <label>Description</label>
                 <input type="text" name="crisis-description" class="crisis-description">
             </div>
-            <div class="input-group recent-event-input-group">
+            <div class="input">
+                <label>Number of events</label>
+                <input type="text" name="crisis-number-of-events" class="crisis-number-of-events">
+            </div>
+            <div class="input">
+                <label>Fatalities</label>
+                <input type="text" name="crisis-fatalities" class="crisis-fatalities">
+            </div>
+            <div class="input">
+                <label>Civilian deaths</label>
+                <input type="text" name="crisis-number-of-civilian-deaths" class="crisis-number-of-civilian-deaths">
+            </div>
+            <div class="input">
+                <label>Armed active agents</label>
+                <input type="text" name="crisis-number-of-armed-active-agents" class="crisis-number-of-armed-active-agents">
+            </div>
+            <div class="input recent-event-input">
                 <label>Recent event</label>
                 <div>
                     <input type="text" class="crisis-recent-event-url" placeholder="Url (eg: http://www.example.com)">
@@ -246,7 +263,7 @@
             <h3>Add country</h3>
         </header>
         <div class="content">
-            <div class="input-group">
+            <div class="input">
                 <label>Name</label>
                 <input type="text" name="timeline-country" id="timeline-country-input">
             </div>
@@ -262,7 +279,7 @@
             <h3>Add country</h3>
         </header>
         <div class="content">
-            <div class="input-group">
+            <div class="input">
                 <label>Name</label>
                 <input type="text" name="report-country" id="report-country-input">
             </div>

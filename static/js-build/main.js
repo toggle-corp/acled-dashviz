@@ -14,7 +14,7 @@ $(document).ready(function () {
     var dashboardFields = ['iso', 'country', 'event_type', 'event_date', 'latitude', 'longitude', 'fatalities', 'interaction'];
 
     var urlForDashboardData = createUrlForAPI({
-        limit: '0',
+        limit: '1000',
         fields: dashboardFields.join('|')
     });
 

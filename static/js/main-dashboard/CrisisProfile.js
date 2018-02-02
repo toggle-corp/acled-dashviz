@@ -103,7 +103,8 @@ class CrisisProfile extends Element {
         let cp = crisisProfiles[index];
          
         this.loadCrisisProfile(cp);
-        this.keyFiguresSection.load(cp.country, cp.date, cp['end-date']);
+        // this.keyFiguresSection.load(cp.country, cp.date, cp['end-date']);
+        this.keyFiguresSection.load(cp);
          
         if(cp['recent-event-url']) {
             this.recentEventsSection.element.find('a').prop('href', cp['recent-event-url']).css('display', 'block');
