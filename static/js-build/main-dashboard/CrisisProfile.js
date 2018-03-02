@@ -19,13 +19,14 @@ var CrisisProfile = function (_Element) {
         jQ3('<header><h4>Crisis profile</h4></header>').appendTo(_this.element);
         _this.reportSection = new Element('<div id="report-section"></div>');
         _this.keyFiguresSection = new KeyFigures();
-        _this.recentEventsSection = new Element('\n            <div id="recent-events-section">\n                <header></header>\n                <a hidden><img alt="Report image"></a>\n                <div id="report-image-empty">Not available</div>\n            </div>\n            ');
 
-        _this.reportSelectContainer = new Element('\n            <div class="select-wrapper">\n                <i class="fa fa-search"></i>\n                <select id="report-search" placeholder="Select an event"></select>\n            </div>\n            ');
+        _this.reportSelectContainer = new Element('\n            <div class="select-wrapper">\n                <i class="fa fa-search"></i>\n                <select id="report-search" placeholder="Select an event"></select>\n            </div>\n        ');
 
-        _this.reportDetailContainer = new Element('\n            <div id="report">\n                <div class="detail">\n                    <h5 class="title"></h5>\n                    <date></date>\n                    <div class="description"></div>\n                </div>\n                <div class="map">\n                </div>\n            <div>\n            ');
+        _this.reportDetailContainer = new Element('\n            <div id="report">\n                <div class="report-header">\n                    <h5 class="title"></h5>\n                    <date></date>\n                </div>\n                <div class="description"></div>\n            <div>\n        ');
 
-        _this.crisisProfileMap = new CrisisProfileMap();
+        _this.recentEventsSection = new Element('\n            <div id="recent-events-section">\n                <a hidden><img alt="Profile image"></a>\n                <div id="report-image-empty">Profile image not available</div>\n            </div>\n        ');
+
+        // this.crisisProfileMap = new CrisisProfileMap();
         _this.loadingAnimation = new LoadingAnimation();
 
         _this.childElements.push(_this.reportSelectContainer);
@@ -35,7 +36,7 @@ var CrisisProfile = function (_Element) {
         _this.childElements.push(_this.keyFiguresSection);
         _this.childElements.push(_this.recentEventsSection);
 
-        _this.crisisProfileMap.element.appendTo(_this.reportDetailContainer.element.find('.map'));
+        // this.crisisProfileMap.element.appendTo(this.reportDetailContainer.element.find('.map'));
         _this.childElements.push(_this.loadingAnimation);
         return _this;
     }
@@ -50,13 +51,13 @@ var CrisisProfile = function (_Element) {
                 this.reportDetailContainer.element.find('date').text(cp.date + ' (ongoing)');
             }
             this.reportDetailContainer.element.find('.description').text(cp.description);
-            this.crisisProfileMap.load(cp.country);
+            // this.crisisProfileMap.load(cp.country);
         }
     }, {
         key: 'process',
         value: function process() {
             var that = this;
-            this.crisisProfileMap.process();
+            // this.crisisProfileMap.process();
 
             for (var i = 0; i < crisisProfiles.length; i++) {
                 crisisProfiles[i].id = i;
@@ -103,7 +104,7 @@ var CrisisProfile = function (_Element) {
             if (cp['recent-event-img']) {
                 this.recentEventsSection.element.find('img').prop('src', cp['recent-event-img']).removeClass('no-img');
                 this.recentEventsSection.element.find('#report-image-empty').css('display', 'none');
-                this.recentEventsSection.element.find('a').css('display', 'block');
+                this.recentEventsSection.element.find('a').css('display', 'flex');
             } else {
                 this.recentEventsSection.element.find('img').prop('src', '').addClass('no-img');
                 this.recentEventsSection.element.find('a').css('display', 'none');

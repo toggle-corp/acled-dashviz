@@ -32,7 +32,13 @@ class DashboardMap extends Element {
     process() {
         let that = this;
 
-        this.map = L.map('world-map', { preferCanvas: true}).setView([0, 0], 2);
+        this.map = L.map(
+            'world-map',
+            {
+                preferCanvas: true,
+                zoomSnap: 0.25,
+            },
+        ).setView([0, 0], 2);
         this.map.addLayer(new L.TileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
         }));
@@ -145,7 +151,6 @@ class DashboardMap extends Element {
 
         const group = new L.featureGroup(markers);
         const bounds = group.getBounds();
-        // const bounds = L.latLngBounds(markers);
 
         this.map.fitBounds(bounds);
     }
