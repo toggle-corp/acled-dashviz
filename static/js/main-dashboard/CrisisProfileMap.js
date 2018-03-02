@@ -5,7 +5,7 @@ class CrisisProfileMap extends Element {
      
     process() {
         this.map = L.map('crisis-profile-map', { preferCanvas: true, zoomControl: false}).setView([0, 10], 5);
-        this.map.addLayer(new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'));
+        this.map.addLayer(new L.TileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'));
 
         this.map.scrollWheelZoom.disable();
     }
