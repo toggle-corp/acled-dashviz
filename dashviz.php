@@ -121,7 +121,8 @@ class DashboardVisualization {
         $query = $wp_query->get('pagename');
 
         if($query == 'crisis_profiles'){
-            header('Crisis profiles', true, 200);
+            // header('Crisis profiles', true, 200);
+            http_response_code(200);
             $wp_query = null;
             $wp_query = new WP_Query();
 
@@ -129,7 +130,8 @@ class DashboardVisualization {
             return true;
 
         } elseif(substr($query, 0, 18) === 'timeline_country__') {
-            header('Timeline country', true, 200);
+            // header('Timeline country', true, 200);
+            http_response_code(200);
             $wp_query = null;
             $wp_query = new WP_Query();
             $country = substr($query, 18, strlen($query)-18);
@@ -138,7 +140,8 @@ class DashboardVisualization {
             return true;
 
         } elseif(substr($query, 0, 16) === 'report_country__') {
-            header('Report country', true, 200);
+            // header('Report country', true, 200);
+            http_response_code(200);
             $wp_query = null;
             $wp_query = new WP_Query();
             $country = substr($query, 16, strlen($query)-16);
@@ -147,7 +150,8 @@ class DashboardVisualization {
             return true;
 
         } elseif(substr($query, 0, 6) === 'post__') {
-            header('ACLED Dashboard', true, 200);
+            // header('ACLED Dashboard', true, 200);
+            http_response_code(200);
             $wp_query = null;
             $wp_query = new WP_Query();
 

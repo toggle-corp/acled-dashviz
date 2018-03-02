@@ -24,21 +24,20 @@ class DashboardMap extends Element {
         this.childElements.push(this.mapLegend);
         this.childElements.push(this.mapInfo);
         this.childElements.push(this.loadingAnimation);
-
          
-        this.mapScale = null; 
+        // this.mapScale = null; 
         this.conditionalLayer = null;
     }
      
     process() {
         let that = this;
 
-        this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
+        this.map = L.map('world-map', { preferCanvas: true}).setView([0, 0], 2);
         this.map.addLayer(new L.TileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
         }));
 
-        this.mapScale = new MapScale(this.map);
+        // this.mapScale = new MapScale(this.map);
 
         // Toggle scroll-zoom by clicking on and outside map
         this.map.scrollWheelZoom.disable();
@@ -90,37 +89,64 @@ class DashboardMap extends Element {
     }
      
     refreshMap(data) {
-        let that = this;
-        let maxEventCount = 0;
+        const that = this;
+
+        const markers = [];
+        for (let location in data) {
+            let cld = data[location]; // current location data 
+             
+            for (let event in cld) {
+                const cr = cld[event]; 
+                const cd = cr[0];
+                const radius = getMapCircleRadius(cr.length);
+                const color = getEventColor(cd.event_type);
+                if (cd.latitude < -90 || cd.latitude > 90) {
+                    continue;
+                }
+                if (cd.longitude < -180 || cd.longitude > 180) {
+                    continue;
+                }
+
+                const marker = L.circleMarker([cd.latitude, cd.longitude], {
+                    radius: radius,
+                    fillColor: color,
+                    stroke: false,
+                    fillOpacity: 0.7,
+                });
+
+                marker.on('mouseover', function() { this.openPopup(); });
+                marker.on('mouseout', function() { this.closePopup(); });
+                marker.bindPopup(`
+                    <strong class="number">
+                        ${cr.length}
+                    </strong>
+                    <span class="label">
+                        ${event.capitalize()}
+                    <span>
+                `);
+                 
+                markers.push(marker);
+                // this.conditionalLayer.addLayer(marker)
+            }
+        }
 
         if (this.conditionalLayer) {
             this.map.removeLayer(this.conditionalLayer);
         }
         
-        this.conditionalLayer = L.conditionalMarkers([], {maxMarkers: 4000, DisplaySort: function(a, b){ return b._mRadius-a._mRadius; } });
-         
-        for (let location in data) {
-            let cld = data[location]; // current location data 
-             
-            for (let event in cld) {
-                let cr = cld[event]; 
-                let cd = cr[0];
-                let radius = getMapCircleRadius(cr.length);
-                let color = getEventColor(cd.event_type);
-                 
-                this.conditionalLayer.addLayer(L.circleMarker([cd.latitude, cd.longitude], {
-                    radius: radius,
-                    fillColor: color,
-                    stroke: false,
-                    fillOpacity: 0.7,
-                    //interactive: false,
-                })
-                    .on('mouseover', function() { this.openPopup(); })
-                    .on('mouseout', function() { this.closePopup(); })
-                    .bindPopup(String(`<strong class="number">${cr.length}</strong> <span>${event.capitalize()}<span>`)));
-            }
-        }
-
+        this.conditionalLayer = L.conditionalMarkers(
+            markers,
+            {
+                maxMarkers: 4000,
+                DisplaySort: (a, b) => ( b._mRadius - a._mRadius),
+            },
+        );
         this.conditionalLayer.addTo(this.map);
+
+        const group = new L.featureGroup(markers);
+        const bounds = group.getBounds();
+        // const bounds = L.latLngBounds(markers);
+
+        this.map.fitBounds(bounds);
     }
 }

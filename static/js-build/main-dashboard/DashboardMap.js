@@ -28,7 +28,7 @@ var DashboardMap = function (_Element) {
         _this.childElements.push(_this.mapInfo);
         _this.childElements.push(_this.loadingAnimation);
 
-        _this.mapScale = null;
+        // this.mapScale = null; 
         _this.conditionalLayer = null;
         return _this;
     }
@@ -38,12 +38,12 @@ var DashboardMap = function (_Element) {
         value: function process() {
             var that = this;
 
-            this.map = L.map('world-map', { preferCanvas: false }).setView([0, 10], 3);
+            this.map = L.map('world-map', { preferCanvas: true }).setView([0, 0], 2);
             this.map.addLayer(new L.TileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
                 attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.'
             }));
 
-            this.mapScale = new MapScale(this.map);
+            // this.mapScale = new MapScale(this.map);
 
             // Toggle scroll-zoom by clicking on and outside map
             this.map.scrollWheelZoom.disable();
@@ -108,16 +108,8 @@ var DashboardMap = function (_Element) {
         key: 'refreshMap',
         value: function refreshMap(data) {
             var that = this;
-            var maxEventCount = 0;
 
-            if (this.conditionalLayer) {
-                this.map.removeLayer(this.conditionalLayer);
-            }
-
-            this.conditionalLayer = L.conditionalMarkers([], { maxMarkers: 4000, DisplaySort: function DisplaySort(a, b) {
-                    return b._mRadius - a._mRadius;
-                } });
-
+            var markers = [];
             for (var location in data) {
                 var cld = data[location]; // current location data 
 
@@ -126,22 +118,50 @@ var DashboardMap = function (_Element) {
                     var cd = cr[0];
                     var radius = getMapCircleRadius(cr.length);
                     var color = getEventColor(cd.event_type);
+                    if (cd.latitude < -90 || cd.latitude > 90) {
+                        continue;
+                    }
+                    if (cd.longitude < -180 || cd.longitude > 180) {
+                        continue;
+                    }
 
-                    this.conditionalLayer.addLayer(L.circleMarker([cd.latitude, cd.longitude], {
+                    var marker = L.circleMarker([cd.latitude, cd.longitude], {
                         radius: radius,
                         fillColor: color,
                         stroke: false,
                         fillOpacity: 0.7
-                        //interactive: false,
-                    }).on('mouseover', function () {
+                    });
+
+                    marker.on('mouseover', function () {
                         this.openPopup();
-                    }).on('mouseout', function () {
+                    });
+                    marker.on('mouseout', function () {
                         this.closePopup();
-                    }).bindPopup(String('<strong class="number">' + cr.length + '</strong> <span>' + event.capitalize() + '<span>')));
+                    });
+                    marker.bindPopup('\n                    <strong class="number">\n                        ' + cr.length + '\n                    </strong>\n                    <span class="label">\n                        ' + event.capitalize() + '\n                    <span>\n                ');
+
+                    markers.push(marker);
+                    // this.conditionalLayer.addLayer(marker)
                 }
             }
 
+            if (this.conditionalLayer) {
+                this.map.removeLayer(this.conditionalLayer);
+            }
+
+            this.conditionalLayer = L.conditionalMarkers(markers, {
+                maxMarkers: 4000,
+                DisplaySort: function DisplaySort(a, b) {
+                    return b._mRadius - a._mRadius;
+                }
+            });
             this.conditionalLayer.addTo(this.map);
+
+            var group = new L.featureGroup(markers);
+            var bounds = group.getBounds();
+            // const bounds = L.latLngBounds(markers);
+
+            this.map.fitBounds(bounds);
         }
     }]);
 
