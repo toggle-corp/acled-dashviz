@@ -22,11 +22,6 @@ var MapLegend = function (_Element) {
     }
 
     _createClass(MapLegend, [{
-        key: 'setTitle',
-        value: function setTitle(title) {
-            // this.element.find('h4').text(title);
-        }
-    }, {
         key: 'addLegendElement',
         value: function addLegendElement(color, label) {
             var legendElementsContainer = this.element.find('.legend-elements');
@@ -36,9 +31,6 @@ var MapLegend = function (_Element) {
             legendElement.find('.name').text(label);
             legendElement.appendTo(legendElementsContainer);
         }
-    }, {
-        key: 'process',
-        value: function process() {}
     }, {
         key: 'clearLegendElements',
         value: function clearLegendElements() {
@@ -59,7 +51,7 @@ var MapLegend = function (_Element) {
 
             var that = this;
             this.element.find('input').on('click', function () {
-                that.element.trigger('jQ3{that.name}:filterclick');
+                that.element.trigger(that.name + ':filterclick');
 
                 if (jQ3(this).prop('checked')) {
                     jQ3(this).closest('.legend-element').addClass('checked');

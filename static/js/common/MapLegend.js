@@ -5,10 +5,6 @@ class MapLegend extends Element {
         this.legendElementTemplate = jQ3('<label class="legend-element checked"><input type="checkbox" checked><span class="color-box"></span><span class="name"><span/></label>');
     }
      
-    setTitle(title){
-        // this.element.find('h4').text(title);
-    }
-     
     addLegendElement(color, label){
         let legendElementsContainer = this.element.find('.legend-elements');
         let legendElement = this.legendElementTemplate.clone();
@@ -18,9 +14,6 @@ class MapLegend extends Element {
         legendElement.appendTo(legendElementsContainer);
     }
      
-    process() {
-    }
-
     clearLegendElements() {
         this.element.find('.legend-elements').empty();
     }
@@ -36,7 +29,7 @@ class MapLegend extends Element {
          
         let that = this;
         this.element.find('input').on('click', function() {
-            that.element.trigger(`jQ3{that.name}:filterclick`);
+            that.element.trigger(`${that.name}:filterclick`);
 
             if (jQ3(this).prop('checked')) {
                 jQ3(this).closest('.legend-element').addClass('checked');
